@@ -30,11 +30,12 @@ CREATE TABLE tableQ  (
 
 );
 
+
 --COMMAND
 
 CREATE TABLE command  (
 	id               int primary key,
-	commandIdUi		 varchar(200),
+	commandIdUi		   varchar(200),
 	specfication	 varchar(200) ,
 	toGo			 bool,
 	status           bool,
