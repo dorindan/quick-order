@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Feedback {
     @Id
-    private int id;
+    private Long id;
     private int rating;
     private String message;
 

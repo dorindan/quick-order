@@ -7,14 +7,14 @@ import javax.persistence.*;
 @Entity
 public class Bill {
     @Id
-    private int id;
+    private Long id;
     private boolean voucher;
     private int sale;
     private Currency total;
 
     //waiter of type users
     @OneToMany
-    @JoinColumn(name = "users_id")
+    @JoinColumn(name = "userId")
     private Users user;
 
     @OneToOne(mappedBy = "bill")

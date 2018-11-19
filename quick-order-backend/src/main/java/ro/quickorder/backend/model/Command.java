@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 public class Command {
     @Id
-    private int id;
+    private Long id;
     private String commandName;
     private String specification;
     private boolean isPacked;

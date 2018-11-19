@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class TableFood {
     @Id
-    private int id;
+    private Long id;
     private int tableNr;
     private int seats;
     private boolean windowView;

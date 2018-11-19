@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 public class MenuItemType {
-    private int id;
+    private Long id;
     private String type;
 
     @OneToMany(mappedBy = "menuItemType")

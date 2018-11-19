@@ -10,7 +10,7 @@ import java.util.List;
 public class Reservation {
 
     @Id
-    private int id;
+    private Long id;
     private Timestamp timeCheckIn;
     private Timestamp timeCheckOut;
 

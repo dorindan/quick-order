@@ -8,7 +8,7 @@ import java.util.List;
 public class Users {
 
     @Id
-    private int id;
+    private Long id;
 
     @OneToMany(mappedBy = "user")
     private List<Feedback> feedback;

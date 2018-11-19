@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 public class MenuItem {
     @Id
-    private int id;
+    private Long id;
     private String name;
     private String description;
     private int preparationTime;
