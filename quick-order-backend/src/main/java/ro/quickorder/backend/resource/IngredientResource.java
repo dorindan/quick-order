@@ -13,8 +13,8 @@ public class IngredientResource {
     @Autowired
     IngredientRepository ingredientRepository;
 
-        @RequestMapping(path = "/ingredient", method = RequestMethod.GET )
-    public Ingredient findByName(@RequestParam(value="name", defaultValue="World")String name){
-        return ingredientRepository.findFirstByName(name);
+    @RequestMapping(path = "/ingredient", method = RequestMethod.GET)
+    public String findByName(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return ingredientRepository.findFirstByName(name).toString();
     }
 }

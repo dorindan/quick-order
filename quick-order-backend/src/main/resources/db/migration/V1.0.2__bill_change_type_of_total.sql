@@ -1,0 +1,1 @@
+ALTER TABLE bill ALTER COLUMN total Type NUMERIC ;
