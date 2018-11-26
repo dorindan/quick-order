@@ -1,0 +1,90 @@
+package ro.quickorder.backend.model;
+
+import javax.persistence.*;
+import javax.persistence.Table;
+import java.util.List;
+import java.util.Objects;
+
+@Entity
+public class Users {
+
+    @Id
+    private Long id;
+
+    @OneToMany(mappedBy = "user")
+    private List<Feedback> feedback;
+
+    @OneToMany(mappedBy = "user")
+    private List<Reservation> reservations;
+
+    @ManyToMany
+    @JoinTable(name = "user_command",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "command_id") })
+    private List<Command> commands;
+
+    public Users(Long id) {
+        this.id = id;
+    }
+
+    public Users() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Feedback> getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(List<Feedback> feedback) {
+        this.feedback = feedback;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public List<Command> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(List<Command> commands) {
+        this.commands = commands;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Users users = (Users) o;
+        return Objects.equals(id, users.id) &&
+                Objects.equals(feedback, users.feedback) &&
+                Objects.equals(reservations, users.reservations) &&
+                Objects.equals(commands, users.commands);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, feedback, reservations, commands);
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", feedback=" + feedback +
+                ", reservations=" + reservations.toString() +
+                ", commands=" + commands.toString() +
+                '}';
+    }
+}
