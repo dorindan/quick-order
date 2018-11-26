@@ -1,16 +1,4 @@
-body#LoginForm{
-  background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg");
-  background-repeat:no-repeat;
-  background-position:center;
-  background-size:cover;
-  padding:10px;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0;
-  overflow: auto;
-  position: fixed;
-}
+body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg"); background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}
 
 .form-heading { color:#fff; font-size:23px;}
 .panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}
@@ -53,10 +41,10 @@ body#LoginForm{
 .forgot {
   text-align: left; margin-bottom:30px;
 }
-.bottom {
-  //width : 33.39%;
-  width:250px;
-  height:250px;
+.botto-text {
+  color: #ffffff;
+  font-size: 14px;
+  margin: auto;
 }
 .login-form .btn.btn-primary.reset {
   background: #ff9900 none repeat scroll 0 0;

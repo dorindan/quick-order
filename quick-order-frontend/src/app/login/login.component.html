@@ -1,56 +1,42 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<!------ Include the above in your HEAD tag ---------->
 
 
 <html>
 <head>
-  <script src="node_modules/core-js/client/shim.min.js"></script>
-  <script src="node_modules/zone.js/dist/zone.js"></script>
-  <script src="node_modules/systemjs/dist/system.src.js"></script>
 
-  <script src="systemjs.config.js"></script>
-  <script>
-    System.import('app').catch(function (err) { console.error(err); });
-  </script>
+  <!------ Include the above in your HEAD tag ---------->
 </head>
-
 <body id="LoginForm">
 <div class="container">
-  <h1 class="form-heading">Quick-Order</h1>
+  <h1 class="form-heading">login Form</h1>
   <div class="login-form">
     <div class="main-div">
       <div class="panel">
         <h2>Admin Login</h2>
         <p>Please enter your email and password</p>
       </div>
-      <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+      <form id="Login">
 
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+        <div class="form-group">
 
 
-          <input class="form-control" placeholder="Username" type="text"
-                 name="username" [(ngModel)]="model.username"
-                 #username="ngModel" required />
+          <input type="text" class="form-control" id="userName" placeholder="Username">
 
         </div>
 
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+        <div class="form-group">
 
-          <input class="form-control" id="inputPassword"
-                 placeholder="Password" type="password"
-                 name="password" [(ngModel)]="model.password"
-                 #password="ngModel" required />
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
 
         </div>
         <div class="forgot">
           <a href="reset.html">Forgot password?</a>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
-        <div *ngIf="f.submitted
-          && !password.valid">Password is required
-        </div>
+
       </form>
     </div>
-    <img class = "bottom" src="assets/img/waiter.jpg">
   </div>
 </div>
 
