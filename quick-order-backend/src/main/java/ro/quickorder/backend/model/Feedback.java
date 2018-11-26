@@ -1,9 +1,11 @@
 package ro.quickorder.backend.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "feedback_menu_item")
 public class Feedback {
     @Id
     private Long id;
@@ -14,9 +16,8 @@ public class Feedback {
     @JoinColumn(name = "menu_item_id")
     private MenuItem menuItem;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    private Users user;
+    @OneToMany(mappedBy = "feedback")
+    private List<Users> users;
 
     public Feedback(Long id, int rating, String message, MenuItem menuItem) {
         this.id = id;
@@ -60,12 +61,12 @@ public class Feedback {
         this.menuItem = menuItem;
     }
 
-    public Users getUser() {
-        return user;
+    public List<Users> getUsers() {
+        return users;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
+    public void setUsers(List<Users> users) {
+        this.users = users;
     }
 
     @Override
@@ -77,12 +78,12 @@ public class Feedback {
                 Objects.equals(id, feedback.id) &&
                 Objects.equals(message, feedback.message) &&
                 Objects.equals(menuItem, feedback.menuItem) &&
-                Objects.equals(user, feedback.user);
+                Objects.equals(users, feedback.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rating, message, menuItem, user);
+        return Objects.hash(id, rating, message, menuItem, users);
     }
 
     @Override
@@ -91,8 +92,7 @@ public class Feedback {
                 "id=" + id +
                 ", rating=" + rating +
                 ", message='" + message + '\'' +
-                ", menuItem=" + menuItem +
-                ", user=" + user +
+                ", menuItem=" + menuItem.getId() +
                 '}';
     }
 }

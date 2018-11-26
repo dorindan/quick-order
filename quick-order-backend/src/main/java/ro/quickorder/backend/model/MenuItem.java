@@ -10,7 +10,6 @@ public class MenuItem {
     private Long id;
     private String name;
     private String description;
-    @Column(name = "preparation_duration")
     private Integer preparationDurationInMinutes;
 
     @ManyToOne

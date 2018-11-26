@@ -11,8 +11,9 @@ public class Users {
     @Id
     private Long id;
 
-    @OneToMany(mappedBy = "user")
-    private List<Feedback> feedback;
+    @ManyToOne
+    @JoinColumn(name = "feedback_menu_item_id")
+    private Feedback feedback;
 
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations;
@@ -38,11 +39,11 @@ public class Users {
         this.id = id;
     }
 
-    public List<Feedback> getFeedback() {
+    public Feedback getFeedback() {
         return feedback;
     }
 
-    public void setFeedback(List<Feedback> feedback) {
+    public void setFeedback(Feedback feedback) {
         this.feedback = feedback;
     }
 
@@ -82,9 +83,6 @@ public class Users {
     public String toString() {
         return "Users{" +
                 "id=" + id +
-                ", feedback=" + feedback +
-                ", reservations=" + reservations.toString() +
-                ", commands=" + commands.toString() +
                 '}';
     }
 }

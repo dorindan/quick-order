@@ -1,2 +1,4 @@
-ALTER TABLE menu_item
-RENAME COLUMN preparation_duration TO preparation_duration_in_minutes;
+ALTER TABLE reservation
+RENAME COLUMN time_check_in TO check_in_time;
+ALTER TABLE reservation
+RENAME COLUMN time_check_out TO check_out_time;
