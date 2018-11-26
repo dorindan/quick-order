@@ -2,7 +2,6 @@ package ro.quickorder.backend.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,11 +10,11 @@ public class Reservation {
 
     @Id
     private Long id;
-    private Timestamp timeCheckIn;
-    private Timestamp timeCheckOut;
+    private Timestamp checkInTime;
+    private Timestamp checkOutTime;
 
     @ManyToOne
-    @JoinColumn(name = "users_id")
+    @JoinColumn(name = "user_id")
     private Users user;
 
     @ManyToOne
@@ -32,10 +31,10 @@ public class Reservation {
             inverseJoinColumns = { @JoinColumn(name = "table_id") })
     private List<TableFood> tables;
 
-    public Reservation(Long id, Timestamp timeCheckIn, Timestamp timeCheckOut, Users user, Command command, boolean confirmed, String status) {
+    public Reservation(Long id, Timestamp checkInTime, Timestamp checkOutTime, Users user, Command command, boolean confirmed, String status) {
         this.id = id;
-        this.timeCheckIn = timeCheckIn;
-        this.timeCheckOut = timeCheckOut;
+        this.checkInTime = checkInTime;
+        this.checkOutTime = checkOutTime;
         this.user = user;
         this.command = command;
         this.confirmed = confirmed;
@@ -53,20 +52,20 @@ public class Reservation {
         this.id = id;
     }
 
-    public Timestamp getTimeCheckIn() {
-        return timeCheckIn;
+    public Timestamp getCheckInTime() {
+        return checkInTime;
     }
 
-    public void setTimeCheckIn(Timestamp timeCheckIn) {
-        this.timeCheckIn = timeCheckIn;
+    public void setCheckInTime(Timestamp checkInTime) {
+        this.checkInTime = checkInTime;
     }
 
-    public Timestamp getTimeCheckOut() {
-        return timeCheckOut;
+    public Timestamp getCheckOutTime() {
+        return checkOutTime;
     }
 
-    public void setTimeCheckOut(Timestamp timeCheckOut) {
-        this.timeCheckOut = timeCheckOut;
+    public void setCheckOutTime(Timestamp checkOutTime) {
+        this.checkOutTime = checkOutTime;
     }
 
     public Users getUser() {
@@ -116,8 +115,8 @@ public class Reservation {
         Reservation that = (Reservation) o;
         return confirmed == that.confirmed &&
                 Objects.equals(id, that.id) &&
-                Objects.equals(timeCheckIn, that.timeCheckIn) &&
-                Objects.equals(timeCheckOut, that.timeCheckOut) &&
+                Objects.equals(checkInTime, that.checkInTime) &&
+                Objects.equals(checkOutTime, that.checkOutTime) &&
                 Objects.equals(user, that.user) &&
                 Objects.equals(command, that.command) &&
                 Objects.equals(status, that.status) &&
@@ -126,16 +125,15 @@ public class Reservation {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, timeCheckIn, timeCheckOut, user, command, confirmed, status, tables);
+        return Objects.hash(id, checkInTime, checkOutTime, user, command, confirmed, status, tables);
     }
 
     @Override
     public String toString() {
         return "Reservation{" +
                 "id=" + id +
-                ", timeCheckIn=" + timeCheckIn +
-                ", timeCheckOut=" + timeCheckOut +
-                ", user=" + user +
+                ", checkInTime=" + checkInTime +
+                ", checkOutTime=" + checkOutTime +
                 ", command=" + command +
                 ", confirmed=" + confirmed +
                 ", status='" + status + '\'' +
