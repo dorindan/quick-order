@@ -152,11 +152,8 @@ public class Command {
                 ", specification='" + specification + '\'' +
                 ", isPacked=" + isPacked +
                 ", status='" + status + '\'' +
-                ", menuItems=" + menuItems +
-                ", bill=" + bill +
+                ", bill=" + bill.getId() +
                 ", table=" + table +
-                ", reservations=" + reservations +
-                ", users=" + users +
                 '}';
     }
 }

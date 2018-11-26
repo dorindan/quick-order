@@ -1,1 +1,2 @@
-ALTER TABLE menu_item ALTER COLUMN preparation_duration Type int USING Extract(MINUTE FROM preparation_duration)::integer;
+ALTER TABLE menu_item
+RENAME COLUMN preparation_duration TO preparation_duration_in_minutes;

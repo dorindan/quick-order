@@ -1,8 +1,5 @@
 package ro.quickorder.backend.model;
 
-import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.Currency;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -12,7 +9,7 @@ public class Bill {
     @Id
     private Long id;
     private boolean voucher;
-    private int sale;
+    private int salePercentage;
     private BigDecimal total;
 
     @ManyToOne
@@ -22,10 +19,10 @@ public class Bill {
     @OneToOne(mappedBy = "bill")
     private Command command;
 
-    public Bill(Long id, boolean voucher, int sale, BigDecimal total, Users user, Command command) {
+    public Bill(Long id, boolean voucher, int salePercentage, BigDecimal total, Users user, Command command) {
         this.id = id;
         this.voucher = voucher;
-        this.sale = sale;
+        this.salePercentage = salePercentage;
         this.total = total;
         this.user = user;
         this.command = command;
@@ -50,12 +47,12 @@ public class Bill {
         this.voucher = voucher;
     }
 
-    public int getSale() {
-        return sale;
+    public int getSalePercentage() {
+        return salePercentage;
     }
 
-    public void setSale(int sale) {
-        this.sale = sale;
+    public void setSalePercentage(int salePercentage) {
+        this.salePercentage = salePercentage;
     }
 
     public BigDecimal getTotal() {
@@ -88,7 +85,7 @@ public class Bill {
         if (o == null || getClass() != o.getClass()) return false;
         Bill bill = (Bill) o;
         return voucher == bill.voucher &&
-                sale == bill.sale &&
+                salePercentage == bill.salePercentage &&
                 Objects.equals(id, bill.id) &&
                 Objects.equals(total, bill.total) &&
                 Objects.equals(user, bill.user) &&
@@ -97,7 +94,7 @@ public class Bill {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, voucher, sale, total, user, command);
+        return Objects.hash(id, voucher, salePercentage, total, user, command);
     }
 
     @Override
@@ -105,10 +102,9 @@ public class Bill {
         return "Bill{" +
                 "id=" + id +
                 ", voucher=" + voucher +
-                ", sale=" + sale +
+                ", salePercentage=" + salePercentage +
                 ", total=" + total +
-                ", user=" + user +
-                ", command=" + command +
+                ", command=" + command.getId() +
                 '}';
     }
 }
