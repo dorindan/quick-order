@@ -13,11 +13,13 @@ public class Feedback {
     private String message;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private MenuItem user;
+
+    @ManyToOne
     @JoinColumn(name = "menu_item_id")
     private MenuItem menuItem;
 
-    @OneToMany(mappedBy = "feedback")
-    private List<Users> users;
 
     public Feedback(Long id, int rating, String message, MenuItem menuItem) {
         this.id = id;
@@ -61,13 +63,6 @@ public class Feedback {
         this.menuItem = menuItem;
     }
 
-    public List<Users> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<Users> users) {
-        this.users = users;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -77,22 +72,12 @@ public class Feedback {
         return rating == feedback.rating &&
                 Objects.equals(id, feedback.id) &&
                 Objects.equals(message, feedback.message) &&
-                Objects.equals(menuItem, feedback.menuItem) &&
-                Objects.equals(users, feedback.users);
+                Objects.equals(user, feedback.user) &&
+                Objects.equals(menuItem, feedback.menuItem);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rating, message, menuItem, users);
-    }
-
-    @Override
-    public String toString() {
-        return "Feedback{" +
-                "id=" + id +
-                ", rating=" + rating +
-                ", message='" + message + '\'' +
-                ", menuItem=" + menuItem.getId() +
-                '}';
+        return Objects.hash(id, rating, message, user, menuItem);
     }
 }
