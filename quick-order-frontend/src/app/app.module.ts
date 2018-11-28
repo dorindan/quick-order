@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
+import { HeaderComponent } from './header/header.component';
+import { LogoComponent } from './header/logo/logo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
+    LogoComponent
     LoginComponent,
   ],
   imports: [

@@ -11,9 +11,8 @@ public class Users {
     @Id
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "feedback_menu_item_id")
-    private Feedback feedback;
+    @OneToMany(mappedBy = "user")
+    private List<Feedback> feedbacks;
 
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations;
@@ -39,12 +38,12 @@ public class Users {
         this.id = id;
     }
 
-    public Feedback getFeedback() {
-        return feedback;
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
     }
 
-    public void setFeedback(Feedback feedback) {
-        this.feedback = feedback;
+    public void setFeedbacks(List<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 
     public List<Reservation> getReservations() {
@@ -69,20 +68,23 @@ public class Users {
         if (o == null || getClass() != o.getClass()) return false;
         Users users = (Users) o;
         return Objects.equals(id, users.id) &&
-                Objects.equals(feedback, users.feedback) &&
+                Objects.equals(feedbacks, users.feedbacks) &&
                 Objects.equals(reservations, users.reservations) &&
                 Objects.equals(commands, users.commands);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, feedback, reservations, commands);
+        return Objects.hash(id, feedbacks, reservations, commands);
     }
 
     @Override
     public String toString() {
         return "Users{" +
                 "id=" + id +
+                ", feedbacks=" + feedbacks +
+                ", reservations=" + reservations +
+                ", commands=" + commands +
                 '}';
     }
 }
