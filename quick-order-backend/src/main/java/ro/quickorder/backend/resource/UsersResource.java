@@ -9,8 +9,10 @@ import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.UsersRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.NotFoundException;
 import java.security.Principal;
 import java.util.Base64;
+import java.util.List;
 
 
 @RestController
@@ -24,10 +26,21 @@ public class UsersResource {
         return usersRepository.findById(id).toString();
     }
 
+    @RequestMapping(path = "/users/all", method = RequestMethod.GET)
+    public List<Users> getUsers() {
+        return usersRepository.findAll();
+    }
+
     @RequestMapping("/login")
     public boolean login(@RequestBody Users user) {
-        return
-                user.getUsername().equals("a") && user.getPassword().equals("a");
+        try {
+            Users userFromDb = usersRepository.findFirstByUsername(user.getUsername());
+            return userFromDb.getPassword().equals(user.getPassword());
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
     }
 
     @RequestMapping("/user")
