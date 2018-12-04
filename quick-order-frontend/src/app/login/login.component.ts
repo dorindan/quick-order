@@ -22,20 +22,22 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    let url = 'http://localhost:8080/login';
-    this.http.post<Observable<boolean>>(url, {
-      username: this.model.username,
-      password: this.model.password
-    }).subscribe(isValid => {
-      if (isValid) {
-        sessionStorage.setItem(
-          'token',
-          btoa(this.model.username + ':' + this.model.password)
-        );
-        this.router.navigate(['home']);
-      } else {
-        alert("Authentication failed.")
-      }
-    });
+      let url = 'http://localhost:8080/login';
+      this.http.post<Observable<boolean>>(url, {
+        username: this.model.username,
+        password: this.model.password
+      }).subscribe(isValid => {
+        if (isValid) {
+          sessionStorage.setItem(
+            'token',
+            btoa(this.model.username + ':' + this.model.password)
+          );
+          this.router.navigate(['home']);
+        } else {
+          alert("Authentication failed.");
+        }
+      });
   }
+
+
 }
