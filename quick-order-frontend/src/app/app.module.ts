@@ -6,17 +6,30 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { LogoComponent } from './header/logo/logo.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { FooterComponent } from './footer/footer.component';
+import { StartPageComponent } from './start-page/start-page.component';
+import { StartLoggedInComponent } from './start-logged-in/start-logged-in.component';
+import { ReservationComponent } from './reservation/reservation.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    LogoComponent
+    LogoComponent,
+    FooterComponent,
+    StartPageComponent,
+    StartLoggedInComponent,
+    ReservationComponent,
+
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
