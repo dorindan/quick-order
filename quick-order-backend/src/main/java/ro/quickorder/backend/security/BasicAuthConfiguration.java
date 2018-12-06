@@ -27,8 +27,7 @@ public class BasicAuthConfiguration
     @Override
     protected void configure(HttpSecurity http)
             throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .anyRequest()
                 .authenticated()

@@ -13,7 +13,6 @@ export class AppRoutingModule { }
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
   { path: '**', redirectTo: '' }
 ];
 
