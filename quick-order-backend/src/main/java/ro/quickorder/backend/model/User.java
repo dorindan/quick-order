@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -102,6 +103,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", feedbacks=" + feedbacks +
                 ", reservations=" + reservations +
                 ", commands=" + commands +

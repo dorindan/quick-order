@@ -27,23 +27,23 @@ public class UsersResource {
         return userRepository.findAll();
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public boolean login(@RequestBody User user) {
-        try {
-            User userFromDb = userRepository.findFirstByUsername(user.getUsername());
-            return userFromDb.getPassword().equals(user.getPassword());
-        }
-        catch(Exception e)
-        {
+            //User userFromDb = userRepository.findFirstByUsername(user.getUsername());
+            //return userFromDb.getPassword().equals(user.getPassword());
+            for (User u : getUsers())
+            {
+                if (user.getPassword().equals(u.getPassword()) && user.getUsername().equals(u.getUsername()))
+                {
+                    return true;
+                }
+            }
             return false;
-        }
     }
 
+
     @RequestMapping("/user")
-    public Principal user(HttpServletRequest request) {
-        String authToken = request.getHeader("Authorization")
-                .substring("Basic".length()).trim();
-        return () -> new String(Base64.getDecoder()
-                .decode(authToken)).split(":")[0];
+    public Principal user(Principal user) {
+        return user;
     }
 }
