@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log("am intrat maaaaaaaaai");
-      let url = '/login';
+      let url = 'http://localhost:8080/login';
       this.http.post<Observable<boolean>>(url, {
         username: this.model.username,
         password: this.model.password
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         if (isValid) {
           console.log("am intrat 123");
           sessionStorage.setItem(
-            'peroneu',
+            'token',
             btoa(this.model.username + ':' + this.model.password)
           );
           this.router.navigate(['test']);
@@ -40,8 +40,6 @@ export class LoginComponent implements OnInit {
           alert("Authentication failed.");
         }
       });
-      const token = this.tokenExtractor.getToken() as string;
-      this.http.post<any>(url, {headers: new HttpHeaders().set('X-XSRF-TOKEN', token)})
   }
 
 
