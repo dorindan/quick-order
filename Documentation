@@ -36,8 +36,6 @@ constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
   }
 
-
-
 6.	Create the function to change the language (in app.component.ts)
   switchLanguage(language: string) {
     this.translate.use(language);
@@ -45,6 +43,7 @@ constructor(private translate: TranslateService) {
 
 7.	For each language create a file (Ex: “en.json” and “ro.json”) in src/assets/i18n 
 (src/assets/i18n/en.json and src/assets/i18n/ro.json)
+
 
 How to use:
 In en.json and ro.json, you build your own class with the name representing the page you are working on.
