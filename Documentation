@@ -1,0 +1,99 @@
+Internationalization:
+
+How to configure:
+1.	Import the necessary modules into app.module.ts : 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+2.	Export the HttpLoaderFactory (in app.module.ts):
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
+3.	Add HttpClientModule and TranslateModule in NgModule -> imports
+@NgModule({
+  …
+  imports: [
+    …
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
+  ],
+  …
+})
+
+4.	Import the TranslateService in app.component.ts:
+ import { TranslateService } from '@ngx-translate/core';
+
+5.	Create the constructor where you set the default language (in app.component.ts)
+constructor(private translate: TranslateService) {
+    translate.setDefaultLang('en');
+  }
+
+
+
+6.	Create the function to change the language (in app.component.ts)
+  switchLanguage(language: string) {
+    this.translate.use(language);
+  }
+
+7.	For each language create a file (Ex: “en.json” and “ro.json”) in src/assets/i18n 
+(src/assets/i18n/en.json and src/assets/i18n/ro.json)
+
+How to use:
+In en.json and ro.json, you build your own class with the name representing the page you are working on.
+In your class you define your “id”: “Translation”, where “id” is what you write in html and will be replace
+with the actual “Translation”,  in en.json “Translation” will be in English and in ro.json “Translation” 
+will be in Romanian. In the html, class.id will be used with “translation =“” “  in the tag the message is in.
+At run time, the class.id (Ex: register.singUP) will be replace with the “Translation” from ro.json/en.json, 
+depending on the language used now.
+
+Exemple:
+1.	In en.json :
+"register": {
+    "singUp": "Sign Up"
+}
+
+2.	In ro.json:
+"register": {
+    "singUp" : "Înregistrare"
+}
+
+3.	In register.component.html: (how to use)
+<h1 translate="" >register.singUp</h1> 
+
+4.	In register.component.html: (how to use on placeholder) 
+<input type="text" placeholder="{{ 'register.enterUser' | translate }}" >
+
+
+How to change the language:
+In parent component there is a function “switchLanguage” used to change the language. To be able to use this
+function you need to export it in the parent html (Example: <app-register [switchLanguage]="myMethodFunc"></app-register>)
+and in your component import it (Ex: @Input() switchLanguage: Function; ). Now create buttons and call the
+function on click with the .json folder name (Example: switchLanguage('ro') for Romania and switchLanguage('en') for English).
+
+Example:
+1.	In app.component.ts: ( you should already have the switchLanguage function) 
+  get myMethodFunc() {
+    return this.switchLanguage.bind(this);
+  }
+  public switchLanguage(language: string) {
+    this.translate.use(language);
+  }
+
+2.	In app.component.html:
+<app-register [switchLanguage]="myMethodFunc"></app-register>
+
+3.	In register.component.ts:
+@Input() switchLanguage: Function;
+
+4.	In register.component.html:
+      <button (click)="switchLanguage('en')">en</button>
+      <button (click)="switchLanguage('ro')">ro</button>
+
