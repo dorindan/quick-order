@@ -9,7 +9,12 @@ import java.util.Objects;
 public class Users {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String username;
+    private String password;
+    private String email;
+
 
     @OneToMany(mappedBy = "user")
     private List<Feedback> feedbacks;
@@ -19,8 +24,8 @@ public class Users {
 
     @ManyToMany
     @JoinTable(name = "user_command",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "command_id") })
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "command_id")})
     private List<Command> commands;
 
     public Users(Long id) {
@@ -28,6 +33,12 @@ public class Users {
     }
 
     public Users() {
+    }
+    public Users(String name, String password, String email) {
+        this.username = name;
+        this.password = password;
+        this.email = email;
+        //this.id = ???
     }
 
     public Long getId() {
@@ -61,6 +72,23 @@ public class Users {
     public void setCommands(List<Command> commands) {
         this.commands = commands;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     @Override
     public boolean equals(Object o) {

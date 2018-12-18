@@ -1,0 +1,21 @@
+{
+  "Title": "Translation example",
+  "Intro": "Hello I am Arthur, I am 42 years old.",
+  "Example": "Hello I am {{name}}, I am {{age}} years old.",
+
+  "register": {
+    "singUp" : "Înregistrare",
+    "message": "Completează casuțele pentru a crea un cont.",
+    "name": "Nume",
+    "email": "Email",
+    "password": "Parolă *(Foloseste cel putin 6 caractere)",
+    "re_Password": "Reintroduceți parola",
+    "re_Password_Wrong": "Reintroduceți parola *(parolele nu sunt egale)",
+    "enterUser": "Introduceți numele de utilizator",
+    "enterEmail": "Introduceți emailul",
+    "enterPassword": "Introduceți parola",
+    "enterRe_Password": "Reintroduceți parola",
+    "cancel": "Înapoi"
+  }
+
+}

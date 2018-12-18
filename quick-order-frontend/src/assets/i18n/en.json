@@ -1,0 +1,21 @@
+{
+  "Title": "Translation example",
+  "Intro": "Hello I am Arthur, I am 42 years old.",
+  "Example": "Hello I am {{name}}, I am {{age}} years old.",
+
+  "register": {
+    "singUp": "Sign Up",
+    "message": "Please fill in this boxes to create an account.",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password *(Use 6 ore more characters)",
+    "re_Password": "Repeat Password",
+    "re_Password_Wrong": "Repeat Password *(does not match the password)",
+    "enterUser": "Enter User Name",
+    "enterEmail": "Enter Email",
+    "enterPassword": "Enter Password",
+    "enterRe_Password": "Repeat Password",
+    "cancel": "Cancel"
+  }
+
+}

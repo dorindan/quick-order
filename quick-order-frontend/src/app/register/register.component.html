@@ -1,0 +1,42 @@
+
+<div id="id01" class="modal" style="display:block">
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+
+      <button (click)="switchLanguage('en')">en</button>
+      <button (click)="switchLanguage('ro')">ro</button>
+      <h1 translate="" >register.singUp</h1>
+      <p translate="" >register.message</p>
+      <hr>
+      <label  for="username" ><b translate="">register.name</b></label>
+      <input type="text" placeholder="{{ 'register.enterUser' | translate }}" [(ngModel)]="userName" name="username" required>
+
+      <label for="email"><b translate="">register.email</b></label>
+      <input type="text" placeholder="{{ 'register.enterEmail' | translate }}"  [(ngModel)]="email" name="email" required>
+
+      <label for="psw" *ngIf="this.rightPass"><b translate="">register.password</b></label>
+      <label for="psw" class="red" *ngIf="!this.rightPass"><b translate="">register.password</b></label>
+      <input (focusout)="validatePassword()" [type]="isActive ? 'password' : 'text'" placeholder="{{ 'register.enterPassword' | translate }}" [(ngModel)]="password" name="psw" required>
+
+      <label for="psw-repeat" *ngIf="this.rightRe_pass"><b translate="">register.re_Password</b></label>
+      <label for="psw-repeat" class="red" *ngIf="!this.rightRe_pass"><b translate="">register.re_Password_Wrong</b></label>
+      <input (focusout)="validateRe_Password()" [type]="isActive ? 'password' : 'text'"  placeholder="{{ 'register.enterRe_Password' | translate }}" [(ngModel)]="re_password"  name="psw-repeat" required>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="isActive"  checked="checked" name="remember" style="margin-bottom:15px">
+      </label>
+      <!--
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label>
+
+      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+      -->
+
+      <div class="clearfix">
+        <button translate="" type="button" (click)='cancle()'  class="cancelbtn">register.cancel</button>
+        <button translate="" type="submit" (click)='register()' class="signupbtn">register.singUp</button>
+      </div>
+    </div>
+  </form>
+</div>
