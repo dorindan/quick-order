@@ -1,0 +1,136 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <br class="xxl">
+    <h1 class="display-3 font-weight-light d-none d-lg-block title" >Find your table for any occasion</h1>
+    <br class="xxl">
+    <h1 class="display-5 font-weight-light d-lg-none title">Find your table for any occasion</h1>
+    <br>
+    <br>
+    <br class="xxl">
+    <br class="xxl">
+    <br class="xxl">
+    <div class="d-none d-lg-block">
+      <br>
+      <br>
+      <br>
+    </div>
+    <div class="d-none d-lg-block">
+
+
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Pick a date</ng-template>
+
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="firstCtrl">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Choose an Hour" [formControl]="hourControl" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let hour of hours" [value]="hours">
+                  {{hour.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="hourControl.hasError('required')"></mat-error>
+              <mat-hint>{{hourControl.value?.sound}}</mat-hint>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Pick a table</ng-template>
+            <mat-form-field>
+              <input matInput placeholder="Table number" formControlName="secondCtrl" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          You are now done.
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+
+    </div>
+
+    <div class="d-lg-none">
+      <mat-vertical-stepper linear #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Pick a date</ng-template>
+            <mat-form-field>
+              <input matInput [matDatepicker]="pickerVertical" placeholder="Choose a date" formControlName="firstCtrl">
+              <mat-datepicker-toggle matSuffix [for]="pickerVertical"></mat-datepicker-toggle>
+              <mat-datepicker #pickerVertical></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Choose an Hour" [formControl]="hourControl" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let hour of hours" [value]="hours">
+                  {{hour.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="hourControl.hasError('required')"></mat-error>
+              <mat-hint>{{hourControl.value?.sound}}</mat-hint>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <mat-form-field>
+              <input matInput placeholder="Address" formControlName="secondCtrl" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          You are now done.
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br class="xxl">
+    <br class="xxl">
+    <br class="xxl">
+  </div>
+</div>
+
+
+
+
+
+
+
+

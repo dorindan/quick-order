@@ -10,6 +10,9 @@ import { FooterComponent } from './footer/footer.component';
 import { StartPageComponent } from './start-page/start-page.component';
 import { StartLoggedInComponent } from './start-logged-in/start-logged-in.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MaterialModule} from "./material.module";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,11 +23,16 @@ import { ReservationComponent } from './reservation/reservation.component';
     StartPageComponent,
     StartLoggedInComponent,
     ReservationComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
