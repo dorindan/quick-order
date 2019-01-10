@@ -1,47 +1,37 @@
 
-<!------ Include the above in your HEAD tag ---------->
-
 <html>
 <head>
 
-  <!------ Include the above in your HEAD tag ---------->
 </head>
-<body id="LoginForm">
-<div class="container">
-  <h1 class="form-heading">login Form</h1>
-  <div class="login-form">
-    <div class="main-div">
-      <div class="panel">
-        <h2>Admin Login</h2>
-        <p>Please enter your email and password</p>
-      </div>
-      <form id="Login" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+<body>
+<div class = "jumbotron">
+          <form id="Login" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
 
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
 
-          <input type="text" class="form-control" id="userName" placeholder="Username" name="username" [(ngModel)]="model.username"
-                 #username="ngModel" required/>
-          <div *ngIf="f.submitted
-            && !username.valid">Username is required</div>
-        </div>
+              <input type="text" class="form-control" id="userName" placeholder="Username" name="username" [(ngModel)]="model.username"
+                     #username="ngModel" required/>
+              <div *ngIf="f.submitted
+                && !username.valid">Username is required</div>
+            </div>
 
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
 
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" [(ngModel)]="model.password"
-                 #password="ngModel" required />
-          <div *ngIf="f.submitted
-          && !password.valid">Password is required</div>
+              <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" [(ngModel)]="model.password"
+                     #password="ngModel" required />
+              <div *ngIf="f.submitted
+              && !password.valid">Password is required</div>
 
-        </div>
+            </div>
 
-        <div class="forgot">
-          <a href="reset.html">Forgot password?</a>
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+            <div class="forgot">
+              <a href="reset.html">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn">Login</button>
 
-      </form>
-    </div>
-  </div>
+          </form>
+
+
 </div>
 
 

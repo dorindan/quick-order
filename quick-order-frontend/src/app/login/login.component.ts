@@ -14,8 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private http: HttpClient,
-              private tokenExtractor: HttpXsrfTokenExtractor) { }
+              private http: HttpClient) { }
               
 
   ngOnInit() {
@@ -23,19 +22,17 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log("am intrat maaaaaaaaai");
       let url = 'http://localhost:8080/login';
       this.http.post<Observable<boolean>>(url, {
         username: this.model.username,
         password: this.model.password
       }).subscribe(isValid => {
         if (isValid) {
-          console.log("am intrat 123");
           sessionStorage.setItem(
             'token',
             btoa(this.model.username + ':' + this.model.password)
           );
-          this.router.navigate(['test']);
+          this.router.navigate(['loggedStart']);
         } else {
           alert("Authentication failed.");
         }
