@@ -2,9 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import {FormControl} from '@angular/forms';
 
 import {ActivatedRoute, Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import {HttpClient, HttpHeaders, HttpXsrfTokenExtractor, HttpClientModule } from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {HttpClient, HttpHeaders, HttpXsrfTokenExtractor} from '@angular/common/http';
 
+@Injectable()
+export class ConfigService {
+  constructor(private http: HttpClient) { }
+}
 
 @Component({
   selector: 'app-register',
@@ -14,7 +19,6 @@ import {HttpClient, HttpHeaders, HttpXsrfTokenExtractor} from '@angular/common/h
 
 export class RegisterComponent implements OnInit {
 
-  @Input() switchLanguage: Function;
 
   public userName = '';
   public password = '';
@@ -22,7 +26,8 @@ export class RegisterComponent implements OnInit {
   public re_password = '';
   public rightPass = true;
   public rightRe_pass = true;
-  public isActive = true;
+  public isActive = false;
+  public termsAndConditions = false;
 
   constructor(  private route: ActivatedRoute,
                 private router: Router,
@@ -63,30 +68,39 @@ export class RegisterComponent implements OnInit {
    // this.router.navigate(['home']);
   }
 
-
+  public changePasswordVisibility() {
+    this.isActive = !this.isActive;
+  }
   public register() {
-    if (this.password === this.re_password && this.password.length >= 6 && this.userName !== '' && this.isValidMailFormat(this.email) ) {
+    if (this.password === this.re_password && this.password.length >= 6 && this.userName !== '' && this.isValidMailFormat(this.email) && this.termsAndConditions) {
       alert('I try to log in');
       let url = '';
       url = 'http://localhost:8080/signUp';
-      this.http.post<Observable<boolean>>(url, {
-        username: this.userName,
-        password: this.password,
-        email: this.email
-      }).subscribe(isValid => {
-        alert('Am luat informatia');
-        if (isValid) {
-          alert('Done');
-          // sessionStorage.setItem(
-          //   'token',
-          //   btoa(this.model.username + ':' + this.model.password)
-          // );
-          // this.router.navigate(['test']);
-        } else {
-          alert('Register faild');
-        }
-        alert(isValid);
+      // this.http.post<Observable<boolean>>(url, {
+      //   username: this.userName,
+      //   password: this.password,
+      //   email: this.email
+      // }).subscribe(isValid => {
+      //   alert('I got the answer' + isValid);
+      //   if (isValid) {
+      //     alert('Done');
+      //   } else {
+      //     alert('Register faild');
+      //   }
+      // });
+
+      this.http.get(url).subscribe((data: RegisterComponent) => {
+        alert('am intrattttt!!!' + data);
       });
+
+      // .subscribe(data => {
+      //   alert('End of log in ' + data);
+      //   if (data) {
+      //         alert('Done');
+      //       } else {
+      //         alert('Register faild');
+      //       }
+      // });
       alert('End of log in');
     } else if (this.userName === '') {
       alert('Enter the user name first.');
@@ -96,6 +110,8 @@ export class RegisterComponent implements OnInit {
       alert('The password dose not have at least 6 characters.');
     } else if (this.password !== this.re_password) {
       alert('Those passwords didn\'t match. Try again.');
+    } else if(!this.termsAndConditions ){
+      alert('You need to agree to the Terms & Privacy in order to create a account.');
     }
   }
 

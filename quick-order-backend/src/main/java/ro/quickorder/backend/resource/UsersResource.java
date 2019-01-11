@@ -52,7 +52,7 @@ public class UsersResource {
     }
 
     @RequestMapping(path = "/signUp", method = RequestMethod.POST)
-    public boolean register(@RequestBody String username) {
+    public boolean register(@RequestBody String username, @RequestBody String password, @RequestBody String email) {
         try{
             return true;
         }

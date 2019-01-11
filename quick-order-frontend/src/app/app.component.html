@@ -1,7 +1,5 @@
-<app-header></app-header>
-<app-start-page></app-start-page>
-<app-login></app-login>
-<app-register></app-register>
-<app-register [switchLanguage]="myMethodFunc"></app-register>
+<app-header [switchLanguage]="myMethodFunc"></app-header>
+
+<router-outlet></router-outlet>
 
 <app-footer></app-footer>

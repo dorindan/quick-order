@@ -15,7 +15,37 @@
     "enterEmail": "Introduceți emailul",
     "enterPassword": "Introduceți parola",
     "enterRe_Password": "Reintroduceți parola",
-    "cancel": "Înapoi"
+    "cancel": "Înapoi",
+    "agreements1": "Sunt de acord cu ",
+    "termsAndConditions": "Termeni si Conditiile",
+    "agreements2": "si am citit si am luat la cunostinta",
+    "privacyPolicy": "Politica de confidentialitate"
+  },
+
+  "header": {
+    "home": "Acasă",
+    "reserve": "Rezervă o Masă",
+    "placeOrder": "Plasează o comandă",
+    "menu": "Meniu",
+    "aboutUs": "Despre Noi",
+    "contact": "Contact",
+    "language": "Limbă: "
+  },
+
+  "startPage": {
+    "quickOrder": "Quick Order",
+    "motto": "Mai rapid decât îți poți imagina.",
+    "singIn": "Logare",
+    "singUp": "Înregistrare"
+  },
+
+  "login": {
+    "login": "Log In",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "remember": "Remember Me",
+    "forgotPass": "Forgot Password?"
   }
 
 }

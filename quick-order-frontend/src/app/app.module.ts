@@ -6,7 +6,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
-import { AppRoutingModule } from './app-routing.module';
+import {AppRoutingModule, routing} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,9 +17,12 @@ import { StartLoggedInComponent } from './start-logged-in/start-logged-in.compon
 import { ReservationComponent } from './reservation/reservation.component';
 import { RegisterComponent } from './register/register.component';
 
+
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+
 
 @NgModule({
   declarations: [
@@ -44,7 +47,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    routing
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,7 +15,37 @@
     "enterEmail": "Enter Email",
     "enterPassword": "Enter Password",
     "enterRe_Password": "Repeat Password",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "agreements1": "I agree to the",
+    "termsAndConditions": "Terms & Conditions",
+    "agreements2": "and I have read and acknowledge the",
+    "privacyPolicy": "Privacy Policy"
+  },
+
+  "header": {
+    "home": "Home",
+    "reserve": "Reserve a Table",
+    "placeOrder": "Place an Order",
+    "menu": "Menu",
+    "aboutUs": "About Us",
+    "contact": "Contact Us",
+    "language": "Language: "
+  },
+
+  "startPage": {
+    "quickOrder": "Quick Order",
+    "motto": "Faster than you can imagine.",
+    "singIn": "Sing in",
+    "singUp": "Sing up"
+  },
+
+  "login": {
+    "login": "Log In",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "remember": "Remember Me",
+    "forgotPass": "Forgot Password?"
   }
 
 }
