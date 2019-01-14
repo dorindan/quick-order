@@ -13,7 +13,6 @@ import { ReservationComponent } from './reservation/reservation.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialModule} from "./material.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {WaiterPageComponent} from "./waiter-page/waiter-page.component";
 
 @NgModule({
   declarations: [
@@ -23,9 +22,7 @@ import {WaiterPageComponent} from "./waiter-page/waiter-page.component";
     FooterComponent,
     StartPageComponent,
     StartLoggedInComponent,
-    ReservationComponent,
-    WaiterPageComponent
-
+    ReservationComponent
   ],
   imports: [
     BrowserModule,
