@@ -48,7 +48,7 @@
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Pick a table</ng-template>
             <mat-form-field>
-              <input matInput placeholder="Table number" formControlName="secondCtrl" required>
+              <input type="number" matInput placeholder="No. of persons" formControlName="secondCtrl" required >
             </mat-form-field>
             <div>
               <button mat-button matStepperPrevious>Back</button>
