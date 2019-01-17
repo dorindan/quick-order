@@ -17,13 +17,14 @@ public class Bill {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
-    private Users user;
+    private User user;
+
 
     @OneToOne(mappedBy = "bill")
     @JsonIgnore
     private Command command;
 
-    public Bill(Long id, boolean voucher, int salePercentage, BigDecimal total, Users user, Command command) {
+    public Bill(Long id, boolean voucher, int salePercentage, BigDecimal total, User user, Command command) {
         this.id = id;
         this.voucher = voucher;
         this.salePercentage = salePercentage;
@@ -67,11 +68,11 @@ public class Bill {
         this.total = total;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
