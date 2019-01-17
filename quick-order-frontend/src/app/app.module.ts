@@ -21,7 +21,7 @@ import { ReservationComponent } from './reservation/reservation.component';
     FooterComponent,
     StartPageComponent,
     StartLoggedInComponent,
-    ReservationComponent
+    ReservationComponent,
   ],
   imports: [
     BrowserModule,
