@@ -1,5 +1,7 @@
 package ro.quickorder.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -14,9 +16,12 @@ public class Bill {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
+
     @OneToOne(mappedBy = "bill")
+    @JsonIgnore
     private Command command;
 
     public Bill(Long id, boolean voucher, int salePercentage, BigDecimal total, User user, Command command) {

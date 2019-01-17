@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BillService} from '../bill.service';
 
 @Component({
   selector: 'app-start-page',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartPageComponent implements OnInit {
 
-  constructor() { }
+  private bill: any;
+
+  constructor(private billService: BillService) {
+  }
 
   ngOnInit() {
+  }
+
+  public getBill(): void {
+    this.billService.getBill(0).subscribe((res) => {
+      this.bill = res;
+    });
   }
 
 }
