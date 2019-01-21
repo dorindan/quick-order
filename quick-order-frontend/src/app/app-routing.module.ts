@@ -12,7 +12,7 @@ const routes: Routes = [];
 })
 export class AppRoutingModule { }
 const appRoutes: Routes = [
-  { path: '', component: StartPageComponent },
+  { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'startPage', component: StartPageComponent },
   { path: 'loggedStart', component: StartLoggedInComponent},

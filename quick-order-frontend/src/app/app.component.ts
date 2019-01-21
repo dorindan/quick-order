@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'QuickOrder';
+
+  static isAuthenticated()
+  {
+    if (sessionStorage.getItem('token') == '')
+      return false;
+    return true;
+  }
 }

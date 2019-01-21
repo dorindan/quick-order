@@ -31,13 +31,12 @@ export class LoginComponent implements OnInit {
             'token',
             btoa(this.model.username + ':' + this.model.password)
           );
+          console.log(atob(sessionStorage.getItem('token')));
           this.router.navigate(['loggedStart']);
         } else {
           alert("Authentication failed.");
         }
       });
   }
-
-
 
 }

@@ -12,6 +12,7 @@ import { FooterComponent } from './footer/footer.component';
 import { StartPageComponent } from './start-page/start-page.component';
 import { StartLoggedInComponent } from './start-logged-in/start-logged-in.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import {CookieService} from "angular2-cookie/core";
 
 @NgModule({
   declarations: [
