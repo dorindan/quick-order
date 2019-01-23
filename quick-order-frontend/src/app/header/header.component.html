@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
-
-
   <body>
   <nav class="navbar navbar-expand-lg  navbar-expand-md navbar-expand-xs navbar-light bg-light">
     <img src="assets/img/QuickOrder.png">
@@ -33,18 +31,17 @@
         <li class="nav-item">
           <a class="nav-link " href="#" translate="">header.contact</a>
         </li>
-        <div class="right">
-
-          <fieldset>
-            <a  translate="">header.language</a>
-              <select  [(ngModel)]="language" (change)="changeLanguage()" id = "myList">
-                <option value = "1">English</option>
-                <option value = "2">Română</option>
-              </select>
-
-          </fieldset>
-        </div>
       </ul>
+    </div>
+
+    <div class="float-xl-right">
+      <fieldset  >
+        <a translate="">header.language</a>
+        <select   [(ngModel)]="language" (change)="changeLanguage()" >
+          <option value = "1">English</option>
+          <option value = "2">Română</option>
+        </select>
+      </fieldset>
     </div>
   </nav>
 

@@ -63,44 +63,18 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public cancle() {
-    alert('Back to LogIn page.');
-   // this.router.navigate(['home']);
-  }
-
   public changePasswordVisibility() {
     this.isActive = !this.isActive;
   }
   public register() {
-    if (this.password === this.re_password && this.password.length >= 6 && this.userName !== '' && this.isValidMailFormat(this.email) && this.termsAndConditions) {
+    if (this.password === this.re_password && this.password.length >= 6 &&
+      this.userName !== '' && this.isValidMailFormat(this.email) && this.termsAndConditions) {
       alert('I try to log in');
       let url = '';
       url = 'http://localhost:8080/signUp';
-      // this.http.post<Observable<boolean>>(url, {
-      //   username: this.userName,
-      //   password: this.password,
-      //   email: this.email
-      // }).subscribe(isValid => {
-      //   alert('I got the answer' + isValid);
-      //   if (isValid) {
-      //     alert('Done');
-      //   } else {
-      //     alert('Register faild');
-      //   }
-      // });
-
       this.http.get(url).subscribe((data: RegisterComponent) => {
         alert('am intrattttt!!!' + data);
       });
-
-      // .subscribe(data => {
-      //   alert('End of log in ' + data);
-      //   if (data) {
-      //         alert('Done');
-      //       } else {
-      //         alert('Register faild');
-      //       }
-      // });
       alert('End of log in');
     } else if (this.userName === '') {
       alert('Enter the user name first.');
@@ -114,38 +88,4 @@ export class RegisterComponent implements OnInit {
       alert('You need to agree to the Terms & Privacy in order to create a account.');
     }
   }
-
-
-//   this.http.post<Observable<boolean>>(url, {
-//   userName: this.model.username,
-//   password: this.model.password
-// }).subscribe(isValid => {
-//   if (isValid) {
-//     sessionStorage.setItem(
-//       'token',
-//       btoa(this.model.username + ':' + this.model.password)
-//     );
-//     this.router.navigate(['']);
-//   } else {
-//     alert("Authentication failed.")
-//   }
-// });
-
-  // reg() {
-  //   let url = 'http://localhost:8080/login';
-  //   this.http.post<Observable<boolean>>(url, {
-  //     username: this.model.username,
-  //     password: this.model.password
-  //   }).subscribe(isValid => {
-  //     if (isValid) {
-  //       sessionStorage.setItem(
-  //         'token',
-  //         btoa(this.model.username + ':' + this.model.password)
-  //       );
-  //       this.router.navigate(['home']);
-  //     } else {
-  //       alert("Authentication failed.");
-  //     }
-  //   });
-  // }
 }

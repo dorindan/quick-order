@@ -14,5 +14,4 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
     public Users findFirstByUsername(String username);
 
-//    public boolean register(Users user);
 }

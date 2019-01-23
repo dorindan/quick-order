@@ -7,15 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'QuickOrder';
-  constructor(private translate: TranslateService) {
-    translate.setDefaultLang('en');
-  }
-  get myMethodFunc() {
-    return this.switchLanguage.bind(this);
+
+  constructor() {
   }
 
-  public switchLanguage(language: string) {
-    this.translate.use(language);
-  }
 }

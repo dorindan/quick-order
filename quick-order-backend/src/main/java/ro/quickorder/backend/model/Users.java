@@ -38,7 +38,6 @@ public class Users {
         this.username = name;
         this.password = password;
         this.email = email;
-        //this.id = ???
     }
 
     public Long getId() {
