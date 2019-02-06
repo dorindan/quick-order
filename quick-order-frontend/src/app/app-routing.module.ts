@@ -20,7 +20,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'startPage', component: StartPageComponent },
   { path: 'loggedStart', component: StartLoggedInComponent},
-  { path: 'register', component: RegisterComponent},
+  { path: 'signUp', component: RegisterComponent},
   { path: '**', redirectTo: '' }
 ];
 

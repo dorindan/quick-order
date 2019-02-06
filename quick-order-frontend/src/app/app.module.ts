@@ -19,6 +19,7 @@ import { RegisterComponent } from './register/register.component';
 
 
 
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -51,7 +52,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     routing
 
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

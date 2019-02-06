@@ -4,22 +4,25 @@
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
 
   "register": {
-    "singUp": "Sign Up",
-    "message": "Please fill in this boxes to create an account.",
-    "name": "Name",
+    "singUp": "Sign up",
+    "username": "Username",
     "email": "Email",
-    "password": "Password *(Use 6 ore more characters)",
+    "password": "Password",
     "re_Password": "Repeat Password",
-    "re_Password_Wrong": "Repeat Password *(does not match the password)",
-    "enterUser": "Enter User Name",
+    "enterUser": "Enter Username",
     "enterEmail": "Enter Email",
-    "enterPassword": "Enter Password",
-    "enterRe_Password": "Repeat Password",
+    "enterPassword": "  Enter Password",
+    "enterRe_Password": "  Confirm Password",
     "cancel": "Cancel",
     "agreements1": "I agree to the",
     "termsAndConditions": "Terms & Conditions",
     "agreements2": "and I have read and acknowledge the",
-    "privacyPolicy": "Privacy Policy"
+    "privacyPolicy": "Privacy Policy",
+    "usernameConditions": "  *(Username must have at least 5 characters)",
+    "emailConditions": "*(Not a valid email address)",
+    "passwordConditions": " *(Use 6 ore more characters)",
+    "Re_PasswordConditions": "*(Password and confirm password need to be identical) ",
+    "invalidFields": "Some of the fields above are not valid!"
   },
 
   "header": {
@@ -35,8 +38,8 @@
   "startPage": {
     "quickOrder": "Quick Order",
     "motto": "Faster than you can imagine.",
-    "singIn": "Sing in",
-    "singUp": "Sing up"
+    "singIn": "Sign in",
+    "singUp": "Sign up"
   },
 
   "login": {

@@ -8,28 +8,35 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
 
+  private language = '';
 
+  constructor(private translate: TranslateService, ) {
 
-  public language = '1' ;
+    if (localStorage.getItem('defaultLanguage') == null) {
+      localStorage.setItem('defaultLanguage', 'en');
+    }
+    this.language = localStorage.getItem('defaultLanguage');
 
-  constructor(private translate: TranslateService) {
-    translate.setDefaultLang('en');
+    translate.setDefaultLang(this.language);
   }
 
   public switchLanguage(language: string) {
-    this.translate.use(language);
+    this.language = language;
+    this.translate.use(this.language);
   }
+
   ngOnInit() {
   }
 
   public changeLanguage(): void {
-    if (this.language === '1') {
+    if (this.language === 'en') {
       this.switchLanguage('en');
-    } else if (this.language === '2') {
+    } else if (this.language === 'ro') {
       this.switchLanguage('ro');
     } else {
-      alert( this.language);
+      alert(this.language);
     }
+    localStorage.setItem('defaultLanguage', this.language );
   }
 
 }

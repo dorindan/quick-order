@@ -9,7 +9,6 @@
             <div class="panel-heading">
               <div class="center">
                 <h1 translate="" >register.singUp</h1>
-                <h3 translate="" >register.message</h3>
               </div>
               <hr>
             </div >
@@ -18,18 +17,29 @@
                     <div class="col-lg-12">
                       <form  style="display: block;">
                         <div class="form-group">
-                          <label  for="username" ><b translate="">register.name</b></label>
-                          <br>
-                          <input type="text" class="form-control" placeholder="{{ 'register.enterUser' | translate }}" [(ngModel)]="userName" name="username" required>
+                          <div>
+                            <label  for="username" ><b translate="">register.username</b></label>
+                            &nbsp;
+                            <label class = "red small" *ngIf="!this.rightUsername" translate="">register.usernameConditions</label>
+                          </div>
+                          <input type="text" (focusout)="validateUsername()"  class="form-control" placeholder="{{ 'register.enterUser' | translate }}" [(ngModel)]="userName" name="username" required>
                         </div>
                         <div class="form-group">
-                          <label for="email"><b translate="">register.email</b></label>
-                          <input type="text" class="form-control" placeholder="{{ 'register.enterEmail' | translate }}"  [(ngModel)]="email" name="email" required>
+                          <div>
+                            <label for="email"><b translate="">register.email</b></label>
+                            &nbsp;
+                            <label class = "red small" *ngIf="!this.rightEmail" translate="">register.emailConditions</label>
+                          </div>
+                          <input type="text" (focusout)="validateEmail()" class="form-control" placeholder="{{ 'register.enterEmail' | translate }}"  [(ngModel)]="email" name="email" required>
                         </div>
-                        <div >
-                          <label for="psw" *ngIf="this.rightPass"><b translate="">register.password</b></label>
-                          <label for="psw" class="red" *ngIf="!this.rightPass"><b translate="">register.password</b></label>
-                          <br>
+                        <div>
+                          <div>
+                            <label for="psw" ><b translate="">register.password</b></label>
+                            &nbsp;
+                            <label class = "red small" *ngIf="!this.rightPass" translate="">register.passwordConditions</label>
+                            &nbsp;
+                            <label class = "red small" *ngIf="!this.rightRe_pass && this.rightPass" translate="">register.Re_PasswordConditions</label>
+                          </div>
                           <input  name="psw"  (focusout)="validatePassword()" [type]="isActive ? 'text' : 'password'" placeholder="{{ 'register.enterPassword' | translate }}" [(ngModel)]="password" required>
                           &nbsp;&nbsp;&nbsp;
                           <input  name="psw-repeat" (focusout)="validateRe_Password()" [type]="isActive ? 'text' : 'password'"  placeholder="{{ 'register.enterRe_Password' | translate }}" [(ngModel)]="re_password"   required>
@@ -56,7 +66,6 @@
                     </div>
                   </div>
                 </div>
-
 
           </div>
         </div>

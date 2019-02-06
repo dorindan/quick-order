@@ -5,22 +5,25 @@
 
   "register": {
     "singUp" : "Înregistrare",
-    "message": "Completează casuțele pentru a crea un cont.",
-    "name": "Nume",
+    "username": "Numele de utilizator",
     "email": "Email",
-    "password": "Parolă *(Foloseste cel putin 6 caractere)",
+    "password": "Parolă",
     "re_Password": "Reintroduceți parola",
-    "re_Password_Wrong": "Reintroduceți parola *(parolele nu sunt egale)",
     "enterUser": "Introduceți numele de utilizator",
     "enterEmail": "Introduceți emailul",
-    "enterPassword": "Introduceți parola",
-    "enterRe_Password": "Reintroduceți parola",
+    "enterPassword": "  Introduceți parola",
+    "enterRe_Password": "  Confirmare parola",
     "cancel": "Înapoi",
     "agreements1": "Sunt de acord cu ",
     "termsAndConditions": "Termeni si Conditiile",
     "agreements2": "si am citit si am luat la cunostinta",
-    "privacyPolicy": "Politica de confidentialitate"
-  },
+    "privacyPolicy": "Politica de confidentialitate",
+    "usernameConditions": "  *(Numele de utilizare trebuie sa aiba minim 5 caractere)",
+    "emailConditions": "*(Adresa nu este valida)",
+    "passwordConditions": " *(Foloseste cel putin 6 caractere)",
+    "Re_PasswordConditions": " *(Parola si confirmare parola trebuie sa fie identice)",
+    "invalidFields": "Anumite filduri nu sunt completate corespunzator"
+},
 
   "header": {
     "home": "Acasă",
