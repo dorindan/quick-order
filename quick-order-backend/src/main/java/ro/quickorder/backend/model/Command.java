@@ -28,7 +28,7 @@ public class Command {
     private List<Reservation> reservations;
 
     @ManyToMany(mappedBy = "commands")
-    private List<Users> users;
+    private List<User> users;
 
     public Command(Long id, String commandName, String specification, boolean isPacked, String status, TableFood table) {
         this.id = id;
@@ -114,11 +114,11 @@ public class Command {
         this.reservations = reservations;
     }
 
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Users> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

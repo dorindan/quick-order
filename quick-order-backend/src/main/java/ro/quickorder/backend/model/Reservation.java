@@ -15,7 +15,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "command_id")
@@ -31,7 +31,7 @@ public class Reservation {
             inverseJoinColumns = { @JoinColumn(name = "table_id") })
     private List<TableFood> tables;
 
-    public Reservation(Long id, Timestamp checkInTime, Timestamp checkOutTime, Users user, Command command, boolean confirmed, String status) {
+    public Reservation(Long id, Timestamp checkInTime, Timestamp checkOutTime, User user, Command command, boolean confirmed, String status) {
         this.id = id;
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
@@ -68,11 +68,11 @@ public class Reservation {
         this.checkOutTime = checkOutTime;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

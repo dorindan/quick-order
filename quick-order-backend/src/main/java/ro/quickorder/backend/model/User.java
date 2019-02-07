@@ -1,18 +1,19 @@
 package ro.quickorder.backend.model;
 
 import javax.persistence.*;
-import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Users {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
     private String password;
+    @Transient
     private String email;
 
 
@@ -28,13 +29,14 @@ public class Users {
             inverseJoinColumns = {@JoinColumn(name = "command_id")})
     private List<Command> commands;
 
-    public Users(Long id) {
+    public User(Long id) {
         this.id = id;
     }
 
-    public Users() {
+    public User() {
     }
-    public Users(String name, String password, String email) {
+
+    public User(String name, String password, String email) {
         this.username = name;
         this.password = password;
         this.email = email;
@@ -88,16 +90,24 @@ public class Users {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
-        return Objects.equals(id, users.id) &&
-                Objects.equals(feedbacks, users.feedbacks) &&
-                Objects.equals(reservations, users.reservations) &&
-                Objects.equals(commands, users.commands);
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(feedbacks, user.feedbacks) &&
+                Objects.equals(reservations, user.reservations) &&
+                Objects.equals(commands, user.commands);
     }
 
     @Override
@@ -107,8 +117,10 @@ public class Users {
 
     @Override
     public String toString() {
-        return "Users{" +
+        return "User{" +
                 "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", feedbacks=" + feedbacks +
                 ", reservations=" + reservations +
                 ", commands=" + commands +

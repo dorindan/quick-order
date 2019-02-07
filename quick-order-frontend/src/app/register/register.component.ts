@@ -31,8 +31,6 @@ export class RegisterComponent implements OnInit {
   public rightUsername = true;
   public rightEmail = true;
   public rightTermsAndConditions = true;
-
-  public invalidFields = false;
   public isActive = false;
 
   constructor(  private route: ActivatedRoute,
@@ -61,37 +59,25 @@ export class RegisterComponent implements OnInit {
       this.rightUsername = false;
     } else {
       this.rightUsername = true;
-      if (this.invalidFields) {
-        this.chackForinvalidFields();
-      }
     }
   }
   public validatePassword(): void {
     if (this.password.length >= 6) {
       this.rightPass = true;
-      if (this.invalidFields) {
-        this.chackForinvalidFields();
-      }
     } else {
       this.rightPass = false;
     }
   }
   public validateRe_Password(): void {
-    if (this.re_password.match('') || this.password.match(this.re_password) === null ) {
+    if (this.re_password.length < 6 || this.password.match(this.re_password) === null ) {
       this.rightRe_pass = false;
     } else {
       this.rightRe_pass = true;
-      if (this.invalidFields) {
-        this.chackForinvalidFields();
-      }
     }
   }
   public validateEmail(): void {
     if (this.isValidMailFormat(this.email)) {
       this.rightEmail = true;
-      if (this.invalidFields) {
-        this.chackForinvalidFields();
-      }
     } else {
       this.rightEmail = false;
     }
@@ -99,14 +85,6 @@ export class RegisterComponent implements OnInit {
 
   public validateTermsAndConditions(): void {
     this.rightTermsAndConditions = this.termsAndConditions;
-  }
-
-  private chackForinvalidFields() {
-    if (this.rightUsername && this.rightEmail && this.rightPass && this.rightRe_pass) {
-      this.invalidFields = false;
-    } else {
-      this.invalidFields = true;
-    }
   }
 
   private checkIfAllIsValid(): boolean {
@@ -132,8 +110,6 @@ export class RegisterComponent implements OnInit {
         alert('am intrattttt!!!' + data);
       });
     }
-
-      this.chackForinvalidFields();
       return;
   }
 }

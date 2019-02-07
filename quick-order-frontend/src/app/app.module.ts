@@ -1,23 +1,21 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AppRoutingModule, routing} from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HeaderComponent } from './header/header.component';
+import {AppComponent} from './app.component';
+import {LoginComponent} from './login/login.component';
+import {HeaderComponent} from './header/header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { FooterComponent } from './footer/footer.component';
-import { StartPageComponent } from './start-page/start-page.component';
-import { StartLoggedInComponent } from './start-logged-in/start-logged-in.component';
-import { ReservationComponent } from './reservation/reservation.component';
-import { RegisterComponent } from './register/register.component';
-
-
+import {FooterComponent} from './footer/footer.component';
+import {StartPageComponent} from './start-page/start-page.component';
+import {StartLoggedInComponent} from './start-logged-in/start-logged-in.component';
+import {ReservationComponent} from './reservation/reservation.component';
+import {RegisterComponent} from './register/register.component';
+import {NgxPopper} from 'angular-popper';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,6 +37,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    routing,
+    AppRoutingModule,
     NgbModule,
     FormsModule,
     HttpClientModule,
@@ -49,9 +51,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    routing
+    routing,
+    NgxPopper
 
   ],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
