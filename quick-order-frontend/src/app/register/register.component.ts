@@ -24,11 +24,13 @@ export class RegisterComponent implements OnInit {
   public password = '';
   public email = '';
   public re_password = '';
-  public rightPass = false;
-  public rightRe_pass = false;
-  public rightUsername = false;
-  public rightEmail = false;
   public termsAndConditions = false;
+
+  public rightPass = true;
+  public rightRe_pass = true;
+  public rightUsername = true;
+  public rightEmail = true;
+  public rightTermsAndConditions = true;
 
   public invalidFields = false;
   public isActive = false;
@@ -38,6 +40,10 @@ export class RegisterComponent implements OnInit {
                 private http: HttpClient
                ) { }
   ngOnInit() {
+  }
+
+  public changePasswordVisibility() {
+    this.isActive = !this.isActive;
   }
 
   private isValidMailFormat(email: string): boolean {
@@ -50,6 +56,16 @@ export class RegisterComponent implements OnInit {
     return true;
   }
 
+  public validateUsername(): void {
+    if (this.userName.length < 5) {
+      this.rightUsername = false;
+    } else {
+      this.rightUsername = true;
+      if (this.invalidFields) {
+        this.chackForinvalidFields();
+      }
+    }
+  }
   public validatePassword(): void {
     if (this.password.length >= 6) {
       this.rightPass = true;
@@ -60,22 +76,11 @@ export class RegisterComponent implements OnInit {
       this.rightPass = false;
     }
   }
-
   public validateRe_Password(): void {
-    if (this.password.match(this.re_password) === null) {
+    if (this.re_password.match('') || this.password.match(this.re_password) === null ) {
       this.rightRe_pass = false;
     } else {
       this.rightRe_pass = true;
-      if (this.invalidFields) {
-        this.chackForinvalidFields();
-      }
-    }
-  }
-  public validateUsername(): void {
-    if (this.userName.length < 5) {
-      this.rightUsername = false;
-    } else {
-      this.rightUsername = true;
       if (this.invalidFields) {
         this.chackForinvalidFields();
       }
@@ -92,40 +97,43 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public changePasswordVisibility() {
-    this.isActive = !this.isActive;
+  public validateTermsAndConditions(): void {
+    this.rightTermsAndConditions = this.termsAndConditions;
   }
 
   private chackForinvalidFields() {
-    if (this.rightUsername && this.rightEmail && this.rightPass && this.rightRe_pass){
+    if (this.rightUsername && this.rightEmail && this.rightPass && this.rightRe_pass) {
       this.invalidFields = false;
     } else {
       this.invalidFields = true;
     }
   }
 
-  public register() {
+  private checkIfAllIsValid(): boolean {
     if (this.password === this.re_password && this.password.length >= 6 &&
-      this.userName !== '' && this.rightEmail && this.termsAndConditions) {
+      this.userName.length < 5 && this.isValidMailFormat(this.email) && this.termsAndConditions) {
+      return true;
+    } else {
+      this.validateUsername();
+      this.validatePassword();
+      this.validateRe_Password();
+      this.validateEmail();
+      this.validateTermsAndConditions();
+      return false;
+    }
+  }
+
+  public register() {
+    if (this.checkIfAllIsValid()) {
       alert('I try to log in');
       let url = '';
       url = 'http://localhost:8080/signUp';
       this.http.get(url).subscribe((data: RegisterComponent) => {
         alert('am intrattttt!!!' + data);
       });
-      alert('End of log in');
-      return;
-    } else if (this.userName === '') {
-      alert('Enter the user name first.');
-    } else if (!this.isValidMailFormat(this.email)) {
-      alert('Enter a valid email address.');
-    } else if (this.password.length < 6) {
-      alert('The password dose not have at least 6 characters.');
-    } else if (this.password !== this.re_password) {
-      alert('Those passwords didn\'t match. Try again.');
-    } else if (!this.termsAndConditions ){
-      alert('You need to agree to the Terms & Privacy in order to create a account.');
     }
-    this.chackForinvalidFields();
+
+      this.chackForinvalidFields();
+      return;
   }
 }

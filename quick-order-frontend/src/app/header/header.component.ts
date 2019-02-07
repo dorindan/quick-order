@@ -28,14 +28,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  public changeLanguage(): void {
-    if (this.language === 'en') {
-      this.switchLanguage('en');
-    } else if (this.language === 'ro') {
-      this.switchLanguage('ro');
-    } else {
-      alert(this.language);
-    }
+  public changeLanguage(language: string): void {
+    this.language = language;
+    this.switchLanguage(this.language);
     localStorage.setItem('defaultLanguage', this.language );
   }
 

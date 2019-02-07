@@ -11,8 +11,8 @@
     "re_Password": "Repeat Password",
     "enterUser": "Enter Username",
     "enterEmail": "Enter Email",
-    "enterPassword": "  Enter Password",
-    "enterRe_Password": "  Confirm Password",
+    "enterPassword": "Enter Password",
+    "enterRe_Password": "Confirm Password",
     "cancel": "Cancel",
     "agreements1": "I agree to the",
     "termsAndConditions": "Terms & Conditions",
@@ -22,7 +22,8 @@
     "emailConditions": "*(Not a valid email address)",
     "passwordConditions": " *(Use 6 ore more characters)",
     "Re_PasswordConditions": "*(Password and confirm password need to be identical) ",
-    "invalidFields": "Some of the fields above are not valid!"
+    "invalidFields": "Some of the fields above are not valid!",
+    "termsAndConditionsAlert": "*  "
   },
 
   "header": {

@@ -5,12 +5,21 @@ nav .navbar-nav li a{
 }
 
 nav .navbar-nav li a:hover{
-  color: #285028;
+  color: #ffffff;
   opacity:0.9;
 }
 .navbar-nav{
   color: darkgreen !important;
   opacity:0.6;
+}
+
+.btn-secondary{
+  background-color: darkgreen !important;
+  opacity:0.4 !important;
+}
+
+.btn{
+  color: #ffffff !important;
 }
 
 

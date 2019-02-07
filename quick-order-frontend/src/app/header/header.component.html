@@ -1,6 +1,3 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!doctype html>
 <html lang="en">
   <head>
@@ -38,27 +35,14 @@
         </li>
       </ul>
     </div>
-    <div class="float-xl-right">
-        <a class="navbar-nav " translate="">header.language
-        <select >
-          <option dat class="ro"  value = "en">
-            <img src="assets/language/gb.png">
-            English
-          </option>
-          <option  value = "ro">Română</option>
-        </select>
-          <img src="assets/language/gb.png">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" [(ngModel)]="language" (change)="changeLanguage()">
-              <a class="dropdown-item" href="#"><img src="assets/language/gb.png">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
-        </a>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+        <a translate="">header.language</a>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+        <a class="dropdown-item" (click)="changeLanguage('en')" ><img src="assets/language/gb.png"> English</a>
+        <a class="dropdown-item" (click)="changeLanguage('ro')" ><img src="assets/language/ro.png"> Română</a>
+      </div>
     </div>
   </nav>
 

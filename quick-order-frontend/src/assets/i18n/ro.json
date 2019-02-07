@@ -11,8 +11,8 @@
     "re_Password": "Reintroduceți parola",
     "enterUser": "Introduceți numele de utilizator",
     "enterEmail": "Introduceți emailul",
-    "enterPassword": "  Introduceți parola",
-    "enterRe_Password": "  Confirmare parola",
+    "enterPassword": "Introduceți parola",
+    "enterRe_Password": "Confirmare parola",
     "cancel": "Înapoi",
     "agreements1": "Sunt de acord cu ",
     "termsAndConditions": "Termeni si Conditiile",
@@ -22,7 +22,8 @@
     "emailConditions": "*(Adresa nu este valida)",
     "passwordConditions": " *(Foloseste cel putin 6 caractere)",
     "Re_PasswordConditions": " *(Parola si confirmare parola trebuie sa fie identice)",
-    "invalidFields": "Anumite filduri nu sunt completate corespunzator"
+    "invalidFields": "Anumite filduri nu sunt completate corespunzator",
+    "termsAndConditionsAlert": "*  "
 },
 
   "header": {
@@ -32,7 +33,7 @@
     "menu": "Meniu",
     "aboutUs": "Despre Noi",
     "contact": "Contact",
-    "language": "Limbă: "
+    "language": "Limba: "
   },
 
   "startPage": {
