@@ -3,16 +3,16 @@ import { NgModule } from '@angular/core';
 
 import {AppRoutingModule, routing} from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { HeaderComponent } from './header/header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { FooterComponent } from './footer/footer.component';
-import { StartPageComponent } from './start-page/start-page.component';
-import { StartLoggedInComponent } from './start-logged-in/start-logged-in.component';
-import { ReservationComponent } from './reservation/reservation.component';
-import {CookieService} from "angular2-cookie/core";
+import {LoginComponent} from "./pages/login/login.component";
+import {FooterComponent} from "./pages/footer/footer.component";
+import {StartPageComponent} from "./pages/start-page/start-page.component";
+import {StartLoggedInComponent} from "./pages/start-logged-in/start-logged-in.component";
+import {ReservationComponent} from "./pages/reservation/reservation.component";
+import {HeaderComponent} from "./pages/header/header.component";
+import {LoginService} from "./services/login.service";
 
 @NgModule({
   declarations: [

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {BillService} from '../bill.service';
+import {BillService} from "../../bill.service";
+
 
 @Component({
   selector: 'app-start-page',

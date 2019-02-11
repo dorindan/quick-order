@@ -10,11 +10,15 @@
 }
 
 .jumbotron {
-  background-image:url('../../assets/img/plate.jpg');
+  background-image:url('../../../assets/img/plate.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: normal;
   opacity:0.6;
   color: #285028 ;
 
+}
+
+a{
+  color: white;
 }

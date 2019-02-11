@@ -7,10 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  static isAuthenticated()
-  {
-    if (sessionStorage.getItem('token') == '')
-      return false;
-    return true;
-  }
 }
