@@ -25,9 +25,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-      let url = 'http://localhost:8080/api/login';
       var user = new User(this.model.username,this.model.password)
-      this.http.post<Observable<boolean>>(url, user).subscribe(isValid => {
+      this.loginService.login(user).subscribe(isValid => {
         if (isValid) {
           sessionStorage.setItem(
             'token',
@@ -35,7 +34,6 @@ export class LoginComponent implements OnInit {
           );
           console.log(atob(sessionStorage.getItem('token')));
           this.router.navigate(['loggedStart']);
-          this.loginService.isAuth = true;
         } else {
           alert("Authentication failed.");
         }

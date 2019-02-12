@@ -1,19 +1,20 @@
 import {Injectable} from "@angular/core";
+import {User} from "../models/User";
+import {Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService{
-  set isAuth(value: boolean) {
-    this._isAuth = value;
-  }
 
-  private _isAuth: boolean = false;
-
-  public constructor(){}
+  constructor(
+    private http: HttpClient,
+  ){}
 
 
-  get isAuth(): boolean {
-    return this._isAuth;
+
+  login(authData: User): Observable<any> {
+    return this.http.post('http://localhost:8080/api/login', authData);
   }
 }

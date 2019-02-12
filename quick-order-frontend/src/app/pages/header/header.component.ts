@@ -15,7 +15,9 @@ export class HeaderComponent implements OnInit {
 
   isAuthenticated()
   {
-    return this.loginService.isAuth;
+    if (sessionStorage.getItem('token') == '')
+      return false;
+    return true;
   }
 
 }
