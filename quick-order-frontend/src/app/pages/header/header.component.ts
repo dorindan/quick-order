@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   private language = '';
 
-  constructor(private translate: TranslateService,
+  constructor(private translateService: TranslateService,
               private loginService: LoginService) {
 
     if (localStorage.getItem('defaultLanguage') == null) {
@@ -19,12 +19,12 @@ export class HeaderComponent implements OnInit {
     }
     this.language = localStorage.getItem('defaultLanguage');
 
-    translate.setDefaultLang(this.language);
+    translateService.setDefaultLang(this.language);
   }
 
   public switchLanguage(language: string) {
     this.language = language;
-    this.translate.use(this.language);
+    this.translateService.use(this.language);
   }
 
   ngOnInit() {
