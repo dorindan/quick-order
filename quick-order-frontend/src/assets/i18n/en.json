@@ -1,0 +1,55 @@
+{
+  "Title": "Translation example",
+  "Intro": "Hello I am Arthur, I am 42 years old.",
+  "Example": "Hello I am {{name}}, I am {{age}} years old.",
+
+  "register": {
+    "singUp": "Sign up",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "re_Password": "Repeat Password",
+    "enterUser": "Enter Username",
+    "enterEmail": "Enter Email",
+    "enterPassword": "Enter Password",
+    "enterRe_Password": "Confirm Password",
+    "cancel": "Cancel",
+    "agreements1": "I agree to the",
+    "termsAndConditions": "Terms & Conditions",
+    "agreements2": "and I have read and acknowledge the",
+    "privacyPolicy": "Privacy Policy",
+    "usernameConditions": "  *(Username must have at least 5 characters)",
+    "emailConditions": "*(Not a valid email address)",
+    "passwordConditions": " *(Use 6 ore more characters)",
+    "Re_PasswordConditions": "*(Password and confirm password need to be identical) ",
+    "invalidFields": "Some of the fields above are not valid!",
+    "termsAndConditionsAlert": "*  "
+  },
+
+  "header": {
+    "home": "Home",
+    "reserve": "Reserve a Table",
+    "placeOrder": "Place an Order",
+    "menu": "Menu",
+    "aboutUs": "About Us",
+    "contact": "Contact Us",
+    "language": "Language: "
+  },
+
+  "startPage": {
+    "quickOrder": "Quick Order",
+    "motto": "Faster than you can imagine.",
+    "singIn": "Sign in",
+    "singUp": "Sign up"
+  },
+
+  "login": {
+    "login": "Log In",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "remember": "Remember Me",
+    "forgotPass": "Forgot Password?"
+  }
+
+}

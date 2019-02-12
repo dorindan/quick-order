@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders, HttpXsrfTokenExtractor} from "@angular/common/http";
-import {User} from "../../models/User";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {User} from '../../models/User';
 import {LoginService} from "../../services/login.service";
 
 
@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private http: HttpClient,
               private loginService: LoginService) { }
-              
 
   ngOnInit() {
     sessionStorage.setItem('token', '');
@@ -35,7 +34,7 @@ export class LoginComponent implements OnInit {
           console.log(atob(sessionStorage.getItem('token')));
           this.router.navigate(['loggedStart']);
         } else {
-          alert("Authentication failed.");
+          alert('Authentication failed.');
         }
       });
   }

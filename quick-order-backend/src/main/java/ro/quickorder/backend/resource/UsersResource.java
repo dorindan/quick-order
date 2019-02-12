@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.repository.UserRepository;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.Base64;
 import java.util.List;
 
 
@@ -45,5 +43,15 @@ public class UsersResource {
     @RequestMapping("/user")
     public Principal user(Principal user) {
         return user;
+    }
+
+    @RequestMapping(path = "/signUp", method = RequestMethod.POST)
+    public boolean register(@RequestBody String username, @RequestBody String password, @RequestBody String email) {
+        try{
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 }

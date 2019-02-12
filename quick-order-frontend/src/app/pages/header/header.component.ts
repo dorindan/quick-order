@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {LoginService} from "../../services/login.service";
 
 @Component({
@@ -8,9 +9,31 @@ import {LoginService} from "../../services/login.service";
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  private language = '';
+
+  constructor(private translate: TranslateService,
+              private loginService: LoginService) {
+
+    if (localStorage.getItem('defaultLanguage') == null) {
+      localStorage.setItem('defaultLanguage', 'en');
+    }
+    this.language = localStorage.getItem('defaultLanguage');
+
+    translate.setDefaultLang(this.language);
+  }
+
+  public switchLanguage(language: string) {
+    this.language = language;
+    this.translate.use(this.language);
+  }
 
   ngOnInit() {
+  }
+
+  public changeLanguage(language: string): void {
+    this.language = language;
+    this.switchLanguage(this.language);
+    localStorage.setItem('defaultLanguage', this.language );
   }
 
   isAuthenticated()

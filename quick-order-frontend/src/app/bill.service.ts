@@ -10,7 +10,7 @@ export class BillService {
   private options = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
-    })}
+    })};
 
   constructor(private http: HttpClient) {
 
