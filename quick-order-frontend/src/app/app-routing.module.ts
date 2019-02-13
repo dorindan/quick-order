@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './pages/login/login.component';
 import {StartPageComponent} from './pages/start-page/start-page.component';
 import {StartLoggedInComponent} from './pages/start-logged-in/start-logged-in.component';
-import {RegisterComponent} from './register/register.component';
+import {RegisterComponent} from './pages/register/register.component';
 
 const routes: Routes = [];
 

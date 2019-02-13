@@ -14,7 +14,7 @@ import {StartPageComponent} from "./pages/start-page/start-page.component";
 import {StartLoggedInComponent} from "./pages/start-logged-in/start-logged-in.component";
 import {ReservationComponent} from "./pages/reservation/reservation.component";
 import {HeaderComponent} from "./pages/header/header.component";
-import {RegisterComponent} from './register/register.component';
+import {RegisterComponent} from './pages/register/register.component';
 import {NgxPopper} from 'angular-popper';
 
 
