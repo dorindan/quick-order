@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -16,6 +16,8 @@ import {ReservationComponent} from "./pages/reservation/reservation.component";
 import {HeaderComponent} from "./pages/header/header.component";
 import {RegisterComponent} from './pages/register/register.component';
 import {NgxPopper} from 'angular-popper';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MaterialModule} from "./material.module";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -36,6 +38,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     routing,
