@@ -30,7 +30,7 @@ public class BasicAuthConfiguration
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .anyRequest()
-                .fullyAuthenticated()
+                .permitAll()
                 .and()
                 .httpBasic();
     }
