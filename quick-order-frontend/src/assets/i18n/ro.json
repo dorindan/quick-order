@@ -1,0 +1,56 @@
+{
+  "Title": "Translation example",
+  "Intro": "Hello I am Arthur, I am 42 years old.",
+  "Example": "Hello I am {{name}}, I am {{age}} years old.",
+
+  "register": {
+    "singUp" : "Înregistrare",
+    "username": "Numele de utilizator",
+    "email": "Email",
+    "password": "Parolă",
+    "re_Password": "Reintroduceți parola",
+    "enterUser": "Introduceți numele de utilizator",
+    "enterEmail": "Introduceți emailul",
+    "enterPassword": "Introduceți parola",
+    "enterRe_Password": "Confirmare parola",
+    "cancel": "Înapoi",
+    "agreements1": "Sunt de acord cu ",
+    "termsAndConditions": "Termeni si Conditiile",
+    "agreements2": "si am citit si am luat la cunostinta",
+    "privacyPolicy": "Politica de confidentialitate",
+    "usernameConditions": "  *(Numele de utilizare trebuie sa aiba minim 5 caractere)",
+    "emailConditions": "*(Adresa nu este valida)",
+    "passwordConditions": " *(Foloseste cel putin 6 caractere)",
+    "Re_PasswordConditions": " *(Parola si confirmare parola trebuie sa fie identice)",
+    "invalidFields": "Anumite filduri nu sunt completate corespunzator",
+    "termsAndConditionsAlert": "*  "
+},
+
+  "header": {
+    "home": "Acasă",
+    "reserve": "Rezervă o Masă",
+    "placeOrder": "Plasează o comandă",
+    "menu": "Meniu",
+    "aboutUs": "Despre Noi",
+    "contact": "Contact",
+    "logout": "Iesire din cont",
+    "language": "Limba: "
+  },
+
+  "startPage": {
+    "quickOrder": "Quick Order",
+    "motto": "Mai rapid decât îți poți imagina.",
+    "singIn": "Logare",
+    "singUp": "Înregistrare"
+  },
+
+  "login": {
+    "login": "Log In",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "remember": "Remember Me",
+    "forgotPass": "Forgot Password?"
+  }
+
+}
