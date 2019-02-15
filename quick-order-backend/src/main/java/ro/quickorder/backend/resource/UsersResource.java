@@ -71,6 +71,7 @@ public class UsersResource {
     throws ClientErrorException{
         UserAttribute newUserAttribute = userAttributeConvertor.convertUserAttrDtoToUserAttribute(userAttribute);
         userAttributeServices.setPreference(userId, newUserAttribute);
+        System.out.println("Am reusit");
     }
 
 }
