@@ -12,8 +12,5 @@ public class QuickOrderBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(QuickOrderBackendApplication.class, args);
-        Timestamp ts = new Timestamp(500);
-        System.out.println("alo");
-        System.out.println("                                                         ");
     }
 }

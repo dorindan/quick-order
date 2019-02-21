@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms'
+import {ReservationService} from "../../services/reservation.service";
+import {MatDatepickerInputEvent, MatOptionSelectionChange, MatSelectChange} from "@angular/material";
+import {Reservation} from "../../models/Reservation";
 
 export interface Hour {
   name: string;
@@ -15,10 +18,17 @@ export class ReservationComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isEditable = true;
+  date = '';
+  month: number;
+  time="00:00";
+  dateTime:string;
+  nrOfPersons: number;
+  reservation:Reservation;
 
 
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder,
+              private reservationService:ReservationService) {}
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -28,8 +38,34 @@ export class ReservationComponent implements OnInit {
       secondCtrl: ['', Validators.required]
     });
   }
+
+  events: string[] = [];
+  addDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.events.push(`${type}: ${event.value}`);
+    this.month = event.value.getMonth() + 1;
+    this.date = event.value.getDate() + "/" + this.month + "/" + event.value.getFullYear();
+  }
+
+  onChange(event) {
+    this.time="";
+    this.time=event.value.name;
+  }
+
+  addNrOfPersons(event){
+    this.nrOfPersons= event.valueOf();
+  }
+
+  concatenate(){
+
+    this.dateTime="";
+    this.dateTime = this.date.concat(" ").concat(this.time);
+    this.reservation = new Reservation(this.dateTime,this.nrOfPersons);
+    console.log(this.reservation);
+  }
+
   hourControl = new FormControl('', [Validators.required]);
-  selectFormControl = new FormControl('', Validators.required);
+  selectFormControl = new FormControl('', Validators.required)
+
   hours: Hour[] = [
     {name: '10:00'},
     {name: '10:30'},
@@ -57,6 +93,7 @@ export class ReservationComponent implements OnInit {
     {name: '21:30'},
     {name: '22:00'}
   ];
+
 
 
 }

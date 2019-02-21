@@ -1,5 +1,8 @@
 package ro.quickorder.backend.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import ro.quickorder.backend.service.CustomDateDeserializer;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -9,8 +12,11 @@ import java.util.Objects;
 public class Reservation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
     private Timestamp checkInTime;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
     private Timestamp checkOutTime;
 
     @ManyToOne
@@ -21,6 +27,7 @@ public class Reservation {
     @JoinColumn(name = "command_id")
     private Command command;
 
+    private Integer numberOfPersons;
     private boolean confirmed;
     private String status;
 
@@ -31,14 +38,19 @@ public class Reservation {
             inverseJoinColumns = { @JoinColumn(name = "table_id") })
     private List<TableFood> tables;
 
-    public Reservation(Long id, Timestamp checkInTime, Timestamp checkOutTime, User user, Command command, boolean confirmed, String status) {
-        this.id = id;
+    public Reservation(Timestamp checkInTime, Timestamp checkOutTime, User user, Command command, int numberOfPersons, boolean confirmed, String status, List<TableFood> tables) {
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
         this.user = user;
         this.command = command;
+        this.numberOfPersons = numberOfPersons;
         this.confirmed = confirmed;
         this.status = status;
+        this.tables = tables;
+    }
+
+    public Reservation(Timestamp checkInTime) {
+        this.checkInTime = checkInTime;
     }
 
     public Reservation() {
@@ -102,6 +114,14 @@ public class Reservation {
 
     public List<TableFood> getTables() {
         return tables;
+    }
+
+    public int getNumberOfPersons() {
+        return numberOfPersons;
+    }
+
+    public void setNumberOfPersons(int numberOfPersons) {
+        this.numberOfPersons = numberOfPersons;
     }
 
     public void setTables(List<TableFood> tables) {

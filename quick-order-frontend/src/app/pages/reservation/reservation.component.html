@@ -25,14 +25,14 @@
             <ng-template matStepLabel>Pick a date</ng-template>
 
             <mat-form-field>
-              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="firstCtrl">
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="firstCtrl" (dateInput)="addDate('input', $event)">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
-              <mat-select placeholder="Choose an Hour" [formControl]="hourControl" required>
+              <mat-select placeholder="Choose an Hour" [formControl]="hourControl" (selectionChange)="onChange($event)" required   >
                 <mat-option>--</mat-option>
-                <mat-option *ngFor="let hour of hours" [value]="hours">
+                <mat-option *ngFor="let hour of hours" [value]="hour">
                   {{hour.name}}
                 </mat-option>
               </mat-select>
@@ -40,15 +40,15 @@
               <mat-hint>{{hourControl.value?.sound}}</mat-hint>
             </mat-form-field>
             <div>
-              <button mat-button matStepperNext>Next</button>
+              <button mat-button matStepperNext >Next</button>
             </div>
           </form>
         </mat-step>
         <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
           <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Pick a table</ng-template>
+            <ng-template matStepLabel>Pick the nr. of persons.</ng-template>
             <mat-form-field>
-              <input matInput placeholder="Table number" formControlName="secondCtrl" required>
+              <input matInput type="number" min="0"  pattern="^[0-9]{1,2}[:.,-]?$" placeholder="Nr. persons" formControlName="secondCtrl" (change)="addNrOfPersons($event.target.value)" required  >
             </mat-form-field>
             <div>
               <button mat-button matStepperPrevious>Back</button>
@@ -57,17 +57,16 @@
           </form>
         </mat-step>
         <mat-step>
-          <ng-template matStepLabel>Done</ng-template>
-          You are now done.
+          <ng-template matStepLabel>Finish</ng-template>
+          Reservation sent.
           <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-button (click)="concatenate()" >Send Reservation</button>
           </div>
         </mat-step>
       </mat-horizontal-stepper>
 
     </div>
-
     <div class="d-lg-none">
       <mat-vertical-stepper linear #stepper>
         <mat-step [stepControl]="firstFormGroup">
@@ -95,9 +94,9 @@
         </mat-step>
         <mat-step [stepControl]="secondFormGroup">
           <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Fill out your address</ng-template>
+            <ng-template matStepLabel>Pick the nr. of persons.</ng-template>
             <mat-form-field>
-              <input matInput placeholder="Address" formControlName="secondCtrl" required>
+              <input matInput type="number" min="0" pattern="^[0-9]{1,2}[:.,-]?$" placeholder="Nr. persons" formControlName="secondCtrl" required  >
             </mat-form-field>
             <div>
               <button mat-button matStepperPrevious>Back</button>
@@ -106,8 +105,8 @@
           </form>
         </mat-step>
         <mat-step>
-          <ng-template matStepLabel>Done</ng-template>
-          You are now done.
+          <ng-template matStepLabel>Finish</ng-template>
+          Reservation sent.
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button (click)="stepper.reset()">Reset</button>
@@ -126,11 +125,3 @@
     <br class="xxl">
   </div>
 </div>
-
-
-
-
-
-
-
-
