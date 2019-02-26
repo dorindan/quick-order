@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../models/User';
-import {LoginService} from "../../services/login.service";
+import {LoginService} from '../../services/login.service';
 
 
 @Component({
@@ -24,17 +24,16 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-      var user = new User(this.model.username,this.model.password)
-      this.loginService.login(user).subscribe(isValid => {
-        if (isValid) {
+      const user = new User(this.model.username, this.model.password)
+      this.loginService.login(user).subscribe(rez => {
+          alert(rez.id);
           sessionStorage.setItem(
             'token',
-            btoa(this.model.username + ':' + this.model.password)
+            rez.id
           );
           this.router.navigate(['loggedStart']);
-        } else {
-          alert('Authentication failed.');
-        }
+      }, error1 => {
+        alert('Authentication failed.');
       });
   }
 

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {Attribute} from '../../models/Attribute';
@@ -43,21 +42,23 @@ export class HeaderComponent implements OnInit {
     this.switchLanguage(this.language);
     localStorage.setItem('defaultLanguage', this.language );
     // FIXME if(logged) and use userID to update language
-    if (true) {//
-      this.updateLanguageOnUser(1, this.language);
+    if (this.isAuthenticated()) {//
+      this.updateLanguageOnUser(sessionStorage.getItem('token'), this.language);
+    } else {
+      alert( 'You are not logged!' );
     }
   }
 
-  updateLanguageOnUser(userId: number, language: string) {
-    const url = 'http://localhost:8080/users/' + userId + '/attributes';
+  updateLanguageOnUser(userId: string, language: string) {
+    const url = 'http://localhost:8080/api/users/' + userId + '/attributes';
     const attribute = new Attribute(language);
     this.http.post(url, attribute).subscribe();
   }
 
-  isAuthenticated()
-  {
-    if (sessionStorage.getItem('token') == '')
+  isAuthenticated() {
+    if (sessionStorage.getItem('token') === '') {
       return false;
+    }
     return true;
   }
 

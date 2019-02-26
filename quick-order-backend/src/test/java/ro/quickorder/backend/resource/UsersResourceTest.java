@@ -13,6 +13,7 @@ import ro.quickorder.backend.exception.NotFoundEx;
 import ro.quickorder.backend.model.Language;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
+import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
 import ro.quickorder.backend.model.User;
@@ -87,4 +88,34 @@ public class UsersResourceTest {
         //bad language enum, how to test?
     }
 
+
+    @Test
+    public void testLogin(){
+        UserDto userDto = new UserDto();
+        userDto.username = "Alex";
+        userDto.password = "parola1";
+        UserDto userDto1 = usersResource.login(userDto);
+        long actual = userDto1.id;
+        assertEquals(1, actual);
+
+        // User wrong
+        try{
+            userDto.username = "Alexx";
+            userDto.password = "parola1";
+            UserDto userDto2 = usersResource.login(userDto);
+            assertEquals(false,true);
+        }catch (NotFoundEx ex){
+            assertEquals("User or password are incorrect!", ex.getMessage());
+        }
+
+        // Password wrong
+        try{
+            userDto.username = "Alex";
+            userDto.password = "parola1213";
+            UserDto userDto2 = usersResource.login(userDto);
+            assertEquals(false,true);
+        }catch (NotFoundEx ex){
+            assertEquals("User or password are incorrect!", ex.getMessage());
+        }
+    }
 }

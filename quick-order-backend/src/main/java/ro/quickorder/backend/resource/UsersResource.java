@@ -3,11 +3,14 @@ package ro.quickorder.backend.resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.convertors.UserAttributeConvertor;
+import ro.quickorder.backend.convertors.UserConvertor;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
+import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserRepository;
 import ro.quickorder.backend.services.UserAttributeServices;
+import ro.quickorder.backend.services.UserServices;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -21,10 +24,14 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class UsersResource {
     private final UserAttributeConvertor userAttributeConvertor = new UserAttributeConvertor();
+    private final UserConvertor userConvertor = new UserConvertor();
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserAttributeServices userAttributeServices;
+    @Autowired
+    private UserServices userServices;
+
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public String findById(@RequestParam(value = "id", defaultValue = "0") Long id) {
@@ -42,15 +49,9 @@ public class UsersResource {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public boolean login(@RequestBody User user) {
-        //User userFromDb = userRepository.findFirstByUsername(user.getUsername());
-        //return userFromDb.getPassword().equals(user.getPassword());
-        for (User u : getUsers()) {
-            if (user.getPassword().equals(u.getPassword()) && user.getUsername().equals(u.getUsername())) {
-                return true;
-            }
-        }
-        return false;
+    public UserDto login(@RequestBody UserDto userDto) throws ClientErrorException{
+        User user = userConvertor.convertUserDtoToUser(userDto);
+        return userServices.login(user);
     }
 
     @RequestMapping("/user")
