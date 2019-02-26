@@ -6,22 +6,21 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AppRoutingModule, routing} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {LoginComponent} from './login/login.component';
-import {HeaderComponent} from './header/header.component';
+import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {FooterComponent} from './footer/footer.component';
-import {StartPageComponent} from './start-page/start-page.component';
-import {StartLoggedInComponent} from './start-logged-in/start-logged-in.component';
-import {ReservationComponent} from './reservation/reservation.component';
-import {RegisterComponent} from './register/register.component';
+import {LoginComponent} from "./pages/login/login.component";
+import {FooterComponent} from "./pages/footer/footer.component";
+import {StartPageComponent} from "./pages/start-page/start-page.component";
+import {StartLoggedInComponent} from "./pages/start-logged-in/start-logged-in.component";
+import {ReservationComponent} from "./pages/reservation/reservation.component";
+import {HeaderComponent} from "./pages/header/header.component";
+import {RegisterComponent} from './pages/register/register.component';
 import {NgxPopper} from 'angular-popper';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
-
 
 @NgModule({
   declarations: [

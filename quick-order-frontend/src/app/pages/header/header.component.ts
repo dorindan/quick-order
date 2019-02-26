@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {User} from '../models/User';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {Attribute} from '../models/Attribute';
+import {Attribute} from '../../models/Attribute';
+import {LoginService} from '../../services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -16,22 +16,23 @@ export class HeaderComponent implements OnInit {
   private language = '';
   model: any = {};
 
-  constructor(private translate: TranslateService,
+  constructor(private translateService: TranslateService,
               private route: ActivatedRoute,
               private router: Router,
-              private http: HttpClient ) {
+              private http: HttpClient,
+              private loginService: LoginService) {
 
     if (localStorage.getItem('defaultLanguage') == null) {
       localStorage.setItem('defaultLanguage', 'en');
     }
     this.language = localStorage.getItem('defaultLanguage');
 
-    translate.setDefaultLang(this.language);
+    translateService.setDefaultLang(this.language);
   }
 
   public switchLanguage(language: string) {
     this.language = language;
-    this.translate.use(this.language);
+    this.translateService.use(this.language);
   }
 
   ngOnInit() {
@@ -51,6 +52,13 @@ export class HeaderComponent implements OnInit {
     const url = 'http://localhost:8080/users/' + userId + '/attributes';
     const attribute = new Attribute(language);
     this.http.post(url, attribute).subscribe();
+  }
+
+  isAuthenticated()
+  {
+    if (sessionStorage.getItem('token') == '')
+      return false;
+    return true;
   }
 
 }
