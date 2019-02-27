@@ -44,8 +44,6 @@ export class HeaderComponent implements OnInit {
     // FIXME if(logged) and use userID to update language
     if (this.isAuthenticated()) {//
       this.updateLanguageOnUser(sessionStorage.getItem('token'), this.language);
-    } else {
-      alert( 'You are not logged!' );
     }
   }
 
