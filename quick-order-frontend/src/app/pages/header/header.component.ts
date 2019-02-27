@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit {
       localStorage.setItem('defaultLanguage', 'en');
     }
     this.language = localStorage.getItem('defaultLanguage');
-
     translateService.setDefaultLang(this.language);
   }
 
