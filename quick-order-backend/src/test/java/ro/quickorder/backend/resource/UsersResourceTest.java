@@ -1,15 +1,13 @@
 package ro.quickorder.backend.resource;
 
-import org.h2.tools.Server;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
-import ro.quickorder.backend.exception.ForbiddenEx;
-import ro.quickorder.backend.exception.NotFoundEx;
+import ro.quickorder.backend.exception.ForbiddenException;
+import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Language;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
@@ -18,7 +16,6 @@ import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
 import ro.quickorder.backend.model.User;
 import javax.inject.Inject;
-import javax.ws.rs.ClientErrorException;
 
 import java.sql.SQLException;
 
@@ -61,19 +58,19 @@ public class UsersResourceTest {
     @Test
     public void testSetPreference() {
         UserAttributeDto attribute = new UserAttributeDto();
-        attribute.language = Language.ro;
+        attribute.language = Language.RO;
         long userId = usersResource.getUsers().get(0).getId();
 
         //Everything is good
         usersResource.setPreference(userId, attribute);
         User user = userRepository.findById(userId).orElse(null);
-        assertEquals( Language.ro, user.getAttribute().getLanguage());
+        assertEquals( Language.RO, user.getAttribute().getLanguage());
 
         //Id 0
         try{
             usersResource.setPreference(0, attribute);
             assertEquals(false,true);
-        }catch (ForbiddenEx ex){
+        }catch (ForbiddenException ex){
             assertEquals("Invalid user id", ex.getMessage());
         }
 
@@ -81,7 +78,7 @@ public class UsersResourceTest {
         try{
             usersResource.setPreference(10, attribute);
             assertEquals(false,true);
-        }catch (NotFoundEx ex){
+        }catch (NotFoundException ex){
             assertEquals("User not found", ex.getMessage());
         }
 
@@ -104,7 +101,7 @@ public class UsersResourceTest {
             userDto.password = "parola1";
             UserDto userDto2 = usersResource.login(userDto);
             assertEquals(false,true);
-        }catch (NotFoundEx ex){
+        }catch (NotFoundException ex){
             assertEquals("User or password are incorrect!", ex.getMessage());
         }
 
@@ -114,7 +111,7 @@ public class UsersResourceTest {
             userDto.password = "parola1213";
             UserDto userDto2 = usersResource.login(userDto);
             assertEquals(false,true);
-        }catch (NotFoundEx ex){
+        }catch (NotFoundException ex){
             assertEquals("User or password are incorrect!", ex.getMessage());
         }
     }

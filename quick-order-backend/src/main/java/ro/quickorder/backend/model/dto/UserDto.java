@@ -5,7 +5,7 @@ public class UserDto {
     public String username;
     public String password;
     public String email;
-    public UserAttributeDto idAttribute;
+    public UserAttributeDto userAttributeDto;
 
     public UserDto(Long id) {
         this.id = id;
@@ -14,11 +14,11 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(Long id, String name, String email, UserAttributeDto idAttribute) {
+    public UserDto(Long id, String name, String email, UserAttributeDto userAttributeDto) {
         this.id = id;
         this.username = name;
         this.email = email;
-        this.idAttribute = idAttribute;
+        this.userAttributeDto = userAttributeDto;
     }
 
     public UserDto(String name,String password){

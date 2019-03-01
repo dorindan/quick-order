@@ -1,10 +1,10 @@
 package ro.quickorder.backend.convertors;
 
+import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.User;
-import ro.quickorder.backend.model.UserAttribute;
-import ro.quickorder.backend.model.dto.UserAttributeDto;
 import ro.quickorder.backend.model.dto.UserDto;
 
+@Component
 public class UserConvertor {
 
     public User convertUserDtoToUser(UserDto userDto){

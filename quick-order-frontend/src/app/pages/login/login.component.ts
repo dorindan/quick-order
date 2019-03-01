@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
             'token',
             rez.id
           );
+        localStorage.setItem('defaultLanguage', rez.userAttributeDto.language);
           this.router.navigate(['loggedStart']);
       }, error1 => {
         alert('Authentication failed.');

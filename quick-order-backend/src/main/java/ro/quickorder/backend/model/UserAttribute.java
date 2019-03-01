@@ -20,7 +20,7 @@ public class UserAttribute {
     }
 
     public UserAttribute(){
-        this.language = Language.en;
+        this.language = Language.EN;
     }
 
     public Long getId() {

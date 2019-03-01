@@ -3,9 +3,10 @@ package ro.quickorder.backend.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-public class NotAcceptableEx extends RuntimeException {
-    public NotAcceptableEx(String message) {
+@ResponseStatus(value = HttpStatus.CONFLICT)
+public class ConflictException extends RuntimeException {
+
+    public ConflictException(String message) {
         super(message);
     }
 }
