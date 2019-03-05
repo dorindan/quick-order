@@ -9,6 +9,7 @@ import ro.quickorder.backend.repository.CommandRepository;
 
 
 @RestController
+@RequestMapping(value = "/api")
 public class CommandResource {
     @Autowired
     CommandRepository commandRepository;
