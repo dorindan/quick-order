@@ -30,7 +30,7 @@ public class ReservationResource {
         return reservationRepository.findById(id).toString();
     }
 
-    @RequestMapping(path="/reservation",method = RequestMethod.PUT)
+    @RequestMapping(path="/reservation",method = RequestMethod.POST)
     public void addReservation(@RequestBody ReservationDto reservation) throws ParseException {
         reservationService.addReservation(reservation);
     }

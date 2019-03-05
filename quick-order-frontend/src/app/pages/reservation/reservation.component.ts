@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms'
 import {ReservationService} from "../../services/reservation.service";
 import {MatDatepickerInputEvent, MatOptionSelectionChange, MatSelectChange} from "@angular/material";
 import {Reservation} from "../../models/Reservation";
+import {MatSnackBar} from "@angular/material/snack-bar";
+
 
 export interface Hour {
   name: string;
@@ -28,7 +30,7 @@ export class ReservationComponent implements OnInit {
 
 
   constructor(private _formBuilder: FormBuilder,
-              private reservationService:ReservationService) {}
+              private reservationService:ReservationService,private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -61,7 +63,17 @@ export class ReservationComponent implements OnInit {
     this.dateTime = this.date.concat(" ").concat(this.time);
     this.reservation = new Reservation(this.dateTime,this.nrOfPersons);
     console.log(this.reservation);
+    this.reservationService.reserve(this.reservation)
+      .subscribe(data => {this.showSnackbar("Reservation sent successfully.")},Error => {this.showSnackbar("Reservation failed. Please try again.")});
   }
+
+  showSnackbar(message :string){
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: ['snackbar']
+    });
+  }
+
 
   hourControl = new FormControl('', [Validators.required]);
   selectFormControl = new FormControl('', Validators.required)
