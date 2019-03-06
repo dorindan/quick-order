@@ -3,11 +3,12 @@ package ro.quickorder.backend.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.convertors.UserAttributeConvertor;
-import ro.quickorder.backend.exception.ForbiddenException;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
+import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
 
@@ -25,12 +26,21 @@ public class UserAttributeService {
     @Inject
     private UserAttributeRepository userAttributeRepository;
 
-    public void setPreference(long userId, UserAttributeDto userAttributeDto) {
-        UserAttribute userAttribute = userAttributeConvertor.convertUserAttrDtoToUserAttribute(userAttributeDto);
+    public void setPreference(UserDto userDto, UserAttributeDto userAttributeDto) {
 
-        User user = userRepository.findById(userId).orElse(null);
-        if(userId < 1){
-            throw new ForbiddenException("Invalid user id");
+        if(userAttributeDto == null){
+            System.out.println("BadRequest!");
+            throw new BadRequestException("No attribute!");
+        }
+
+        UserAttribute userAttribute = userAttributeConvertor.convertUserAttrDtoToUserAttribute(userAttributeDto);
+        User user = null;
+
+        // identify user using userName
+        for(User u : userRepository.findAll()){;
+            if(u.getUsername().equals(userDto.username)){
+                user = u;
+            }
         }
         if(user == null){
             throw new NotFoundException("User not found");

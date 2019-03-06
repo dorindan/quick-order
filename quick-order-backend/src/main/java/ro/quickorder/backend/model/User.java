@@ -9,15 +9,14 @@ import java.util.Objects;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
-    @Transient
     private String email;
 
     @OneToOne(mappedBy = "user")
-    private UserAttribute attribute= new UserAttribute();
+    private UserAttribute attribute;
 
     @OneToMany(mappedBy = "user")
     private List<Feedback> feedbacks;

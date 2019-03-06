@@ -38,23 +38,19 @@ public class UsersResource {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public UserDto login(@RequestBody UserDto userDto) {
+    public UserDto login(@NotNull @RequestBody UserDto userDto) {
         return userService.login(userDto);
     }
 
     @RequestMapping(path = "/signUp", method = RequestMethod.POST)
-    public boolean register(@RequestBody String username, @RequestBody String password, @RequestBody String email) {
-        try {
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public UserDto signUp(@NotNull @RequestBody UserDto userDto) {
+        return userService.signUp(userDto);
     }
 
-    @PostMapping(path = "/{userId}/attributes")
-    public void setPreference(@PathVariable("userId") @Positive long userId, @NotNull @RequestBody UserAttributeDto userAttributeDto)
+    @PostMapping(path = "/attributes")
+    public void setPreference(@NotNull @RequestBody UserDto userDto)
     {
-        userAttributeService.setPreference(userId, userAttributeDto);
+        userAttributeService.setPreference(userDto, userDto.userAttributeDto);
     }
 
 }

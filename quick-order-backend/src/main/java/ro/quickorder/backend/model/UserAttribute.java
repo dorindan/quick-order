@@ -13,6 +13,7 @@ public class UserAttribute {
     @Enumerated(EnumType.STRING)
     private Language language;
     @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public UserAttribute(Language language) {

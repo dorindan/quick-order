@@ -11,6 +11,7 @@ public class UserConvertor {
         User user = new User();
         user.setUsername(userDto.username);
         user.setPassword(userDto.password);
+        user.setEmail(userDto.email);
         return user;
     }
 }
