@@ -51,7 +51,6 @@ public class UserService {
             }
 
         User user = userConvertor.convertUserDtoToUser(userDto);
-            System.out.println("------>>>" + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
         User newUser = userRepository.save(user);
         UserAttribute userAttribute = new UserAttribute();
         userAttributeRepository.save(userAttribute);
