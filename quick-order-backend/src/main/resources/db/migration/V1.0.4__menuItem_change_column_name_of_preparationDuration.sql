@@ -1,2 +1,0 @@
-ALTER TABLE menu_item
-RENAME COLUMN preparation_duration TO preparation_duration_in_minutes;

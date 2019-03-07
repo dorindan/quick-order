@@ -1,1 +1,0 @@
-ALTER TABLE command ADD constraint bill_unique unique(bill_id);
