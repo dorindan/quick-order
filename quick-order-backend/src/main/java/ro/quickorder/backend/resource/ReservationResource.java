@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/api")
+@RequestMapping(value = "")
 public class ReservationResource {
     @Autowired
     ReservationRepository reservationRepository;
