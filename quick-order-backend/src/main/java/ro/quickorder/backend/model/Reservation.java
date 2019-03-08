@@ -12,6 +12,7 @@ public class Reservation {
     private Long id;
     private Timestamp checkInTime;
     private Timestamp checkOutTime;
+    private String reservationName;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -98,6 +99,14 @@ public class Reservation {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getReservationName() {
+        return reservationName;
+    }
+
+    public void setReservationName(String reservationName) {
+        this.reservationName = reservationName;
     }
 
     public List<TableFood> getTables() {
