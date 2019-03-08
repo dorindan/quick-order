@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class BasicAuthConfiguration
         extends WebSecurityConfigurerAdapter {
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -47,7 +46,7 @@ public class BasicAuthConfiguration
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/menuItemsByType").permitAll()
                 .anyRequest()
-                .fullyAuthenticated()
+                .permitAll()
                 .and()
                 .httpBasic();
     }

@@ -10,7 +10,6 @@ import ro.quickorder.backend.repository.ReservationRepository;
 
 
 @RestController
-@RequestMapping(value = "/api")
 public class ReservationResource {
     @Autowired
     ReservationRepository reservationRepository;

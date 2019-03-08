@@ -21,14 +21,13 @@
       <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password"
              [(ngModel)]="model.password"
              #password="ngModel" required/>
-      <div *ngIf="f.submitted
-              && !password.valid">Password is required
-      </div>
 
     </div>
 
     <div class="forgot">
       <a href="reset.html">Forgot password?</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="signUp">SignUp?</a>
     </div>
     <button type="submit" class="btn">Login</button>
 

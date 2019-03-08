@@ -9,7 +9,6 @@ import ro.quickorder.backend.repository.FeedbackRepository;
 
 
 @RestController
-@RequestMapping(value = "/api")
 public class FeedbackResource {
     @Autowired
     FeedbackRepository feedbackRepository;

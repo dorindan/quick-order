@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpXsrfTokenExtractor, HttpClientModule } from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {User} from '../../models/User';
+import {ApiService} from '../../services/api.service';
 
 @Injectable()
 export class ConfigService {
@@ -33,10 +35,7 @@ export class RegisterComponent implements OnInit {
   public rightTermsAndConditions = true;
   public isActive = false;
 
-  constructor(  private route: ActivatedRoute,
-                private router: Router,
-                private http: HttpClient
-               ) { }
+  constructor(private apiService: ApiService, private router: Router) { }
   ngOnInit() {
   }
 
@@ -89,7 +88,7 @@ export class RegisterComponent implements OnInit {
 
   private checkIfAllIsValid(): boolean {
     if (this.password === this.re_password && this.password.length >= 6 &&
-      this.userName.length < 5 && this.isValidMailFormat(this.email) && this.termsAndConditions) {
+      this.userName.length > 5 && this.isValidMailFormat(this.email) && this.termsAndConditions) {
       return true;
     } else {
       this.validateUsername();
@@ -102,14 +101,17 @@ export class RegisterComponent implements OnInit {
   }
 
   public register() {
-    if (this.checkIfAllIsValid()) {
+     if (this.checkIfAllIsValid()) {
       alert('I try to log in');
-      let url = '';
-      url = 'http://localhost:8080/signUp';
-      this.http.get(url).subscribe((data: RegisterComponent) => {
-        alert('am intrattttt!!!' + data);
+      const user = new User(this.userName, this.password);
+      user.email = this.email;
+      const url = 'api/users/signUp';
+      this.apiService.postRequest(url, user).subscribe(rez => {
+        this.router.navigate(['']);
+      }, error1 => {
+        alert('Register failed.');
       });
-    }
+     }
       return;
   }
 }

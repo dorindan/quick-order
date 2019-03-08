@@ -9,7 +9,6 @@ import ro.quickorder.backend.repository.TableFoodRepository;
 
 
 @RestController
-@RequestMapping(value = "/api")
 public class TableFoodResource {
     @Autowired
     TableFoodRepository tableFoodRepository;

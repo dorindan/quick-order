@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping(value = "/api")
 public class BillResource {
     @Autowired
     BillRepository billRepository;

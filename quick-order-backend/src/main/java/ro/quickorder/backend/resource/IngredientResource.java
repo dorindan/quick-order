@@ -9,7 +9,6 @@ import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.repository.IngredientRepository;
 
 @RestController
-@RequestMapping(value = "/api")
 public class IngredientResource {
     @Autowired
     IngredientRepository ingredientRepository;

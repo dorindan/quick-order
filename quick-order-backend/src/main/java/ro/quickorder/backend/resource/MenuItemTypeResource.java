@@ -13,7 +13,6 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/api")
 public class MenuItemTypeResource {
     @Autowired
     MenuItemTypeRepository menuItemTypeRepository;

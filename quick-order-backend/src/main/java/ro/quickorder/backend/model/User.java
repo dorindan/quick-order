@@ -9,13 +9,14 @@ import java.util.Objects;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
-    @Transient
     private String email;
 
+    @OneToOne(mappedBy = "user")
+    private UserAttribute attribute;
 
     @OneToMany(mappedBy = "user")
     private List<Feedback> feedbacks;
@@ -91,13 +92,20 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public UserAttribute getAttribute() {
+        return this.attribute;
+    }
+
+    public void setAttribute(UserAttribute attribute) {
+        this.attribute = attribute;
+    }
 
     @Override
     public boolean equals(Object o) {
