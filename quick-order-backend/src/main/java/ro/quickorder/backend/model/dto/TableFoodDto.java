@@ -1,13 +1,6 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.Command;
-import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
-
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import java.util.List;
 
 public class TableFoodDto {
 

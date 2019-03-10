@@ -2,10 +2,10 @@ package ro.quickorder.backend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
-import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
@@ -23,7 +23,6 @@ public class ReservationService {
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
-
     public List<ReservationDto> getAllUnconfirmed() {
         List<Reservation> reservations = reservationRepository.findAll();
         List<ReservationDto> result = new ArrayList<>();
@@ -36,42 +35,48 @@ public class ReservationService {
         return result;
     }
 
+    public void confirmReservation(ReservationDto reservationDto,  List<TableFoodDto> tableFoodDtos) {
 
-
-
-    public void confirmReservation(ReservationDto reservationDto,  List<TableFoodDto> tableFoodDtos){
-
-        if(reservationDto.reservationName == null)
+        if (reservationDto.reservationName == null)
             throw new NotFoundException("Reservation not found");
 
         // find reservation
         Reservation reservation = null;
         List<Reservation> reservations = reservationRepository.findAll();
         for (Reservation res : reservations) {
-            if(res.getReservationName().equals(reservationDto.reservationName)){
+            if (res.getReservationName().equals(reservationDto.reservationName)) {
                 reservation = res;
             }
         }
-        if(reservation == null)
+        if (reservation == null)
             throw new NotFoundException("Reservation not found");
 
         // find tables
+        if (tableFoodDtos.size() == 0)
+            throw new ForbiddenException("TableList can not be null");
         List<TableFood> tableFoodListToSet = new ArrayList<>();
         List<TableFood> tableFoodList = tableFoodRepository.findAll();
-        for (TableFoodDto tableFoodDto: tableFoodDtos) {
+        for (TableFoodDto tableFoodDto : tableFoodDtos) {
             TableFood tableFood = null;
-        for (TableFood table : tableFoodList) {
-            if(table.getTableNr() == tableFoodDto.tableNr){
-                tableFood = table;
+            for (TableFood table : tableFoodList) {
+                if (table.getTableNr() == tableFoodDto.tableNr) {
+                    tableFood = table;
+                }
             }
-        }
-            if(tableFood == null)
+            if (tableFood == null)
                 throw new NotFoundException("Reservation not found");
             tableFoodListToSet.add(tableFood);
         }
 
+
+        for (TableFood table : tableFoodListToSet) {
+            table.setFree(false);
+            tableFoodRepository.save(table);
+        }
+
         // put tables in reservation
         reservation.setTables(tableFoodListToSet);
+        reservation.setConfirmed(true);
 
         // save reservation in database
         reservationRepository.save(reservation);

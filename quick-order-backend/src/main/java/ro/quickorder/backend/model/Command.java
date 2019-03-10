@@ -6,7 +6,9 @@ import java.util.Objects;
 
 @Entity
 public class Command {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String commandName;
     private String specification;
@@ -30,8 +32,7 @@ public class Command {
     @ManyToMany(mappedBy = "commands")
     private List<User> users;
 
-    public Command(Long id, String commandName, String specification, boolean isPacked, String status, TableFood table) {
-        this.id = id;
+    public Command( String commandName, String specification, boolean isPacked, String status, TableFood table) {
         this.commandName = commandName;
         this.specification = specification;
         this.isPacked = isPacked;

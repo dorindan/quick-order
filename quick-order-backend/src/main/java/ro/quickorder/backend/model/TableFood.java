@@ -1,16 +1,14 @@
 package ro.quickorder.backend.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class TableFood {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int tableNr;
     private int seats;
@@ -24,8 +22,7 @@ public class TableFood {
     @ManyToMany(mappedBy = "tables")
     private List<Reservation> reservations;
 
-    public TableFood(Long id, int tableNr, int seats, boolean windowView, int floor, boolean free) {
-        this.id = id;
+    public TableFood(int tableNr, int seats, boolean windowView, int floor, boolean free) {
         this.tableNr = tableNr;
         this.seats = seats;
         this.windowView = windowView;

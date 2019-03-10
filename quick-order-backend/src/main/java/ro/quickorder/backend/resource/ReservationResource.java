@@ -10,6 +10,7 @@ import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.services.ReservationService;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -33,7 +34,7 @@ public class ReservationResource {
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.POST)
-    public void confirmReservation(ReservationDto reservationDto, List<TableFoodDto> tableFoodDtos){
+    public void confirmReservation(@NotNull ReservationDto reservationDto,@NotNull List<TableFoodDto> tableFoodDtos){
         reservationService.confirmReservation(reservationDto, tableFoodDtos);
     }
 

@@ -39,7 +39,7 @@ public class UsersResourceTest {
     private UserAttributeRepository userAttributeRepository;
 
     @Before
-    public void setUp() throws SQLException {
+    public void setUp() {
         User user1 = new User("Alex", "parola1", "alex@yahoo.com");
         User user2 = new User("Radu", "parola2", "aadu@yahoo.com");
         User user3 = new User("Ana", "parola3", "ana@yahoo.com");

@@ -4,11 +4,13 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 public class Reservation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Timestamp checkInTime;
     private Timestamp checkOutTime;
@@ -32,14 +34,14 @@ public class Reservation {
             inverseJoinColumns = { @JoinColumn(name = "table_id") })
     private List<TableFood> tables;
 
-    public Reservation(Long id, Timestamp checkInTime, Timestamp checkOutTime, User user, Command command, boolean confirmed, String status) {
-        this.id = id;
+    public Reservation(Timestamp checkInTime, Timestamp checkOutTime, User user, Command command, boolean confirmed, String status) {
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
         this.user = user;
         this.command = command;
         this.confirmed = confirmed;
         this.status = status;
+        this.reservationName = UUID.randomUUID().toString().substring(0,8);
     }
 
     public Reservation() {
