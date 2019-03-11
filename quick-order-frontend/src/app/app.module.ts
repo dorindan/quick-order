@@ -18,6 +18,7 @@ import {RegisterComponent} from './pages/register/register.component';
 import {NgxPopper} from 'angular-popper';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
+import { WaiterPageComponent } from './pages/waiter-page/waiter-page.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -33,7 +34,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     StartPageComponent,
     StartLoggedInComponent,
     ReservationComponent,
-    RegisterComponent
+    RegisterComponent,
+    WaiterPageComponent
   ],
   imports: [
     BrowserModule,

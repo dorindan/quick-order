@@ -1,0 +1,39 @@
+<body>
+<div class="container-fluid ">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let reservation of reservations" expanded="false">
+
+      <mat-expansion-panel-header>
+
+        <mat-panel-title>
+          {{reservation.userName}}
+        </mat-panel-title>
+
+        <div class="seats">
+          <mat-panel-description>
+            {{reservation.seats}} seats
+          </mat-panel-description>
+        </div>
+
+        <div class="checkInAndOutTime">
+          <mat-panel-description>
+            {{reservation.checkInTime}} - {{reservation.checkOutTime}}
+          </mat-panel-description>
+        </div>
+
+      </mat-expansion-panel-header>
+
+      <mat-selection-list #list>
+        <hr>
+        <p>TABLES</p>
+        <hr>
+        <mat-list-option *ngFor="let table of tables" (click)="selection(list)"   [value]="table.text">
+          {{table.text }}
+        </mat-list-option>
+      </mat-selection-list>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>
+</body>
