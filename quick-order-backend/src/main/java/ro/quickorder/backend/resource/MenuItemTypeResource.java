@@ -17,8 +17,8 @@ public class MenuItemTypeResource {
     @Autowired
     MenuItemTypeRepository menuItemTypeRepository;
 
-    @RequestMapping(path = "/menuItemsByType", method = RequestMethod.GET)
-    public List<MenuItemType> findById() {
+    @RequestMapping(path = "/menuItemType/all", method = RequestMethod.GET)
+    public List<MenuItemType> getAllMenuItemTypes() {
         return menuItemTypeRepository.findAll();
     }
 

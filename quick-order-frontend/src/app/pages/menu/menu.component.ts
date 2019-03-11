@@ -11,13 +11,11 @@ import {Observable} from "rxjs";
 export class MenuComponent implements OnInit {
 
   menu: Menu[];
-  title: string = "yay";
 
   constructor(private menuService:MenuService) { }
 
   ngOnInit() {
     this.menuService.getMenu().subscribe(response =>{
-      console.log(response);
       this.menu = response;
     })
 
