@@ -17,8 +17,8 @@ import ro.quickorder.backend.model.dto.UserAttributeDto;
 import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
-import ro.quickorder.backend.services.UserAttributeService;
-import ro.quickorder.backend.services.UserService;
+import ro.quickorder.backend.service.UserAttributeService;
+import ro.quickorder.backend.service.UserService;
 
 import javax.inject.Inject;
 

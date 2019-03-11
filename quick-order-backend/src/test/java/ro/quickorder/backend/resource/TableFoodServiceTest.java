@@ -1,19 +1,17 @@
 package ro.quickorder.backend.resource;
 
 
-import org.h2.table.Table;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.TableFoodRepository;
-import ro.quickorder.backend.services.TableFoodService;
+import ro.quickorder.backend.service.TableFoodService;
 
 import javax.inject.Inject;
 import java.util.List;

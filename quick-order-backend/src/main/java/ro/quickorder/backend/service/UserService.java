@@ -1,4 +1,4 @@
-package ro.quickorder.backend.services;
+package ro.quickorder.backend.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

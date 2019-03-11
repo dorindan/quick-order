@@ -18,10 +18,11 @@ import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.CommandRepository;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
-import ro.quickorder.backend.services.ReservationService;
-import ro.quickorder.backend.services.TableFoodService;
+import ro.quickorder.backend.service.ReservationService;
+import ro.quickorder.backend.service.TableFoodService;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -48,16 +49,16 @@ public class ReservationServiceTest {
     public void setUp() {
 
         Command command1 = new Command("Command Name1", "no specifications", false, "ready", null);
-        Reservation res1 = new Reservation(null, null, null, null, false, null);
+        Reservation res1 = new Reservation(null, null, null, null,1, false, null, new ArrayList<>() );
 
         TableFood table1 = new TableFood(1,5,false,1,true);
         TableFood table2 = new TableFood(2,4,true,1,false);
         TableFood table3 = new TableFood(3,4,false,1,true);
         Command command2 = new Command("Command Name2", "no specifications", false, "ready", null);
-        Reservation res2 = new Reservation(null, null, null, null, true, null);
+        Reservation res2 = new Reservation(null, null, null, null, 1, true, null, new ArrayList<>());
 
         Command command3 = new Command("Command Name3", "no specifications", true, "ready", null);
-        Reservation res3 = new Reservation(null, null, null, null, false, null);
+        Reservation res3 = new Reservation(null, null, null, null, 1, false, null, new ArrayList<>());
 
         //save reservation
         Reservation re1 = reservationRepository.save(res1);

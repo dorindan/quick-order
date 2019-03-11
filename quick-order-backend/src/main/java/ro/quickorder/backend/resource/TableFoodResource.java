@@ -6,13 +6,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ro.quickorder.backend.model.TableFood;
-import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.TableFoodRepository;
 import java.util.List;
-import ro.quickorder.backend.services.TableFoodService;
-
-import java.util.List;
+import ro.quickorder.backend.service.TableFoodService;
 
 
 @RestController
