@@ -24,15 +24,13 @@ public class ReservationService {
     @Autowired
     ReservationRepository reservationRepository;
 
-    public void addReservation(ReservationDto reservation){
-
-        reservation.setStatus("not accepted");
-        reservation.setConfirmed(false);
-        Timestamp checkOutTime = new Timestamp(reservation.getCheckInTime().getTime()+7200000);
-        reservation.setCheckOutTime(checkOutTime);
-        Reservation convertedReservation = ReservationConverter.toReservation(reservation);
-
-        reservationRepository.save(convertedReservation);
+    public void addReservation(ReservationDto reservationDto) {
+        reservationDto.setStatus("not accepted");
+        reservationDto.setConfirmed(false);
+        long twoHoursInMilliseconds = 7200000;
+        Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
+        reservationDto.setCheckOutTime(checkOutTime);
+        Reservation reservation = ReservationConverter.toReservation(reservationDto);
+        reservationRepository.save(reservation);
     }
-
 }

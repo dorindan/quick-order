@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "")
+@RequestMapping(value = "/reservation")
 public class ReservationResource {
     @Autowired
     ReservationRepository reservationRepository;
@@ -25,12 +25,12 @@ public class ReservationResource {
     @Autowired
     ReservationService reservationService;
 
-    @RequestMapping(path = "/reservation", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String findById(@RequestParam(value = "id", defaultValue = "0") Long id) {
         return reservationRepository.findById(id).toString();
     }
 
-    @RequestMapping(path="/reservation",method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public void addReservation(@RequestBody ReservationDto reservation) throws ParseException {
         reservationService.addReservation(reservation);
     }

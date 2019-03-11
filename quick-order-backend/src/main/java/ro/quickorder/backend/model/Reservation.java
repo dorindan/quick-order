@@ -116,11 +116,11 @@ public class Reservation {
         return tables;
     }
 
-    public int getNumberOfPersons() {
+    public Integer getNumberOfPersons() {
         return numberOfPersons;
     }
 
-    public void setNumberOfPersons(int numberOfPersons) {
+    public void setNumberOfPersons(Integer numberOfPersons) {
         this.numberOfPersons = numberOfPersons;
     }
 
