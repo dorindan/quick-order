@@ -57,7 +57,6 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-
     }
 
     private Reservation getReservationEntityByName(ReservationDto reservationDto)
