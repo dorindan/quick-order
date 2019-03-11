@@ -106,6 +106,25 @@ public class ReservationTest {
         assertEquals(reservationDtoListAfter.size(),1);
         assertEquals(tableFoodDtoListAfter.size(),0);
 
+        // reservation is taken
+        try{
+
+            reservationResource.confirmReservation(reservationDtoList.get(0),tableFoodDtoListAfter);
+            assertEquals(false,true);
+        }catch (NotFoundException e){
+            assertEquals(e.getMessage(),"Reservation is already confirmed");
+        }
+
+        // table is taken
+        try{
+
+            reservationResource.confirmReservation(reservationDtoList.get(1),tableFoodDtoList);
+            assertEquals(false,true);
+        }catch (NotFoundException e){
+            assertEquals(e.getMessage(),"Table is already taken!");
+        }
+
+
         // reservation is invalid
         reservationDtoList.get(0).reservationName = null;
         try{
@@ -124,7 +143,6 @@ public class ReservationTest {
         }catch (ForbiddenException e){
             assertEquals(e.getMessage(),"TableList can not be null");
         }
-
     }
 
 }

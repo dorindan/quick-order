@@ -2,6 +2,7 @@ package ro.quickorder.backend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
@@ -45,6 +46,8 @@ public class ReservationService {
         List<Reservation> reservations = reservationRepository.findAll();
         for (Reservation res : reservations) {
             if (res.getReservationName().equals(reservationDto.reservationName)) {
+                if(res.isConfirmed())
+                    throw new NotFoundException("Reservation is already confirmed");
                 reservation = res;
             }
         }
@@ -60,6 +63,8 @@ public class ReservationService {
             TableFood tableFood = null;
             for (TableFood table : tableFoodList) {
                 if (table.getTableNr() == tableFoodDto.tableNr) {
+                    if(!table.isFree())
+                        throw new NotFoundException("Table is already taken!");
                     tableFood = table;
                 }
             }
