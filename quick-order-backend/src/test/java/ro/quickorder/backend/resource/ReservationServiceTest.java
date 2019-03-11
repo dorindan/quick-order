@@ -137,7 +137,7 @@ public class ReservationServiceTest {
         }
 
         // reservation is invalid
-        reservationDtos.get(0).reservationName = null;
+        reservationDtos.get(0).setReservationName(null);
         try{
 
             reservationService.confirmReservation(reservationDtos.get(0),tableFoodDtos);

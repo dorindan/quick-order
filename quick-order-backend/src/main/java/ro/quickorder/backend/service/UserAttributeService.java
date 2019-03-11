@@ -35,7 +35,7 @@ public class UserAttributeService {
         UserAttribute userAttribute = userAttributeConvertor.convertUserAttrDtoToUserAttribute(userAttributeDto);
 
         // identify user using userName
-        User user=userRepository.findByUsername(userDto.username);
+        User user=userRepository.findByUsername(userDto.getUsername());
         if(user == null){
             throw new NotFoundException("User not found");
         }

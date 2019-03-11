@@ -58,7 +58,7 @@ public class ReservationService {
 
     public void confirmReservation(ReservationDto reservationDto,  List<TableFoodDto> tableFoodDtos) {
 
-        if (reservationDto.reservationName == null)
+        if (reservationDto.getReservationName() == null)
             throw new NotFoundException("Reservation not found");
 
         // find reservation
@@ -82,7 +82,7 @@ public class ReservationService {
     private Reservation getReservationEntityByName(ReservationDto reservationDto)
     {
         // find reservation
-        Reservation reservation = reservationRepository.findByReservationName(reservationDto.reservationName);
+        Reservation reservation = reservationRepository.findByReservationName(reservationDto.getReservationName());
         if(reservation.isConfirmed())
             throw new NotFoundException("Reservation is already confirmed");
         if (reservation == null)
@@ -95,7 +95,7 @@ public class ReservationService {
             throw new ForbiddenException("TableList can not be null");
         List<TableFood> tableFoodListToSet = new ArrayList<>();
         for (TableFoodDto tableFoodDto : tableFoodDtos) {
-            TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.tableNr);
+            TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
             if (tableFood == null || !tableFood.isFree())
                 throw new NotFoundException("Table not found");
             tableFoodListToSet.add(tableFood);

@@ -45,7 +45,7 @@ public class UsersResource {
     @PostMapping(path = "/attributes")
     public void setPreference(@NotNull @RequestBody UserDto userDto)
     {
-        userAttributeService.setPreference(userDto, userDto.userAttributeDto);
+        userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
     }
 
 }

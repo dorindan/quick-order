@@ -8,12 +8,12 @@ import java.sql.Timestamp;
 
 public class ReservationDto {
     @JsonDeserialize(using = CustomDateDeserializer.class)
-    public Timestamp checkInTime;
-    public Timestamp checkOutTime;
-    public String status;
-    public boolean confirmed;
-    public Integer numberOfPersons;
-    public String reservationName;
+    private Timestamp checkInTime;
+    private Timestamp checkOutTime;
+    private String status;
+    private boolean confirmed;
+    private Integer numberOfPersons;
+    private String reservationName;
 
     public ReservationDto() {
     }
@@ -64,5 +64,13 @@ public class ReservationDto {
 
     public void setNumberOfPersons(Integer numberOfPersons) {
         this.numberOfPersons = numberOfPersons;
+    }
+
+    public String getReservationName() {
+        return reservationName;
+    }
+
+    public void setReservationName(String reservationName) {
+        this.reservationName = reservationName;
     }
 }
