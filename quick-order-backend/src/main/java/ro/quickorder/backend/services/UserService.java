@@ -40,13 +40,11 @@ public class UserService {
     public UserDto signUp(UserDto userDto) {
 
         // test if username is ok
-        for (User u : userRepository.findAll())
-            if(u.getUsername().equals(userDto.username)) {
-                throw new NotAcceptableException("UserName is already taken!");
-            }
+        if (userRepository.findByUsername(userDto.username) == null) {
+            throw new NotAcceptableException("UserName is already taken!");
+        }
         // test if email is ok
-        for (User u : userRepository.findAll())
-            if(u.getEmail().equals(userDto.email)) {
+            if (userRepository.findByEmail(userDto.email) == null) {
                 throw new NotAcceptableException("Email is already taken!");
             }
 

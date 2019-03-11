@@ -29,7 +29,6 @@ public class UserAttributeService {
     public void setPreference(UserDto userDto, UserAttributeDto userAttributeDto) {
 
         if(userAttributeDto == null){
-            System.out.println("BadRequest!");
             throw new BadRequestException("No attribute!");
         }
 
