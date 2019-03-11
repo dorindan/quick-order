@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ro.quickorder.backend.model.Reservation;
 
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation,Long> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     Reservation findByReservationName(String name);
 }

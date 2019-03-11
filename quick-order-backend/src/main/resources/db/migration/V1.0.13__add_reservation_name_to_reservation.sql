@@ -1,1 +1,0 @@
-alter table reservation add column reservation_name varchar(10);

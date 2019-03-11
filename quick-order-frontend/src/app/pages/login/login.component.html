@@ -21,9 +21,6 @@
       <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password"
              [(ngModel)]="model.password"
              #password="ngModel" required/>
-      <div *ngIf="f.submitted
-              && !password.valid">Password is required
-      </div>
 
     </div>
 
