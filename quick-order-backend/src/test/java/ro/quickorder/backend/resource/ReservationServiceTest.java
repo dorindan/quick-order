@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @ActiveProfiles("junit")
 @RunWith(SpringRunner.class)
@@ -124,22 +125,21 @@ public class ReservationServiceTest {
 
     }
 
-    private void testReservationErrors(List<ReservationDto> reservationDtoList, List<TableFoodDto> tableFoodDtoList, List<TableFoodDto> tableFoodDtoListAfter){
+    private void testReservationErrors(List<ReservationDto> reservationDtos, List<TableFoodDto> tableFoodDtos, List<TableFoodDto> tableFoodDtoListAfter){
 
         // reservation is taken
         try{
-
-            reservationService.confirmReservation(reservationDtoList.get(0),tableFoodDtoListAfter);
+            reservationService.confirmReservation(reservationDtos.get(0),tableFoodDtoListAfter);
             assertEquals(false,true);
         }catch (NotFoundException e){
             assertEquals(e.getMessage(),"Reservation is already confirmed");
         }
 
         // reservation is invalid
-        reservationDtoList.get(0).reservationName = null;
+        reservationDtos.get(0).reservationName = null;
         try{
 
-            reservationService.confirmReservation(reservationDtoList.get(0),tableFoodDtoList);
+            reservationService.confirmReservation(reservationDtos.get(0),tableFoodDtos);
             assertEquals(false,true);
         }catch (NotFoundException e){
             assertEquals(e.getMessage(),"Reservation not found");
@@ -149,16 +149,14 @@ public class ReservationServiceTest {
     private void testTableFoodErrors(List<ReservationDto> reservationDtoList, List<TableFoodDto> tableFoodDtoList, List<TableFoodDto> tableFoodDtoListAfter){
         // table is taken
         try{
-
             reservationService.confirmReservation(reservationDtoList.get(1),tableFoodDtoList);
-            assertEquals(false,true);
+            fail("Table should be taken");
         }catch (NotFoundException e){
-            assertEquals(e.getMessage(),"Table is already taken!");
+            assertEquals(e.getMessage(),"Table not found");
         }
 
         // table is invalid
         try{
-
             reservationService.confirmReservation(reservationDtoList.get(1),tableFoodDtoListAfter);
             assertEquals(false,true);
         }catch (ForbiddenException e){

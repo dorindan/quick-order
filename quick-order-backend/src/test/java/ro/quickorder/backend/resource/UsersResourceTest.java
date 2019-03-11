@@ -141,7 +141,7 @@ public class UsersResourceTest {
         UserDto userDto = new UserDto();
         userDto.username = "Andrei";
         userDto.password = "password";
-        userDto.email = "Alex@yahoo.com";
+        userDto.email = "Andrei@yahoo.com";
 
         UserDto userDtoRez = userService.signUp(userDto);
         assertEquals(userDtoRez.email, userDto.email);

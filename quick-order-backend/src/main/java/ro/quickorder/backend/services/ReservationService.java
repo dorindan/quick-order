@@ -77,8 +77,8 @@ public class ReservationService {
         List<TableFood> tableFoodListToSet = new ArrayList<>();
         for (TableFoodDto tableFoodDto : tableFoodDtos) {
             TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.tableNr);
-            if (tableFood == null)
-                throw new NotFoundException("Reservation not found");
+            if (tableFood == null || !tableFood.isFree())
+                throw new NotFoundException("Table not found");
             tableFoodListToSet.add(tableFood);
         }
         return tableFoodListToSet;
