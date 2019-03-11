@@ -1,6 +1,8 @@
 package ro.quickorder.backend.resource;
 
 
+import org.h2.table.Table;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.TableFoodRepository;
+import ro.quickorder.backend.services.TableFoodService;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -20,12 +23,12 @@ import static org.junit.Assert.assertEquals;
 @ActiveProfiles("junit")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TableFoodTest {
+public class TableFoodServiceTest {
 
     @Inject
     TableFoodRepository tableFoodRepository;
     @Inject
-    TableFoodResource tableFoodResource;
+    TableFoodService tableFoodService;
 
     @Before
     public void setUp() {
@@ -42,10 +45,15 @@ public class TableFoodTest {
         tableFoodRepository.save(table5);
     }
 
+    @After
+    public void tearDown(){
+        tableFoodRepository.deleteAll();
+    }
+
     @Test
     public void testgetAllTables(){
 
-        List<TableFoodDto> rezFree = tableFoodResource.getAllFree();
+        List<TableFoodDto> rezFree = tableFoodService.getAllFree();
 
         assertEquals(rezFree.size(),3);
     }

@@ -1,6 +1,7 @@
 package ro.quickorder.backend.resource;
 
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,8 @@ import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.CommandRepository;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
+import ro.quickorder.backend.services.ReservationService;
+import ro.quickorder.backend.services.TableFoodService;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -26,12 +29,12 @@ import static org.junit.Assert.assertEquals;
 @ActiveProfiles("junit")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ReservationTest {
+public class ReservationServiceTest {
 
     @Inject
-    ReservationResource reservationResource;
+    ReservationService reservationService;
     @Inject
-    TableFoodResource tableFoodResource;
+    TableFoodService tableFoodService;
 
     @Inject
     ReservationRepository reservationRepository;
@@ -79,66 +82,84 @@ public class ReservationTest {
         reservationRepository.save(re2);
         reservationRepository.save(re3);
 
-
     }
+
+    @After
+    public void tearDown(){
+        reservationRepository.deleteAll();
+        commandRepository.deleteAll();
+        tableFoodRepository.deleteAll();
+    }
+
 
 
     @Test
     public void testGetAllUnconfirmed(){
-        List<ReservationDto> reservationDtoList = reservationResource.getAllUnconfirmed();
+        List<ReservationDto> reservationDtoList = reservationService.getAllUnconfirmed();
 
         assertEquals(reservationDtoList.size(),2);
     }
 
     @Test
-    public void testConfirmReservation(){
-        List<ReservationDto> reservationDtoList = reservationResource.getAllUnconfirmed();
-        List<TableFoodDto> tableFoodDtoList = tableFoodResource.getAllFree();
+    public void testConfirmReservation() {
+        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree();
 
-        assertEquals(reservationDtoList.size(),2);
-        assertEquals(tableFoodDtoList.size(),2);
+        assertEquals(reservationDtos.size(), 2);
+        assertEquals(tableFoodDtos.size(), 2);
 
-        reservationResource.confirmReservation(reservationDtoList.get(0),tableFoodDtoList);
+        reservationService.confirmReservation(reservationDtos.get(0), tableFoodDtos);
 
-        List<ReservationDto> reservationDtoListAfter = reservationResource.getAllUnconfirmed();
-        List<TableFoodDto> tableFoodDtoListAfter = tableFoodResource.getAllFree();
+        List<ReservationDto> reservationDtosAfter = reservationService.getAllUnconfirmed();
+        List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree();
 
-        assertEquals(reservationDtoListAfter.size(),1);
-        assertEquals(tableFoodDtoListAfter.size(),0);
+        assertEquals(reservationDtosAfter.size(), 1);
+        assertEquals(tableFoodDtosAfter.size(), 0);
+
+        //reservation errors
+        testReservationErrors(reservationDtos, tableFoodDtos, tableFoodDtosAfter);
+
+        // table errors
+        testTableFoodErrors(reservationDtos, tableFoodDtos, tableFoodDtosAfter);
+
+    }
+
+    private void testReservationErrors(List<ReservationDto> reservationDtoList, List<TableFoodDto> tableFoodDtoList, List<TableFoodDto> tableFoodDtoListAfter){
 
         // reservation is taken
         try{
 
-            reservationResource.confirmReservation(reservationDtoList.get(0),tableFoodDtoListAfter);
+            reservationService.confirmReservation(reservationDtoList.get(0),tableFoodDtoListAfter);
             assertEquals(false,true);
         }catch (NotFoundException e){
             assertEquals(e.getMessage(),"Reservation is already confirmed");
         }
 
+        // reservation is invalid
+        reservationDtoList.get(0).reservationName = null;
+        try{
+
+            reservationService.confirmReservation(reservationDtoList.get(0),tableFoodDtoList);
+            assertEquals(false,true);
+        }catch (NotFoundException e){
+            assertEquals(e.getMessage(),"Reservation not found");
+        }
+    }
+
+    private void testTableFoodErrors(List<ReservationDto> reservationDtoList, List<TableFoodDto> tableFoodDtoList, List<TableFoodDto> tableFoodDtoListAfter){
         // table is taken
         try{
 
-            reservationResource.confirmReservation(reservationDtoList.get(1),tableFoodDtoList);
+            reservationService.confirmReservation(reservationDtoList.get(1),tableFoodDtoList);
             assertEquals(false,true);
         }catch (NotFoundException e){
             assertEquals(e.getMessage(),"Table is already taken!");
         }
 
-
-        // reservation is invalid
-        reservationDtoList.get(0).reservationName = null;
-        try{
-
-            reservationResource.confirmReservation(reservationDtoList.get(0),tableFoodDtoList);
-            assertEquals(false,true);
-        }catch (NotFoundException e){
-            assertEquals(e.getMessage(),"Reservation not found");
-        }
-
         // table is invalid
         try{
 
-            reservationResource.confirmReservation(reservationDtoList.get(1),tableFoodDtoListAfter);
+            reservationService.confirmReservation(reservationDtoList.get(1),tableFoodDtoListAfter);
             assertEquals(false,true);
         }catch (ForbiddenException e){
             assertEquals(e.getMessage(),"TableList can not be null");

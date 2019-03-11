@@ -26,14 +26,14 @@ public class ReservationService {
 
     public List<ReservationDto> getAllUnconfirmed() {
         List<Reservation> reservations = reservationRepository.findAll();
-        List<ReservationDto> result = new ArrayList<>();
+        List<ReservationDto> results = new ArrayList<>();
 
         for (Reservation res : reservations) {
             if (!res.isConfirmed()) {
-                result.add(new ReservationDto(res));
+                results.add(new ReservationDto(res));
             }
         }
-        return result;
+        return results;
     }
 
     public void confirmReservation(ReservationDto reservationDto,  List<TableFoodDto> tableFoodDtos) {
@@ -41,6 +41,27 @@ public class ReservationService {
         if (reservationDto.reservationName == null)
             throw new NotFoundException("Reservation not found");
 
+        // find reservation
+        Reservation reservation = getReservationEntityByName(reservationDto);
+
+        // find tables
+        List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
+
+        // occupy all table
+        ocupateAllTable(reservationTables);
+
+        // put tables in reservation
+        reservation.setTables(reservationTables);
+        reservation.setConfirmed(true);
+
+        // save reservation in database
+        reservationRepository.save(reservation);
+
+
+    }
+
+    private Reservation getReservationEntityByName(ReservationDto reservationDto)
+    {
         // find reservation
         Reservation reservation = null;
         List<Reservation> reservations = reservationRepository.findAll();
@@ -53,8 +74,10 @@ public class ReservationService {
         }
         if (reservation == null)
             throw new NotFoundException("Reservation not found");
+        return reservation;
+    }
 
-        // find tables
+    private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos){
         if (tableFoodDtos.size() == 0)
             throw new ForbiddenException("TableList can not be null");
         List<TableFood> tableFoodListToSet = new ArrayList<>();
@@ -72,20 +95,14 @@ public class ReservationService {
                 throw new NotFoundException("Reservation not found");
             tableFoodListToSet.add(tableFood);
         }
+        return tableFoodListToSet;
+    }
 
-
+    private void ocupateAllTable(List<TableFood> tableFoodListToSet){
         for (TableFood table : tableFoodListToSet) {
             table.setFree(false);
             tableFoodRepository.save(table);
         }
-
-        // put tables in reservation
-        reservation.setTables(tableFoodListToSet);
-        reservation.setConfirmed(true);
-
-        // save reservation in database
-        reservationRepository.save(reservation);
-
-
     }
+
 }

@@ -29,7 +29,7 @@ public class TableFoodResource {
 
     @RequestMapping(path = "/free", method = RequestMethod.GET)
     public List<TableFoodDto> getAllFree(){
-        return tableFoodService.getAllTableFood();
+        return tableFoodService.getAllFree();
     }
 
 }

@@ -15,11 +15,11 @@ public class TableFoodService {
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
-    public List<TableFoodDto> getAllTableFood(){
+    public List<TableFoodDto> getAllFree(){
 
         List<TableFoodDto> rez = new ArrayList<>();
-        List<TableFood> tableFoodList = tableFoodRepository.findAll();
-        for (TableFood table: tableFoodList)
+        List<TableFood> tables = tableFoodRepository.findAll();
+        for (TableFood table: tables)
             if(table.isFree())
                 rez.add(new TableFoodDto(table));
 
