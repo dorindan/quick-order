@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-
-export interface Tables {
-  text: string;
-  seats: number;
-  free: string;
-}
+import {Table} from "../../models/Table";
+import {TableService} from "../../services/table.service";
+import {Observable} from "rxjs";
 
 export interface Reservation {
   userName: string;
@@ -20,16 +17,9 @@ export interface Reservation {
   styleUrls: ['./waiter-page.component.scss']
 })
 export class WaiterPageComponent implements OnInit {
+  tablesGet: Observable<Table[]>;
+  tables: Table[];
 
-  columnsToDisplay = ['User name', 'Seats', 'CheckInTime', 'CheckOutTime'];
-  expandedElement: Tables | null;
-  tables: Tables[] = [
-    {text: 'One', seats: 6, free: 'free'},
-    {text: 'Two', seats: 4, free: 'free'},
-    {text: 'Three', seats: 2, free: 'free'},
-    {text: 'Four', seats: 3, free: 'reserved'},
-    {text: 'Five', seats: 8, free: 'free'}
-  ];
   reservations: Reservation[] = [
     {userName: 'John Doe', seats: 6, checkInTime: '03/03/2019 10:30', checkOutTime: '03/03/2019 12:30'},
     {userName: 'Bob Dob', seats: 7, checkInTime: '04/02/2019 10:30', checkOutTime: '04/02/2019 12:30'},
@@ -39,13 +29,18 @@ export class WaiterPageComponent implements OnInit {
   private selectedOptions: any[];
 
 
-  constructor() {
+  constructor(private tableService: TableService ) {
   }
 
   ngOnInit() {
+    this.tablesGet = this.tableService.getTables();
+    this.tables = [];
+    this.tablesGet.forEach(table => table.forEach(t => this.tables.push(t)));
+    console.log(this.tables);
   }
 
   selection(list) {
     this.selectedOptions = list.selectedOptions.selected.map(item => console.log(item.value));
   }
+
 }

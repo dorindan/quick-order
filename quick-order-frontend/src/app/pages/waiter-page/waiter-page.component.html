@@ -28,7 +28,7 @@
         <p>TABLES</p>
         <hr>
         <mat-list-option *ngFor="let table of tables" (click)="selection(list)"   [value]="table.text">
-          {{table.text }}
+          {{table.tableNr }}
         </mat-list-option>
       </mat-selection-list>
 
