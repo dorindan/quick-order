@@ -1,10 +1,14 @@
 package ro.quickorder.backend.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.service.CustomDateDeserializer;
 import ro.quickorder.backend.model.Reservation;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ReservationDto {
     @JsonDeserialize(using = CustomDateDeserializer.class)
@@ -14,6 +18,7 @@ public class ReservationDto {
     private boolean confirmed;
     private Integer numberOfPersons;
     private String reservationName;
+    private List<TableFoodDto> tableFoodDtos = new ArrayList<>();
 
     public ReservationDto() {
     }
@@ -72,5 +77,13 @@ public class ReservationDto {
 
     public void setReservationName(String reservationName) {
         this.reservationName = reservationName;
+    }
+
+    public List<TableFoodDto> getTableFoodDtos() {
+        return tableFoodDtos;
+    }
+
+    public void setTableFoodDtos(List<TableFoodDto> tableFoodDtos) {
+        this.tableFoodDtos = tableFoodDtos;
     }
 }
