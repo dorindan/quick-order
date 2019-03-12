@@ -2,8 +2,6 @@ package ro.quickorder.backend.model;
 
 import javax.persistence.*;
 
-
-
 @Entity
 @Table(name = "user_attribute")
 public class UserAttribute {

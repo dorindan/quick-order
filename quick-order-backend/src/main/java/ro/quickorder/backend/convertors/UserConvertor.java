@@ -9,9 +9,9 @@ public class UserConvertor {
 
     public User convertUserDtoToUser(UserDto userDto){
         User user = new User();
-        user.setUsername(userDto.username);
-        user.setPassword(userDto.password);
-        user.setEmail(userDto.email);
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
         return user;
     }
 }

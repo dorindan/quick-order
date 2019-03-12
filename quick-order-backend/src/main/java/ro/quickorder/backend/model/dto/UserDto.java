@@ -1,10 +1,10 @@
 package ro.quickorder.backend.model.dto;
 
 public class UserDto {
-    public String username;
-    public String password;
-    public String email;
-    public UserAttributeDto userAttributeDto;
+    private String username;
+    private String password;
+    private String email;
+    private UserAttributeDto userAttributeDto;
 
     public UserDto() {
     }
@@ -15,8 +15,36 @@ public class UserDto {
         this.userAttributeDto = userAttributeDto;
     }
 
-    public UserDto(String name,String password){
-        this.username = name;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserAttributeDto getUserAttributeDto() {
+        return userAttributeDto;
+    }
+
+    public void setUserAttributeDto(UserAttributeDto userAttributeDto) {
+        this.userAttributeDto = userAttributeDto;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -1,5 +1,6 @@
 package ro.quickorder.backend.resource;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,23 +8,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.exception.BadRequestException;
-import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotAcceptableException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Language;
+import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
 import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
-import ro.quickorder.backend.model.User;
+import ro.quickorder.backend.service.UserAttributeService;
+import ro.quickorder.backend.service.UserService;
+
 import javax.inject.Inject;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 @ActiveProfiles("junit")
@@ -32,14 +30,17 @@ import static org.junit.Assert.assertEquals;
 public class UsersResourceTest {
 
     @Inject
-    private UsersResource usersResource;
+    private UserService userService;
+    @Inject
+    private UserAttributeService userAttributeService;
+
     @Inject
     private UserRepository userRepository;
     @Inject
     private UserAttributeRepository userAttributeRepository;
 
     @Before
-    public void setUp() throws SQLException {
+    public void setUp() {
         User user1 = new User("Alex", "parola1", "alex@yahoo.com");
         User user2 = new User("Radu", "parola2", "aadu@yahoo.com");
         User user3 = new User("Ana", "parola3", "ana@yahoo.com");
@@ -62,35 +63,42 @@ public class UsersResourceTest {
         userAttributeRepository.save(userAttribute3);
     }
 
+    @After
+    public void tearDown(){
+        userAttributeRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
     @Test
     public void testSetPreference() {
         UserAttributeDto attributeDto = new UserAttributeDto();
-        attributeDto.language = Language.RO;
-        long userId = usersResource.getUsers().get(0).getId();
+        attributeDto.setLanguage(Language.RO);
+        long userId = userRepository.findAll().get(0).getId();
 
         UserDto userDto = new UserDto();
-        userDto.email= "alex@yahoo.com";
-        userDto.username = "Alex";
+        userDto.setEmail("alex@yahoo.com");
+        userDto.setUsername("Alex");
 
         // no attribute
         try{
-            usersResource.setPreference(userDto);
+            userAttributeService.setPreference(userDto,userDto.getUserAttributeDto());
             assertEquals(false,true);
         }catch (BadRequestException ex){
             assertEquals("No attribute!", ex.getMessage());
         }
 
-        userDto.userAttributeDto = attributeDto;
+        userDto.setUserAttributeDto(attributeDto);
 
         // Everything is good
-        usersResource.setPreference(userDto);
+        userAttributeService.setPreference(userDto,userDto.getUserAttributeDto());
         User user = userRepository.findById(userId).orElse(null);
+
         assertEquals( Language.RO, user.getAttribute().getLanguage());
 
         // bad username
         try{
-            userDto.username = "newUser";
-            usersResource.setPreference(userDto);
+            userDto.setUsername("newUser");
+            userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
             assertEquals(false,true);
         }catch (NotFoundException ex){
             assertEquals("User not found", ex.getMessage());
@@ -100,17 +108,17 @@ public class UsersResourceTest {
     @Test
     public void testLogin(){
         UserDto userDto = new UserDto();
-        userDto.username = "Alex";
-        userDto.password = "parola1";
-        UserDto userDto1 = usersResource.login(userDto);
-        String actual = userDto1.username;
+        userDto.setUsername("Alex");
+        userDto.setPassword("parola1");
+        UserDto userDto1 = userService.login(userDto);
+        String actual = userDto1.getUsername();
         assertEquals("Alex", actual);
 
         // User wrong
         try{
-            userDto.username = "Alexx";
-            userDto.password = "parola1";
-            UserDto userDto2 = usersResource.login(userDto);
+            userDto.setUsername("Alexx");
+            userDto.setPassword("parola1");
+            UserDto userDto2 = userService.login(userDto);
             assertEquals(false,true);
         }catch (NotFoundException ex){
             assertEquals("User or password are incorrect!", ex.getMessage());
@@ -118,9 +126,9 @@ public class UsersResourceTest {
 
         // Password wrong
         try{
-            userDto.username = "Alex";
-            userDto.password = "parola1213";
-            UserDto userDto2 = usersResource.login(userDto);
+            userDto.setUsername("Alex");
+            userDto.setPassword("parola1213");
+            UserDto userDto2 = userService.login(userDto);
             assertEquals(false,true);
         }catch (NotFoundException ex){
             assertEquals("User or password are incorrect!", ex.getMessage());
@@ -131,19 +139,19 @@ public class UsersResourceTest {
     public void testSignUp(){
 
         UserDto userDto = new UserDto();
-        userDto.username = "Andrei";
-        userDto.password = "password";
-        userDto.email = "Alex@yahoo.com";
+        userDto.setUsername("Andrei");
+        userDto.setPassword("password");
+        userDto.setEmail("Andrei@yahoo.com");
 
-        UserDto userDtoRez = usersResource.signUp(userDto);
-        assertEquals(userDtoRez.email, userDto.email);
-        assertEquals(userDtoRez.username, userDto.username);
-        assertEquals(userDtoRez.password, null);
+        UserDto userDtoRez = userService.signUp(userDto);
+        assertEquals(userDtoRez.getEmail(), userDto.getEmail());
+        assertEquals(userDtoRez.getUsername(), userDto.getUsername());
+        assertEquals(userDtoRez.getPassword(), null);
 
         // user already used
         try{
-            userDto.username = "Alex";
-            UserDto userDto1 = usersResource.signUp(userDto);
+            userDto.setUsername("Alex");
+            UserDto userDto1 = userService.signUp(userDto);
             assertEquals(false,true);
         }catch (NotAcceptableException ex){
             assertEquals("UserName is already taken!", ex.getMessage());
@@ -151,9 +159,9 @@ public class UsersResourceTest {
 
         // Password wrong
         try{
-            userDto.username = "Avram";
-            userDto.email = "ana@yahoo.com";
-            UserDto userDto2 = usersResource.signUp(userDto);
+            userDto.setUsername("Avram");
+            userDto.setEmail("ana@yahoo.com");
+            UserDto userDto2 = userService.signUp(userDto);
             assertEquals(false,true);
         }catch (NotAcceptableException ex){
             assertEquals("Email is already taken!", ex.getMessage());

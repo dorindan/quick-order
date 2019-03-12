@@ -9,7 +9,7 @@ public class UserAttributeConvertor {
     
     public UserAttribute convertUserAttrDtoToUserAttribute(UserAttributeDto userAttributeDto){
         UserAttribute userAttribute = new UserAttribute();
-        userAttribute.setLanguage(userAttributeDto.language);
+        userAttribute.setLanguage(userAttributeDto.getLanguage());
         return userAttribute;
     }
     
