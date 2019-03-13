@@ -18,12 +18,12 @@ public class ReservationDto {
     public ReservationDto() {
     }
 
-    public ReservationDto(Reservation reservation){
-        this.checkInTime = reservation.getCheckInTime();
-        this.checkOutTime = reservation.getCheckOutTime();
-        this.confirmed = reservation.isConfirmed();
-        this.status = reservation.getStatus();
-        this.reservationName = reservation.getReservationName();
+    public ReservationDto(Timestamp checkInTime, Timestamp checkOutTime, String status, boolean confirmed, Integer numberOfPersons, String reservationName){
+        this.checkInTime = checkInTime;
+        this.checkOutTime = checkOutTime;
+        this.confirmed = confirmed;
+        this.status = status;
+        this.reservationName = reservationName;
     }
 
     public Timestamp getCheckInTime() {
@@ -50,7 +50,7 @@ public class ReservationDto {
         this.status = status;
     }
 
-    public Boolean getConfirmed() {
+    public Boolean isConfirmed() {
         return confirmed;
     }
 

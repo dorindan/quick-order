@@ -44,7 +44,7 @@ public class Bill {
         this.id = id;
     }
 
-    public boolean isVoucher() {
+    public boolean hasVoucher() {
         return voucher;
     }
 

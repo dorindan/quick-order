@@ -13,12 +13,12 @@ public class TableFoodDto {
     public TableFoodDto(){
 
     }
-    public TableFoodDto(TableFood tableFood){
-        this.tableNr = tableFood.getTableNr();
-        this.seats = tableFood.getSeats();
-        this.windowView = tableFood.isWindowView();
-        this.floor =tableFood.getFloor();
-        this.free = tableFood.isFree();
+    public TableFoodDto(int tableNr, int seats, boolean windowView, int floor, boolean free){
+        this.tableNr = tableNr;
+        this.seats = seats;
+        this.windowView = windowView;
+        this.floor = floor;
+        this.free = free;
     }
 
     public int getTableNr() {
