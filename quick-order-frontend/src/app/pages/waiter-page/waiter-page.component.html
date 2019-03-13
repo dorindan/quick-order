@@ -6,14 +6,8 @@
       <mat-expansion-panel-header>
 
         <mat-panel-title>
-          {{reservation.userName}}
+          Number of Persons: {{reservation.numberOfPersons}}
         </mat-panel-title>
-
-        <div class="seats">
-          <mat-panel-description>
-            {{reservation.seats}} seats
-          </mat-panel-description>
-        </div>
 
         <div class="checkInAndOutTime">
           <mat-panel-description>
@@ -28,7 +22,7 @@
         <p>TABLES</p>
         <hr>
         <mat-list-option *ngFor="let table of tables" (click)="selection(list)"   [value]="table.text">
-          {{table.tableNr }}
+          <pre class="mainDetails">Table: {{table.tableNr }}     Seats: {{table.seats}} <p class="extraDetails">     Floor: {{table.floor}}     Has window view: {{table.windowView}}</p></pre>
         </mat-list-option>
       </mat-selection-list>
 

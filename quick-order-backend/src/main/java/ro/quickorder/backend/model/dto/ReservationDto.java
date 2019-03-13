@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class ReservationDto {
     @JsonDeserialize(using = CustomDateDeserializer.class)
@@ -28,12 +29,11 @@ public class ReservationDto {
         this.checkOutTime = reservation.getCheckOutTime();
         this.confirmed = reservation.isConfirmed();
         this.status = reservation.getStatus();
+        this.numberOfPersons = reservation.getNumberOfPersons();
         this.reservationName = reservation.getReservationName();
     }
 
-    public Timestamp getCheckInTime() {
-        return checkInTime;
-    }
+    public Timestamp getCheckInTime() { return checkInTime; }
 
     public void setCheckInTime(Timestamp checkInTime) {
         this.checkInTime = checkInTime;

@@ -2,8 +2,8 @@ export class Reservation {
   checkInTime: string;
   numberOfPersons: number;
 
-  constructor(dateTime: string, numberOfPersons: number) {
-    this.checkInTime = dateTime;
+  constructor(checkInTime: string, numberOfPersons: number) {
+    this.checkInTime = checkInTime;
     this.numberOfPersons = numberOfPersons;
   }
 }
