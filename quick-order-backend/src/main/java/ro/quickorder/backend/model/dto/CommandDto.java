@@ -1,5 +1,10 @@
 package ro.quickorder.backend.model.dto;
 
+/**
+ *  Data transfer object for {@link ro.quickorder.backend.model.Command}
+ *
+ *  *@author R. Lupoaie
+ */
 public class CommandDto {
 
     private String commandName;

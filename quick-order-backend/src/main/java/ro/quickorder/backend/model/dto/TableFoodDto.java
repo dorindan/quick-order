@@ -1,7 +1,10 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.TableFood;
-
+/**
+ *  Data transfer object for {@link ro.quickorder.backend.model.TableFood}
+ *
+ *  *@author R. Lupoaie
+ */
 public class TableFoodDto {
 
     private int tableNr;

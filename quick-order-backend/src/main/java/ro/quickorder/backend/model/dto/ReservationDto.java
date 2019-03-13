@@ -6,6 +6,11 @@ import ro.quickorder.backend.model.Reservation;
 
 import java.sql.Timestamp;
 
+/**
+ *  Data transfer object for {@link Reservation}
+ *
+ *  *@author R. Lupoaie
+ */
 public class ReservationDto {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     private Timestamp checkInTime;

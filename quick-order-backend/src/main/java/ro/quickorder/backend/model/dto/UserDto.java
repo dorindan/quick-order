@@ -1,7 +1,10 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.UserAttribute;
-
+/**
+ *  Data transfer object for {@link ro.quickorder.backend.model.User}
+ *
+ *  *@author R. Lupoaie
+ */
 public class UserDto {
     private String username;
     private String password;

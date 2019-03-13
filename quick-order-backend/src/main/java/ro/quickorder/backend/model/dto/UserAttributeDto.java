@@ -3,6 +3,11 @@ package ro.quickorder.backend.model.dto;
 import ro.quickorder.backend.model.Language;
 import ro.quickorder.backend.model.UserAttribute;
 
+/**
+ *  Data transfer object for {@link UserAttribute}
+ *
+ *  *@author R. Lupoaie
+ */
 public class UserAttributeDto {
 
     private Language language;

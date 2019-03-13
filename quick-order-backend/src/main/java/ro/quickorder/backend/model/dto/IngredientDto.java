@@ -1,5 +1,10 @@
 package ro.quickorder.backend.model.dto;
 
+/**
+ *  Data transfer object for {@link ro.quickorder.backend.model.Ingredient}
+ *
+ *  *@author R. Lupoaie
+ */
 public class IngredientDto {
 
     private String name;

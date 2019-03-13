@@ -2,6 +2,11 @@ package ro.quickorder.backend.model.dto;
 
 import java.math.BigDecimal;
 
+/**
+ *  Data transfer object for {@link ro.quickorder.backend.model.Bill}
+ *
+ *  *@author R. Lupoaie
+ */
 public class BillDto {
 
     private boolean voucher;

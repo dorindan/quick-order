@@ -1,7 +1,10 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.Feedback;
-
+/**
+ *  Data transfer object for {@link ro.quickorder.backend.model.Feedback}
+ *
+ *  *@author R. Lupoaie
+ */
 public class FeedbackDto {
 
     private int rating;

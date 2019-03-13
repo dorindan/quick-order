@@ -4,12 +4,18 @@ import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.dto.ReservationDto;
 
+/**
+ Converts Commands to their corresponding DTO and vice versa.
+ *@author R. Lupoaie
+ */
+
 @Component
 public class ReservationConverter {
 
     public Reservation toReservation(ReservationDto reservationDto) {
-        if (reservationDto == null)
+        if (reservationDto == null) {
             return null;
+        }
         Reservation reservation = new Reservation();
         reservation.setCheckInTime(reservationDto.getCheckInTime());
         reservation.setCheckOutTime(reservationDto.getCheckOutTime());
@@ -21,8 +27,9 @@ public class ReservationConverter {
     }
 
     public ReservationDto toReservationDto(Reservation reservation) {
-        if (reservation == null)
+        if (reservation == null) {
             return null;
+        }
         ReservationDto reservationDto = new ReservationDto();
         reservationDto.setCheckInTime(reservation.getCheckInTime());
         reservationDto.setCheckOutTime(reservation.getCheckOutTime());

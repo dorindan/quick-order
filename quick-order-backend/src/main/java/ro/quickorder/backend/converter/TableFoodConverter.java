@@ -4,12 +4,18 @@ import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 
+/**
+ Converts Commands to their corresponding DTO and vice versa.
+ *@author R. Lupoaie
+ */
+
 @Component
 public class TableFoodConverter {
 
     public TableFood toTableFood(TableFoodDto tableFoodDto) {
-        if (tableFoodDto == null)
+        if (tableFoodDto == null) {
             return null;
+        }
         TableFood tableFood = new TableFood();
         tableFood.setTableNr(tableFoodDto.getTableNr());
         tableFood.setSeats(tableFoodDto.getSeats());
@@ -20,8 +26,9 @@ public class TableFoodConverter {
     }
 
     public TableFoodDto toTableFoodDto(TableFood tableFood) {
-        if (tableFood == null)
+        if (tableFood == null) {
             return null;
+        }
         TableFoodDto tableFoodDto = new TableFoodDto();
         tableFoodDto.setTableNr(tableFood.getTableNr());
         tableFoodDto.setSeats(tableFood.getSeats());
