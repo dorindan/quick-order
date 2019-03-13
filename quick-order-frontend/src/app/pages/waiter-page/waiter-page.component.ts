@@ -18,7 +18,7 @@ export class WaiterPageComponent implements OnInit {
   reservations: Reservation[];
   private selectedOptions: any[];
 
-  constructor(private tableService: TableService , private reservationService: ReservationService) {
+  constructor(private tableService: TableService, private reservationService: ReservationService) {
   }
 
   ngOnInit() {
@@ -34,6 +34,13 @@ export class WaiterPageComponent implements OnInit {
 
   selection(list) {
     this.selectedOptions = list.selectedOptions.selected.map(item => console.log(item.value));
+  }
+
+  getFormattedTime(reservation: Reservation): string {
+    return reservation.checkInTime.substr(0, 10) + ' ' +
+           reservation.checkInTime.substr(11, 5) + ' - ' +
+           reservation.checkOutTime.substr(0, 10) + ' ' +
+           reservation.checkOutTime.substr(11, 5);
   }
 
 }
