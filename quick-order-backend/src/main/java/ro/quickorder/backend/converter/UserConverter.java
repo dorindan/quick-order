@@ -13,8 +13,7 @@ import ro.quickorder.backend.model.dto.UserDto;
 @Component
 public class UserConverter {
 
-    @Autowired
-    private UserAttributeConverter userAttributeConverter;
+    private UserAttributeConverter userAttributeConverter = new UserAttributeConverter();
 
     public User toUser(UserDto userDto) {
         if (userDto == null) {

@@ -15,8 +15,7 @@ public class Ingredient {
     @ManyToMany(mappedBy = "ingredients")
     private List<MenuItem> menuItems;
 
-    public Ingredient(Long id, String name) {
-        this.id = id;
+    public Ingredient( String name) {
         this.name = name;
     }
 

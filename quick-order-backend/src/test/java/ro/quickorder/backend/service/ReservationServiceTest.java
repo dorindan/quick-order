@@ -1,4 +1,4 @@
-package ro.quickorder.backend.resource;
+package ro.quickorder.backend.service;
 
 
 import org.junit.After;

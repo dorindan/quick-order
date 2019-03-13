@@ -14,6 +14,12 @@ public class UserDto {
     public UserDto() {
     }
 
+    public UserDto(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
     public UserDto(String username, String password, String email, UserAttributeDto userAttributeDto) {
         this.username = username;
         this.password = password;

@@ -24,8 +24,7 @@ public class Bill {
     @JsonIgnore
     private Command command;
 
-    public Bill(Long id, boolean voucher, int salePercentage, BigDecimal total, User user, Command command) {
-        this.id = id;
+    public Bill(boolean voucher, int salePercentage, BigDecimal total, User user, Command command) {
         this.voucher = voucher;
         this.salePercentage = salePercentage;
         this.total = total;

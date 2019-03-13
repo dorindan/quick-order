@@ -31,8 +31,7 @@ public class MenuItem {
             inverseJoinColumns = { @JoinColumn(name = "command_id") })
     private List<Command> commands;
 
-    public MenuItem(Long id, String name, String description, Integer preparationDurationInMinutes) {
-        this.id = id;
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
