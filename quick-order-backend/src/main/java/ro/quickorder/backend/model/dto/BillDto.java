@@ -8,17 +8,19 @@ public class BillDto {
     private int salePercentage;
     private BigDecimal total;
 
-    public BillDto(){
+    public BillDto() {
 
     }
 
-    public BillDto(boolean voucher, int salePercentage, BigDecimal total){
+    public BillDto(boolean voucher, int salePercentage, BigDecimal total) {
         this.voucher = voucher;
         this.salePercentage = salePercentage;
         this.total = total;
     }
 
-    public boolean hasVoucher() { return voucher; }
+    public boolean hasVoucher() {
+        return voucher;
+    }
 
     public void setVoucher(boolean voucher) {
         this.voucher = voucher;

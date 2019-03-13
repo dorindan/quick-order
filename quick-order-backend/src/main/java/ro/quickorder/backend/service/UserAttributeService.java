@@ -32,7 +32,7 @@ public class UserAttributeService {
             throw new BadRequestException("No attribute!");
         }
 
-        UserAttribute userAttribute = userAttributeConverter.convertUserAttrDtoToUserAttribute(userAttributeDto);
+        UserAttribute userAttribute = userAttributeConverter.toUserAttribute(userAttributeDto);
 
         // identify user using userName
         User user=userRepository.findByUsername(userDto.getUsername());

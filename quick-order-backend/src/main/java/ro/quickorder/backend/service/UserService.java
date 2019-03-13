@@ -8,7 +8,6 @@ import ro.quickorder.backend.converter.UserConverter;
 import ro.quickorder.backend.exception.*;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
-import ro.quickorder.backend.model.dto.UserAttributeDto;
 import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
@@ -30,10 +29,10 @@ public class UserService {
     private UserAttributeRepository userAttributeRepository;
 
     public UserDto login(UserDto userDto) {
-        User user = userConverter.convertUserDtoToUser(userDto);
+        User user = userConverter.toUser(userDto);
         for (User u : userRepository.findAll()) {
             if (user.getPassword().equals(u.getPassword()) && user.getUsername().equals(u.getUsername())) {
-                return new UserDto(u.getUsername(),u.getEmail(), userAttributeConverter.convertUserAttributeToUserAttrDto(u.getAttribute()));
+                return new UserDto(u.getUsername(),u.getEmail(), userAttributeConverter.toUserAttributeDto(u.getAttribute()));
             }
         }
         throw new NotFoundException("User or password are incorrect!");
@@ -50,7 +49,7 @@ public class UserService {
                 throw new NotAcceptableException("Email is already taken!");
             }
 
-        User user = userConverter.convertUserDtoToUser(userDto);
+        User user = userConverter.toUser(userDto);
         User newUser = userRepository.save(user);
         UserAttribute userAttribute = new UserAttribute();
         userAttributeRepository.save(userAttribute);
@@ -59,7 +58,7 @@ public class UserService {
         newUser.setAttribute(newAttribute);
 
         UserDto userDtoRez = new UserDto(newUser.getUsername(), newUser.getEmail(),
-                userAttributeConverter.convertUserAttributeToUserAttrDto(newUser.getAttribute()));
+                userAttributeConverter.toUserAttributeDto(newUser.getAttribute()));
         return userDtoRez;
     }
 }

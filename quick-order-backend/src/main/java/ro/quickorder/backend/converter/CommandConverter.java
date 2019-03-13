@@ -7,8 +7,10 @@ import ro.quickorder.backend.model.dto.CommandDto;
 @Component
 public class CommandConverter {
 
-    public Command convertCommandDtoToCommand(CommandDto commandDto){
-        Command command= new Command();
+    public Command toCommand(CommandDto commandDto) {
+        if (commandDto == null)
+            return null;
+        Command command = new Command();
         command.setCommandName(commandDto.getCommandName());
         command.setSpecification(commandDto.getSpecification());
         command.setPacked(commandDto.isPacked());
@@ -16,8 +18,10 @@ public class CommandConverter {
         return command;
     }
 
-    public CommandDto convertCommandToCommandDto(Command command){
-        CommandDto commandDto= new CommandDto();
+    public CommandDto toCommandDto(Command command) {
+        if (command == null)
+            return null;
+        CommandDto commandDto = new CommandDto();
         commandDto.setCommandName(command.getCommandName());
         commandDto.setSpecification(command.getSpecification());
         commandDto.setPacked(command.isPacked());

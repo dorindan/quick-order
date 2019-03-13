@@ -27,7 +27,7 @@ public class TableFoodService {
         List<TableFood> tables = tableFoodRepository.findAll();
         for (TableFood table: tables)
             if(table.isFree())
-                rez.add(tableFoodConverter.convertTableFoodToTableFoodDto(table));
+                rez.add(tableFoodConverter.toTableFoodDto(table));
 
 
         return rez;

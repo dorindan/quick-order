@@ -7,8 +7,10 @@ import ro.quickorder.backend.model.dto.TableFoodDto;
 @Component
 public class TableFoodConverter {
 
-    public TableFood convertTableFoodDtoToTableFood(TableFoodDto tableFoodDto){
-        TableFood tableFood= new TableFood();
+    public TableFood toTableFood(TableFoodDto tableFoodDto) {
+        if (tableFoodDto == null)
+            return null;
+        TableFood tableFood = new TableFood();
         tableFood.setTableNr(tableFoodDto.getTableNr());
         tableFood.setSeats(tableFoodDto.getSeats());
         tableFood.setWindowView(tableFoodDto.isWindowView());
@@ -17,8 +19,10 @@ public class TableFoodConverter {
         return tableFood;
     }
 
-    public TableFoodDto convertTableFoodToTableFoodDto(TableFood tableFood){
-        TableFoodDto tableFoodDto= new TableFoodDto();
+    public TableFoodDto toTableFoodDto(TableFood tableFood) {
+        if (tableFood == null)
+            return null;
+        TableFoodDto tableFoodDto = new TableFoodDto();
         tableFoodDto.setTableNr(tableFood.getTableNr());
         tableFoodDto.setSeats(tableFood.getSeats());
         tableFoodDto.setWindowView(tableFood.isWindowView());
@@ -26,6 +30,5 @@ public class TableFoodConverter {
         tableFoodDto.setFree(tableFood.isFree());
         return tableFoodDto;
     }
-
 
 }

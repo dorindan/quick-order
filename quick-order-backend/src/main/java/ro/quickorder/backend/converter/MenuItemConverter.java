@@ -7,21 +7,24 @@ import ro.quickorder.backend.model.dto.MenuItemDto;
 @Component
 public class MenuItemConverter {
 
-    public MenuItem convertMenuItemDtoToMenuItem(MenuItemDto menuItemDtoDto){
-        MenuItem menuItem= new MenuItem();
+    public MenuItem toMenuItem(MenuItemDto menuItemDtoDto) {
+        if (menuItemDtoDto == null)
+            return null;
+        MenuItem menuItem = new MenuItem();
         menuItem.setName(menuItemDtoDto.getName());
         menuItem.setDescription(menuItemDtoDto.getDescription());
         menuItem.setPreparationDurationInMinutes(menuItemDtoDto.getPreparationDurationInMinutes());
         return menuItem;
     }
 
-    public MenuItemDto convertMenuItemToMenuItemDto(MenuItem menuItem){
-        MenuItemDto menuItemDto= new MenuItemDto();
+    public MenuItemDto toMenuItemDto(MenuItem menuItem) {
+        if (menuItem == null)
+            return null;
+        MenuItemDto menuItemDto = new MenuItemDto();
         menuItemDto.setName(menuItem.getName());
         menuItemDto.setDescription(menuItem.getDescription());
         menuItemDto.setPreparationDurationInMinutes(menuItem.getPreparationDurationInMinutes());
         return menuItemDto;
     }
-
 
 }

@@ -11,21 +11,25 @@ public class UserConverter {
     @Autowired
     private UserAttributeConverter userAttributeConverter;
 
-    public User convertUserDtoToUser(UserDto userDto){
+    public User toUser(UserDto userDto) {
+        if (userDto == null)
+            return null;
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
-        user.setAttribute(userAttributeConverter.convertUserAttrDtoToUserAttribute(userDto.getUserAttributeDto()));
+        user.setAttribute(userAttributeConverter.toUserAttribute(userDto.getUserAttributeDto()));
         return user;
     }
 
-    public UserDto convertUserToUserDto(User user) {
+    public UserDto toUserDto(User user) {
+        if (user == null)
+            return null;
         UserDto userDto = new UserDto();
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
         userDto.setEmail(user.getEmail());
-        userDto.setUserAttributeDto(userAttributeConverter.convertUserAttributeToUserAttrDto(user.getAttribute()));
+        userDto.setUserAttributeDto(userAttributeConverter.toUserAttributeDto(user.getAttribute()));
         return userDto;
     }
 }

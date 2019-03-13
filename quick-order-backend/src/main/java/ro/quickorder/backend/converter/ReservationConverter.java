@@ -7,8 +7,10 @@ import ro.quickorder.backend.model.dto.ReservationDto;
 @Component
 public class ReservationConverter {
 
-    public Reservation convertReservationDtoToReservation(ReservationDto reservationDto){
-        Reservation reservation= new Reservation();
+    public Reservation toReservation(ReservationDto reservationDto) {
+        if (reservationDto == null)
+            return null;
+        Reservation reservation = new Reservation();
         reservation.setCheckInTime(reservationDto.getCheckInTime());
         reservation.setCheckOutTime(reservationDto.getCheckOutTime());
         reservation.setStatus(reservationDto.getStatus());
@@ -18,8 +20,10 @@ public class ReservationConverter {
         return reservation;
     }
 
-    public ReservationDto convertReservationToReservationDto(Reservation reservation){
-        ReservationDto reservationDto= new ReservationDto();
+    public ReservationDto toReservationDto(Reservation reservation) {
+        if (reservation == null)
+            return null;
+        ReservationDto reservationDto = new ReservationDto();
         reservationDto.setCheckInTime(reservation.getCheckInTime());
         reservationDto.setCheckOutTime(reservation.getCheckOutTime());
         reservationDto.setStatus(reservation.getStatus());
@@ -28,7 +32,5 @@ public class ReservationConverter {
         reservationDto.setReservationName(reservation.getReservationName());
         return reservationDto;
     }
-
-
 
 }

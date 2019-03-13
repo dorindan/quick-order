@@ -7,11 +7,11 @@ public class CommandDto {
     private boolean isPacked;
     private String status;
 
-    public CommandDto(){
+    public CommandDto() {
 
     }
 
-    public CommandDto(String commandName, String specification, boolean isPacked, String status){
+    public CommandDto(String commandName, String specification, boolean isPacked, String status) {
         this.commandName = commandName;
         this.specification = specification;
         this.isPacked = isPacked;

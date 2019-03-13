@@ -6,11 +6,11 @@ public class MenuItemDto {
     private String description;
     private Integer preparationDurationInMinutes;
 
-    public  MenuItemDto(){
+    public MenuItemDto() {
 
     }
 
-    public MenuItemDto(String name, String description, Integer preparationDurationInMinutes){
+    public MenuItemDto(String name, String description, Integer preparationDurationInMinutes) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;

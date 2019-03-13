@@ -10,10 +10,11 @@ public class TableFoodDto {
     private int floor;
     private boolean free;
 
-    public TableFoodDto(){
+    public TableFoodDto() {
 
     }
-    public TableFoodDto(int tableNr, int seats, boolean windowView, int floor, boolean free){
+
+    public TableFoodDto(int tableNr, int seats, boolean windowView, int floor, boolean free) {
         this.tableNr = tableNr;
         this.seats = seats;
         this.windowView = windowView;

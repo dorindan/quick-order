@@ -8,11 +8,11 @@ public class FeedbackDto {
     private String message;
 
 
-    public FeedbackDto(){
+    public FeedbackDto() {
 
     }
 
-    public FeedbackDto(int rating, String message){
+    public FeedbackDto(int rating, String message) {
         this.rating = rating;
         this.message = message;
     }

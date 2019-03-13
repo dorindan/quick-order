@@ -33,7 +33,7 @@ public class ReservationService {
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
-        Reservation reservation = reservationConverter.convertReservationDtoToReservation(reservationDto);
+        Reservation reservation = reservationConverter.toReservation(reservationDto);
         reservationRepository.save(reservation);
     }
 
@@ -45,7 +45,7 @@ public class ReservationService {
 
         for (Reservation res : reservations) {
             if (!res.isConfirmed()) {
-                results.add(reservationConverter.convertReservationToReservationDto(res));
+                results.add(reservationConverter.toReservationDto(res));
             }
         }
         return results;

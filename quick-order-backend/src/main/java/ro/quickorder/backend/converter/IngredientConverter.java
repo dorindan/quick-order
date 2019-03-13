@@ -7,14 +7,18 @@ import ro.quickorder.backend.model.dto.IngredientDto;
 @Component
 public class IngredientConverter {
 
-    public Ingredient convertIngredientDtoToIngredient(IngredientDto ingredientDto){
-        Ingredient ingredient= new Ingredient();
+    public Ingredient toIngredient(IngredientDto ingredientDto) {
+        if (ingredientDto == null)
+            return null;
+        Ingredient ingredient = new Ingredient();
         ingredient.setName(ingredientDto.getName());
         return ingredient;
     }
 
-    public IngredientDto convertIngredientToIngredientDto(Ingredient ingredient){
-        IngredientDto ingredientDto= new IngredientDto();
+    public IngredientDto toIngredientDto(Ingredient ingredient) {
+        if (ingredient == null)
+            return null;
+        IngredientDto ingredientDto = new IngredientDto();
         ingredientDto.setName(ingredient.getName());
         return ingredientDto;
     }

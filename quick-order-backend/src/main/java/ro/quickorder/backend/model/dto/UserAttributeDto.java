@@ -10,7 +10,7 @@ public class UserAttributeDto {
     public UserAttributeDto() {
     }
 
-    public UserAttributeDto(Language language){
+    public UserAttributeDto(Language language) {
         this.language = language;
     }
 

@@ -18,7 +18,7 @@ public class ReservationDto {
     public ReservationDto() {
     }
 
-    public ReservationDto(Timestamp checkInTime, Timestamp checkOutTime, String status, boolean confirmed, Integer numberOfPersons, String reservationName){
+    public ReservationDto(Timestamp checkInTime, Timestamp checkOutTime, String status, boolean confirmed, Integer numberOfPersons, String reservationName) {
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
         this.confirmed = confirmed;
