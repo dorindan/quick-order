@@ -22,3 +22,7 @@ INSERT INTO public.menu_item (id, menu_item_type_id, name, description, preparat
 INSERT INTO public.menu_item (id, menu_item_type_id, name, description, preparation_duration_in_minutes, price) VALUES (1, 3, 'Ciolan cu fasole', 'ii bun', 25, 28);
 INSERT INTO public.menu_item (id, menu_item_type_id, name, description, preparation_duration_in_minutes, price) VALUES (2, 1, 'Pizza Cannibale', 'ii bun', 30, 22);
 INSERT INTO public.menu_item (id, menu_item_type_id, name, description, preparation_duration_in_minutes, price) VALUES (4, 2, 'Fanta', 'nu ii sanatos', 2, 15);
+
+INSERT INTO public.menu_item_ingredient (id, menu_item_id, ingredient_id) VALUES (1, 1, 6);
+INSERT INTO public.menu_item_ingredient (id, menu_item_id, ingredient_id) VALUES (2, 1, 7);
+INSERT INTO public.menu_item_ingredient (id, menu_item_id, ingredient_id) VALUES (3, 2, 4);

@@ -1,5 +1,7 @@
 package ro.quickorder.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.Period;
 import java.util.List;
@@ -11,7 +13,9 @@ public class MenuItem {
     private String name;
     private String description;
     private Integer preparationDurationInMinutes;
+    private Integer price;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "menu_item_type_id")
     private MenuItemType menuItemType;
@@ -31,13 +35,22 @@ public class MenuItem {
             inverseJoinColumns = { @JoinColumn(name = "command_id") })
     private List<Command> commands;
 
-    public MenuItem(String name, String description, Integer preparationDurationInMinutes) {
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
+        this.price = price;
     }
 
     public MenuItem() {
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public Long getId() {

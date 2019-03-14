@@ -12,8 +12,6 @@ public class Ingredient {
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "ingredients")
-    private List<MenuItem> menuItems;
 
     public Ingredient( String name) {
         this.name = name;
@@ -38,27 +36,18 @@ public class Ingredient {
         this.name = name;
     }
 
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
-    }
-
-    public void setMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(menuItems, that.menuItems);
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, menuItems);
+        return Objects.hash(id, name);
     }
 
     @Override
