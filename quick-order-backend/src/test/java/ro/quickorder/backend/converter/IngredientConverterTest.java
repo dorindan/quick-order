@@ -40,7 +40,6 @@ public class IngredientConverterTest {
 
         assertEquals(ingredientDto.getName(), ingredient.getName());
         assertEquals(ingredientDto.getName(), ingredient.getName());
-        assertNull(ingredient.getMenuItems());
     }
 
     @Test

@@ -17,7 +17,7 @@ public class MenuItemConverterTest {
 
     @Test
     public void testConvertMenuItemToDto() {
-        MenuItem menuItem = new MenuItem("name1", "description", 20);
+        MenuItem menuItem = new MenuItem("name1", "description", 20, 45);
 
         MenuItemDto menuItemDto = menuItemConverter.toMenuItemDto(menuItem);
 
