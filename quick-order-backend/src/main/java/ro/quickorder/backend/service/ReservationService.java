@@ -34,7 +34,6 @@ public class ReservationService {
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println(timestamp);
 
         if (reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1){
             throw new ForbiddenException("Number of persons must be between 1 and 99!");
