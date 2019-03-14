@@ -48,7 +48,7 @@
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Pick the nr. of persons.</ng-template>
             <mat-form-field>
-              <input matInput type="number" min="0"  pattern="^[0-9]{1,2}[:.,-]?$" placeholder="Nr. persons" formControlName="secondCtrl" (change)="addNrOfPersons($event.target.value)" required  >
+              <input matInput type="number" min="0"  pattern="^(0?[1-9]|[1-9][0-9])$" placeholder="Nr. persons" formControlName="secondCtrl" (change)="addNrOfPersons($event.target.value)" required  >
             </mat-form-field>
             <div>
               <button mat-button matStepperPrevious>Back</button>
@@ -72,9 +72,9 @@
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Pick a date</ng-template>
             <mat-form-field>
-              <input matInput [matDatepicker]="pickerVertical" placeholder="Choose a date" formControlName="firstCtrl"  (dateInput)="addDate('input', $event)">
+              <input matInput [min]="minDate" [matDatepicker]="pickerVertical" placeholder="Choose a date" formControlName="firstCtrl"  (dateInput)="addDate('input', $event)">
               <mat-datepicker-toggle matSuffix [for]="pickerVertical"></mat-datepicker-toggle>
-              <mat-datepicker #pickerVertical></mat-datepicker>
+              <mat-datepicker #pickerVertical ></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
               <mat-select placeholder="Choose an Hour" [formControl]="hourControl" (selectionChange)="onChange($event)"  required>

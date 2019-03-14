@@ -27,6 +27,7 @@ export class ReservationComponent implements OnInit {
   nrOfPersons: number;
   reservation: Reservation;
   events: string[] = [];
+  minDate = new Date();
 
 
   constructor(private _formBuilder: FormBuilder,
@@ -44,9 +45,11 @@ export class ReservationComponent implements OnInit {
 
 
   addDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    event;
     this.events.push(`${type}: ${event.value}`);
     this.month = event.value.getMonth() + 1;
     this.date = event.value.getDate() + '/' + this.month + '/' + event.value.getFullYear();
+    console.log(event.value.getDate());
   }
 
   onChange(event) {
@@ -60,6 +63,7 @@ export class ReservationComponent implements OnInit {
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
     this.reservation = new Reservation(this.dateTime, this.nrOfPersons);
+    console.log(this.reservation);
     this.reservationService.reserve(this.reservation)
       .subscribe(data => {
         this.showSnackbar('Reservation sent successfully.');

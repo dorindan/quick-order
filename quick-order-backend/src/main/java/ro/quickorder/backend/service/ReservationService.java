@@ -33,6 +33,15 @@ public class ReservationService {
     private TableFoodRepository tableFoodRepository;
 
     public void addReservation(ReservationDto reservationDto) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println(timestamp);
+
+        if (reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1){
+            throw new ForbiddenException("Number of persons must be between 1 and 99!");
+        }
+        if (reservationDto.getCheckInTime().before(timestamp)){
+            throw new ForbiddenException("Can't choose before NOW!");
+        }
         reservationDto.setStatus("not accepted");
         reservationDto.setConfirmed(false);
         long twoHoursInMilliseconds = 7200000;
