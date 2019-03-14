@@ -23,12 +23,12 @@ public class ReservationConverterTest {
 
         ReservationDto reservationDto = reservationConverter.toReservationDto(reservation);
 
-        assertEquals(reservationDto.getCheckInTime(), reservation.getCheckInTime());
-        assertEquals(reservationDto.getCheckOutTime(), reservation.getCheckOutTime());
-        assertEquals(reservationDto.getNumberOfPersons(), reservation.getNumberOfPersons());
-        assertEquals(reservationDto.getReservationName(), reservation.getReservationName());
-        assertEquals(reservationDto.getStatus(), reservation.getStatus());
-        assertEquals(reservationDto.isConfirmed(), reservation.isConfirmed());
+        assertEquals(reservation.getCheckInTime(), reservationDto.getCheckInTime());
+        assertEquals(reservation.getCheckOutTime(), reservationDto.getCheckOutTime());
+        assertEquals(reservation.getNumberOfPersons(), reservationDto.getNumberOfPersons());
+        assertEquals(reservation.getReservationName(), reservationDto.getReservationName());
+        assertEquals(reservation.getStatus(), reservationDto.getStatus());
+        assertEquals(reservation.isConfirmed(), reservationDto.isConfirmed());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class ReservationConverterTest {
 
     @Test
     public void testConvertDtoToReservation() {
-        ReservationDto reservationDto = new ReservationDto(new Timestamp(10), new Timestamp(20),  "status", false, 3, "name");
+        ReservationDto reservationDto = new ReservationDto(new Timestamp(10), new Timestamp(20), "status", false, 3, "name");
 
         Reservation reservation = reservationConverter.toReservation(reservationDto);
 

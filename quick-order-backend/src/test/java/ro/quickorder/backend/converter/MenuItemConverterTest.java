@@ -16,7 +16,7 @@ public class MenuItemConverterTest {
     private MenuItemConverter menuItemConverter = new MenuItemConverter();
 
     @Test
-    public void testConvertMenuItemToDto(){
+    public void testConvertMenuItemToDto() {
         MenuItem menuItem = new MenuItem("name1", "description", 20);
 
         MenuItemDto menuItemDto = menuItemConverter.toMenuItemDto(menuItem);
@@ -25,22 +25,23 @@ public class MenuItemConverterTest {
         assertEquals(menuItem.getDescription(), menuItemDto.getDescription());
         assertEquals(menuItem.getPreparationDurationInMinutes(), menuItemDto.getPreparationDurationInMinutes());
     }
+
     @Test
-    public void testConvertMenuItemToDtoWhenMenuItemIsNull(){
+    public void testConvertMenuItemToDtoWhenMenuItemIsNull() {
         MenuItemDto menuItemDto = menuItemConverter.toMenuItemDto(null);
 
         assertNull(menuItemDto);
     }
 
     @Test
-    public void testConvertDtoToMenuItem(){
+    public void testConvertDtoToMenuItem() {
         MenuItemDto menuItemDto = new MenuItemDto("name1", "description", 20);
 
         MenuItem menuItem = menuItemConverter.toMenuItem(menuItemDto);
 
-        assertEquals(menuItem.getName(), menuItemDto.getName());
-        assertEquals(menuItem.getDescription(), menuItemDto.getDescription());
-        assertEquals(menuItem.getPreparationDurationInMinutes(), menuItemDto.getPreparationDurationInMinutes());
+        assertEquals(menuItemDto.getName(), menuItem.getName());
+        assertEquals(menuItemDto.getDescription(), menuItem.getDescription());
+        assertEquals(menuItemDto.getPreparationDurationInMinutes(), menuItem.getPreparationDurationInMinutes());
         assertNull(menuItem.getCommands());
         assertNull(menuItem.getFeedbacks());
         assertNull(menuItem.getIngredients());
@@ -48,12 +49,9 @@ public class MenuItemConverterTest {
     }
 
     @Test
-    public void testConvertDtoToMenuItemWhenDtoIsNull(){
+    public void testConvertDtoToMenuItemWhenDtoIsNull() {
         MenuItem menuItem = menuItemConverter.toMenuItem(null);
 
         assertNull(menuItem);
     }
-
-
-
 }

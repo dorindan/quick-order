@@ -16,39 +16,37 @@ public class IngredientConverterTest {
     private IngredientConverter ingredientConverter = new IngredientConverter();
 
     @Test
-    public void testConvertIngredientToDto(){
+    public void testConvertIngredientToDto() {
         Ingredient ingredient = new Ingredient("name1");
 
         IngredientDto ingredientDto = ingredientConverter.toIngredientDto(ingredient);
 
-        assertEquals(ingredientDto.getName(),ingredient.getName());
-        assertEquals(ingredientDto.getName(),ingredient.getName());
+        assertEquals(ingredient.getName(), ingredientDto.getName());
+        assertEquals(ingredient.getName(), ingredientDto.getName());
     }
+
     @Test
-    public void testConvertIngredientToDtoWhenIngredientIsNull(){
+    public void testConvertIngredientToDtoWhenIngredientIsNull() {
         IngredientDto ingredientDto = ingredientConverter.toIngredientDto(null);
 
         assertNull(ingredientDto);
     }
 
     @Test
-    public void testConvertDtoToIngredient(){
+    public void testConvertDtoToIngredient() {
         IngredientDto ingredientDto = new IngredientDto("name1");
 
         Ingredient ingredient = ingredientConverter.toIngredient(ingredientDto);
 
-        assertEquals(ingredientDto.getName(),ingredient.getName());
-        assertEquals(ingredientDto.getName(),ingredient.getName());
+        assertEquals(ingredientDto.getName(), ingredient.getName());
+        assertEquals(ingredientDto.getName(), ingredient.getName());
         assertNull(ingredient.getMenuItems());
     }
+
     @Test
-    public void testConvertDtoToIngredientWhenDtoIsNull(){
+    public void testConvertDtoToIngredientWhenDtoIsNull() {
         Ingredient ingredient = ingredientConverter.toIngredient(null);
 
         assertNull(ingredient);
     }
-
-
-
-
 }

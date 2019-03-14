@@ -16,24 +16,25 @@ public class FeedbackConverterTest {
     private FeedbackConverter feedbackConverter = new FeedbackConverter();
 
     @Test
-    public void testConvertFeedbackToDto(){
-        Feedback feedback = new Feedback(4,"Message",null);
+    public void testConvertFeedbackToDto() {
+        Feedback feedback = new Feedback(4, "Message", null);
 
         FeedbackDto feedbackDto = feedbackConverter.toFeedbackDto(feedback);
 
-        assertEquals(feedbackDto.getMessage(), feedback.getMessage());
-        assertEquals(feedbackDto.getRating(), feedback.getRating());
+        assertEquals(feedback.getMessage(), feedbackDto.getMessage());
+        assertEquals(feedback.getRating(), feedbackDto.getRating());
     }
+
     @Test
-    public void testConvertFeedbackToDtoWhenFeedbackIsNull(){
+    public void testConvertFeedbackToDtoWhenFeedbackIsNull() {
         FeedbackDto feedbackDto = feedbackConverter.toFeedbackDto(null);
 
         assertNull(feedbackDto);
     }
 
     @Test
-    public void testConvertDtoToFeedback(){
-        FeedbackDto feedbackDto = new FeedbackDto(4,"Message");
+    public void testConvertDtoToFeedback() {
+        FeedbackDto feedbackDto = new FeedbackDto(4, "Message");
 
         Feedback feedback = feedbackConverter.toFeedback(feedbackDto);
 
@@ -41,8 +42,9 @@ public class FeedbackConverterTest {
         assertEquals(feedbackDto.getRating(), feedback.getRating());
         assertNull(feedback.getMenuItem());
     }
+
     @Test
-    public void testConvertDtoToFeedbackWhenDtoIsNull(){
+    public void testConvertDtoToFeedbackWhenDtoIsNull() {
         Feedback feedback = feedbackConverter.toFeedback(null);
 
         assertNull(feedback);

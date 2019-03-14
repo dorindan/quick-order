@@ -17,36 +17,35 @@ public class UserAttributeConverterTest {
     private UserAttributeConverter userAttributeConverter = new UserAttributeConverter();
 
     @Test
-    public void testConverterUserAttributeToDto(){
+    public void testConverterUserAttributeToDto() {
         UserAttribute userAttribute = new UserAttribute(Language.EN);
 
         UserAttributeDto userAttributeDto = userAttributeConverter.toUserAttributeDto(userAttribute);
 
-        assertEquals(userAttributeDto.getLanguage(),userAttribute.getLanguage());
+        assertEquals(userAttribute.getLanguage(), userAttributeDto.getLanguage());
     }
 
     @Test
-    public void testConverterUserAttributeToDtoWhenUserAttributeIsNull(){
+    public void testConverterUserAttributeToDtoWhenUserAttributeIsNull() {
         UserAttributeDto userAttributeDto = userAttributeConverter.toUserAttributeDto(null);
 
         assertNull(userAttributeDto);
     }
 
     @Test
-    public void testConverterDtoToUserAttribute(){
+    public void testConverterDtoToUserAttribute() {
         UserAttributeDto userAttributeDto = new UserAttributeDto(Language.EN);
 
         UserAttribute userAttribute = userAttributeConverter.toUserAttribute(userAttributeDto);
 
-        assertEquals(userAttributeDto.getLanguage(),userAttribute.getLanguage());
+        assertEquals(userAttributeDto.getLanguage(), userAttribute.getLanguage());
         assertNull(userAttribute.getUser());
     }
 
     @Test
-    public void testConverterDtoToUserAttributeWhenDtoIsNull(){
+    public void testConverterDtoToUserAttributeWhenDtoIsNull() {
         UserAttribute userAttribute = userAttributeConverter.toUserAttribute(null);
 
         assertNull(userAttribute);
     }
-
 }
