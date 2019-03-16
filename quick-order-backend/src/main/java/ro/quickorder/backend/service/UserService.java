@@ -1,6 +1,7 @@
 package ro.quickorder.backend.service;
 
 
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.UserAttributeConverter;
@@ -13,6 +14,8 @@ import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
 
 import javax.inject.Inject;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
@@ -40,6 +43,18 @@ public class UserService {
 
     public UserDto signUp(UserDto userDto) {
 
+        String line = userDto.getUsername();
+        String pattern = "^[a-zA-Z0-9_.]*$";
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+
+        // Now create matcher object.
+        Matcher m = r.matcher(line);
+        // bad username
+        if (!m.find()) {
+            throw new ForbiddenException("UserName has characters that are not allowed!");
+        }
         // test if username is ok
         if (userRepository.findByUsername(userDto.getUsername()) != null) {
             throw new NotAcceptableException("UserName is already taken!");

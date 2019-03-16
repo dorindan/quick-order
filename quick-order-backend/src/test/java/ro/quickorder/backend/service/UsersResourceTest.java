@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.exception.BadRequestException;
+import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotAcceptableException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Language;
@@ -22,7 +23,7 @@ import ro.quickorder.backend.service.UserService;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @ActiveProfiles("junit")
 @RunWith(SpringRunner.class)
@@ -64,11 +65,12 @@ public class UsersResourceTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         userAttributeRepository.deleteAll();
         userRepository.deleteAll();
     }
 
+    // Set preferences
     @Test
     public void testSetPreference() {
         UserAttributeDto attributeDto = new UserAttributeDto();
@@ -79,65 +81,96 @@ public class UsersResourceTest {
         userDto.setEmail("alex@yahoo.com");
         userDto.setUsername("Alex");
 
-        // no attribute
-        try{
-            userAttributeService.setPreference(userDto,userDto.getUserAttributeDto());
-            assertEquals(false,true);
-        }catch (BadRequestException ex){
+        userDto.setUserAttributeDto(attributeDto);
+
+        userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
+        User user = userRepository.findById(userId).orElse(null);
+        assertNotNull(user);
+        UserAttribute userAttribute = user.getAttribute();
+        assertNotNull(userAttribute);
+        assertEquals(Language.RO, userAttribute.getLanguage());
+    }
+
+    @Test
+    public void testSetPreferenceAttributeIsNull(){
+        UserDto userDto = new UserDto();
+        userDto.setEmail("alex@yahoo.com");
+        userDto.setUsername("Alex");
+
+        try {
+            userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
+            fail();
+        } catch (BadRequestException ex) {
             assertEquals("No attribute!", ex.getMessage());
         }
+    }
+
+    @Test
+    public void testSetPreferenceBadUser() {
+        UserAttributeDto attributeDto = new UserAttributeDto();
+        attributeDto.setLanguage(Language.RO);
+        long userId = userRepository.findAll().get(0).getId();
+
+        UserDto userDto = new UserDto();
+        userDto.setEmail("newUser@yahoo.com");
+        userDto.setUsername("newUser");
 
         userDto.setUserAttributeDto(attributeDto);
 
-        // Everything is good
-        userAttributeService.setPreference(userDto,userDto.getUserAttributeDto());
-        User user = userRepository.findById(userId).orElse(null);
-
-        assertEquals( Language.RO, user.getAttribute().getLanguage());
-
-        // bad username
-        try{
-            userDto.setUsername("newUser");
+        try {
             userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
-            assertEquals(false,true);
-        }catch (NotFoundException ex){
+            fail();
+        } catch (NotFoundException ex) {
             assertEquals("User not found", ex.getMessage());
         }
     }
+    // ----------------
 
+    // Login ---------------------
     @Test
-    public void testLogin(){
+    public void testLogin() {
         UserDto userDto = new UserDto();
         userDto.setUsername("Alex");
         userDto.setPassword("parola1");
+
         UserDto userDto1 = userService.login(userDto);
         String actual = userDto1.getUsername();
+
         assertEquals("Alex", actual);
+    }
 
-        // User wrong
-        try{
-            userDto.setUsername("Alexx");
-            userDto.setPassword("parola1");
-            UserDto userDto2 = userService.login(userDto);
-            assertEquals(false,true);
-        }catch (NotFoundException ex){
-            assertEquals("User or password are incorrect!", ex.getMessage());
-        }
+    @Test
+    public void testLoginWrongUsername() {
+        UserDto userDto = new UserDto();
+        userDto.setUsername("Alexx");
+        userDto.setPassword("parola1");
 
-        // Password wrong
-        try{
-            userDto.setUsername("Alex");
-            userDto.setPassword("parola1213");
-            UserDto userDto2 = userService.login(userDto);
-            assertEquals(false,true);
-        }catch (NotFoundException ex){
+        try {
+            UserDto userDtoRes = userService.login(userDto);
+            fail("The username should be wrong");
+        } catch (NotFoundException ex) {
             assertEquals("User or password are incorrect!", ex.getMessage());
         }
     }
 
     @Test
-    public void testSignUp(){
+    public void testLogInWrongPassword(){
+        UserDto userDto = new UserDto();
+        userDto.setUsername("Alex");
+        userDto.setPassword("parola1213");
 
+        try {
+            UserDto userDtoRes = userService.login(userDto);
+            fail("The password should be wrong");
+        } catch (NotFoundException ex) {
+            assertEquals("User or password are incorrect!", ex.getMessage());
+        }
+    }
+    // --------
+
+    // SignUp -----------------
+    @Test
+    public void testSignUp(){
         UserDto userDto = new UserDto();
         userDto.setUsername("Andrei");
         userDto.setPassword("password");
@@ -146,27 +179,53 @@ public class UsersResourceTest {
         UserDto userDtoRez = userService.signUp(userDto);
         assertEquals(userDtoRez.getEmail(), userDto.getEmail());
         assertEquals(userDtoRez.getUsername(), userDto.getUsername());
-        assertEquals(userDtoRez.getPassword(), null);
+        assertNull(userDtoRez.getPassword());
+    }
 
-        // user already used
+    @Test
+    public void testSignUpInvalidUsername(){
         try{
-            userDto.setUsername("Alex");
+            UserDto userDtoTest = new UserDto();
+            userDtoTest.setUsername("Dinu)");
+            userDtoTest.setPassword("password");
+            userDtoTest.setEmail("Dinu@yahoo.com");
+
+            UserDto res = userService.signUp(userDtoTest);
+            fail("The username should be invalid, it contains characters that are not allowed!");
+        }catch (ForbiddenException e){
+            assertEquals("UserName has characters that are not allowed!",e.getMessage());
+        }
+    }
+
+    @Test
+    public void testSignUpUserAlreadyUsed(){
+        UserDto userDto = new UserDto();
+        userDto.setUsername("Alex");
+        userDto.setPassword("password");
+        userDto.setEmail("Andrei@yahoo.com");
+
+        try{
             UserDto userDto1 = userService.signUp(userDto);
-            assertEquals(false,true);
+            fail("User should be already used!");
         }catch (NotAcceptableException ex){
             assertEquals("UserName is already taken!", ex.getMessage());
         }
+    }
 
-        // Password wrong
+    @Test
+    public void testSignUpEmailAlreadyUsed(){
+        UserDto userDto = new UserDto();
+        userDto.setUsername("Andrei");
+        userDto.setPassword("password");
+        userDto.setEmail("ana@yahoo.com");
+
         try{
-            userDto.setUsername("Avram");
-            userDto.setEmail("ana@yahoo.com");
             UserDto userDto2 = userService.signUp(userDto);
-            assertEquals(false,true);
+            fail("Email should already be used!");
         }catch (NotAcceptableException ex){
             assertEquals("Email is already taken!", ex.getMessage());
         }
-
     }
+    // -------------
 
 }
