@@ -35,7 +35,7 @@ public class UserService {
         User user = userConverter.toUser(userDto);
         for (User u : userRepository.findAll()) {
             if (user.getPassword().equals(u.getPassword()) && user.getUsername().equals(u.getUsername())) {
-                return new UserDto(u.getUsername(),u.getEmail(), userAttributeConverter.toUserAttributeDto(u.getAttribute()));
+                return new UserDto(u.getUsername(), u.getEmail(), userAttributeConverter.toUserAttributeDto(u.getAttribute()));
             }
         }
         throw new NotFoundException("User or password are incorrect!");
@@ -43,7 +43,7 @@ public class UserService {
 
     public UserDto signUp(UserDto userDto) {
 
-        if(userDto == null)
+        if (userDto == null)
             throw new BadRequestException("User is null!");
 
         String line = userDto.getUsername();
@@ -63,9 +63,9 @@ public class UserService {
             throw new NotAcceptableException("UserName is already taken!");
         }
         // test if email is ok
-            if (userRepository.findByEmail(userDto.getEmail()) != null) {
-                throw new NotAcceptableException("Email is already taken!");
-            }
+        if (userRepository.findByEmail(userDto.getEmail()) != null) {
+            throw new NotAcceptableException("Email is already taken!");
+        }
 
         User user = userConverter.toUser(userDto);
         User newUser = userRepository.save(user);
