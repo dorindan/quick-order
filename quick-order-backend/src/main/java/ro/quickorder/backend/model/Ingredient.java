@@ -12,9 +12,7 @@ public class Ingredient {
     private Long id;
     private String name;
 
-
-    public Ingredient(Long id, String name) {
-        this.id = id;
+    public Ingredient( String name) {
         this.name = name;
     }
 
@@ -56,7 +54,6 @@ public class Ingredient {
         return "Ingredient{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-
                 '}';
     }
 }

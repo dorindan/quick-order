@@ -2,6 +2,7 @@ package ro.quickorder.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.quickorder.backend.converter.TableFoodConverter;
 import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.TableFoodRepository;
@@ -13,7 +14,12 @@ import java.util.List;
 public class TableFoodService {
 
     @Autowired
+    private TableFoodConverter tableFoodConverter;
+
+    @Autowired
     private TableFoodRepository tableFoodRepository;
+
+
 
     public List<TableFoodDto> getAllFree(){
 
@@ -21,7 +27,7 @@ public class TableFoodService {
         List<TableFood> tables = tableFoodRepository.findAll();
         for (TableFood table: tables)
             if(table.isFree())
-                rez.add(new TableFoodDto(table));
+                rez.add(tableFoodConverter.toTableFoodDto(table));
 
 
         return rez;

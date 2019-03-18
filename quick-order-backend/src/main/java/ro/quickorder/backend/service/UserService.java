@@ -3,12 +3,11 @@ package ro.quickorder.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.quickorder.backend.convertors.UserAttributeConvertor;
-import ro.quickorder.backend.convertors.UserConvertor;
+import ro.quickorder.backend.converter.UserAttributeConverter;
+import ro.quickorder.backend.converter.UserConverter;
 import ro.quickorder.backend.exception.*;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
-import ro.quickorder.backend.model.dto.UserAttributeDto;
 import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
@@ -19,7 +18,9 @@ import javax.inject.Inject;
 public class UserService {
 
     @Autowired
-    private UserConvertor userConvertor;
+    private UserConverter userConverter;
+    @Autowired
+    private UserAttributeConverter userAttributeConverter;
 
     @Autowired
     private UserRepository userRepository;
@@ -28,10 +29,10 @@ public class UserService {
     private UserAttributeRepository userAttributeRepository;
 
     public UserDto login(UserDto userDto) {
-        User user = userConvertor.convertUserDtoToUser(userDto);
+        User user = userConverter.toUser(userDto);
         for (User u : userRepository.findAll()) {
             if (user.getPassword().equals(u.getPassword()) && user.getUsername().equals(u.getUsername())) {
-                return new UserDto(u.getUsername(),u.getEmail(), new UserAttributeDto(u.getAttribute()));
+                return new UserDto(u.getUsername(),u.getEmail(), userAttributeConverter.toUserAttributeDto(u.getAttribute()));
             }
         }
         throw new NotFoundException("User or password are incorrect!");
@@ -48,7 +49,7 @@ public class UserService {
                 throw new NotAcceptableException("Email is already taken!");
             }
 
-        User user = userConvertor.convertUserDtoToUser(userDto);
+        User user = userConverter.toUser(userDto);
         User newUser = userRepository.save(user);
         UserAttribute userAttribute = new UserAttribute();
         userAttributeRepository.save(userAttribute);
@@ -57,7 +58,7 @@ public class UserService {
         newUser.setAttribute(newAttribute);
 
         UserDto userDtoRez = new UserDto(newUser.getUsername(), newUser.getEmail(),
-                new UserAttributeDto(newUser.getAttribute()));
+                userAttributeConverter.toUserAttributeDto(newUser.getAttribute()));
         return userDtoRez;
     }
 }

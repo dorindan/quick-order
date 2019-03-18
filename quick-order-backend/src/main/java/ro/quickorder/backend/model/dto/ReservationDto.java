@@ -1,11 +1,20 @@
 package ro.quickorder.backend.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import ro.quickorder.backend.model.Command;
+import ro.quickorder.backend.model.TableFood;
+import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.service.CustomDateDeserializer;
 import ro.quickorder.backend.model.Reservation;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+/**
+ *  Data transfer object for {@link Reservation}
+ *
+ *  *@author R. Lupoaie
+ */
 public class ReservationDto {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     private Timestamp checkInTime;
@@ -18,13 +27,13 @@ public class ReservationDto {
     public ReservationDto() {
     }
 
-    public ReservationDto(Reservation reservation){
-        this.checkInTime = reservation.getCheckInTime();
-        this.checkOutTime = reservation.getCheckOutTime();
-        this.confirmed = reservation.isConfirmed();
-        this.status = reservation.getStatus();
-        this.numberOfPersons = reservation.getNumberOfPersons();
-        this.reservationName = reservation.getReservationName();
+    public ReservationDto(Timestamp checkInTime, Timestamp checkOutTime, String status, boolean confirmed, Integer numberOfPersons, String reservationName) {
+        this.checkInTime = checkInTime;
+        this.checkOutTime = checkOutTime;
+        this.confirmed = confirmed;
+        this.status = status;
+        this.numberOfPersons = numberOfPersons;
+        this.reservationName = reservationName;
     }
 
     public Timestamp getCheckInTime() {
@@ -51,7 +60,7 @@ public class ReservationDto {
         this.status = status;
     }
 
-    public Boolean getConfirmed() {
+    public Boolean isConfirmed() {
         return confirmed;
     }
 
@@ -73,5 +82,28 @@ public class ReservationDto {
 
     public void setReservationName(String reservationName) {
         this.reservationName = reservationName;
+    }
+
+    public static final class Builder {
+        private Timestamp checkInTime;
+        private Timestamp checkOutTime;
+        private Integer numberOfPersons;
+        private boolean confirmed;
+        private String status;
+        private String reservationName;
+
+
+        public ReservationDto.Builder withCheckInTime(Timestamp checkInTime) {
+            this.checkInTime = checkInTime;
+            return this;
+        }
+
+        public ReservationDto.Builder withnumberOfPersons(Integer numberOfPersons) {
+            this.numberOfPersons = numberOfPersons;
+            return this;
+        }
+        public ReservationDto build() {
+            return new ReservationDto(checkInTime, checkOutTime, status, confirmed, numberOfPersons, reservationName);
+        }
     }
 }

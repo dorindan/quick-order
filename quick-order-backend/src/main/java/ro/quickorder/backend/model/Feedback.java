@@ -21,8 +21,7 @@ public class Feedback {
     private MenuItem menuItem;
 
 
-    public Feedback(Long id, int rating, String message, MenuItem menuItem) {
-        this.id = id;
+    public Feedback(int rating, String message, MenuItem menuItem) {
         this.rating = rating;
         this.message = message;
         this.menuItem = menuItem;

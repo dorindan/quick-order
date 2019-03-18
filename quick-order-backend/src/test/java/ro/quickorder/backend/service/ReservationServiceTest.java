@@ -1,4 +1,4 @@
-package ro.quickorder.backend.resource;
+package ro.quickorder.backend.service;
 
 
 import org.junit.After;
@@ -169,8 +169,7 @@ public class ReservationServiceTest {
     @Test
     public void testAddReservation(){
         try{
-            Reservation reservation = new Reservation.Builder().withnumberOfPersons(12).withCheckInTime(new Timestamp(12)).build();
-            ReservationDto reservationDto = new ReservationDto(reservation);
+            ReservationDto reservationDto = new ReservationDto.Builder().withnumberOfPersons(12).withCheckInTime(new Timestamp(12)).build();
             reservationService.addReservation(reservationDto);
 
         }catch(ForbiddenException e){
@@ -178,8 +177,7 @@ public class ReservationServiceTest {
         }
 
         try{
-            Reservation reservation = new Reservation.Builder().withCheckInTime(new Timestamp(System.currentTimeMillis() + 10000)).withnumberOfPersons(100).build();
-            ReservationDto reservationDto = new ReservationDto(reservation);
+            ReservationDto reservationDto = new ReservationDto.Builder().withCheckInTime(new Timestamp(System.currentTimeMillis() + 10000)).withnumberOfPersons(100).build();
             reservationService.addReservation(reservationDto);
 
         }catch(ForbiddenException e){

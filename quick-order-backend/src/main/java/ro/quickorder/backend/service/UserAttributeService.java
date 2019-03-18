@@ -2,7 +2,7 @@ package ro.quickorder.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.quickorder.backend.convertors.UserAttributeConvertor;
+import ro.quickorder.backend.converter.UserAttributeConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.User;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public class UserAttributeService {
 
     @Autowired
-    private UserAttributeConvertor userAttributeConvertor ;
+    private UserAttributeConverter userAttributeConverter;
 
     @Autowired
     private UserRepository userRepository;
@@ -32,7 +32,7 @@ public class UserAttributeService {
             throw new BadRequestException("No attribute!");
         }
 
-        UserAttribute userAttribute = userAttributeConvertor.convertUserAttrDtoToUserAttribute(userAttributeDto);
+        UserAttribute userAttribute = userAttributeConverter.toUserAttribute(userAttributeDto);
 
         // identify user using userName
         User user=userRepository.findByUsername(userDto.getUsername());

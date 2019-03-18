@@ -3,10 +3,6 @@ package ro.quickorder.backend.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.ReservationConverter;
 import ro.quickorder.backend.exception.ForbiddenException;
@@ -19,16 +15,15 @@ import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
+    @Autowired
+    private ReservationConverter reservationConverter;
+
     @Autowired
     ReservationRepository reservationRepository;
     @Autowired
@@ -50,7 +45,7 @@ public class ReservationService {
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
-        Reservation reservation = ReservationConverter.toReservation(reservationDto);
+        Reservation reservation = reservationConverter.toReservation(reservationDto);
         reservationRepository.save(reservation);
     }
 
@@ -62,7 +57,7 @@ public class ReservationService {
 
         for (Reservation res : reservations) {
             if (!res.isConfirmed()) {
-                results.add(new ReservationDto(res));
+                results.add(reservationConverter.toReservationDto(res));
             }
         }
         return results;
