@@ -72,7 +72,6 @@ public class UsersResourceTest {
         userRepository.deleteAll();
     }
 
-    // Set preferences
     @Test
     public void testSetPreference() {
         UserAttributeDto attributeDto = new UserAttributeDto();
@@ -126,9 +125,7 @@ public class UsersResourceTest {
             assertEquals("User not found", ex.getMessage());
         }
     }
-    // ----------------
 
-    // Login ---------------------
     @Test
     public void testLogin() {
         UserDto userDto = new UserDto();
@@ -168,9 +165,7 @@ public class UsersResourceTest {
             assertEquals("User or password are incorrect!", ex.getMessage());
         }
     }
-    // --------
 
-    // SignUp -----------------
     @Test
     public void testSignUp(){
         UserDto userDto = new UserDto();
@@ -239,6 +234,5 @@ public class UsersResourceTest {
             assertEquals("Email is already taken!", ex.getMessage());
         }
     }
-    // -------------
 
 }
