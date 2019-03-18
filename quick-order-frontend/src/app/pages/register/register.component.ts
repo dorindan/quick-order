@@ -55,10 +55,10 @@ export class RegisterComponent implements OnInit {
   }
 
   public validateUsername(): void {
-    const USER_REGEXP = /^[a-zA-Z0-9_.]*$/i;
+    const USER_REGEXP = /^[a-zA-Z0-9_.]{5,}$/i;
     let control: FormControl;
     control = new FormControl(this.userName);
-    if (this.userName.length < 5 || !USER_REGEXP.test(control.value)) {
+    if (!USER_REGEXP.test(control.value)) {
       this.rightUsername = false;
     } else {
       this.rightUsername = true;

@@ -43,8 +43,11 @@ public class UserService {
 
     public UserDto signUp(UserDto userDto) {
 
+        if(userDto == null)
+            throw new BadRequestException("User is null!");
+
         String line = userDto.getUsername();
-        String pattern = "^[a-zA-Z0-9_.]*$";
+        String pattern = "^[a-zA-Z0-9_.]{5,}$";
 
         // Create a Pattern object
         Pattern r = Pattern.compile(pattern);

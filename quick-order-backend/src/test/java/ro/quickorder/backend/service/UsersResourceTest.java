@@ -18,12 +18,14 @@ import ro.quickorder.backend.model.dto.UserAttributeDto;
 import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
-import ro.quickorder.backend.service.UserAttributeService;
-import ro.quickorder.backend.service.UserService;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 
 @ActiveProfiles("junit")
 @RunWith(SpringRunner.class)
@@ -42,9 +44,9 @@ public class UsersResourceTest {
 
     @Before
     public void setUp() {
-        User user1 = new User("Alex", "parola1", "alex@yahoo.com");
-        User user2 = new User("Radu", "parola2", "aadu@yahoo.com");
-        User user3 = new User("Ana", "parola3", "ana@yahoo.com");
+        User user1 = new User("Alex1", "parola1", "alex@yahoo.com");
+        User user2 = new User("Radu2", "parola2", "aadu@yahoo.com");
+        User user3 = new User("Ana12", "parola3", "ana@yahoo.com");
         UserAttribute userAttribute = new UserAttribute();
         User us1 = userRepository.save(user1);
         userAttributeRepository.save(userAttribute);
@@ -79,7 +81,7 @@ public class UsersResourceTest {
 
         UserDto userDto = new UserDto();
         userDto.setEmail("alex@yahoo.com");
-        userDto.setUsername("Alex");
+        userDto.setUsername("Alex1");
 
         userDto.setUserAttributeDto(attributeDto);
 
@@ -130,13 +132,13 @@ public class UsersResourceTest {
     @Test
     public void testLogin() {
         UserDto userDto = new UserDto();
-        userDto.setUsername("Alex");
+        userDto.setUsername("Alex1");
         userDto.setPassword("parola1");
 
         UserDto userDto1 = userService.login(userDto);
         String actual = userDto1.getUsername();
 
-        assertEquals("Alex", actual);
+        assertEquals("Alex1", actual);
     }
 
     @Test
@@ -183,6 +185,17 @@ public class UsersResourceTest {
     }
 
     @Test
+    public void testSingUpUserIsNull(){
+
+        try {
+            UserDto userDtoRez = userService.signUp(null);
+            fail("User is null, it should throw a BadRequestException");
+        } catch(BadRequestException e){
+            assertEquals("User is null!", e.getMessage());
+        }
+    }
+
+    @Test
     public void testSignUpInvalidUsername(){
         try{
             UserDto userDtoTest = new UserDto();
@@ -200,7 +213,7 @@ public class UsersResourceTest {
     @Test
     public void testSignUpUserAlreadyUsed(){
         UserDto userDto = new UserDto();
-        userDto.setUsername("Alex");
+        userDto.setUsername("Alex1");
         userDto.setPassword("password");
         userDto.setEmail("Andrei@yahoo.com");
 
