@@ -1,5 +1,7 @@
 package ro.quickorder.backend.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -26,20 +28,22 @@ import java.util.Optional;
 
 @Service
 public class ReservationService {
-
+    private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
     ReservationRepository reservationRepository;
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
     public void addReservation(ReservationDto reservationDto) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
-        if (reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1){
-            throw new ForbiddenException("Number of persons must be between 1 and 99!");
+        if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)){
+            LOG.error("Number of persons for a reservation must be between 1 and 99");
+            throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
         }
-        if (reservationDto.getCheckInTime().before(timestamp)){
-            throw new ForbiddenException("Can't choose before NOW!");
+        if (reservationDto.getCheckInTime().before(currentTimestamp)){
+            LOG.error("CheckInTime must be greater than the current date");
+            throw new ForbiddenException("CheckInTime must be greater than the current date");
         }
         reservationDto.setStatus("not accepted");
         reservationDto.setConfirmed(false);

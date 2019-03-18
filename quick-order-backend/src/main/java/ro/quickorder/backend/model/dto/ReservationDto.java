@@ -23,6 +23,7 @@ public class ReservationDto {
         this.checkOutTime = reservation.getCheckOutTime();
         this.confirmed = reservation.isConfirmed();
         this.status = reservation.getStatus();
+        this.numberOfPersons = reservation.getNumberOfPersons();
         this.reservationName = reservation.getReservationName();
     }
 

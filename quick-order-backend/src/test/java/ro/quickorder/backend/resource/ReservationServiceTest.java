@@ -22,6 +22,7 @@ import ro.quickorder.backend.service.ReservationService;
 import ro.quickorder.backend.service.TableFoodService;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,6 +164,28 @@ public class ReservationServiceTest {
         }catch (ForbiddenException e){
             assertEquals(e.getMessage(),"TableList can not be null");
         }
+    }
+
+    @Test
+    public void testAddReservation(){
+        try{
+            Reservation reservation = new Reservation.Builder().withnumberOfPersons(12).withCheckInTime(new Timestamp(12)).build();
+            ReservationDto reservationDto = new ReservationDto(reservation);
+            reservationService.addReservation(reservationDto);
+
+        }catch(ForbiddenException e){
+            assertEquals(e.getMessage(),"CheckInTime must be greater than the current date");
+        }
+
+        try{
+            Reservation reservation = new Reservation.Builder().withCheckInTime(new Timestamp(System.currentTimeMillis() + 10000)).withnumberOfPersons(100).build();
+            ReservationDto reservationDto = new ReservationDto(reservation);
+            reservationService.addReservation(reservationDto);
+
+        }catch(ForbiddenException e){
+            assertEquals(e.getMessage(),"Number of persons for a reservation must be between 1 and 99");
+        }
+
     }
 
 }
