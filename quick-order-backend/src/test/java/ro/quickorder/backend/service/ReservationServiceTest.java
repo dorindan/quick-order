@@ -103,6 +103,7 @@ public class ReservationServiceTest {
         assertEquals(reservationDtoList.size(),2);
     }
 
+    // Confirm Reservation --------------------
     @Test
     public void testConfirmReservation() {
         List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
@@ -118,53 +119,80 @@ public class ReservationServiceTest {
 
         assertEquals(reservationDtosAfter.size(), 1);
         assertEquals(tableFoodDtosAfter.size(), 0);
-
-        //reservation errors
-        testReservationErrors(reservationDtos, tableFoodDtos, tableFoodDtosAfter);
-
-        // table errors
-        testTableFoodErrors(reservationDtos, tableFoodDtos, tableFoodDtosAfter);
-
     }
 
-    private void testReservationErrors(List<ReservationDto> reservationDtos, List<TableFoodDto> tableFoodDtos, List<TableFoodDto> tableFoodDtoListAfter){
+    @Test
+    public void testConfirmReservationReservationIsTaken() {
+        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree();
 
-        // reservation is taken
+        assertEquals(reservationDtos.size(), 2);
+        assertEquals(tableFoodDtos.size(), 2);
+
+        reservationService.confirmReservation(reservationDtos.get(0), tableFoodDtos);
+
+        List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree();
+
         try{
-            reservationService.confirmReservation(reservationDtos.get(0),tableFoodDtoListAfter);
-            assertEquals(false,true);
+            reservationService.confirmReservation(reservationDtos.get(0),tableFoodDtosAfter);
+            fail("Reservation should be taken");
         }catch (NotFoundException e){
             assertEquals(e.getMessage(),"Reservation is already confirmed");
         }
+    }
 
-        // reservation is invalid
+    @Test
+    public void testConfirmReservationReservationIsInvalid() {
+        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree();
+
         reservationDtos.get(0).setReservationName(null);
         try{
 
             reservationService.confirmReservation(reservationDtos.get(0),tableFoodDtos);
-            assertEquals(false,true);
+            fail("Reservation should not have been found");
         }catch (NotFoundException e){
             assertEquals(e.getMessage(),"Reservation not found");
         }
     }
 
-    private void testTableFoodErrors(List<ReservationDto> reservationDtoList, List<TableFoodDto> tableFoodDtoList, List<TableFoodDto> tableFoodDtoListAfter){
-        // table is taken
+    @Test
+    public void testConfirmReservationTableIsTaken() {
+        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree();
+
+        assertEquals(reservationDtos.size(), 2);
+        assertEquals(tableFoodDtos.size(), 2);
+
+        reservationService.confirmReservation(reservationDtos.get(0), tableFoodDtos);
+
         try{
-            reservationService.confirmReservation(reservationDtoList.get(1),tableFoodDtoList);
+            reservationService.confirmReservation(reservationDtos.get(1),tableFoodDtos);
             fail("Table should be taken");
         }catch (NotFoundException e){
             assertEquals(e.getMessage(),"Table not found");
         }
+    }
 
-        // table is invalid
+    @Test
+    public void testConfirmReservationTableIsInvalid() {
+        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree();
+
+        assertEquals(reservationDtos.size(), 2);
+        assertEquals(tableFoodDtos.size(), 2);
+
+        reservationService.confirmReservation(reservationDtos.get(0), tableFoodDtos);
+
+        List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree();
         try{
-            reservationService.confirmReservation(reservationDtoList.get(1),tableFoodDtoListAfter);
-            assertEquals(false,true);
+            reservationService.confirmReservation(reservationDtos.get(1),tableFoodDtosAfter);
+            fail("The list of tables should be invalid!");
         }catch (ForbiddenException e){
             assertEquals(e.getMessage(),"TableList can not be null");
         }
     }
+    // ------------
 
     @Test
     public void testAddReservation(){
