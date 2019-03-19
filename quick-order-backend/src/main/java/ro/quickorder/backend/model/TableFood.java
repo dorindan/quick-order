@@ -103,19 +103,13 @@ public class TableFood {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TableFood tableFood = (TableFood) o;
-        return tableNr == tableFood.tableNr &&
-                seats == tableFood.seats &&
-                windowView == tableFood.windowView &&
-                floor == tableFood.floor &&
-                free == tableFood.free &&
-                Objects.equals(id, tableFood.id) &&
-                Objects.equals(commands, tableFood.commands) &&
-                Objects.equals(reservations, tableFood.reservations);
+        return
+                Objects.equals(id, tableFood.id) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tableNr, seats, windowView, floor, free, commands, reservations);
+        return Objects.hash(id);
     }
 
     @Override

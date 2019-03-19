@@ -103,7 +103,7 @@ public class ReservationService {
         List<TableFood> tableFoodListToSet = new ArrayList<>();
         for (TableFoodDto tableFoodDto : tableFoodDtos) {
             TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
-            if (tableFood == null || !tableFood.isFree())
+            if (tableFood == null )
                 throw new NotFoundException("Table not found");
             tableFoodListToSet.add(tableFood);
         }
