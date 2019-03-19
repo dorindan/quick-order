@@ -14,6 +14,7 @@ public class ReservationConverter {
         reservationDto.setConfirmed(reservation.isConfirmed());
         reservationDto.setNumberOfPersons(reservation.getNumberOfPersons());
         reservationDto.setStatus(reservation.getStatus());
+        reservationDto.setReservationName(reservation.getReservationName());
 
         return reservationDto;
     }
@@ -27,6 +28,7 @@ public class ReservationConverter {
         reservation.setConfirmed(reservationDto.getConfirmed());
         reservation.setStatus(reservationDto.getStatus());
         reservation.setNumberOfPersons(reservationDto.getNumberOfPersons());
+        reservation.setReservationName(reservationDto.getReservationName());
         return reservation;
     }
 }

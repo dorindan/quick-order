@@ -9,8 +9,16 @@ body{
   width:20%;
 }
 
+.reservationUUID{
+  width:30%;
+}
+
+.numberOfPersons{
+  width:30%;
+}
+
 .checkInAndOutTime{
-  width:60%;
+  width:30%;
 }
 
 p{
@@ -29,4 +37,17 @@ pre{
   font-family: Arial;
   color: #7e967e;
   font-size: x-small;
+}
+
+.buttonDiv{
+  width:100%;
+  padding-right: 3em;
+}
+
+.acceptButton{
+  float:right;
+}
+
+.hint{
+  float: right;
 }

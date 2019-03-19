@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Table} from "../../models/Table";
-import {TableService} from "../../services/table.service";
-import {Observable} from "rxjs";
-import {ReservationService} from "../../services/reservation.service";
-import {Reservation} from "../../models/Reservation";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Table} from '../../models/Table';
+import {TableService} from '../../services/table.service';
+import {Observable} from 'rxjs';
+import {ReservationService} from '../../services/reservation.service';
+import {Reservation} from '../../models/Reservation';
+
 
 
 @Component({
@@ -16,7 +17,10 @@ export class WaiterPageComponent implements OnInit {
   tables: Table[];
   reservationsGet: Observable<Reservation[]>;
   reservations: Reservation[];
-  private selectedOptions: any[];
+  selectedOptions: number[];
+  indexExpanded: number;
+  disabledElements: number[];
+  @ViewChild('myExpansionPanel') myExpansionPanel: ElementRef;
 
   constructor(private tableService: TableService, private reservationService: ReservationService) {
   }
@@ -30,17 +34,48 @@ export class WaiterPageComponent implements OnInit {
     this.reservations = [];
     this.reservationsGet.forEach(reservation => reservation.forEach(r => this.reservations.push(r)));
     console.log(this.reservations);
+    this.indexExpanded = -1;
+    this.disabledElements = [];
   }
 
-  selection(list) {
-    this.selectedOptions = list.selectedOptions.selected.map(item => console.log(item.value));
+  selection() {
+    this.selectedOptions.forEach(item => console.log(item));
   }
 
   getFormattedTime(reservation: Reservation): string {
     return reservation.checkInTime.substr(0, 10) + ' ' +
-           reservation.checkInTime.substr(11, 5) + ' - ' +
-           reservation.checkOutTime.substr(0, 10) + ' ' +
-           reservation.checkOutTime.substr(11, 5);
+      reservation.checkInTime.substr(11, 5) + ' - ' +
+      reservation.checkOutTime.substr(0, 10) + ' ' +
+      reservation.checkOutTime.substr(11, 5);
   }
 
+  acceptReservation(reservation: Reservation, index: number) {
+    if (this.selectedOptions.length === 0) {
+      this.indexExpanded = -1;
+    } else {
+      this.indexExpanded = -1;
+      this.disabledElements.push(index);
+    }
+    console.log(this.indexExpanded);
+    console.log(reservation.reservationName + ' ' + this.selectedOptions);
+  }
+
+  hint(index: number): String {
+    return '';
+  }
+
+  openGroup(any, index: number) {
+    console.log(any);
+    this.selectedOptions = [];
+    this.indexExpanded = index;
+  }
+
+  checkDisabled(i: number): boolean {
+    if (this.disabledElements.includes(i)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
+
