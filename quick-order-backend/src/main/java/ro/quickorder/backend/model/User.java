@@ -1,5 +1,7 @@
 package ro.quickorder.backend.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -9,8 +11,13 @@ import java.util.Objects;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private String id;
     private String username;
     private String password;
     private String email;
@@ -30,10 +37,6 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "command_id")})
     private List<Command> commands;
 
-    public User(Long id) {
-        this.id = id;
-    }
-
     public User() {
     }
 
@@ -43,11 +46,11 @@ public class User {
         this.email = email;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

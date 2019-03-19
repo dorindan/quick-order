@@ -1,16 +1,10 @@
 package ro.quickorder.backend.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.hibernate.annotations.GenericGenerator;
 import ro.quickorder.backend.service.CustomDateDeserializer;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
@@ -21,8 +15,13 @@ import java.util.UUID;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private String id;
     @JsonDeserialize(using = CustomDateDeserializer.class)
     private Timestamp checkInTime;
     @JsonDeserialize(using = CustomDateDeserializer.class)
@@ -67,11 +66,11 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

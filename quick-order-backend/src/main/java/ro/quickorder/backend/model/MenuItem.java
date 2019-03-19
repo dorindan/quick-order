@@ -1,6 +1,7 @@
 package ro.quickorder.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.Period;
@@ -8,8 +9,15 @@ import java.util.List;
 import java.util.Objects;
 @Entity
 public class MenuItem {
+
     @Id
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private String id;
     private String name;
     private String description;
     private Integer preparationDurationInMinutes;
@@ -53,11 +61,11 @@ public class MenuItem {
         this.price = price;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

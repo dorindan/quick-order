@@ -76,7 +76,7 @@ public class UsersResourceTest {
     public void testSetPreference() {
         UserAttributeDto attributeDto = new UserAttributeDto();
         attributeDto.setLanguage(Language.RO);
-        long userId = userRepository.findAll().get(0).getId();
+        String userId = userRepository.findAll().get(0).getId();
 
         UserDto userDto = new UserDto();
         userDto.setEmail("alex@yahoo.com");
@@ -85,7 +85,7 @@ public class UsersResourceTest {
         userDto.setUserAttributeDto(attributeDto);
 
         userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
-        User user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId);
         assertNotNull(user);
         UserAttribute userAttribute = user.getAttribute();
         assertNotNull(userAttribute);
@@ -110,7 +110,7 @@ public class UsersResourceTest {
     public void testSetPreferenceBadUser() {
         UserAttributeDto attributeDto = new UserAttributeDto();
         attributeDto.setLanguage(Language.RO);
-        long userId = userRepository.findAll().get(0).getId();
+        String userId = userRepository.findAll().get(0).getId();
 
         UserDto userDto = new UserDto();
         userDto.setEmail("newUser@yahoo.com");
