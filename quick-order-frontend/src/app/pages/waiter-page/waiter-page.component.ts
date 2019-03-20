@@ -20,6 +20,9 @@ export class WaiterPageComponent implements OnInit {
   selectedOptions: number[];
   indexExpanded: number;
   disabledElements: number[];
+  totalOfSelectedSeats: number;
+  i: number;
+  j: number;
   @ViewChild('myExpansionPanel') myExpansionPanel: ElementRef;
 
   constructor(private tableService: TableService, private reservationService: ReservationService) {
@@ -33,9 +36,9 @@ export class WaiterPageComponent implements OnInit {
     this.reservationsGet = this.reservationService.getUnacceptedReservation();
     this.reservations = [];
     this.reservationsGet.forEach(reservation => reservation.forEach(r => this.reservations.push(r)));
-    console.log(this.reservations);
     this.indexExpanded = -1;
     this.disabledElements = [];
+    this.selectedOptions = [];
   }
 
   selection() {
@@ -56,11 +59,24 @@ export class WaiterPageComponent implements OnInit {
       this.indexExpanded = -1;
       this.disabledElements.push(index);
     }
-    console.log(this.indexExpanded);
-    console.log(reservation.reservationName + ' ' + this.selectedOptions);
+   /* console.log(this.indexExpanded);
+    console.log(reservation.reservationName + ' ' + this.selectedOptions);*/
   }
 
-  hint(index: number): String {
+  hint(reservation: Reservation, index: number): String {
+    this.totalOfSelectedSeats = 0;
+    this.i = 0;
+    this.j = 0;
+    for (const option of this.selectedOptions) {
+      for (const table of this.tables) {
+        if (table.tableNr === option) {
+          this.totalOfSelectedSeats = this.totalOfSelectedSeats + table.seats;
+        }
+      }
+    }
+    if (reservation.numberOfPersons > this.totalOfSelectedSeats) {
+      return 'You selected tables with less seats than requested.';
+    }
     return '';
   }
 
