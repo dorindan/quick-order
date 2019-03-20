@@ -15,7 +15,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     Reservation findByReservationName(String name);
 
-    @Query(value = "Select r From Reservation r left join fetch r.tables")
+
     List<Reservation> findAll();
 
     @Query(value = "Select r.tables From Reservation r where r.checkInTime < :timestampOut and  r.checkOutTime > :timestampIn")
