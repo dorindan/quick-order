@@ -20,7 +20,7 @@ public class Reservation {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private String id;
     @JsonDeserialize(using = CustomDateDeserializer.class)
     private Timestamp checkInTime;

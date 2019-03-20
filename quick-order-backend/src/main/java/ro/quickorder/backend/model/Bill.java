@@ -16,7 +16,7 @@ public class Bill {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private String id;
     private boolean voucher;
     private int salePercentage;
