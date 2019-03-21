@@ -33,4 +33,12 @@ public class TableFoodService {
         return rez;
     }
 
+    public List<TableFoodDto> getAll(){
+        List<TableFoodDto> rez = new ArrayList<>();
+        List<TableFood> tables = tableFoodRepository.findAll();
+        for (TableFood table: tables)
+                rez.add(tableFoodConverter.toTableFoodDto(table));
+        return rez;
+    }
+
 }

@@ -57,6 +57,13 @@ public class TableFoodServiceTest {
     }
 
 
+    @Test
+    public void testGetAll(){
+        List<TableFoodDto> rezFree = tableFoodService.getAll();
+
+        assertEquals(rezFree.size(),5);
+    }
+
 
 
 

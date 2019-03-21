@@ -25,7 +25,7 @@ export class ApiService {
       if (showSuccess) {
         console.log(resp);
       }
-    }, (err) =>{
+    }, (err) => {
       console.error(err);
       const { error: respError } = err;
     });
