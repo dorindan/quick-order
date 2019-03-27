@@ -16,16 +16,9 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping(value = "/reservation")
 public class ReservationResource {
-    @Autowired
-    ReservationRepository reservationRepository;
 
     @Autowired
     ReservationService reservationService;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String findById(@RequestParam(value = "id", defaultValue = "0") Long id) {
-        return reservationRepository.findById(id).toString();
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public void addReservation(@RequestBody ReservationDto reservation) throws ParseException {

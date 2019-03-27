@@ -8,12 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.quickorder.backend.repository.IngredientRepository;
 
 @RestController
+@RequestMapping(value = "/ingredient")
 public class IngredientResource {
-    @Autowired
-    IngredientRepository ingredientRepository;
 
-    @RequestMapping(path = "/ingredient", method = RequestMethod.GET)
-    public String findByName(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return ingredientRepository.findFirstByName(name).toString();
-    }
 }

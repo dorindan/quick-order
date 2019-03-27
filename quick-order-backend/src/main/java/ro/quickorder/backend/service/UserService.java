@@ -1,7 +1,5 @@
 package ro.quickorder.backend.service;
 
-
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.UserAttributeConverter;

@@ -12,17 +12,7 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping(value = "/menuItem")
 public class MenuItemResource {
-    @Autowired
-    MenuItemRepository menuItemRepository;
 
-    @RequestMapping(path = "/menuItem/{id}/ingredients", method = RequestMethod.GET)
-    public List<Ingredient> getIngredients(@PathVariable("id") Long id) {
-        return menuItemRepository.findById(id).get().getIngredients();
-    }
-
-    @RequestMapping(path = "/menuItem/all", method = RequestMethod.GET)
-    public List<MenuItem> getMenuItems() {
-        return menuItemRepository.findAll();
-    }
 }

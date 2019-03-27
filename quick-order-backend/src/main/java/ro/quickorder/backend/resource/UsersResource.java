@@ -15,22 +15,9 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UsersResource {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private UserAttributeService userAttributeService;
     @Autowired
     private UserService userService;
-
-
-    @RequestMapping(path = "/{id}",method = RequestMethod.GET)
-    public String findById(@PathVariable(value = "id") Long id) {
-        return userRepository.findById(id).toString();
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public UserDto login(@NotNull @RequestBody UserDto userDto) {

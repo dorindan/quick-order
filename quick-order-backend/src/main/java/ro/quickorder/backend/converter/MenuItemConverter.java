@@ -5,9 +5,8 @@ import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 
 /**
- *Converts Commands to their corresponding DTO and vice versa.
- *
- *@author R. Lupoaie
+ *  Converts MenuItems to their corresponding DTO and vice versa.
+ * @author R. Lupoaie
  */
 @Component
 public class MenuItemConverter {
