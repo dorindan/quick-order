@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import ro.quickorder.backend.converter.TableFoodConverter;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Command;
@@ -38,6 +40,8 @@ public class ReservationServiceTest {
     ReservationService reservationService;
     @Inject
     TableFoodService tableFoodService;
+    @Inject
+    TableFoodConverter tableFoodConverter;
 
     @Inject
     ReservationRepository reservationRepository;
@@ -49,41 +53,43 @@ public class ReservationServiceTest {
     @Before
     public void setUp() {
 
-        Command command1 = new Command("Command Name1", "no specifications", false, "ready", null);
         Reservation res1 = new Reservation(null, null, null, null,1, false, null, new ArrayList<>() );
 
         TableFood table1 = new TableFood(1,5,false,1,true);
         TableFood table2 = new TableFood(2,4,true,1,false);
         TableFood table3 = new TableFood(3,4,false,1,true);
-        Command command2 = new Command("Command Name2", "no specifications", false, "ready", null);
         Reservation res2 = new Reservation(null, null, null, null, 1, true, null, new ArrayList<>());
 
-        Command command3 = new Command("Command Name3", "no specifications", true, "ready", null);
         Reservation res3 = new Reservation(null, null, null, null, 1, false, null, new ArrayList<>());
 
         //save reservation
-        Reservation re1 = reservationRepository.save(res1);
-        Reservation re2 = reservationRepository.save(res2);
-        Reservation re3 = reservationRepository.save(res3);
+        Reservation reservation1 = reservationRepository.save(res1);
+        Reservation reservation2 = reservationRepository.save(res2);
+        Reservation reservation3 = reservationRepository.save(res3);
 
         // save table
-        tableFoodRepository.save(table1);
-        tableFoodRepository.save(table3);
-
-        // save table for command
-        Command cmd2 = commandRepository.save(command2);
+        TableFood tableFood1 = tableFoodRepository.save(table1);
         TableFood tableFood2 = tableFoodRepository.save(table2);
-        cmd2.setTable(tableFood2);
+        TableFood tableFood3 = tableFoodRepository.save(table3);
 
-        // set commands to reservation
-        re1.setCommand(commandRepository.save(command1));
-        re2.setCommand(commandRepository.save(cmd2));
-        re2.setCommand(commandRepository.save(command3));
+
+        List<TableFood> tableFoods = new ArrayList<>();
+        tableFoods.add(tableFood1);
+        tableFoods.add(tableFood2);
+
+        reservation1.setTables(tableFoods);
+
+        tableFoods = new ArrayList<>();
+        tableFoods.add(tableFood2);
+        tableFoods.add(tableFood3);
+
+        // save table
+        reservation2.setTables(tableFoods);
 
         // save reservation
-        reservationRepository.save(re1);
-        reservationRepository.save(re2);
-        reservationRepository.save(re3);
+        reservationRepository.save(reservation1);
+        reservationRepository.save(reservation2);
+        reservationRepository.save(reservation3);
 
     }
 
@@ -212,6 +218,31 @@ public class ReservationServiceTest {
             assertEquals(e.getMessage(),"Number of persons for a reservation must be between 1 and 99");
         }
 
+    }
+
+    @Test
+    public void testReservationsForTable(){
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));
+        List<ReservationDto> reservations1 = reservationService.reservationsForTable(tableFoodDto1.getTableNr());
+        assertEquals(2, reservations1.size());
+
+        TableFoodDto tableFoodDto2 = tableFoodConverter.toTableFoodDto(tableFoods.get(0));
+        List<ReservationDto> reservations2 = reservationService.reservationsForTable(tableFoodDto2.getTableNr());
+        assertEquals(1, reservations2.size());
+    }
+
+    @Test
+    public void testReservationsForTableTableNotFound(){
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));
+        tableFoodDto1.setTableNr(213);
+        try{
+            List<ReservationDto> reservations1 = reservationService.reservationsForTable(tableFoodDto1.getTableNr());
+            fail("The reservation should not have been found");
+        }catch (NotFoundException e){
+            assertEquals("Table not found!", e.getMessage());
+        }
     }
 
 }

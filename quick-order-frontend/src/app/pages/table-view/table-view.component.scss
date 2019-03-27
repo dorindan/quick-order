@@ -1,32 +1,58 @@
-
-@media only screen and (max-width: 1500px) {
-  .xxl{
-    display: none;
-  }
+.center{
+  padding-top: 2.5em;
 }
 
-.jumbotron {
-  background-image:url('../../../assets/img/table3.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-blend-mode: normal;
-  opacity:0.55;
-  color: #285028 ;
 
+body{
+  padding-top: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 19em;
 }
 
-h1{
-  text-align: center;
+.seats{
+  width:20%;
 }
 
-.title{
-  background-color: rgba(248,249,250,.7);
+.reservationUUID{
+  width:30%;
 }
 
-::ng-deep .snackbar{
-  text-align: center !important;
-  background:  #285028  !important;
-  opacity:0.8 !important;
+.numberOfPersons{
+  width:30%;
 }
 
+.checkInAndOutTime{
+  width:30%;
+}
+
+p{
+  font-size: larger;
+  color: #7e967e;
+}
+
+pre{
+  font-family: Arial;
+  color: #7e967e;
+  display: inline-block;
+}
+
+.extraDetails{
+  display: inline-block;
+  font-family: Arial;
+  color: #7e967e;
+  font-size: x-small;
+}
+
+.buttonDiv{
+  width:100%;
+  padding-right: 3em;
+}
+
+.acceptButton{
+  float:right;
+}
+
+.hint{
+  float: right;
+}

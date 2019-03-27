@@ -1,0 +1,32 @@
+<body>
+
+
+<div class="container-fluid ">
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let table of tables ; let i = index" (opened)="openGroup(i)"   [disabled]="checkDisabled(i)" >
+
+      <mat-expansion-panel-header>
+
+      <div >
+        <mat-panel-title>
+          <pre class="center">Table: {{table.tableNr }}     Seats: {{table.seats}} <p class="extraDetails">     Floor: {{table.floor}}     Has window view: {{table.windowView}}</p></pre>
+        </mat-panel-title>
+      </div>
+
+      </mat-expansion-panel-header>
+
+
+      <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="selection()">
+        <hr>
+        <p>Reservations</p>
+        <hr>
+        <mat-list-option *ngFor="let reservation of reservations"  [value]="reservation.reservationName">
+          <pre class="mainDetails">Reservation: {{reservation.reservationName }}     In: {{reservation.checkInTime}}  Out: {{reservation.checkOutTime}} <p class="extraDetails">     Number of Persons: {{reservation.numberOfPersons}}     Confirmed: {{reservation.confirmed}}</p></pre>
+        </mat-list-option>
+      </mat-selection-list>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>
+</body>

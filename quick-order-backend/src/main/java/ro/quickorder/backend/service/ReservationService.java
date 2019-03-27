@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.ReservationConverter;
+import ro.quickorder.backend.converter.TableFoodConverter;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
@@ -23,6 +25,7 @@ public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
     private ReservationConverter reservationConverter;
+
 
     @Autowired
     ReservationRepository reservationRepository;
@@ -115,5 +118,20 @@ public class ReservationService {
             table.setFree(false);
             tableFoodRepository.save(table);
         }
+    }
+
+
+    public List<ReservationDto> reservationsForTable(Integer tableNr){
+        List<ReservationDto> res = new ArrayList<>();
+        TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
+        if(tableFood == null){
+            throw new NotFoundException("Table not found! ");
+        }
+        List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
+
+        for (Reservation reservation : reservations) {
+            res.add(reservationConverter.toReservationDto(reservation));
+        }
+        return res;
     }
 }

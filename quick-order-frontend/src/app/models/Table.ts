@@ -1,10 +1,10 @@
 
 export class Table {
 
-  private tableNr: number;
-  private seats: number;
-  private windowView: boolean;
-  private floor: number;
+  public tableNr: number;
+  public seats: number;
+  public windowView: boolean;
+  public floor: number;
 
   constructor(tableNr: number, seats: number, windowView: boolean, floor: number) {
     this.tableNr = tableNr;

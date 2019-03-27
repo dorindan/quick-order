@@ -28,8 +28,6 @@ public class TableFoodService {
         for (TableFood table: tables)
             if(table.isFree())
                 rez.add(tableFoodConverter.toTableFoodDto(table));
-
-
         return rez;
     }
 
