@@ -7,6 +7,11 @@ import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
 
 import java.util.List;
+import ro.quickorder.backend.model.TableFood;
+
+import java.sql.Timestamp;
+import java.util.List;
+
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
@@ -15,4 +20,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query(value = "FROM Reservation r WHERE :tableFood member of r.tables ORDER BY r.checkInTime ASC ")
     List<Reservation> findReservationByTable(TableFood tableFood);
+
+    List<Reservation> findAll();
+
+    @Query(value = "Select r.tables From Reservation r where r.checkInTime < :maxCheckOutTime and  r.checkOutTime > :minCheckInTime")
+    List<TableFood> findTablesWithReservationsBetween(Timestamp minCheckInTime, Timestamp maxCheckOutTime);
 }
