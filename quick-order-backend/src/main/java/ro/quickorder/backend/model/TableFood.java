@@ -4,6 +4,8 @@ package ro.quickorder.backend.model;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import org.springframework.util.CollectionUtils;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -116,9 +118,7 @@ public class TableFood {
                 windowView == tableFood.windowView &&
                 floor == tableFood.floor &&
                 free == tableFood.free &&
-                Objects.equals(id, tableFood.id) &&
-                Objects.equals(commands, tableFood.commands) &&
-                Objects.equals(reservations, tableFood.reservations);
+                Objects.equals(id, tableFood.id) ;
     }
 
     @Override
