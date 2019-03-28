@@ -1,9 +1,11 @@
 package ro.quickorder.backend.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.hibernate.annotations.GenericGenerator;
 import ro.quickorder.backend.service.CustomDateDeserializer;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +15,13 @@ import java.util.UUID;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(updatable = false, nullable = false)
+    private String id;
     @JsonDeserialize(using = CustomDateDeserializer.class)
     private Timestamp checkInTime;
     @JsonDeserialize(using = CustomDateDeserializer.class)
@@ -36,11 +43,11 @@ public class Reservation {
 
     @ManyToMany
     @JoinTable(name = "table_reservation",
-            joinColumns = { @JoinColumn(name = "reservation_id") },
-            inverseJoinColumns = { @JoinColumn(name = "table_id") })
+            joinColumns = {@JoinColumn(name = "reservation_id")},
+            inverseJoinColumns = {@JoinColumn(name = "table_id")})
     private List<TableFood> tables;
 
-    public Reservation(Timestamp checkInTime, Timestamp checkOutTime, User user, Command command, int numberOfPersons, boolean confirmed, String status, List<TableFood> tables) {
+    public Reservation(Timestamp checkInTime, Timestamp checkOutTime, User user, Command command, Integer numberOfPersons, boolean confirmed, String status, List<TableFood> tables) {
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
         this.user = user;
@@ -48,7 +55,7 @@ public class Reservation {
         this.numberOfPersons = numberOfPersons;
         this.confirmed = confirmed;
         this.status = status;
-        this.reservationName = UUID.randomUUID().toString().substring(0,8);
+        this.reservationName = UUID.randomUUID().toString().substring(0, 8);
         this.tables = tables;
     }
 
@@ -59,11 +66,11 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -169,6 +176,36 @@ public class Reservation {
                 ", confirmed=" + confirmed +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public static final class Builder {
+        private Long id;
+        private Timestamp checkInTime;
+        private Timestamp checkOutTime;
+        private User user;
+        private Command command;
+        private Integer numberOfPersons;
+        private boolean confirmed;
+        private String status;
+        private List<TableFood> tables;
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withCheckInTime(Timestamp checkInTime) {
+            this.checkInTime = checkInTime;
+            return this;
+        }
+
+        public Builder withnumberOfPersons(Integer numberOfPersons) {
+            this.numberOfPersons = numberOfPersons;
+            return this;
+        }
+        public Reservation build() {
+            return new Reservation(checkInTime, checkOutTime, user, command, numberOfPersons, confirmed, status, tables);
+        }
     }
 }
 

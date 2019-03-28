@@ -1,17 +1,29 @@
 package ro.quickorder.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.Period;
 import java.util.List;
 import java.util.Objects;
 @Entity
 public class MenuItem {
+
     @Id
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(updatable = false, nullable = false)
+    private String id;
     private String name;
     private String description;
     private Integer preparationDurationInMinutes;
+    private Integer price;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "menu_item_type_id")
     private MenuItemType menuItemType;
@@ -31,21 +43,29 @@ public class MenuItem {
             inverseJoinColumns = { @JoinColumn(name = "command_id") })
     private List<Command> commands;
 
-    public MenuItem(Long id, String name, String description, Integer preparationDurationInMinutes) {
-        this.id = id;
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
+        this.price = price;
     }
 
     public MenuItem() {
     }
 
-    public Long getId() {
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

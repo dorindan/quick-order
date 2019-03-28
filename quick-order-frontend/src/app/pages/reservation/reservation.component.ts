@@ -27,6 +27,7 @@ export class ReservationComponent implements OnInit {
   nrOfPersons: number;
   reservation: Reservation;
   events: string[] = [];
+  currentDate = new Date();
 
 
   constructor(private _formBuilder: FormBuilder,
@@ -107,5 +108,12 @@ export class ReservationComponent implements OnInit {
     {name: '22:00'}
   ];
 
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.key;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
 
+  }
 }

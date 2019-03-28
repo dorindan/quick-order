@@ -1,10 +1,8 @@
 package ro.quickorder.backend.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.ReservationConverter;
 import ro.quickorder.backend.exception.ForbiddenException;
@@ -17,12 +15,14 @@ import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReservationService {
+    private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
+    @Autowired
+    private ReservationConverter reservationConverter;
 
     @Autowired
     ReservationRepository reservationRepository;
@@ -30,13 +30,22 @@ public class ReservationService {
     private TableFoodRepository tableFoodRepository;
 
     public void addReservation(ReservationDto reservationDto) {
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+
+        if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)){
+            LOG.error("Number of persons for a reservation must be between 1 and 99");
+            throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
+        }
+        if (reservationDto.getCheckInTime().before(currentTimestamp)){
+            LOG.error("CheckInTime must be greater than the current date");
+            throw new ForbiddenException("CheckInTime must be greater than the current date");
+        }
         reservationDto.setStatus("not accepted");
         reservationDto.setConfirmed(false);
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
-        reservationDto.setReservationName(UUID.randomUUID().toString().substring(0,8));
-        Reservation reservation = ReservationConverter.toReservation(reservationDto);
+        Reservation reservation = reservationConverter.toReservation(reservationDto);
         reservationRepository.save(reservation);
     }
 
@@ -48,7 +57,7 @@ public class ReservationService {
 
         for (Reservation res : reservations) {
             if (!res.isConfirmed()) {
-                results.add(new ReservationDto(res));
+                results.add(reservationConverter.toReservationDto(res));
             }
         }
         return results;

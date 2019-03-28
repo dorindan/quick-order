@@ -4,6 +4,7 @@ import {LoginComponent} from './pages/login/login.component';
 import {StartPageComponent} from './pages/start-page/start-page.component';
 import {StartLoggedInComponent} from './pages/start-logged-in/start-logged-in.component';
 import {RegisterComponent} from './pages/register/register.component';
+import {MenuComponent} from "./pages/menu/menu.component";
 import {ReservationComponent} from "./pages/reservation/reservation.component";
 
 const routes: Routes = [];
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'startPage', component: StartPageComponent },
   { path: 'loggedStart', component: StartLoggedInComponent},
   { path: 'signUp', component: RegisterComponent},
+  { path: 'menu', component: MenuComponent},
   { path: 'reserve', component: ReservationComponent},
   { path: '**', redirectTo: '' }
 ];

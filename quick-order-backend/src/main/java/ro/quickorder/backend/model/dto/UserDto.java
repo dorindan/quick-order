@@ -1,5 +1,10 @@
 package ro.quickorder.backend.model.dto;
 
+/**
+ *  Data transfer object for {@link ro.quickorder.backend.model.User}
+ *
+ *  *@author R. Lupoaie
+ */
 public class UserDto {
     private String username;
     private String password;
@@ -7,6 +12,19 @@ public class UserDto {
     private UserAttributeDto userAttributeDto;
 
     public UserDto() {
+    }
+
+    public UserDto(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    public UserDto(String username, String password, String email, UserAttributeDto userAttributeDto) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.userAttributeDto = userAttributeDto;
     }
 
     public UserDto(String name, String email, UserAttributeDto userAttributeDto) {

@@ -7,6 +7,7 @@ import {HttpClient, HttpHeaders, HttpXsrfTokenExtractor, HttpClientModule } from
 import {Observable} from 'rxjs';
 import {User} from '../../models/User';
 import {ApiService} from '../../services/api.service';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Injectable()
 export class ConfigService {
@@ -54,7 +55,10 @@ export class RegisterComponent implements OnInit {
   }
 
   public validateUsername(): void {
-    if (this.userName.length < 5) {
+    const USER_REGEXP = /^[a-zA-Z0-9_.]{5,}$/i;
+    let control: FormControl;
+    control = new FormControl(this.userName);
+    if (!USER_REGEXP.test(control.value)) {
       this.rightUsername = false;
     } else {
       this.rightUsername = true;
@@ -88,7 +92,7 @@ export class RegisterComponent implements OnInit {
 
   private checkIfAllIsValid(): boolean {
     if (this.password === this.re_password && this.password.length >= 6 &&
-      this.userName.length > 5 && this.isValidMailFormat(this.email) && this.termsAndConditions) {
+      this.userName.length > 5 && this.rightUsername && this.isValidMailFormat(this.email) && this.termsAndConditions) {
       return true;
     } else {
       this.validateUsername();
@@ -102,16 +106,18 @@ export class RegisterComponent implements OnInit {
 
   public register() {
      if (this.checkIfAllIsValid()) {
-      alert('I try to log in');
       const user = new User(this.userName, this.password);
       user.email = this.email;
       const url = 'api/users/signUp';
       this.apiService.postRequest(url, user).subscribe(rez => {
         this.router.navigate(['']);
+        alert('Register successful.');
       }, error1 => {
-        alert('Register failed.');
+        alert('Register failed. ');
+        return;
       });
+     } else {
+       alert('Complete all boxes with the appropriate data first!');
      }
-      return;
   }
 }

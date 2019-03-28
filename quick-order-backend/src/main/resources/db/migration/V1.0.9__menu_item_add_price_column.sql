@@ -1,0 +1,2 @@
+ALTER TABLE menu_item
+ADD COLUMN price INT;

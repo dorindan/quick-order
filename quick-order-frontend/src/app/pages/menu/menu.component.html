@@ -1,0 +1,17 @@
+<div class="menu-body" *ngFor="let menu of menu">
+  <div class="menu-section">
+    <h2 class="menu-section-title">{{menu.type}}</h2>
+    <div class="menu-item" *ngFor="let menuItem of menu.menuItems">
+      <div class="menu-item-name">
+        {{menuItem.name}}
+      </div>
+      <div class="menu-item-price">
+        {{menuItem.price}} lei
+      </div>
+      <span class="menu-item-description" *ngFor="let ingredient of menuItem.ingredients;let i = index" >
+        <span *ngIf="i > 0">,</span>
+        <span>{{ingredient.name}}</span>
+      </span>
+    </div>
+  </div>
+</div>
