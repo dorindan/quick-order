@@ -46,28 +46,40 @@ public class TableFoodServiceTest {
         TableFood table4 = new TableFood(4, 6, true, 1, true);
         TableFood table5 = new TableFood(5, 5, false, 1, true);
 
-        Timestamp timestampIn = Timestamp.valueOf("2007-09-23 8:10:10.0");
-        Timestamp timestampOut = Timestamp.valueOf("2007-09-23 11:10:10.0");
+        Timestamp timestampIn1 = Timestamp.valueOf("2007-09-23 8:10:10.0");
+        Timestamp timestampOut1 = Timestamp.valueOf("2007-09-23 11:10:10.0");
         TableFood table1 = new TableFood(1, 5, false, 1, false);
         TableFood table2 = new TableFood(2, 4, true, 1, true);
         TableFood table3 = new TableFood(3, 4, false, 1, true);
-        Reservation res2 = new Reservation(timestampIn, timestampOut, null, null, 1, true, null, new ArrayList<>());
+        Reservation res2 = new Reservation(timestampIn1, timestampOut1, null, null, 1, true, null, new ArrayList<>());
 
-        tableFoodRepository.save(table2);
-        tableFoodRepository.save(table3);
-        tableFoodRepository.save(table4);
+        Timestamp timestampIn2 = Timestamp.valueOf("2007-09-23 9:10:10.0");
+        Timestamp timestampOut2 = Timestamp.valueOf("2007-09-23 12:10:10.0");
+        Reservation res3 = new Reservation(timestampIn2, timestampOut2, null, null, 1, true, null, new ArrayList<>());
+
         tableFoodRepository.save(table5);
-
-        //save reservation
-        Reservation re2 = reservationRepository.save(res2);
 
         // save table for command
         TableFood tableFood1 = tableFoodRepository.save(table1);
-        List<TableFood> tableFoodList = new ArrayList<>();
-        tableFoodList.add(tableFood1);
-        res2.setTables(tableFoodList);
+        TableFood tableFood4 = tableFoodRepository.save(table4);
+        List<TableFood> tableFoodList1 = new ArrayList<>();
+        tableFoodList1.add(tableFood1);
+        tableFoodList1.add(tableFood4);
+        res2.setTables(tableFoodList1);
+
+        TableFood tableFood2 = tableFoodRepository.save(table2);
+        TableFood tableFood3 = tableFoodRepository.save(table3);
+        List<TableFood> tableFoodList2 = new ArrayList<>();
+        tableFoodList2.add(tableFood2);
+        tableFoodList2.add(tableFood3);
+        res3.setTables(tableFoodList2);
+
+        //save reservation
+        Reservation re2 = reservationRepository.save(res2);
+        Reservation re3 = reservationRepository.save(res3);
 
         reservationRepository.save(re2);
+        reservationRepository.save(re3);
     }
 
     @After
@@ -81,22 +93,22 @@ public class TableFoodServiceTest {
         Timestamp timestampIn1 = Timestamp.valueOf("2007-09-23 10:10:10.0");
         Timestamp timestampOut1 = Timestamp.valueOf("2007-09-23 12:10:10.0");
         List<TableFoodDto> rezFree1 = tableFoodService.getAllFree(timestampIn1, timestampOut1);
-        assertEquals(4, rezFree1.size());
+        assertEquals(1, rezFree1.size());
 
         Timestamp timestampIn2 = Timestamp.valueOf("2007-09-23 7:10:10.0");
-        Timestamp timestampOut2 = Timestamp.valueOf("2007-09-23 10:10:10.0");
+        Timestamp timestampOut2 = Timestamp.valueOf("2007-09-23 9:10:10.0");
         List<TableFoodDto> rezFree2 = tableFoodService.getAllFree(timestampIn2, timestampOut2);
-        assertEquals(4, rezFree2.size());
+        assertEquals(3, rezFree2.size());
 
-        Timestamp timestampIn3 = Timestamp.valueOf("2007-09-23 9:10:10.0");
-        Timestamp timestampOut3 = Timestamp.valueOf("2007-09-23 10:10:10.0");
+        Timestamp timestampIn3 = Timestamp.valueOf("2007-09-23 11:10:10.0");
+        Timestamp timestampOut3 = Timestamp.valueOf("2007-09-23 13:10:10.0");
         List<TableFoodDto> rezFree3 = tableFoodService.getAllFree(timestampIn3, timestampOut3);
-        assertEquals(4, rezFree3.size());
+        assertEquals(3, rezFree3.size());
 
         Timestamp timestampIn4 = Timestamp.valueOf("2007-09-23 6:10:10.0");
         Timestamp timestampOut4 = Timestamp.valueOf("2007-09-23 15:10:10.0");
         List<TableFoodDto> rezFree4 = tableFoodService.getAllFree(timestampIn4, timestampOut4);
-        assertEquals(4, rezFree4.size());
+        assertEquals(1, rezFree4.size());
 
         Timestamp timestampIn5 = Timestamp.valueOf("2007-09-23 6:10:10.0");
         Timestamp timestampOut5 = Timestamp.valueOf("2007-09-23 7:10:10.0");
@@ -113,7 +125,7 @@ public class TableFoodServiceTest {
     public void testgetAllFreeTablesTimestempIsNull() {
         try {
             List<TableFoodDto> rezFree = tableFoodService.getAllFree(null, null);
-            fail("");
+            fail("Time parameter is null, it should throw an error");
         } catch (BadRequestException e) {
             assertEquals("Time parameters can not be null", e.getMessage());
         }

@@ -49,8 +49,6 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-
-
     public List<ReservationDto> getAllUnconfirmed() {
         List<Reservation> reservations = reservationRepository.findAll();
         List<ReservationDto> results = new ArrayList<>();
@@ -65,8 +63,10 @@ public class ReservationService {
 
     public void confirmReservation(ReservationDto reservationDto,  List<TableFoodDto> tableFoodDtos) {
 
-        if (reservationDto.getReservationName() == null)
+        if (reservationDto.getReservationName() == null){
+            LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
+        }
 
         // find reservation
         Reservation reservation = getReservationEntityByName(reservationDto);
@@ -90,21 +90,29 @@ public class ReservationService {
     {
         // find reservation
         Reservation reservation = reservationRepository.findByReservationName(reservationDto.getReservationName());
-        if(reservation.isConfirmed())
+        if(reservation.isConfirmed()) {
+            LOG.error("Reservation is already confirmed");
             throw new NotFoundException("Reservation is already confirmed");
-        if (reservation == null)
+        }
+        if (reservation == null) {
+            LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
+        }
         return reservation;
     }
 
     private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos){
-        if (tableFoodDtos.size() == 0)
+        if (tableFoodDtos.size() == 0) {
+            LOG.error("TableList can not be null");
             throw new ForbiddenException("TableList can not be null");
+        }
         List<TableFood> tableFoodListToSet = new ArrayList<>();
         for (TableFoodDto tableFoodDto : tableFoodDtos) {
             TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
-            if (tableFood == null )
+            if (tableFood == null ) {
+                LOG.error("Table not found");
                 throw new NotFoundException("Table not found");
+            }
             tableFoodListToSet.add(tableFood);
         }
         return tableFoodListToSet;

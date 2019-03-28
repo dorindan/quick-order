@@ -17,6 +17,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findAll();
 
-    @Query(value = "Select r.tables From Reservation r where r.checkInTime < :timestampOut and  r.checkOutTime > :timestampIn")
-    List<TableFood> findReservationsByInside(Timestamp timestampIn, Timestamp timestampOut);
+    @Query(value = "Select r.tables From Reservation r where r.checkInTime < :maxCheckOutTime and  r.checkOutTime > :minCheckInTime")
+    List<TableFood> findTablesWithReservationsBetween(Timestamp minCheckInTime, Timestamp maxCheckOutTime);
 }

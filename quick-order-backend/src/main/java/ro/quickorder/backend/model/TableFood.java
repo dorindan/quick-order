@@ -2,6 +2,8 @@ package ro.quickorder.backend.model;
 
 
 
+import org.springframework.util.CollectionUtils;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -103,7 +105,7 @@ public class TableFood {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TableFood tableFood = (TableFood) o;
-        return  tableNr == tableFood.tableNr &&
+        return tableNr == tableFood.tableNr &&
                 seats == tableFood.seats &&
                 windowView == tableFood.windowView &&
                 floor == tableFood.floor &&
