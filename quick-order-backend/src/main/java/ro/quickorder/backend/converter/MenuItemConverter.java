@@ -12,14 +12,17 @@ import ro.quickorder.backend.model.dto.MenuItemDto;
 @Component
 public class MenuItemConverter {
 
-    public MenuItem toMenuItem(MenuItemDto menuItemDtoDto) {
-        if (menuItemDtoDto == null) {
+    public MenuItem toMenuItem(MenuItemDto menuItemDto) {
+        if (menuItemDto == null) {
             return null;
         }
         MenuItem menuItem = new MenuItem();
-        menuItem.setName(menuItemDtoDto.getName());
-        menuItem.setDescription(menuItemDtoDto.getDescription());
-        menuItem.setPreparationDurationInMinutes(menuItemDtoDto.getPreparationDurationInMinutes());
+        menuItem.setName(menuItemDto.getName());
+        menuItem.setDescription(menuItemDto.getDescription());
+        menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
+        menuItem.setPrice(menuItemDto.getPrice());
+        menuItem.setIngredients(menuItemDto.getIngredients());
+        menuItem.setMenuItemType(menuItemDto.getMenuItemType());
         return menuItem;
     }
 
@@ -31,6 +34,9 @@ public class MenuItemConverter {
         menuItemDto.setName(menuItem.getName());
         menuItemDto.setDescription(menuItem.getDescription());
         menuItemDto.setPreparationDurationInMinutes(menuItem.getPreparationDurationInMinutes());
+        menuItemDto.setPrice(menuItem.getPrice());
+        menuItemDto.setIngredients(menuItem.getIngredients());
+        menuItemDto.setMenuItemType(menuItem.getMenuItemType());
         return menuItemDto;
     }
 

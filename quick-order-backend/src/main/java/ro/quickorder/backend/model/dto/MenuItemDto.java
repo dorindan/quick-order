@@ -1,5 +1,10 @@
 package ro.quickorder.backend.model.dto;
 
+import ro.quickorder.backend.model.Ingredient;
+import ro.quickorder.backend.model.MenuItemType;
+
+import java.util.List;
+
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.MenuItem}
  *
@@ -10,15 +15,19 @@ public class MenuItemDto {
     private String name;
     private String description;
     private Integer preparationDurationInMinutes;
+    private Integer price;
+    private MenuItemType menuItemType;
+    private List<Ingredient> ingredients;
 
     public MenuItemDto() {
 
     }
 
-    public MenuItemDto(String name, String description, Integer preparationDurationInMinutes) {
+    public MenuItemDto(String name, String description, Integer preparationDurationInMinutes, Integer price) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
+        this.price = price;
     }
 
     public String getName() {
@@ -43,5 +52,29 @@ public class MenuItemDto {
 
     public void setPreparationDurationInMinutes(Integer preparationDurationInMinutes) {
         this.preparationDurationInMinutes = preparationDurationInMinutes;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public MenuItemType getMenuItemType() {
+        return menuItemType;
+    }
+
+    public void setMenuItemType(MenuItemType menuItemType) {
+        this.menuItemType = menuItemType;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
