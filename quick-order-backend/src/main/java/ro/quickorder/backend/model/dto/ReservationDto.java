@@ -2,8 +2,10 @@ package ro.quickorder.backend.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ro.quickorder.backend.service.CustomDateDeserializer;
 import ro.quickorder.backend.model.Reservation;
+import ro.quickorder.backend.service.CustomDateSerializer;
 
 import java.sql.Timestamp;
 
@@ -14,7 +16,10 @@ import java.sql.Timestamp;
  */
 public class ReservationDto {
     @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Timestamp checkInTime;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Timestamp checkOutTime;
     private String status;
     private boolean confirmed;

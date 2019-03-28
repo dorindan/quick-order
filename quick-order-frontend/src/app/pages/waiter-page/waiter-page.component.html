@@ -1,15 +1,10 @@
 <body>
 <div class="container-fluid ">
   <mat-accordion>
-    <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let reservation of reservations ; let i = index" (opened)="openGroup(reservation.reservationName, i)"  [disabled]="checkDisabled(i)" >
+    <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let reservation of reservations ; let i = index"
+                         (opened)="openGroup(reservation.reservationName, i)" [disabled]="checkDisabled(i)">
 
       <mat-expansion-panel-header>
-
-        <div class="reservationUUID">
-          <mat-panel-title>
-            Reservation Number: {{reservation.reservationName}}
-          </mat-panel-title>
-        </div>
 
         <div class="numberOfPersons">
           <mat-panel-description>
@@ -23,24 +18,28 @@
           </mat-panel-description>
         </div>
 
+        <div class="editButtonDiv" *ngIf=checkDisabled(i); then [hidden]="true" disabled="false" else [hidden]="false">
+          <mat-icon class="editButton" (click)="enableEdit(i)">create</mat-icon>
+        </div>
+
       </mat-expansion-panel-header>
+        <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="selection()">
+          <hr>
+          <p>TABLES</p>
+          <hr>
+          <mat-list-option *ngFor="let table of tables" [value]="table.tableNr">
+            <pre class="mainDetails">Table: {{table.tableNr }}     Seats: {{table.seats}} <p class="extraDetails">     Floor: {{table.floor}}     Has window view: {{table.windowView}}</p></pre>
+          </mat-list-option>
+        </mat-selection-list>
 
-      <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="selection()">
         <hr>
-        <p>TABLES</p>
-        <hr>
-        <mat-list-option *ngFor="let table of tables"  [value]="table.tableNr">
-          <pre class="mainDetails">Table: {{table.tableNr }}     Seats: {{table.seats}} <p class="extraDetails">     Floor: {{table.floor}}     Has window view: {{table.windowView}}</p></pre>
-        </mat-list-option>
-      </mat-selection-list>
-
-      <hr>
-      <div class="buttonDiv">
-        <button mat-stroked-button class="acceptButton" (click)="acceptReservation(reservation, i)">Accept reservation</button>
-        <br><br>
-        <mat-hint class="hint">{{hint(reservation,i)}}</mat-hint>
-      </div>
-
+        <div class="buttonDiv">
+          <button mat-stroked-button class="acceptButton" (click)="acceptReservation(reservation, i)">Accept
+            reservation
+          </button>
+          <br><br>
+          <mat-hint class="hint">{{hint(reservation,i)}}</mat-hint>
+        </div>
     </mat-expansion-panel>
   </mat-accordion>
 

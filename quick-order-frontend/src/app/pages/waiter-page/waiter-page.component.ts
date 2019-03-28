@@ -93,5 +93,9 @@ export class WaiterPageComponent implements OnInit {
       return false;
     }
   }
+
+  enableEdit(i: number) {
+    this.disabledElements = this.disabledElements.filter(item => item !== i);
+  }
 }
 

@@ -39,8 +39,8 @@ public class ReservationResource {
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.POST)
-    public void confirmReservation(@NotNull ReservationDto reservationDto){
-        reservationService.confirmReservation(reservationDto,reservationDto.getTableFoodDtos());
+    public void confirmReservation(@NotNull ReservationDto reservationDto,@NotNull List<TableFoodDto> tableFoodDtos){
+        reservationService.confirmReservation(reservationDto, tableFoodDtos);
     }
 
 
