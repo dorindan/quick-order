@@ -60,7 +60,7 @@ export class ReservationComponent implements OnInit {
 
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
-    this.reservation = new Reservation(this.dateTime, this.nrOfPersons, '');
+    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'qewdsa', false);
     this.reservationService.reserve(this.reservation)
       .subscribe(data => {
         this.showSnackbar('Reservation sent successfully.');
@@ -76,9 +76,8 @@ export class ReservationComponent implements OnInit {
     });
   }
 
-
   hourControl = new FormControl('', [Validators.required]);
-  selectFormControl = new FormControl('', Validators.required)
+  selectFormControl = new FormControl('', Validators.required);
 
   hours: Hour[] = [
     {name: '10:00'},

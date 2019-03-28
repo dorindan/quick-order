@@ -133,7 +133,7 @@ public class ReservationService {
         List<ReservationDto> res = new ArrayList<>();
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
         if(tableFood == null){
-            throw new NotFoundException("Table not found! ");
+            throw new NotFoundException("Table not found!");
         }
         List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
 
