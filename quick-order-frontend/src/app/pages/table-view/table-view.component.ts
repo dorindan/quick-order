@@ -14,7 +14,6 @@ import {Router} from '@angular/router';
 })
 export class TableViewComponent implements OnInit {
 
-  selectedOptions: number[];
   tables: Table[];
   tablesGet: Observable<Table[]>;
   reservations: Reservation[];
@@ -28,18 +27,18 @@ export class TableViewComponent implements OnInit {
     this.tablesGet.forEach(table => table.forEach(t => this.tables.push(t)));
   }
 
-  selection() {
-    this.selectedOptions.forEach(item => console.log(item));
-  }
-
   openGroup(i: number) {
     this.reservationsGet = this.reservationService.getReservation(this.tables[i].tableNr);
     this.reservations = [];
     this.reservationsGet.forEach(reservation => reservation.forEach(t => this.reservations.push(t)));
   }
 
-  checkDisabled(i: number): boolean {
-    return false;
+  getFormattedTime(reservation: Reservation): string {
+    return  'In: '+ reservation.checkInTime.substr(0, 10) + ' ' +
+      reservation.checkInTime.substr(11, 5) + '   ' + ' Out: ' +
+      reservation.checkOutTime.substr(0, 10) + ' ' +
+      reservation.checkOutTime.substr(11, 5);
   }
+
 
 }

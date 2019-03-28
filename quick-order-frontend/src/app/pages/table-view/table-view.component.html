@@ -3,7 +3,7 @@
 
 <div class="container-fluid ">
   <mat-accordion>
-    <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let table of tables ; let i = index" (opened)="openGroup(i)"   [disabled]="checkDisabled(i)" >
+    <mat-expansion-panel *ngFor="let table of tables ; let i = index" (opened)="openGroup(i)"   >
 
       <mat-expansion-panel-header>
 
@@ -16,14 +16,16 @@
       </mat-expansion-panel-header>
 
 
-      <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="selection()">
+      <mat-list #list expanded="false">
         <hr>
         <p>Reservations</p>
         <hr>
-        <mat-list-option *ngFor="let reservation of reservations"  [value]="reservation.reservationName">
-          <pre class="mainDetails">Reservation: {{reservation.reservationName }}     In: {{reservation.checkInTime}}  Out: {{reservation.checkOutTime}} <p class="extraDetails">     Number of Persons: {{reservation.numberOfPersons}}     Confirmed: {{reservation.confirmed}}</p></pre>
-        </mat-list-option>
-      </mat-selection-list>
+        <mat-list-item *ngFor="let reservation of reservations" >
+          <pre  mat-line class="mainDetails">Reservation: {{reservation.reservationName }} &nbsp;  &nbsp;   {{getFormattedTime(reservation)}} &nbsp; &nbsp;Number of Persons: {{reservation.numberOfPersons}}
+            <p class="extraDetails">         Confirmed: {{reservation.confirmed}}</p>
+          </pre>
+        </mat-list-item>
+      </mat-list>
 
     </mat-expansion-panel>
   </mat-accordion>
