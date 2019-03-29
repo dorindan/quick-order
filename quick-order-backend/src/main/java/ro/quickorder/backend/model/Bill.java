@@ -1,6 +1,7 @@
 package ro.quickorder.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -8,8 +9,15 @@ import java.util.Objects;
 
 @Entity
 public class Bill {
+
     @Id
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(updatable = false, nullable = false)
+    private String id;
     private boolean voucher;
     private int salePercentage;
     private BigDecimal total;
@@ -35,11 +43,11 @@ public class Bill {
     public Bill() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
