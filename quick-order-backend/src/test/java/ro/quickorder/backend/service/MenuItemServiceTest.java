@@ -123,7 +123,7 @@ public class MenuItemServiceTest {
 
         assertEquals(3, menuItems.size());
 
-        menuItemService.removeMenuItem(menuItems.get(0));
+        menuItemService.removeMenuItem(menuItems.get(0).getName());
 
         List<MenuItemDto> newMenuItems = menuItemService.getMenuItems();
 
@@ -135,7 +135,7 @@ public class MenuItemServiceTest {
         MenuItemDto menuItemDto= new MenuItemDto("Name", "the most original description!", 5, 18);
 
         try {
-            menuItemService.removeMenuItem(menuItemDto);
+            menuItemService.removeMenuItem(menuItemDto.getName());
             fail("User dose not exist, error should pop-up");
         } catch (NotFoundException e){
             assertEquals("MenuItem not found!", e.getMessage());

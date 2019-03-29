@@ -68,8 +68,8 @@ public class MenuItemService {
         menuItemRepository.save(menuItem);
     }
 
-    public void removeMenuItem(MenuItemDto menuItemDto) {
-        MenuItem menuItem = menuItemRepository.findByName(menuItemDto.getName());
+    public void removeMenuItem(String menuItemName) {
+        MenuItem menuItem = menuItemRepository.findByName(menuItemName);
         if(menuItem == null){
             LOG.error("MenuItem not found!");
             throw new NotFoundException("MenuItem not found!");
