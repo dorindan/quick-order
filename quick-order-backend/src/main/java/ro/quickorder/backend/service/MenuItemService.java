@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.MenuItemConverter;
+import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.repository.MenuItemRepository;
@@ -35,16 +36,45 @@ public class MenuItemService {
         return  result;
     }
 
-    public void addMenuItem() {
-        menuItemRepository.findAll();
+    public void addMenuItem(MenuItemDto menuItemDto) {
+        MenuItem menuItem = menuItemRepository.findByName(menuItemDto.getName());
+        if(menuItem != null){
+            LOG.error("MenuItem already exists!");
+            throw new NotFoundException("MenuItem already exists!");
+        }
+        menuItem = new MenuItem();
+        menuItem.setName(menuItemDto.getName());
+        menuItem.setIngredients(menuItemDto.getIngredients());
+        menuItem.setPrice(menuItemDto.getPrice());
+        menuItem.setDescription(menuItemDto.getDescription());
+        menuItem.setMenuItemType(menuItemDto.getMenuItemType());
+        menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
+
+        menuItemRepository.save(menuItem);
     }
 
-    public void updateMenuItem() {
-        menuItemRepository.findAll();
+    public void updateMenuItem(MenuItemDto menuItemDto) {
+        MenuItem menuItem = menuItemRepository.findByName(menuItemDto.getName());
+        if(menuItem == null){
+            LOG.error("MenuItem not found!");
+            throw new NotFoundException("MenuItem not found!");
+        }
+        menuItem.setIngredients(menuItemDto.getIngredients());
+        menuItem.setPrice(menuItemDto.getPrice());
+        menuItem.setDescription(menuItemDto.getDescription());
+        menuItem.setMenuItemType(menuItemDto.getMenuItemType());
+        menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
+
+        menuItemRepository.save(menuItem);
     }
 
-    public void removeMenuItem() {
-        menuItemRepository.findAll();
+    public void removeMenuItem(MenuItemDto menuItemDto) {
+        MenuItem menuItem = menuItemRepository.findByName(menuItemDto.getName());
+        if(menuItem == null){
+            LOG.error("MenuItem not found!");
+            throw new NotFoundException("MenuItem not found!");
+        }
+        menuItemRepository.delete(menuItem);
     }
 
 }

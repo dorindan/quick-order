@@ -9,6 +9,7 @@ import ro.quickorder.backend.repository.BillRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.service.MenuItemService;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.PathParam;
 import java.util.List;
 
@@ -26,17 +27,17 @@ public class MenuItemResource {
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public void addMenuItem() {
-        menuItemService.addMenuItem();
+    public void addMenuItem(@RequestBody @NotNull MenuItemDto menuItemDto) {
+        menuItemService.addMenuItem(menuItemDto);
     }
 
     @RequestMapping(path = "/update", method = RequestMethod.POST)
-    public void updateMenuItem() {
-        menuItemService.updateMenuItem();
+    public void updateMenuItem(@RequestBody @NotNull MenuItemDto menuItemDto) {
+        menuItemService.updateMenuItem(menuItemDto);
     }
 
     @RequestMapping(path = "/remove", method = RequestMethod.DELETE)
-    public void removeMenuItem() {
-        menuItemService.removeMenuItem();
+    public void removeMenuItem(@RequestBody @NotNull MenuItemDto menuItemDto) {
+        menuItemService.removeMenuItem(menuItemDto);
     }
 }

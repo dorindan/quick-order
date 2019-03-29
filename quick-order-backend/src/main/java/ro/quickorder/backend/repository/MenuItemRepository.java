@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 import ro.quickorder.backend.model.MenuItem;
 @Repository
 public interface MenuItemRepository extends JpaRepository<MenuItem,Long> {
+
+    public MenuItem findByName(String name);
 }
