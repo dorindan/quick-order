@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
 import {Menu} from "../models/Menu";
+import {MenuItem} from '../models/MenuItem';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +16,9 @@ export class MenuService{
 
   getMenu(): Observable<Menu[]> {
     return this.apiService.getRequest('api/menuItemType/all');
+  }
+
+  getMenuItems(): Observable<MenuItem[]> {
+  return this.apiService.getRequest('api/menuItem/all');
   }
 }

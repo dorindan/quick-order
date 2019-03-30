@@ -21,7 +21,7 @@ public class MenuItemResource {
     @Autowired
     private MenuItemService menuItemService;
 
-    @RequestMapping(path = "/menuItem/all", method = RequestMethod.GET)
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
     public List<MenuItemDto> getMenuItems() {
         return menuItemService.getMenuItems();
     }
