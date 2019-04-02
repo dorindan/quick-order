@@ -14,7 +14,6 @@ import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -74,7 +73,7 @@ public class MenuItemService {
         menuItem.setIngredients(ingredients);
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setDescription(menuItemDto.getDescription());
-        menuItem.setMenuItemType(menuItemDto.getMenuItemType());
+        menuItem.setMenuItemType(menuItemDto.getMenuItemTypeDto());
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
 
         System.out.println("get all was called ");
@@ -91,7 +90,7 @@ public class MenuItemService {
         menuItem.setIngredients(ingredientConverter.toIngredientList(ingredientDtos));
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setDescription(menuItemDto.getDescription());
-        menuItem.setMenuItemType(menuItemDto.getMenuItemType());
+        menuItem.setMenuItemType(menuItemDto.getMenuItemTypeDto());
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
 
         menuItemRepository.save(menuItem);

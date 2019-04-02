@@ -30,7 +30,7 @@ public class MenuItemConverter {
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setIngredients(ingredientConverter.toIngredientList(Arrays.asList( menuItemDto.getIngredients())));
-        menuItem.setMenuItemType(menuItemDto.getMenuItemType());
+        menuItem.setMenuItemType(menuItemDto.getMenuItemTypeDto());
         return menuItem;
     }
 
@@ -49,7 +49,7 @@ public class MenuItemConverter {
             ingredientDtosConverted[i] = ingredientDtos.get(i);
         }
         menuItemDto.setIngredients(ingredientDtosConverted);
-        menuItemDto.setMenuItemType(menuItem.getMenuItemType());
+        menuItemDto.setMenuItemTypeDto(menuItem.getMenuItemType());
         return menuItemDto;
     }
 

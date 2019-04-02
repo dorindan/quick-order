@@ -45,7 +45,7 @@ export class ApiService {
     return $response;
   }
 
-  deleteRequest(path: string,  params, options?): Observable<any> {
+  deleteRequest(path: string,  params?, options?): Observable<any> {
     const $response = this.http.delete(`${this.apiEndpoint}/${path}`, params)
       .pipe(share());
     this.checkResponse($response);

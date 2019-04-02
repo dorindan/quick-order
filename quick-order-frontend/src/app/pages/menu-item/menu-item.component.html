@@ -1,11 +1,5 @@
 <div class="wrapper-editor">
 
-  <div class="block my-4">
-    <div class="d-flex justify-content-center">
-      <p class="h5 text-primary createShowP">{{selection.selected.length}} row selected</p>
-    </div>
-  </div>
-
   <div class="row d-flex justify-content-center modalWrapper">
 
     <!--   Add   -->
@@ -18,7 +12,7 @@
 
             <div class="modal-header text-center">
               <h4 class="modal-title w-100 font-weight-bold text-primary ml-5">Add new Item</h4>
-              <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close" (click)="clear()">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -180,24 +174,23 @@
 
   </div>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table align="center" [dataSource]="dataSource" class="table-hover mat-elevation-z8">
 
-
-    <!-- Position Column -->
+    <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th mat-header-cell *matHeaderCellDef><h5 class="color">Name</h5></th>
       <td mat-cell *matCellDef="let element">{{element.name}}</td>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- Description Column -->
     <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <th mat-header-cell *matHeaderCellDef><h5 class="color">Description</h5></th>
       <td mat-cell *matCellDef="let element">{{element.description}}</td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Ingredients Column -->
     <ng-container matColumnDef="ingredients">
-      <th mat-header-cell *matHeaderCellDef>ingredients</th>
+      <th mat-header-cell *matHeaderCellDef ><h5 class="color">Ingredients</h5></th>
       <td mat-cell *matCellDef="let element">
         <div ngbDropdown class="d-inline-block">
           <button class="btn " id="dropdownBasic1" ngbDropdownToggle>Ingredients</button>
@@ -210,17 +203,19 @@
       </td>
     </ng-container>
 
-    <!-- Symbol Column -->
+    <!-- Preparation time Column -->
     <ng-container matColumnDef="preparationTime">
-      <th mat-header-cell *matHeaderCellDef>Preparation time</th>
+      <th mat-header-cell *matHeaderCellDef><h5 class="color">Preparation time</h5></th>
       <td mat-cell *matCellDef="let element">{{element.preparationDurationInMinutes}}</td>
     </ng-container>
 
+    <!-- Price Column -->
     <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <th mat-header-cell *matHeaderCellDef><h5 class="color">Price</h5></th>
       <td mat-cell *matCellDef="let element">{{element.price}}</td>
     </ng-container>
 
+    <!-- Edit and Delete Column -->
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
@@ -239,13 +234,12 @@
       </td>
     </ng-container>
 
+    <!--  The Description of columns  -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="selection.toggle(row)">
-    </tr>
 
+    <!--  Puts every line  -->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   </table>
-
 
 </div>

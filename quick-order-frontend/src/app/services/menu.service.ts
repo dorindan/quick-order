@@ -32,7 +32,7 @@ export class MenuService {
     this.apiService.postRequest('api/menuItem/update', menuItem);
   }
 
-  deleteMenuItem(menuItem: MenuItem): void {
-    this.apiService.deleteRequest('api/menuItem/remove', menuItem);
+  deleteMenuItem(menuItemName: string): void {
+    this.apiService.deleteRequest('api/menuItem/remove/' + menuItemName);
   }
 }

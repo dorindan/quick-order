@@ -57,6 +57,7 @@ export class MenuItemComponent implements OnInit {
     newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
 
     this.tableService.addMenuItem(newMenuItem);
+    this.clear();
   }
 
   setUpdate(menuItem: MenuItem): void {
@@ -73,15 +74,15 @@ export class MenuItemComponent implements OnInit {
 
   update(): void {
     let newMenuItem: MenuItem;
-    newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
-
+    newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, [], this.price);
+    alert(this.name + ' ' + this.description + ' ' + this.preparationDurationInMinutes + ' ' + [] + ' ' + this.price);
     this.tableService.editMenuItem(newMenuItem);
+    this.clear();
   }
 
   delete(): void {
-    let newMenuItem: MenuItem;
-    newMenuItem = new MenuItem(this.name, '', 0, [], 0);
-    this.tableService.deleteMenuItem(newMenuItem);
+    this.tableService.deleteMenuItem(this.name);
+    this.clear();
   }
 
   clear(): void {

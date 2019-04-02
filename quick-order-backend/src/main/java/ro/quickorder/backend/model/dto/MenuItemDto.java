@@ -1,11 +1,6 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItemType;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.MenuItem}
@@ -18,9 +13,8 @@ public class MenuItemDto {
     private String description;
     private Integer preparationDurationInMinutes;
     private Integer price;
-    private MenuItemType menuItemType;
-    private IngredientDto[] objecte = new IngredientDto[100];
-    private Object[] ingredients ;
+    private MenuItemTypeDto menuItemTypeDto;
+    private IngredientDto[] ingredients ;
 
     public MenuItemDto() {
 
@@ -73,19 +67,19 @@ public class MenuItemDto {
         this.price = price;
     }
 
-    public MenuItemType getMenuItemType() {
-        return menuItemType;
+    public MenuItemTypeDto getMenuItemTypeDto() {
+        return menuItemTypeDto;
     }
 
-    public void setMenuItemType(MenuItemType menuItemType) {
-        this.menuItemType = menuItemType;
+    public void setMenuItemTypeDto(MenuItemTypeDto menuItemTypeDto) {
+        this.menuItemTypeDto = menuItemTypeDto;
     }
 
     public IngredientDto[] getIngredients() {
-        return objecte;
+        return ingredients;
     }
 
     public void setIngredients(IngredientDto[] ingredients) {
-        this.objecte = ingredients;
+        this.ingredients = ingredients;
     }
 }
