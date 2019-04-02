@@ -39,7 +39,14 @@ export class ApiService {
   }
 
   postRequest(path: string,  params, options?): Observable<any> {
-    const $response = this.http.post(`${this.apiEndpoint}/${path}`, params, params)
+    const $response = this.http.post(`${this.apiEndpoint}/${path}`, params)
+      .pipe(share());
+    this.checkResponse($response);
+    return $response;
+  }
+
+  deleteRequest(path: string,  params, options?): Observable<any> {
+    const $response = this.http.delete(`${this.apiEndpoint}/${path}`, params)
       .pipe(share());
     this.checkResponse($response);
     return $response;

@@ -51,20 +51,6 @@ export class MenuItemComponent implements OnInit {
 
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
   add(): void {
     let newMenuItem: MenuItem;
     alert(' |' + this.ingredients.length + '| ');
@@ -73,7 +59,7 @@ export class MenuItemComponent implements OnInit {
     this.tableService.addMenuItem(newMenuItem);
   }
 
-  setupdate(menuItem: MenuItem): void {
+  setUpdate(menuItem: MenuItem): void {
     this.name = menuItem.name;
     this.description = menuItem.description;
     this.preparationDurationInMinutes = menuItem.preparationDurationInMinutes;
@@ -81,12 +67,8 @@ export class MenuItemComponent implements OnInit {
     this.price = menuItem.price;
   }
 
-  setdelete(menuItem: MenuItem): void {
+  setDelete(menuItem: MenuItem): void {
     this.name = menuItem.name;
-    this.description = menuItem.description;
-    this.preparationDurationInMinutes = menuItem.preparationDurationInMinutes;
-    this.ingredients = menuItem.ingredients;
-    this.price = menuItem.price;
   }
 
   update(): void {
@@ -97,7 +79,9 @@ export class MenuItemComponent implements OnInit {
   }
 
   delete(): void {
-    this.tableService.deleteMenuItem(this.name);
+    let newMenuItem: MenuItem;
+    newMenuItem = new MenuItem(this.name, '', 0, [], 0);
+    this.tableService.deleteMenuItem(newMenuItem);
   }
 
   clear(): void {

@@ -51,6 +51,15 @@
     "password": "Password",
     "remember": "Remember Me",
     "forgotPass": "Forgot Password?"
+  },
+
+  "menuItem": {
+    "login": "Log In",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "remember": "Remember Me",
+    "forgotPass": "Forgot Password?"
   }
 
 }

@@ -17,7 +17,7 @@
           <div class="modal-content">
 
             <div class="modal-header text-center">
-              <h4 class="modal-title w-100 font-weight-bold text-primary ml-5">Add new form</h4>
+              <h4 class="modal-title w-100 font-weight-bold text-primary ml-5">Add new Item</h4>
               <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -41,9 +41,9 @@
                   <mat-form-field>
                     <mat-label>Ingredients</mat-label>
                     <mat-select multiple [(ngModel)]="ingredients">
-                      <mat-option [value]="ingredients" class="form-control validate" id="modalAdd1" tabindex="-1" aria-labelledby="modalAdd"
+                      <mat-option class="form-control validate" id="modalAdd1" tabindex="-1" aria-labelledby="modalAdd"
                                   *ngFor="let ingredient of ingredientsList"
-                                  >{{ingredient.name}}
+                      >{{ingredient.name}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -52,20 +52,19 @@
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right">Preparation duration</label>
-                <input type="number" [(ngModel)]="preparationDurationInMinutes" class="form-control validate">
+                <input type="number" min="0" [(ngModel)]="preparationDurationInMinutes" class="form-control validate">
               </div>
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right">Price</label>
-                <input type="number" [(ngModel)]="price" class="form-control">
+                <input type="number" min="0" [(ngModel)]="price" class="form-control">
               </div>
-
 
             </div>
 
             <div class="modal-footer d-flex justify-content-center buttonAddFormWrapper">
               <button class="btn btn-outline-primary btn-block buttonAdd" (click)="add()"
-                      data-dismiss="modal">Add form
+                      data-dismiss="modal">Add Item
                 <i class="fas fa-paper-plane-o ml-1"></i>
               </button>
             </div>
@@ -90,10 +89,13 @@
           <div class="modal-content">
             <div class="modal-header text-center">
               <h4 class="modal-title w-100 font-weight-bold text-secondary ml-5">Edit Item</h4>
-              <button type="button" class="close text-secondary" data-dismiss="modal" aria-label="Close" (click)="clear()">
+              <button type="button" class="close text-secondary" data-dismiss="modal" aria-label="Close"
+                      (click)="clear()">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+
+
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right">Name</label>
@@ -111,9 +113,10 @@
                 <div>
                   <mat-form-field>
                     <mat-label>Ingredients</mat-label>
-                    <mat-select multiple>
-                      <mat-option class="form-control validate" *ngFor="let ingredient of ingredientsList"
-                                  [value]="ingredient">{{ingredient.name}}
+                    <mat-select multiple [(ngModel)]="ingredients">
+                      <mat-option class="form-control validate" tabindex="-1" aria-labelledby="modalAdd"
+                                  *ngFor="let ingredient of ingredientsList"
+                      >{{ingredient.name}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -122,16 +125,16 @@
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right">Preparation duration</label>
-                <input type="number" [(ngModel)]="preparationDurationInMinutes" class="form-control validate">
+                <input type="number" min="0" [(ngModel)]="preparationDurationInMinutes" class="form-control validate">
               </div>
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right">Price</label>
-                <input type="number" [(ngModel)]="price" class="form-control">
+                <input type="number" min="0" [(ngModel)]="price" class="form-control">
               </div>
 
-
             </div>
+
 
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
               <button class="btn btn-outline-secondary btn-block editInside" data-dismiss="modal" (click)="update()">
@@ -158,11 +161,16 @@
               </button>
             </div>
             <div class="modal-body mx-3">
-              <p class="text-center h4">Are you sure to delete selected row?</p>
+              <p class="text-center h4">Are you sure to delete {{name}}?</p>
             </div>
             <div class="modal-footer d-flex justify-content-center deleteButtonsWrapper">
-              <button type="button" class="btn btn-danger btnYesClass" id="btnYes" data-dismiss="modal" (click)="delete()">Yes</button>
-              <button type="button" class="btn btn-primary btnNoClass" id="btnNo" data-dismiss="modal" (click)="clear()">No</button>
+              <button type="button" class="btn btn-danger btnYesClass" id="btnYes" data-dismiss="modal"
+                      (click)="delete()">Yes
+              </button>
+              <button type="button" class="btn btn-primary btnNoClass" id="btnNo" data-dismiss="modal"
+                      (click)="clear()">
+                No
+              </button>
             </div>
           </div>
         </div>
@@ -217,16 +225,16 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
         <div class="d-md-inline">
-        <div class="text-center buttonEditWrapper">
-          <button class="btn btn-info btn-rounded btn-sm buttonEdit"
-                  data-toggle="modal" data-target="#modalEdit" (click)="setupdate(element)">
-            Edit
-          </button>
-          <button class="btn btn-danger btn-sm btn-rounded "
-                  data-toggle="modal" data-target="#modalDelete" (click)="setdelete(element)">
-            Delete
-          </button>
-        </div>
+          <div class="text-center buttonEditWrapper">
+            <button class="btn btn-info btn-rounded btn-sm buttonEdit"
+                    data-toggle="modal" data-target="#modalEdit" (click)="setUpdate(element)">
+              Edit
+            </button>
+            <button class="btn btn-danger btn-sm btn-rounded "
+                    data-toggle="modal" data-target="#modalDelete" (click)="setDelete(element)">
+              Delete
+            </button>
+          </div>
         </div>
       </td>
     </ng-container>

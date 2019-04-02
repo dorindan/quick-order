@@ -38,8 +38,8 @@ public class MenuItemResource {
         menuItemService.updateMenuItem(menuItemDto);
     }
 
-    @RequestMapping(path = "/remove", method = RequestMethod.POST)
-    public void removeMenuItem(@RequestBody @NotNull String menuItemName) {
-        menuItemService.removeMenuItem(menuItemName);
+    @RequestMapping(path = "/remove", method = RequestMethod.DELETE)
+    public void removeMenuItem(@NotNull @RequestBody MenuItemDto menuItem) {
+        menuItemService.removeMenuItem(menuItem.getName());
     }
 }
