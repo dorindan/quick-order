@@ -19,6 +19,8 @@ public class MenuItemConverter {
 
     @Autowired
     private IngredientConverter ingredientConverter;
+    @Autowired
+    private MenuItemTypeConverter menuItemTypeConverter;
 
     public MenuItem toMenuItem(MenuItemDto menuItemDto) {
         if (menuItemDto == null) {
@@ -30,7 +32,7 @@ public class MenuItemConverter {
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setIngredients(ingredientConverter.toIngredientList(Arrays.asList( menuItemDto.getIngredients())));
-        menuItem.setMenuItemType(menuItemDto.getMenuItemTypeDto());
+        menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
         return menuItem;
     }
 
@@ -49,7 +51,7 @@ public class MenuItemConverter {
             ingredientDtosConverted[i] = ingredientDtos.get(i);
         }
         menuItemDto.setIngredients(ingredientDtosConverted);
-        menuItemDto.setMenuItemTypeDto(menuItem.getMenuItemType());
+        menuItemDto.setMenuItemTypeDto(menuItemTypeConverter.toMenuItemTypeDto(menuItem.getMenuItemType()));
         return menuItemDto;
     }
 

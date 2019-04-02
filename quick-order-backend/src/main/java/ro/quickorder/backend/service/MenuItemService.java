@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.IngredientConverter;
 import ro.quickorder.backend.converter.MenuItemConverter;
+import ro.quickorder.backend.converter.MenuItemTypeConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
@@ -31,6 +32,8 @@ public class MenuItemService {
     private IngredientRepository ingredientRepository;
     @Autowired
     private MenuItemConverter menuItemConverter;
+    @Autowired
+    private MenuItemTypeConverter menuItemTypeConverter;
 
     @Autowired
     private IngredientConverter ingredientConverter;
@@ -73,7 +76,7 @@ public class MenuItemService {
         menuItem.setIngredients(ingredients);
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setDescription(menuItemDto.getDescription());
-        menuItem.setMenuItemType(menuItemDto.getMenuItemTypeDto());
+        menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
 
         System.out.println("get all was called ");
@@ -90,7 +93,7 @@ public class MenuItemService {
         menuItem.setIngredients(ingredientConverter.toIngredientList(ingredientDtos));
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setDescription(menuItemDto.getDescription());
-        menuItem.setMenuItemType(menuItemDto.getMenuItemTypeDto());
+        menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
 
         menuItemRepository.save(menuItem);
