@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
-import {MatTableDataSource} from '@angular/material';
+import {MatSelectChange, MatTableDataSource} from '@angular/material';
 import {Ingredient} from '../../models/Ingredient';
 import {MenuItem} from '../../models/MenuItem';
-
-
+import {Observable} from 'rxjs';
+import {Reservation} from '../../models/Reservation';
+import {MenuService} from '../../services/menu.service';
 
 
 @Component({
@@ -14,27 +15,40 @@ import {MenuItem} from '../../models/MenuItem';
 })
 export class MenuItemComponent implements OnInit {
 
-  menuItems: MenuItem[] = [];
-  displayedColumns: string[] = [ 'select', 'name', 'description', 'ingredients', 'preparationTime', 'price'];
+  menuItems: MenuItem[];
+  menuItemsGet: Observable<MenuItem[]>;
+  displayedColumns: string[] = ['name', 'description', 'ingredients', 'preparationTime', 'price', 'edit'];
   dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
   selection = new SelectionModel<MenuItem>(true, []);
+  ingredientsList: Ingredient[];
 
-  ngOnInit(): void {
-    const ingredient = new Ingredient('numele e tare');
-   const menuItem1= new MenuItem('Name', 'Description',  9, null , 21);
-   const menuItem2 = new MenuItem('Name', 'Description',  9, null , 21);
-   const menuItem3 = new MenuItem('Name', 'Description',  9, null , 21);
-   const menuItem4 = new MenuItem('Name', 'Description',  9, null , 21);
-   const menuItem = new MenuItem('Name', 'Description',  9, null , 21);
-   menuItem.ingredients = [];
-   menuItem.ingredients.push(ingredient);
-   menuItem.ingredients.push(ingredient);
-   menuItem.ingredients.push(ingredient);
-    this.menuItems.push(menuItem);
-    this.menuItems.push(menuItem1);
-    this.menuItems.push(menuItem2);
-    this.menuItems.push(menuItem4);
-    this.menuItems.push(menuItem3);
+
+  name = '';
+  description = '';
+  preparationDurationInMinutes = 0;
+  ingredients = [];
+  price = 0;
+
+  constructor(private tableService: MenuService) {
+  }
+
+  ngOnInit() {
+    this.ingredientsList = [];
+    this.ingredientsList.push(new Ingredient('piper'));
+    this.ingredientsList.push(new Ingredient('sare'));
+    this.ingredientsList.push(new Ingredient('zahar'));
+    this.ingredientsList.push(new Ingredient('oua'));
+    this.updateMenu();
+  }
+
+  updateMenu() {
+    this.menuItemsGet = this.tableService.getMenuItems();
+    this.menuItems = [];
+    this.menuItemsGet.forEach(menuItem => menuItem.forEach(m => {
+      this.menuItems.push(m);
+      this.dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
+    }));
+
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -51,15 +65,47 @@ export class MenuItemComponent implements OnInit {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  add(_name: string, _description: string, _preparationDurationInMinutes: number): void {
-    alert(name + _description + _preparationDurationInMinutes);
+  add(): void {
+    let newMenuItem: MenuItem;
+    alert(' |' + this.ingredients.length + '| ');
+    newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
+
+    this.tableService.addMenuItem(newMenuItem);
   }
 
-  update(_name: string, _description: string, _preparationDurationInMinutes: number): void {
-    alert(name + _description + _preparationDurationInMinutes);
+  setupdate(menuItem: MenuItem): void {
+    this.name = menuItem.name;
+    this.description = menuItem.description;
+    this.preparationDurationInMinutes = menuItem.preparationDurationInMinutes;
+    this.ingredients = menuItem.ingredients;
+    this.price = menuItem.price;
   }
 
-  remove(_name: string, _description: string, _preparationDurationInMinutes: number): void {
-    alert(name + _description + _preparationDurationInMinutes);
+  setdelete(menuItem: MenuItem): void {
+    this.name = menuItem.name;
+    this.description = menuItem.description;
+    this.preparationDurationInMinutes = menuItem.preparationDurationInMinutes;
+    this.ingredients = menuItem.ingredients;
+    this.price = menuItem.price;
   }
+
+  update(): void {
+    let newMenuItem: MenuItem;
+    newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
+
+    this.tableService.editMenuItem(newMenuItem);
+  }
+
+  delete(): void {
+    this.tableService.deleteMenuItem(this.name);
+  }
+
+  clear(): void {
+    this.name = '';
+    this.description = '';
+    this.preparationDurationInMinutes = 0;
+    this.ingredients = [];
+    this.price = 0;
+  }
+
 }

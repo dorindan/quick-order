@@ -79,6 +79,18 @@ public class MenuItemServiceTest {
     }
 
     @Test
+    public void testAddMenuItemWhenNameIsNull() {
+        MenuItemDto menuItemDto= new MenuItemDto();
+
+        try {
+            menuItemService.addMenuItem(menuItemDto);
+            fail("MenuItem has name equals with null, error should pop-up");
+        } catch (NotFoundException e){
+            assertEquals("Name can not be null",  e.getMessage());
+        }
+    }
+
+    @Test
     public void testAddMenuItemWhenItemNameAlreadyExists() {
         MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", 5, 18);
 

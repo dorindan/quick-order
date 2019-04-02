@@ -1,17 +1,11 @@
 export class Ingredient {
 
-  private _name: string;
-
-
-  get name(): string {
-    return this._name;
-  }
-
-  set name(value: string) {
-    this._name = value;
-  }
+  public name: string;
 
   constructor(name: string) {
-    this._name = name;
+    this.name = name;
   }
+
+
+
 }

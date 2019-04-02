@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.dto.IngredientDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  Converts Commands to their corresponding DTO and vice versa.
  *@author R. Lupoaie
@@ -29,5 +32,25 @@ public class IngredientConverter {
         ingredientDto.setName(ingredient.getName());
         return ingredientDto;
     }
+
+    public List<Ingredient> toIngredientList(List<IngredientDto> ingredientDtos) {
+        if (ingredientDtos == null) {
+            return null;
+        }
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        ingredientDtos.forEach(ingredientDto -> ingredients.add(toIngredient(ingredientDto)) );
+        return ingredients;
+    }
+
+    public List<IngredientDto> toIngredientDtoList(List<Ingredient> ingredients) {
+        if (ingredients == null) {
+            return null;
+        }
+        ArrayList<IngredientDto> ingredientDtos = new ArrayList<>();
+        ingredients.forEach(ingredient -> ingredientDtos.add(toIngredientDto(ingredient)) );
+        return ingredientDtos;
+    }
+
+
 
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.dto.IngredientDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.repository.BillRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
@@ -27,7 +28,8 @@ public class MenuItemResource {
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public void addMenuItem(@RequestBody @NotNull MenuItemDto menuItemDto) {
+    public void addMenuItem(@NotNull @RequestBody  MenuItemDto menuItemDto) {
+        //menuItemDto.setIngredients();
         menuItemService.addMenuItem(menuItemDto);
     }
 
@@ -36,7 +38,7 @@ public class MenuItemResource {
         menuItemService.updateMenuItem(menuItemDto);
     }
 
-    @RequestMapping(path = "/remove", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/remove", method = RequestMethod.POST)
     public void removeMenuItem(@RequestBody @NotNull String menuItemName) {
         menuItemService.removeMenuItem(menuItemName);
     }

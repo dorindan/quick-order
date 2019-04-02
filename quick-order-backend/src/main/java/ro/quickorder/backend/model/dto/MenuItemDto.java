@@ -3,6 +3,8 @@ package ro.quickorder.backend.model.dto;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItemType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,7 +19,8 @@ public class MenuItemDto {
     private Integer preparationDurationInMinutes;
     private Integer price;
     private MenuItemType menuItemType;
-    private List<Ingredient> ingredients;
+    private IngredientDto[] objecte = new IngredientDto[100];
+    private Object[] ingredients ;
 
     public MenuItemDto() {
 
@@ -26,6 +29,14 @@ public class MenuItemDto {
     public MenuItemDto(String name, String description, Integer preparationDurationInMinutes, Integer price) {
         this.name = name;
         this.description = description;
+        this.preparationDurationInMinutes = preparationDurationInMinutes;
+        this.price = price;
+    }
+
+    public MenuItemDto(String name, String description, IngredientDto[] ingredientDtos, Integer preparationDurationInMinutes, Integer price) {
+        this.name = name;
+        this.description = description;
+        this.ingredients = ingredientDtos;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
         this.price = price;
     }
@@ -70,11 +81,11 @@ public class MenuItemDto {
         this.menuItemType = menuItemType;
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
+    public IngredientDto[] getIngredients() {
+        return objecte;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredients(IngredientDto[] ingredients) {
+        this.objecte = ingredients;
     }
 }

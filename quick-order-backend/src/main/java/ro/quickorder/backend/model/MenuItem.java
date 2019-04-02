@@ -50,6 +50,14 @@ public class MenuItem {
         this.price = price;
     }
 
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price, List<Ingredient> ingredients) {
+        this.name = name;
+        this.description = description;
+        this.preparationDurationInMinutes = preparationDurationInMinutes;
+        this.price = price;
+        this.ingredients = ingredients;
+    }
+
     public MenuItem() {
     }
 
