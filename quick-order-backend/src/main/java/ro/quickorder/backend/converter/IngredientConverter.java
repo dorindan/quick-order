@@ -5,7 +5,9 @@ import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.dto.IngredientDto;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  Converts Commands to their corresponding DTO and vice versa.
@@ -33,16 +35,16 @@ public class IngredientConverter {
         return ingredientDto;
     }
 
-    public List<Ingredient> toIngredientList(List<IngredientDto> ingredientDtos) {
+    public Set<Ingredient> toIngredientList(Set<IngredientDto> ingredientDtos) {
         if (ingredientDtos == null) {
             return null;
         }
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        Set<Ingredient> ingredients = new HashSet<>();
         ingredientDtos.forEach(ingredientDto -> ingredients.add(toIngredient(ingredientDto)) );
         return ingredients;
     }
 
-    public List<IngredientDto> toIngredientDtoList(List<Ingredient> ingredients) {
+    public List<IngredientDto> toIngredientDtoList(Set<Ingredient> ingredients) {
         if (ingredients == null) {
             return null;
         }

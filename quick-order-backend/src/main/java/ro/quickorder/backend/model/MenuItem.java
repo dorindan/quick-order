@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.time.Period;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 public class MenuItem {
 
@@ -35,7 +37,7 @@ public class MenuItem {
     @JoinTable(name = "menu_item_ingredient",
             joinColumns = { @JoinColumn(name = "menu_item_id") },
             inverseJoinColumns = { @JoinColumn(name = "ingredient_id")  })
-    private List<Ingredient> ingredients;
+    private Set<Ingredient> ingredients;
 
     @ManyToMany
     @JoinTable(name = "menu_item_command",
@@ -50,7 +52,7 @@ public class MenuItem {
         this.price = price;
     }
 
-    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price, List<Ingredient> ingredients) {
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price, Set<Ingredient> ingredients) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
@@ -117,11 +119,11 @@ public class MenuItem {
         this.feedbacks = feedbacks;
     }
 
-    public List<Ingredient> getIngredients() {
+    public Set<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 

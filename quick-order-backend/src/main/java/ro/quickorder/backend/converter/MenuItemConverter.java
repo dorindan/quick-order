@@ -1,5 +1,6 @@
 package ro.quickorder.backend.converter;
 
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.MenuItem;
@@ -35,7 +36,7 @@ public class MenuItemConverter {
             menuItem.setIngredients(null);
         }
         else {
-            menuItem.setIngredients(ingredientConverter.toIngredientList(Arrays.asList(menuItemDto.getIngredients())));
+            menuItem.setIngredients(ingredientConverter.toIngredientList(Sets.newHashSet(menuItemDto.getIngredients())));
         }
         if(menuItemDto.getMenuItemTypeDto() == null){
             menuItem.setMenuItemType(null);

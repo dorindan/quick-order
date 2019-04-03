@@ -54,7 +54,6 @@ export class MenuItemComponent implements OnInit {
 
   add(): void {
     let newMenuItem: MenuItem;
-    alert(' |' + this.ingredients[0] + '| ' + this.ingredients[1] + '| ' + this.ingredients[2] + '| ');
     newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
 
     this.tableService.addMenuItem(newMenuItem);
@@ -66,7 +65,10 @@ export class MenuItemComponent implements OnInit {
     this.name = menuItem.name;
     this.description = menuItem.description;
     this.preparationDurationInMinutes = menuItem.preparationDurationInMinutes;
-    this.ingredients = menuItem.ingredients;
+    menuItem.ingredients.forEach(i => {
+      this.ingredients.push(i);
+      alert(this.ingredients.length);
+    });
     this.price = menuItem.price;
   }
 

@@ -15,10 +15,7 @@ import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author R. Lupoaie
@@ -60,7 +57,7 @@ public class MenuItemService {
             throw new NotFoundException("MenuItem already exists!");
         }
 
-        List<Ingredient> ingredients = setIngredients(menuItemDto);
+        Set<Ingredient> ingredients = setIngredients(menuItemDto);
 
         menuItem = new MenuItem(menuItemDto.getName(), menuItemDto.getDescription(), menuItemDto.getPrice(), menuItemDto.getPreparationDurationInMinutes(), ingredients);
         menuItemRepository.save(menuItem);
@@ -74,7 +71,7 @@ public class MenuItemService {
         }
 
 
-        List<Ingredient> ingredients = setIngredients(menuItemDto);
+        Set<Ingredient> ingredients = setIngredients(menuItemDto);
 
         menuItem.setIngredients(ingredients);
         menuItem.setPrice(menuItemDto.getPrice());
@@ -85,8 +82,8 @@ public class MenuItemService {
         menuItemRepository.save(menuItem);
     }
 
-    private List<Ingredient> setIngredients(MenuItemDto menuItemDto) {
-        List<Ingredient> ingredients = new ArrayList<>();
+    private Set<Ingredient> setIngredients(MenuItemDto menuItemDto) {
+        Set<Ingredient> ingredients = new HashSet<>();
         if (menuItemDto.getIngredients() != null)
             for (int i = 0; i < menuItemDto.getIngredients().length; i++) {
                 Ingredient ingredient = ingredientRepository.findFirstByName(menuItemDto.getIngredients()[i].getName());
