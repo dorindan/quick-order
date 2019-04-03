@@ -53,12 +53,17 @@ export class MenuItemComponent implements OnInit {
   }
 
   add(): void {
+    if (this.validare()) {
+      alert('Name must be of minimal 3 characters');
+      return;
+    }
     let newMenuItem: MenuItem;
     newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
 
     this.tableService.addMenuItem(newMenuItem);
     this.clear();
     this.updateMenu();
+
   }
 
   setUpdate(menuItem: MenuItem): void {
@@ -67,7 +72,6 @@ export class MenuItemComponent implements OnInit {
     this.preparationDurationInMinutes = menuItem.preparationDurationInMinutes;
     menuItem.ingredients.forEach(i => {
       this.ingredients.push(i);
-      alert(this.ingredients.length);
     });
     this.price = menuItem.price;
   }
@@ -96,6 +100,13 @@ export class MenuItemComponent implements OnInit {
     this.preparationDurationInMinutes = 0;
     this.ingredients = [];
     this.price = 0;
+  }
+
+  validare(): boolean {
+    if (this.name.length > 2) {
+      return true;
+    }
+    return false;
   }
 
 }
