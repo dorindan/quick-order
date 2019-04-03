@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
 
   private checkIfAllIsValid(): boolean {
     if (this.password === this.re_password && this.password.length >= 6 &&
-      this.userName.length > 5 && this.rightUsername && this.isValidMailFormat(this.email) && this.termsAndConditions) {
+      this.userName.length >= 5 && this.rightUsername && this.isValidMailFormat(this.email) && this.termsAndConditions) {
       return true;
     } else {
       this.validateUsername();
