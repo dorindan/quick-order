@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {User} from '../models/User';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {ApiService} from './api.service';
+import {Ingredient} from '../models/Ingredient';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class IngredientService {
 
   constructor(
     private http: HttpClient,
@@ -15,8 +15,8 @@ export class LoginService {
   ) {
   }
 
-
-  login(authData: User): Observable<any> {
-    return this.apiService.postRequest('api/users/login', authData);
+  getIngredient(): Observable<Ingredient[]> {
+    return this.apiService.getRequest('api/ingredient/all');
   }
+
 }

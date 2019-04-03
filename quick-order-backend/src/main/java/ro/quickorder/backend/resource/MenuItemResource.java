@@ -29,7 +29,6 @@ public class MenuItemResource {
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public void addMenuItem(@NotNull @RequestBody  MenuItemDto menuItemDto) {
-        //menuItemDto.setIngredients();
         menuItemService.addMenuItem(menuItemDto);
     }
 

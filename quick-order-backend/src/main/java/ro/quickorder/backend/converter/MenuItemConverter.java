@@ -31,8 +31,18 @@ public class MenuItemConverter {
         menuItem.setDescription(menuItemDto.getDescription());
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
         menuItem.setPrice(menuItemDto.getPrice());
-        menuItem.setIngredients(ingredientConverter.toIngredientList(Arrays.asList( menuItemDto.getIngredients())));
-        menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
+        if(menuItemDto.getIngredients() == null){
+            menuItem.setIngredients(null);
+        }
+        else {
+            menuItem.setIngredients(ingredientConverter.toIngredientList(Arrays.asList(menuItemDto.getIngredients())));
+        }
+        if(menuItemDto.getMenuItemTypeDto() == null){
+            menuItem.setMenuItemType(null);
+        }
+        else {
+            menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
+        }
         return menuItem;
     }
 
@@ -45,13 +55,23 @@ public class MenuItemConverter {
         menuItemDto.setDescription(menuItem.getDescription());
         menuItemDto.setPreparationDurationInMinutes(menuItem.getPreparationDurationInMinutes());
         menuItemDto.setPrice(menuItem.getPrice());
-        List<IngredientDto> ingredientDtos = ingredientConverter.toIngredientDtoList(menuItem.getIngredients());
-        IngredientDto[] ingredientDtosConverted = new IngredientDto[ingredientDtos.size()];
-        for(int i=0;i<ingredientDtos.size();i++){
-            ingredientDtosConverted[i] = ingredientDtos.get(i);
+        if(menuItem.getIngredients() == null){
+            menuItemDto.setIngredients(null);
         }
-        menuItemDto.setIngredients(ingredientDtosConverted);
-        menuItemDto.setMenuItemTypeDto(menuItemTypeConverter.toMenuItemTypeDto(menuItem.getMenuItemType()));
+        else {
+            List<IngredientDto> ingredientDtos = ingredientConverter.toIngredientDtoList(menuItem.getIngredients());
+            IngredientDto[] ingredientDtosConverted = new IngredientDto[ingredientDtos.size()];
+            for(int i=0;i<ingredientDtos.size();i++){
+                ingredientDtosConverted[i] = ingredientDtos.get(i);
+            }
+            menuItemDto.setIngredients(ingredientDtosConverted);
+        }
+        if(menuItem.getMenuItemType() == null){
+            menuItemDto.setMenuItemTypeDto(null);
+        }
+        else {
+            menuItemDto.setMenuItemTypeDto(menuItemTypeConverter.toMenuItemTypeDto(menuItem.getMenuItemType()));
+        }
         return menuItemDto;
     }
 

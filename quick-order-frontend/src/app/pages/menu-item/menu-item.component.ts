@@ -6,6 +6,7 @@ import {MenuItem} from '../../models/MenuItem';
 import {Observable} from 'rxjs';
 import {Reservation} from '../../models/Reservation';
 import {MenuService} from '../../services/menu.service';
+import {IngredientService} from '../../services/ingredient.service';
 
 
 @Component({
@@ -17,9 +18,9 @@ export class MenuItemComponent implements OnInit {
 
   menuItems: MenuItem[];
   menuItemsGet: Observable<MenuItem[]>;
+  ingredientGet: Observable<Ingredient[]>;
   displayedColumns: string[] = ['name', 'description', 'ingredients', 'preparationTime', 'price', 'edit'];
   dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
-  selection = new SelectionModel<MenuItem>(true, []);
   ingredientsList: Ingredient[];
 
 
@@ -29,15 +30,15 @@ export class MenuItemComponent implements OnInit {
   ingredients = [];
   price = 0;
 
-  constructor(private tableService: MenuService) {
+  constructor(private tableService: MenuService, private ingredientService: IngredientService) {
   }
 
   ngOnInit() {
     this.ingredientsList = [];
-    this.ingredientsList.push(new Ingredient('piper'));
-    this.ingredientsList.push(new Ingredient('sare'));
-    this.ingredientsList.push(new Ingredient('zahar'));
-    this.ingredientsList.push(new Ingredient('oua'));
+    this.ingredientGet = this.ingredientService.getIngredient();
+    this.ingredientGet.forEach(menuItem => menuItem.forEach(m => {
+      this.ingredientsList.push(m);
+    }));
     this.updateMenu();
   }
 
@@ -53,7 +54,7 @@ export class MenuItemComponent implements OnInit {
 
   add(): void {
     let newMenuItem: MenuItem;
-    alert(' |' + this.ingredients.length + '| ');
+    alert(' |' + this.ingredients[0] + '| ' + this.ingredients[1] + '| ' + this.ingredients[2] + '| ');
     newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
 
     this.tableService.addMenuItem(newMenuItem);

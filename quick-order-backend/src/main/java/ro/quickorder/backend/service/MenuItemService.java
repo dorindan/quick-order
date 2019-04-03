@@ -18,6 +18,7 @@ import ro.quickorder.backend.repository.MenuItemRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author R. Lupoaie
@@ -59,27 +60,9 @@ public class MenuItemService {
             throw new NotFoundException("MenuItem already exists!");
         }
 
-        List<Ingredient> ingredients = new ArrayList<>();
-        for (IngredientDto ingredientDto : menuItemDto.getIngredients()) {
-            Ingredient ingredient = ingredientRepository.findFirstByName(ingredientDto.getName());
-            if (ingredient != null) {
-                ingredients.add(ingredient);
-            }
-            else{
-                LOG.error("Item was not found!");
-                throw new NotFoundException("Item was not found!");
-            }
-        }
+        List<Ingredient> ingredients = setIngredients(menuItemDto);
 
-        menuItem = new MenuItem();
-        menuItem.setName(menuItemDto.getName());
-        menuItem.setIngredients(ingredients);
-        menuItem.setPrice(menuItemDto.getPrice());
-        menuItem.setDescription(menuItemDto.getDescription());
-        menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
-        menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
-
-        System.out.println("get all was called ");
+        menuItem = new MenuItem(menuItemDto.getName(), menuItemDto.getDescription(), menuItemDto.getPrice(), menuItemDto.getPreparationDurationInMinutes(), ingredients);
         menuItemRepository.save(menuItem);
     }
 
@@ -89,14 +72,32 @@ public class MenuItemService {
             LOG.error("MenuItem not found!");
             throw new NotFoundException("MenuItem not found!");
         }
-        ArrayList<IngredientDto> ingredientDtos = (ArrayList)Arrays.asList(menuItemDto.getIngredients());
-        menuItem.setIngredients(ingredientConverter.toIngredientList(ingredientDtos));
+
+
+        List<Ingredient> ingredients = setIngredients(menuItemDto);
+
+        menuItem.setIngredients(ingredients);
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setDescription(menuItemDto.getDescription());
         menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
 
         menuItemRepository.save(menuItem);
+    }
+
+    private List<Ingredient> setIngredients(MenuItemDto menuItemDto) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        if (menuItemDto.getIngredients() != null)
+            for (int i = 0; i < menuItemDto.getIngredients().length; i++) {
+                Ingredient ingredient = ingredientRepository.findFirstByName(menuItemDto.getIngredients()[i].getName());
+                if (ingredient != null) {
+                    ingredients.add(ingredient);
+                } else {
+                    LOG.error("Ingredient was not found!");
+                    throw new NotFoundException("Ingredient was not found!");
+                }
+            }
+        return ingredients;
     }
 
     public void removeMenuItem(String menuItemName) {

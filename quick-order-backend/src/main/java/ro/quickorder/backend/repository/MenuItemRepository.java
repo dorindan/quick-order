@@ -12,4 +12,7 @@ public interface MenuItemRepository extends JpaRepository<MenuItem,Long> {
 
 
     MenuItem findByName(String name);
+
+    @Query(value = "From MenuItem m left join fetch m.ingredients")
+    List<MenuItem> findAll();
 }

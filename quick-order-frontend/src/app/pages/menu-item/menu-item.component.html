@@ -35,8 +35,8 @@
                 <div>
                   <mat-form-field>
                     <mat-label>Ingredients</mat-label>
-                    <mat-select multiple [(ngModel)]="ingredients">
-                      <mat-option class="form-control validate"
+                    <mat-select multiple [(ngModel)]="ingredients" >
+                      <mat-option class="form-control validate" [value]="ingredient.name"
                                   *ngFor="let ingredient of ingredientsList"
                       >{{ingredient.name}}
                       </mat-option>
@@ -55,6 +55,12 @@
                 <input type="number" min="0" [(ngModel)]="price" class="form-control">
               </div>
 
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center editInsideWrapper">
+              <button class="btn btn-outline-secondary btn-block editInside" data-dismiss="modal" (click)="add()">
+                Add
+              </button>
             </div>
 
           </div>
@@ -97,7 +103,7 @@
                   <mat-form-field>
                     <mat-label>Ingredients</mat-label>
                     <mat-select multiple [(ngModel)]="ingredients">
-                      <mat-option class="form-control validate" tabindex="-1" aria-labelledby="modalAdd"
+                      <mat-option class="form-control validate" tabindex="-1" aria-labelledby="modalAdd" [value]="ingredient.name"
                                   *ngFor="let ingredient of ingredientsList"
                       >{{ingredient.name}}
                       </mat-option>

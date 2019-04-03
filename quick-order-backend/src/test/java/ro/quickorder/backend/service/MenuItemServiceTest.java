@@ -7,15 +7,20 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import ro.quickorder.backend.converter.IngredientConverter;
 import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.exception.NotFoundException;
+import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.dto.IngredientDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
+import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 
 import javax.inject.Inject;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -31,9 +36,15 @@ public class MenuItemServiceTest {
     @Inject
     private MenuItemRepository menuItemRepository;
     @Inject
+    private IngredientRepository ingredientRepository;
+    @Inject
     private MenuItemService menuItemService;
     @Inject
+    private IngredientService ingredientService;
+    @Inject
     private MenuItemConverter menuItemConverter;
+    @Inject
+    private IngredientConverter ingredientConverter;
 
 
     @Before
@@ -42,10 +53,17 @@ public class MenuItemServiceTest {
         MenuItem menuItem1 = new MenuItem("Name1", "Original description!", 12, 20);
         MenuItem menuItem2 = new MenuItem("Name2", "Original description!", 20, 30);
         MenuItem menuItem3 = new MenuItem("Name3", "Original description!", 25, 40);
+        Ingredient ingredient1 = new Ingredient("marar");
+        Ingredient ingredient2 = new Ingredient("sare");
+        Ingredient ingredient3 = new Ingredient("piper");
 
         menuItemRepository.save(menuItem1);
         menuItemRepository.save(menuItem2);
         menuItemRepository.save(menuItem3);
+
+        ingredientRepository.save(ingredient1);
+        ingredientRepository.save(ingredient2);
+        ingredientRepository.save(ingredient3);
     }
 
     @After
@@ -67,6 +85,20 @@ public class MenuItemServiceTest {
     public void testAddMenuItem() {
         MenuItemDto menuItemDto= new MenuItemDto("Salad", "the most original description!", 5, 18);
 
+        List<IngredientDto> ingredientDtosUsed = new ArrayList<>();
+        List<IngredientDto> ingredientDtos = ingredientService.getAll();
+
+        ingredientDtosUsed.add(ingredientDtos.get(1));
+        ingredientDtosUsed.add(ingredientDtos.get(2));
+
+        IngredientDto[] ingredientDtosArray = new IngredientDto[ingredientDtosUsed.size()];
+
+        for(int i=0;i<ingredientDtosUsed.size();i++){
+            ingredientDtosArray[i]=ingredientDtosUsed.get(i);
+        }
+
+        menuItemDto.setIngredients(ingredientDtosArray);
+
         List<MenuItemDto> menuItems = menuItemService.getMenuItems();
 
         assertEquals(3, menuItems.size());
@@ -76,6 +108,8 @@ public class MenuItemServiceTest {
         List<MenuItemDto> newMenuItems = menuItemService.getMenuItems();
 
         assertEquals(4, newMenuItems.size());
+
+        assertEquals(1, newMenuItems.get(3).getIngredients().length);
     }
 
     @Test

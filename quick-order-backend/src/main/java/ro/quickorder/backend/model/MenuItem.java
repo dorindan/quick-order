@@ -11,12 +11,12 @@ import java.util.Objects;
 public class MenuItem {
 
     @Id
+    @Column(updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(updatable = false, nullable = false)
     private String id;
     private String name;
     private String description;
@@ -34,7 +34,7 @@ public class MenuItem {
     @ManyToMany
     @JoinTable(name = "menu_item_ingredient",
             joinColumns = { @JoinColumn(name = "menu_item_id") },
-            inverseJoinColumns = { @JoinColumn(name = "ingredient_id") })
+            inverseJoinColumns = { @JoinColumn(name = "ingredient_id")  })
     private List<Ingredient> ingredients;
 
     @ManyToMany

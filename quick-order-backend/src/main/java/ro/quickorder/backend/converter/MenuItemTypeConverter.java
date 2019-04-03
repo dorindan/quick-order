@@ -1,14 +1,8 @@
 package ro.quickorder.backend.converter;
 
 import org.springframework.stereotype.Component;
-import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.MenuItemType;
-import ro.quickorder.backend.model.dto.IngredientDto;
-import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.model.dto.MenuItemTypeDto;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *Converts MenuItemType to their corresponding DTO and vice versa.
