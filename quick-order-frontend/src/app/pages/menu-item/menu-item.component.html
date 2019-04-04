@@ -10,6 +10,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
 
+
             <div class="modal-header text-center">
               <h4 class="modal-title w-100 font-weight-bold text-primary ml-5" translate="">menuItem.addNew</h4>
               <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close"
@@ -21,7 +22,9 @@
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" for="inputName" translate="">menuItem.name</label>
-                <input type="text" id="inputName" [(ngModel)]="name" class="form-control validate">
+                &nbsp;
+                <label class = "red small" *ngIf="!nameRight" translate="">menuItem.nameCondition</label>
+                <input type="text" id="inputName" [(ngModel)]="name" class="form-control validate" (focusout)="validare()">
               </div>
 
               <div class="md-form mb-5">
@@ -47,12 +50,16 @@
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.preparationDuration</label>
-                <input type="number" min="0" [(ngModel)]="preparationDurationInMinutes" class="form-control validate">
+                &nbsp;
+                <label class = "red small" *ngIf="!durationRight" translate="">menuItem.durationCondition</label>
+                <input type="number" min="0" [(ngModel)]="preparationDurationInMinutes" class="form-control validate" (focusout)="validare()">
               </div>
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.price</label>
-                <input type="number" min="0" [(ngModel)]="price" class="form-control">
+                &nbsp;
+                <label class = "red small" *ngIf="!priceRight" translate="">menuItem.priceCondition</label>
+                <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validare()">
               </div>
 
             </div>
@@ -88,7 +95,7 @@
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.name</label>
-                <input type="text" disabled [(ngModel)]="name" class="form-control validate">
+                <input type="text" disabled [(ngModel)]="name" class="form-control validate" >
               </div>
 
               <div class="md-form mb-5">
@@ -114,12 +121,16 @@
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.preparationDuration</label>
-                <input type="number" min="0" [(ngModel)]="preparationDurationInMinutes" class="form-control validate">
+                &nbsp;
+                <label class = "red small" *ngIf="!durationRight" translate="">menuItem.durationCondition</label>
+                <input type="number" min="0" [(ngModel)]="preparationDurationInMinutes" class="form-control validate" (focusout)="validare()">
               </div>
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.price</label>
-                <input type="number" min="0" [(ngModel)]="price" class="form-control">
+                &nbsp;
+                <label class = "red small" *ngIf="!priceRight" translate="">menuItem.priceCondition</label>
+                <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validare()">
               </div>
 
             </div>

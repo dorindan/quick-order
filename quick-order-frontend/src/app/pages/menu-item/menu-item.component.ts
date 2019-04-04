@@ -23,6 +23,9 @@ export class MenuItemComponent implements OnInit {
   dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
   ingredientsList: Ingredient[];
 
+  nameRight = true;
+  priceRight = true;
+  durationRight = true;
 
   name = '';
   description = '';
@@ -54,10 +57,8 @@ export class MenuItemComponent implements OnInit {
 
   add(): void {
     if (!this.validare()) {
-      alert('Name must be of minimal 3 characters');
       return;
-    }
-    else {
+    } else {
       let newMenuItem: MenuItem;
       newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
 
@@ -77,16 +78,13 @@ export class MenuItemComponent implements OnInit {
     this.price = menuItem.price;
   }
 
-
   setDelete(menuItem: MenuItem): void {
     this.name = menuItem.name;
   }
 
   update(): void {
-    alert( this.ingredients.length);
     let newMenuItem: MenuItem;
     newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
-    alert(this.name + ' ' + this.description + ' ' + this.preparationDurationInMinutes + ' ' + this.ingredients.length + ' ' + this.price);
     this.tableService.editMenuItem(newMenuItem);
     this.clear();
   }
@@ -107,9 +105,27 @@ export class MenuItemComponent implements OnInit {
 
   validare(): boolean {
     if (this.name.length > 2) {
+      this.nameRight = true;
+    } else {
+      this.nameRight = false;
+    }
+
+    if (this.price < 0) {
+      this.priceRight = false;
+    } else {
+      this.priceRight = true;
+    }
+
+    if (this.preparationDurationInMinutes < 0) {
+      this.durationRight = false;
+    } else {
+      this.durationRight = true;
+    }
+    if (!this.durationRight || !this.nameRight || !this.priceRight) {
+      return false;
+    } else {
       return true;
     }
-    return false;
   }
 
 }

@@ -66,7 +66,10 @@
     "delete": "Șterge",
     "sure": "Esti sigur ca dorești să ștergi ",
     "yes": "Da",
-    "no": "Nu"
+    "no": "Nu",
+    "nameCondition": "*(Numele trebuie sa aiba minim 3 caractere) ",
+    "durationCondition": "*(Durata nu poate fi negativă) ",
+    "priceCondition": "*(Prețul nu poate fi negativ) "
   }
 
 }
