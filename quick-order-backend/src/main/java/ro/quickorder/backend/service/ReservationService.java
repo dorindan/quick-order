@@ -40,9 +40,10 @@ public class ReservationService {
             throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
         }
         if (reservationDto.getCheckInTime().before(currentTimestamp)){
-            LOG.error("CheckInTime must be greater than the current date");
+            LOG.error("CheckInTime must be greater than the current date currentTimeStamp: " + currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
             throw new ForbiddenException("CheckInTime must be greater than the current date");
         }
+        LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
         reservationDto.setStatus("not accepted");
         reservationDto.setConfirmed(false);
         long twoHoursInMilliseconds = 7200000;
