@@ -2,15 +2,25 @@ package ro.quickorder.backend.model;
 
 
 
+import org.hibernate.annotations.GenericGenerator;
+
+import org.springframework.util.CollectionUtils;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class TableFood {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(updatable = false, nullable = false)
+    private String id;
     private int tableNr;
     private int seats;
     private boolean windowView;
@@ -34,11 +44,11 @@ public class TableFood {
     public TableFood() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -108,9 +118,7 @@ public class TableFood {
                 windowView == tableFood.windowView &&
                 floor == tableFood.floor &&
                 free == tableFood.free &&
-                Objects.equals(id, tableFood.id) &&
-                Objects.equals(commands, tableFood.commands) &&
-                Objects.equals(reservations, tableFood.reservations);
+                Objects.equals(id, tableFood.id) ;
     }
 
     @Override

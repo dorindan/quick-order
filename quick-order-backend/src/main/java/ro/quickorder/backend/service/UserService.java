@@ -2,6 +2,8 @@ package ro.quickorder.backend.service;
 
 
 import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.UserAttributeConverter;
@@ -19,7 +21,7 @@ import java.util.regex.Pattern;
 
 @Service
 public class UserService {
-
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserConverter userConverter;
     @Autowired
@@ -38,13 +40,16 @@ public class UserService {
                 return new UserDto(u.getUsername(), u.getEmail(), userAttributeConverter.toUserAttributeDto(u.getAttribute()));
             }
         }
+        LOG.error("User or password are incorrect!");
         throw new NotFoundException("User or password are incorrect!");
     }
 
     public UserDto signUp(UserDto userDto) {
 
-        if (userDto == null)
+        if (userDto == null) {
+            LOG.error("User is null!");
             throw new BadRequestException("User is null!");
+        }
 
         String line = userDto.getUsername();
         String pattern = "^[a-zA-Z0-9_.]{5,}$";
@@ -56,14 +61,17 @@ public class UserService {
         Matcher m = r.matcher(line);
         // bad username
         if (!m.find()) {
+            LOG.error("UserName has characters that are not allowed!");
             throw new ForbiddenException("UserName has characters that are not allowed!");
         }
         // test if username is ok
         if (userRepository.findByUsername(userDto.getUsername()) != null) {
+            LOG.error("UserName is already taken!");
             throw new NotAcceptableException("UserName is already taken!");
         }
         // test if email is ok
         if (userRepository.findByEmail(userDto.getEmail()) != null) {
+            LOG.error("Email is already taken!");
             throw new NotAcceptableException("Email is already taken!");
         }
 

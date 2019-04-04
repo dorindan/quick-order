@@ -4,7 +4,7 @@ import {ReservationService} from '../../services/reservation.service';
 import {MatDatepickerInputEvent, MatOptionSelectionChange, MatSelectChange} from '@angular/material';
 import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
-
+import {PropertyService} from "../../services/property.service";
 
 export interface Hour {
   name: string;
@@ -28,10 +28,13 @@ export class ReservationComponent implements OnInit {
   reservation: Reservation;
   events: string[] = [];
   currentDate = new Date();
+  hours: string[] = [];
 
 
   constructor(private _formBuilder: FormBuilder,
-              private reservationService: ReservationService, private snackBar: MatSnackBar) {
+              private reservationService: ReservationService,
+              private snackBar: MatSnackBar,
+              private propertyService: PropertyService) {
   }
 
   ngOnInit() {
@@ -41,6 +44,18 @@ export class ReservationComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+
+    this.propertyService.getBistroProperty().subscribe(response =>{
+      var startHours: string[] = response.startProgramTime.split(':',3);
+      var startHour = new Date();
+      startHour.setHours(+startHours[0], +startHours[1], +startHours[2]);
+
+      var endHours: string[] = response.endProgramTime.split(':',3);
+      var endHour = new Date();
+      endHour.setHours(+endHours[0], +endHours[1], +endHours[2]);
+      this.fillHours(startHour,endHour);
+    })
+
   }
 
 
@@ -51,7 +66,7 @@ export class ReservationComponent implements OnInit {
   }
 
   onChange(event) {
-    this.time = event.value.name;
+    this.time = event.value;
   }
 
   addNrOfPersons(event) {
@@ -60,6 +75,7 @@ export class ReservationComponent implements OnInit {
 
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
+
     this.reservation = new Reservation(this.dateTime, this.nrOfPersons);
     this.reservationService.reserve(this.reservation)
       .subscribe(data => {
@@ -68,7 +84,6 @@ export class ReservationComponent implements OnInit {
         this.showSnackbar('Reservation failed. Please try again.');
       });
   }
-
   showSnackbar(message: string) {
     this.snackBar.open(message, '', {
       duration: 3000,
@@ -76,37 +91,60 @@ export class ReservationComponent implements OnInit {
     });
   }
 
+  validateHour(time: string){
+    var splittedHour = time.split(":",2);
+    var splittedDate = this.date.split("/",3);
+    var day = +splittedDate[0];
+    var month = +splittedDate[1];
+    var year = +splittedDate[2];
+    var hour = +splittedHour[0];
+    var minutes = +splittedHour[1];
+
+    if (this.currentDate.getFullYear() < year){
+      return true;
+    }
+
+    if (this.currentDate.getMonth() + 1 < month){
+      return true;
+    }
+
+    if (this.currentDate.getDate() < day){
+      return true;
+    }
+
+    if (hour < this.currentDate.getHours()){
+      return false;
+    }
+
+    if (hour == this.currentDate.getHours() && minutes <= this.currentDate.getMinutes())
+      return false;
+
+
+    return true;
+  }
+
+  fillHours(startHour:Date, finishHour:Date){
+    var i:number;
+    var j:number;
+    for (i = startHour.getHours(); i < finishHour.getHours(); i++){
+      for (j = 0; j <= 55; j += 5){
+        if (j == 0){
+          this.hours.push(i + ':' + '00')
+        }
+        else if (j == 5){
+          this.hours.push(i + ':' + '05')
+        }
+        else {
+          this.hours.push(i + ':' + j)
+        }
+      }
+    }
+  }
+
 
   hourControl = new FormControl('', [Validators.required]);
-  selectFormControl = new FormControl('', Validators.required)
+  selectFormControl = new FormControl('', Validators.required);
 
-  hours: Hour[] = [
-    {name: '10:00'},
-    {name: '10:30'},
-    {name: '11:00'},
-    {name: '11:30'},
-    {name: '12:00'},
-    {name: '12:30'},
-    {name: '13:00'},
-    {name: '13:30'},
-    {name: '14:00'},
-    {name: '14:30'},
-    {name: '15:00'},
-    {name: '15:30'},
-    {name: '16:00'},
-    {name: '16:30'},
-    {name: '17:00'},
-    {name: '17:30'},
-    {name: '18:00'},
-    {name: '18:30'},
-    {name: '19:00'},
-    {name: '19:30'},
-    {name: '20:00'},
-    {name: '20:30'},
-    {name: '21:00'},
-    {name: '21:30'},
-    {name: '22:00'}
-  ];
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.key;
