@@ -1,0 +1,58 @@
+.center{
+  padding-top: 2.5em;
+}
+
+
+body{
+  padding-top: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 19em;
+}
+
+.seats{
+  width:20%;
+}
+
+.reservationUUID{
+  width:30%;
+}
+
+.numberOfPersons{
+  width:30%;
+}
+
+.checkInAndOutTime{
+  width:30%;
+}
+
+p{
+  font-size: larger;
+  color: #7e967e;
+}
+
+pre{
+  font-family: Arial;
+  color: #7e967e;
+  display: inline-block;
+}
+
+.extraDetails{
+  display: inline-block;
+  font-family: Arial;
+  color: #7e967e;
+  font-size: x-small;
+}
+
+.buttonDiv{
+  width:100%;
+  padding-right: 3em;
+}
+
+.acceptButton{
+  float:right;
+}
+
+.hint{
+  float: right;
+}

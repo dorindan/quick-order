@@ -16,19 +16,15 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class ReservationService {
+export class TableService {
   constructor(
     private http: HttpClient,
     private apiService: ApiService
   ) {
   }
 
-  reserve(reservation: Reservation): Observable<any> {
-    return this.apiService.postRequest('api/reservation', reservation);
-  }
-
-  getReservation(tableNr: number): Observable<any> {
-    return this.apiService.getRequest('api/reservation/reservationsForTable/' + tableNr);
+  getAllTables(): Observable<Table[]> {
+    return this.apiService.getRequest('api/table/all');
   }
 }
 

@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.ReservationConverter;
+import ro.quickorder.backend.converter.TableFoodConverter;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
@@ -24,6 +26,7 @@ public class ReservationService {
     @Autowired
     private ReservationConverter reservationConverter;
 
+
     @Autowired
     ReservationRepository reservationRepository;
     @Autowired
@@ -37,9 +40,10 @@ public class ReservationService {
             throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
         }
         if (reservationDto.getCheckInTime().before(currentTimestamp)){
-            LOG.error("CheckInTime must be greater than the current date");
+            LOG.error("CheckInTime must be greater than the current date currentTimeStamp: " + currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
             throw new ForbiddenException("CheckInTime must be greater than the current date");
         }
+        LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
         reservationDto.setStatus("not accepted");
         reservationDto.setConfirmed(false);
         long twoHoursInMilliseconds = 7200000;
@@ -123,5 +127,20 @@ public class ReservationService {
             table.setFree(false);
             tableFoodRepository.save(table);
         }
+    }
+
+
+    public List<ReservationDto> getReservationsForTableByTableNumber (Integer tableNr){
+        List<ReservationDto> res = new ArrayList<>();
+        TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
+        if(tableFood == null){
+            throw new NotFoundException("Table not found!");
+        }
+        List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
+
+        for (Reservation reservation : reservations) {
+            res.add(reservationConverter.toReservationDto(reservation));
+        }
+        return res;
     }
 }

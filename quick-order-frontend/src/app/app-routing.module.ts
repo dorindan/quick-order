@@ -6,6 +6,7 @@ import {StartLoggedInComponent} from './pages/start-logged-in/start-logged-in.co
 import {RegisterComponent} from './pages/register/register.component';
 import {MenuComponent} from "./pages/menu/menu.component";
 import {ReservationComponent} from "./pages/reservation/reservation.component";
+import {TableViewComponent} from './pages/table-view/table-view.component';
 
 const routes: Routes = [];
 
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
   { path: 'signUp', component: RegisterComponent},
   { path: 'menu', component: MenuComponent},
   { path: 'reserve', component: ReservationComponent},
+  { path: 'tableView', component: TableViewComponent},
   { path: '**', redirectTo: '' }
 ];
 
