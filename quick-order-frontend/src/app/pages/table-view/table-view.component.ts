@@ -33,10 +33,13 @@ export class TableViewComponent implements OnInit {
     this.reservationsGet.forEach(reservation => reservation.forEach(t => this.reservations.push(t)));
   }
 
-  getFormattedTime(reservation: Reservation): string {
-    return  'In: '+ reservation.checkInTime.substr(0, 10) + ' ' +
-      reservation.checkInTime.substr(11, 5) + '   ' + ' Out: ' +
-      reservation.checkOutTime.substr(0, 10) + ' ' +
+  getFormattedTimeIn(reservation: Reservation): string {
+    return  reservation.checkInTime.substr(0, 10) + ' ' +
+      reservation.checkInTime.substr(11, 5);
+  }
+
+  getFormattedTimeOut(reservation: Reservation): string {
+    return reservation.checkOutTime.substr(0, 10) + ' ' +
       reservation.checkOutTime.substr(11, 5);
   }
 

@@ -29,7 +29,7 @@ public class ReservationResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void addReservation(@RequestBody ReservationDto reservation) throws ParseException {
+    public void addReservation(@RequestBody ReservationDto reservation) {
         reservationService.addReservation(reservation);
     }
 
@@ -45,8 +45,8 @@ public class ReservationResource {
     }
 
     @RequestMapping(path = "/reservationsForTable/{tableNr}", method = RequestMethod.GET)
-    public List<ReservationDto> reservationsForTable(@PathVariable Integer tableNr){
-        return reservationService.reservationsForTable(tableNr);
+    public List<ReservationDto> getReservationsForTableByTableNumber (@PathVariable Integer tableNr){
+        return reservationService.getReservationsForTableByTableNumber (tableNr);
     }
 
 

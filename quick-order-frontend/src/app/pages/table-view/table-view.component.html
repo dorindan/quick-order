@@ -1,28 +1,25 @@
 <body>
 
-
 <div class="container-fluid ">
   <mat-accordion>
     <mat-expansion-panel *ngFor="let table of tables ; let i = index" (opened)="openGroup(i)"   >
-
       <mat-expansion-panel-header>
 
       <div >
-        <mat-panel-title>
-          <pre class="center">Table: {{table.tableNr }}     Seats: {{table.seats}} <p class="extraDetails">     Floor: {{table.floor}}     Has window view: {{table.windowView}}</p></pre>
+        <mat-panel-title >
+          <pre class="center" ><label translate="">tableView.table</label>: {{table.tableNr }} <label translate="">tableView.seats</label>: {{table.seats}} <p class="extraDetails"><label translate="">tableView.floor</label>: {{table.floor}} <label translate=""> tableView.view</label>: {{table.windowView}}</p></pre>
         </mat-panel-title>
       </div>
 
       </mat-expansion-panel-header>
 
-
       <mat-list #list expanded="false">
         <hr>
-        <p>Reservations</p>
+        <p translate="">tableView.reservations</p>
         <hr>
         <mat-list-item *ngFor="let reservation of reservations" >
-          <pre  mat-line class="mainDetails">Reservation: {{reservation.reservationName }} &nbsp;  &nbsp;   {{getFormattedTime(reservation)}} &nbsp; &nbsp;Number of Persons: {{reservation.numberOfPersons}}
-            <p class="extraDetails">         Confirmed: {{reservation.confirmed}}</p>
+          <pre  mat-line class="mainDetails"><label translate="">tableView.reservation</label>: {{reservation.reservationName }} &nbsp;  &nbsp;   <label translate="">tableView.in</label>: {{getFormattedTimeIn(reservation)}} &nbsp;<label translate="">tableView.out</label>: {{getFormattedTimeOut(reservation)}} &nbsp;<label translate="">tableView.nrPersons</label>: {{reservation.numberOfPersons}}
+            <p class="extraDetails"> <label translate="">tableView.confirmed</label>: {{reservation.confirmed}}</p>
           </pre>
         </mat-list-item>
       </mat-list>

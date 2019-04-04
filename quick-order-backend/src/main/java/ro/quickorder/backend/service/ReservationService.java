@@ -129,7 +129,7 @@ public class ReservationService {
     }
 
 
-    public List<ReservationDto> reservationsForTable(Integer tableNr){
+    public List<ReservationDto> getReservationsForTableByTableNumber (Integer tableNr){
         List<ReservationDto> res = new ArrayList<>();
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
         if(tableFood == null){

@@ -229,11 +229,11 @@ public class ReservationServiceTest {
     public void testReservationsForTable(){
         List<TableFood> tableFoods = tableFoodRepository.findAll();
         TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(2));
-        List<ReservationDto> reservations1 = reservationService.reservationsForTable(tableFoodDto1.getTableNr());
+        List<ReservationDto> reservations1 = reservationService.getReservationsForTableByTableNumber(tableFoodDto1.getTableNr());
         assertEquals(1, reservations1.size());
 
         TableFoodDto tableFoodDto2 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));
-        List<ReservationDto> reservations2 = reservationService.reservationsForTable(tableFoodDto2.getTableNr());
+        List<ReservationDto> reservations2 = reservationService.getReservationsForTableByTableNumber(tableFoodDto2.getTableNr());
         assertEquals(0, reservations2.size());
     }
 
@@ -243,7 +243,7 @@ public class ReservationServiceTest {
         TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));
         tableFoodDto1.setTableNr(213);
         try{
-            List<ReservationDto> reservations1 = reservationService.reservationsForTable(tableFoodDto1.getTableNr());
+            List<ReservationDto> reservations1 = reservationService.getReservationsForTableByTableNumber(tableFoodDto1.getTableNr());
             fail("The reservation should not have been found");
         }catch (NotFoundException e){
             assertEquals("Table not found!", e.getMessage());

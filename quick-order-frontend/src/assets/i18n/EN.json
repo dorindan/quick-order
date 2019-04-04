@@ -51,6 +51,19 @@
     "password": "Password",
     "remember": "Remember Me",
     "forgotPass": "Forgot Password?"
+  },
+
+  "tableView": {
+    "table": "Table",
+    "seats": "Seats",
+    "floor": "Floor",
+    "view": "Has window view",
+    "reservations": "Reservations",
+    "reservation": "Reservation",
+    "nrPersons": "Number of Persons",
+    "confirmed": "Confirmed",
+    "in": "In",
+    "out": "Out"
   }
 
 }
