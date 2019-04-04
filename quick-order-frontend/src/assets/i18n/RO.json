@@ -51,6 +51,22 @@
     "password": "Password",
     "remember": "Remember Me",
     "forgotPass": "Forgot Password?"
+  },
+
+  "menuItem": {
+    "addNew": "Adaugă un nou item",
+    "name": "Nume",
+    "description": "Descriere",
+    "ingredients": "Ingrediente",
+    "preparationDuration": "Durată de preparare",
+    "price": "Preț",
+    "add": "Adaugă",
+    "editItem": "Modifică item",
+    "edit": "Modifică",
+    "delete": "Șterge",
+    "sure": "Esti sigur ca dorești să ștergi ",
+    "yes": "Da",
+    "no": "Nu"
   }
 
 }

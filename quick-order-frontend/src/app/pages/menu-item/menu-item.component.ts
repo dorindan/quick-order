@@ -53,17 +53,18 @@ export class MenuItemComponent implements OnInit {
   }
 
   add(): void {
-    if (this.validare()) {
+    if (!this.validare()) {
       alert('Name must be of minimal 3 characters');
       return;
     }
-    let newMenuItem: MenuItem;
-    newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
+    else {
+      let newMenuItem: MenuItem;
+      newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
 
-    this.tableService.addMenuItem(newMenuItem);
-    this.clear();
-    this.updateMenu();
-
+      this.tableService.addMenuItem(newMenuItem);
+      this.clear();
+      this.updateMenu();
+    }
   }
 
   setUpdate(menuItem: MenuItem): void {
@@ -76,11 +77,13 @@ export class MenuItemComponent implements OnInit {
     this.price = menuItem.price;
   }
 
+
   setDelete(menuItem: MenuItem): void {
     this.name = menuItem.name;
   }
 
   update(): void {
+    alert( this.ingredients.length);
     let newMenuItem: MenuItem;
     newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
     alert(this.name + ' ' + this.description + ' ' + this.preparationDurationInMinutes + ' ' + this.ingredients.length + ' ' + this.price);

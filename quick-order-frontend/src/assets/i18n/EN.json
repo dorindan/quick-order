@@ -54,7 +54,19 @@
   },
 
   "menuItem": {
-
+    "addNew": "Add new Item",
+    "name": "Name",
+    "description": "Description",
+    "ingredients": "Ingredients",
+    "preparationDuration": "Preparation duration",
+    "price": "Price",
+    "add": "Add",
+    "editItem": "Edit Item",
+    "edit": "Edit",
+    "delete": "Delete",
+    "sure": "Are you sure to delete ",
+    "yes": "Yes",
+    "no": "No"
   }
 
 }
