@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import ro.quickorder.backend.converter.TableFoodConverter;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Command;
@@ -38,6 +40,8 @@ public class ReservationServiceTest {
     ReservationService reservationService;
     @Inject
     TableFoodService tableFoodService;
+    @Inject
+    TableFoodConverter tableFoodConverter;
 
     @Inject
     ReservationRepository reservationRepository;
@@ -218,6 +222,31 @@ public class ReservationServiceTest {
 
         } catch (ForbiddenException e) {
             assertEquals(e.getMessage(), "Number of persons for a reservation must be between 1 and 99");
+        }
+    }
+
+    @Test
+    public void testReservationsForTable(){
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(2));
+        List<ReservationDto> reservations1 = reservationService.getReservationsForTableByTableNumber(tableFoodDto1.getTableNr());
+        assertEquals(1, reservations1.size());
+
+        TableFoodDto tableFoodDto2 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));
+        List<ReservationDto> reservations2 = reservationService.getReservationsForTableByTableNumber(tableFoodDto2.getTableNr());
+        assertEquals(0, reservations2.size());
+    }
+
+    @Test
+    public void testReservationsForTableTableNotFound(){
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));
+        tableFoodDto1.setTableNr(213);
+        try{
+            List<ReservationDto> reservations1 = reservationService.getReservationsForTableByTableNumber(tableFoodDto1.getTableNr());
+            fail("The reservation should not have been found");
+        }catch (NotFoundException e){
+            assertEquals("Table not found!", e.getMessage());
         }
     }
 

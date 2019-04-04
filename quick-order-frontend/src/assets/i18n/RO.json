@@ -51,6 +51,19 @@
     "password": "Password",
     "remember": "Remember Me",
     "forgotPass": "Forgot Password?"
+  },
+
+  "tableView": {
+    "table": "Tabel",
+    "seats": "Locuri",
+    "floor": "Etajul",
+    "view": "Cu vedere la fereastră",
+    "reservations": "Rezervări",
+    "reservation": "Rezervare",
+    "nrPersons": "Număr de persoane",
+    "confirmed": "Confirmat",
+    "in": "De la",
+    "out": "Până la"
   }
 
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class CustomDateDeserializer extends JsonDeserializer<Timestamp> {
     private static final Logger LOG = LoggerFactory.getLogger(CustomDateDeserializer.class);
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     @Override
     public Timestamp deserialize(JsonParser jsonParser,

@@ -29,4 +29,9 @@ public class TableFoodResource {
         return tableFoodService.getAllFree(checkInTime,checkOutTime);
     }
 
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public List<TableFoodDto> getAllTables(){
+        return tableFoodService.getAll();
+    }
+
 }
