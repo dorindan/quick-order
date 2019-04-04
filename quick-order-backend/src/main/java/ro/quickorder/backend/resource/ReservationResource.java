@@ -2,6 +2,7 @@ package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
@@ -16,19 +17,12 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping(value = "/reservation")
 public class ReservationResource {
-    @Autowired
-    ReservationRepository reservationRepository;
 
     @Autowired
     ReservationService reservationService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String findById(@RequestParam(value = "id", defaultValue = "0") Long id) {
-        return reservationRepository.findById(id).toString();
-    }
-
     @RequestMapping(method = RequestMethod.POST)
-    public void addReservation(@RequestBody ReservationDto reservation) throws ParseException {
+    public void addReservation(@RequestBody ReservationDto reservation) {
         reservationService.addReservation(reservation);
     }
 
@@ -41,6 +35,11 @@ public class ReservationResource {
     @RequestMapping(path = "/confirm", method = RequestMethod.POST)
     public void confirmReservation(@NotNull ReservationDto reservationDto,@NotNull List<TableFoodDto> tableFoodDtos){
         reservationService.confirmReservation(reservationDto, tableFoodDtos);
+    }
+
+    @RequestMapping(path = "/reservationsForTable/{tableNr}", method = RequestMethod.GET)
+    public List<ReservationDto> getReservationsForTableByTableNumber (@PathVariable Integer tableNr){
+        return reservationService.getReservationsForTableByTableNumber (tableNr);
     }
 
 

@@ -22,24 +22,16 @@ import javax.validation.constraints.NotNull;
 public class TableFoodResource {
 
     @Autowired
-    TableFoodRepository tableFoodRepository;
-    @Autowired
     TableFoodService tableFoodService;
-
-    @RequestMapping(path = "/table", method = RequestMethod.GET)
-    public List<TableFood> findAll() {
-        return tableFoodRepository.findAll();
-    }
-
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public String findById(@RequestParam(value = "id", defaultValue = "0") Long id) {
-        return tableFoodRepository.findById(id).toString();
-    }
-
 
     @RequestMapping(path = "/free", method = RequestMethod.GET)
     public List<TableFoodDto> getAllFree(Timestamp checkInTime, Timestamp checkOutTime){
         return tableFoodService.getAllFree(checkInTime,checkOutTime);
+    }
+
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public List<TableFoodDto> getAllTables(){
+        return tableFoodService.getAll();
     }
 
 }

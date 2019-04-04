@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- Converts Commands to their corresponding DTO and vice versa.
- *@author R. Lupoaie
+ *  Converts Ingredients to their corresponding DTO and vice versa.
+ * @author R. Lupoaie
  */
 
 @Component

@@ -1,14 +1,16 @@
 package ro.quickorder.backend.service;
 
 
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.UserAttributeConverter;
 import ro.quickorder.backend.converter.UserConverter;
-import ro.quickorder.backend.exception.*;
+import ro.quickorder.backend.exception.BadRequestException;
+import ro.quickorder.backend.exception.ForbiddenException;
+import ro.quickorder.backend.exception.NotAcceptableException;
+import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserDto;

@@ -5,8 +5,8 @@ import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 
 /**
- Converts Commands to their corresponding DTO and vice versa.
- *@author R. Lupoaie
+ *  Converts TableFoods to their corresponding DTO and vice versa.
+ * @author R. Lupoaie
  */
 
 @Component

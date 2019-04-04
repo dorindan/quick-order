@@ -11,9 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *Converts Commands to their corresponding DTO and vice versa.
- *
- *@author R. Lupoaie
+ *  Converts MenuItems to their corresponding DTO and vice versa.
+ * @author R. Lupoaie
  */
 @Component
 public class MenuItemConverter {
