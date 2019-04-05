@@ -21,7 +21,7 @@ public class ReservationResource {
     @Autowired
     ReservationService reservationService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
     public void addReservation(@RequestBody ReservationDto reservation) {
         reservationService.addReservation(reservation);
     }

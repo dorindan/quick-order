@@ -78,7 +78,7 @@ export class ReservationComponent implements OnInit {
 
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
-    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'Add Reservation needs change!', false);
+    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons);
     this.reservationService.reserve(this.reservation)
       .subscribe(data => {
         this.showSnackbar('Reservation sent successfully.');

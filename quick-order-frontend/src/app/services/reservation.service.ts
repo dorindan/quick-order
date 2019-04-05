@@ -24,7 +24,11 @@ export class ReservationService {
   }
 
   reserve(reservation: Reservation): Observable<any> {
-    return this.apiService.postRequest('api/reservation', reservation);
+    return this.apiService.postRequest('api/reservation/add', reservation);
+  }
+
+  reserveWithConfirmation(reservation: Reservation): Observable<any> {
+    return this.apiService.postRequest('api/reservation/addConfirmed', reservation);
   }
 
   getReservation(tableNr: number): Observable<any> {

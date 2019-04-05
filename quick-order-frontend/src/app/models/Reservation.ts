@@ -6,11 +6,9 @@ export class Reservation {
   public reservationName: string;
 
 
-  constructor(dateTimeIn: string, dateTimeOut: string, numberOfPersons: number, reservationName: string, confirmed: boolean) {
+  constructor(dateTimeIn: string, dateTimeOut: string, numberOfPersons: number) {
     this.checkInTime = dateTimeIn;
     this.checkOutTime = dateTimeOut;
     this.numberOfPersons = numberOfPersons;
-    this.reservationName = reservationName;
-    this.confirmed = confirmed;
   }
 }
