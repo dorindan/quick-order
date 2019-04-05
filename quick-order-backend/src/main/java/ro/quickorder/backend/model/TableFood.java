@@ -25,7 +25,7 @@ public class TableFood {
     private int seats;
     private boolean windowView;
     private int floor;
-    private boolean free;
+    private boolean active = true;
 
     @OneToMany(mappedBy = "table")
     private List<Command> commands;
@@ -33,12 +33,11 @@ public class TableFood {
     @ManyToMany(mappedBy = "tables")
     private List<Reservation> reservations;
 
-    public TableFood(int tableNr, int seats, boolean windowView, int floor, boolean free) {
+    public TableFood(int tableNr, int seats, boolean windowView, int floor) {
         this.tableNr = tableNr;
         this.seats = seats;
         this.windowView = windowView;
         this.floor = floor;
-        this.free = free;
     }
 
     public TableFood() {
@@ -84,13 +83,6 @@ public class TableFood {
         this.floor = floor;
     }
 
-    public boolean isFree() {
-        return free;
-    }
-
-    public void setFree(boolean free) {
-        this.free = free;
-    }
 
     public List<Command> getCommands() {
         return commands;
@@ -117,13 +109,12 @@ public class TableFood {
                 seats == tableFood.seats &&
                 windowView == tableFood.windowView &&
                 floor == tableFood.floor &&
-                free == tableFood.free &&
                 Objects.equals(id, tableFood.id) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tableNr, seats, windowView, floor, free, commands, reservations);
+        return Objects.hash(id, tableNr, seats, windowView, floor, commands, reservations);
     }
 
     @Override
@@ -134,7 +125,14 @@ public class TableFood {
                 ", seats=" + seats +
                 ", windowView=" + windowView +
                 ", floor=" + floor +
-                ", free=" + free +
                 '}';
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

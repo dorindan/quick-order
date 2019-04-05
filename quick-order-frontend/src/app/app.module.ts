@@ -21,6 +21,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import { MenuItemComponent } from './pages/menu-item/menu-item.component';
 import { TableViewComponent } from './pages/table-view/table-view.component';
+import { TableComponent } from './pages/table/table.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,7 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuComponent,
     TableViewComponent,
     MenuComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

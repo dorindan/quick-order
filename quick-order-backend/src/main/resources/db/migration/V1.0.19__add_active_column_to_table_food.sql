@@ -1,0 +1,1 @@
+ALTER TABLE table_food ADD COLUMN active bool DEFAULT(true);

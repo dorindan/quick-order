@@ -54,9 +54,9 @@ public class ReservationServiceTest {
     public void setUp() {
 
 
-        TableFood table1 = new TableFood(1, 5, false, 1, false);
-        TableFood table2 = new TableFood(2, 4, true, 1, true);
-        TableFood table3 = new TableFood(3, 4, false, 1, true);
+        TableFood table1 = new TableFood(1, 5, false, 1);
+        TableFood table2 = new TableFood(2, 4, true, 1);
+        TableFood table3 = new TableFood(3, 4, false, 1);
 
         Timestamp timestampIn1 = Timestamp.valueOf("2007-09-23 11:0:0.0");
         Timestamp timestampOut1 = Timestamp.valueOf("2007-09-23 13:59:0.0");

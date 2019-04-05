@@ -1,10 +1,7 @@
 package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
@@ -33,5 +30,22 @@ public class TableFoodResource {
     public List<TableFoodDto> getAllTables(){
         return tableFoodService.getAll();
     }
+
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
+    public void addTable(@RequestBody @NotNull TableFoodDto tableFoodDto){
+        tableFoodService.addTable(tableFoodDto);
+    }
+
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    public void updateTable(@RequestBody @NotNull TableFoodDto tableFoodDto){
+        tableFoodService.updateTable(tableFoodDto);
+    }
+
+    @RequestMapping(path = "/remove/{tableNr}", method = RequestMethod.DELETE)
+    public void removeTable(@PathVariable int tableNr){
+        tableFoodService.removeTable(tableNr);
+    };
+
+
 
 }
