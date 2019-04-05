@@ -83,6 +83,19 @@
     "nameCondition": "*(Name must have at least 3 characters) ",
     "durationCondition": "*(The duration can not be negative) ",
     "priceCondition": "*(The price can not be negative) "
+  },
+
+  "reservation": {
+    "motto": "Find your table for any occasion",
+    "dataPicker": "Pick a date",
+    "next": "Next",
+    "chooseHour": "Choose an Hour",
+    "chooseDate": "Choose a date",
+    "pickNrPersons": "Pick the nr. of persons.",
+    "nrPersons": "Nr. persons",
+    "back": "Back",
+    "sendReservation": "Send Reservation",
+    "finish": "Finish"
   }
 
 }
