@@ -13,6 +13,6 @@ public interface MenuItemRepository extends JpaRepository<MenuItem,Long> {
 
     MenuItem findByName(String name);
 
-    @Query(value = "Select distinct m From MenuItem m left join fetch m.ingredients")
+    @Query(value = "Select distinct m From MenuItem m left join fetch m.ingredients ORDER BY m.name ASC")
     List<MenuItem> findAll();
 }

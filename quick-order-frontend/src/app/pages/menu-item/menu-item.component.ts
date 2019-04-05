@@ -52,20 +52,6 @@ export class MenuItemComponent implements OnInit {
       this.menuItems.push(m);
       this.dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
     }));
-
-  }
-
-  add(): void {
-    if (!this.validare()) {
-      return;
-    } else {
-      let newMenuItem: MenuItem;
-      newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
-
-      this.tableService.addMenuItem(newMenuItem);
-      this.clear();
-      this.updateMenu();
-    }
   }
 
   setUpdate(menuItem: MenuItem): void {
@@ -82,17 +68,32 @@ export class MenuItemComponent implements OnInit {
     this.name = menuItem.name;
   }
 
+  add(): void {
+    if (this.validation()) {
+      let newMenuItem: MenuItem;
+      newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
+
+      this.tableService.addMenuItem(newMenuItem);
+      window.location.reload();
+    } else {
+      alert('Some date are not valid, try again!');
+    }
+  }
+
   update(): void {
+    if (this.validation()) {
     let newMenuItem: MenuItem;
     newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
     this.tableService.editMenuItem(newMenuItem);
-    this.clear();
+    window.location.reload();
+    } else {
+      alert('Some Date are not valid, try again!');
+    }
   }
 
   delete(): void {
     this.tableService.deleteMenuItem(this.name);
-    this.clear();
-    this.updateMenu();
+    window.location.reload();
   }
 
   clear(): void {
@@ -103,7 +104,7 @@ export class MenuItemComponent implements OnInit {
     this.price = 0;
   }
 
-  validare(): boolean {
+  validation(): boolean {
     if (this.name.length > 2) {
       this.nameRight = true;
     } else {

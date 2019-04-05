@@ -21,7 +21,9 @@ import javax.inject.Inject;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -85,19 +87,14 @@ public class MenuItemServiceTest {
     public void testAddMenuItem() {
         MenuItemDto menuItemDto= new MenuItemDto("Salad", "the most original description!", 5, 18);
 
-        List<IngredientDto> ingredientDtosUsed = new ArrayList<>();
         List<IngredientDto> ingredientDtos = ingredientService.getAll();
 
-        ingredientDtosUsed.add(ingredientDtos.get(1));
-        ingredientDtosUsed.add(ingredientDtos.get(2));
+        Set<IngredientDto> ingredientDtoSet = new HashSet<>();
 
-        IngredientDto[] ingredientDtosArray = new IngredientDto[ingredientDtosUsed.size()];
+        ingredientDtoSet.add(ingredientDtos.get(1));
+        ingredientDtoSet.add(ingredientDtos.get(2));
 
-        for(int i=0;i<ingredientDtosUsed.size();i++){
-            ingredientDtosArray[i]=ingredientDtosUsed.get(i);
-        }
-
-        menuItemDto.setIngredients(ingredientDtosArray);
+        menuItemDto.setIngredients(ingredientDtoSet);
 
         List<MenuItemDto> menuItems = menuItemService.getMenuItems();
 
@@ -109,7 +106,7 @@ public class MenuItemServiceTest {
 
         assertEquals(4, newMenuItems.size());
 
-        assertEquals(1, newMenuItems.get(3).getIngredients().length);
+        assertEquals(2, newMenuItems.get(0).getIngredients().size());
     }
 
     @Test

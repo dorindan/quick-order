@@ -9,6 +9,7 @@ import ro.quickorder.backend.model.dto.MenuItemDto;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  *  Converts MenuItems to their corresponding DTO and vice versa.
@@ -59,12 +60,8 @@ public class MenuItemConverter {
             menuItemDto.setIngredients(null);
         }
         else {
-            List<IngredientDto> ingredientDtos = ingredientConverter.toIngredientDtoList(menuItem.getIngredients());
-            IngredientDto[] ingredientDtosConverted = new IngredientDto[ingredientDtos.size()];
-            for(int i=0;i<ingredientDtos.size();i++){
-                ingredientDtosConverted[i] = ingredientDtos.get(i);
-            }
-            menuItemDto.setIngredients(ingredientDtosConverted);
+            Set<IngredientDto> ingredientDtoSet = ingredientConverter.toIngredientDtoList(menuItem.getIngredients());
+            menuItemDto.setIngredients(ingredientDtoSet);
         }
         if(menuItem.getMenuItemType() == null){
             menuItemDto.setMenuItemTypeDto(null);

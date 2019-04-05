@@ -85,8 +85,8 @@ public class MenuItemService {
     private Set<Ingredient> setIngredients(MenuItemDto menuItemDto) {
         Set<Ingredient> ingredients = new HashSet<>();
         if (menuItemDto.getIngredients() != null)
-            for (int i = 0; i < menuItemDto.getIngredients().length; i++) {
-                Ingredient ingredient = ingredientRepository.findFirstByName(menuItemDto.getIngredients()[i].getName());
+           for(IngredientDto ingredientDto:  menuItemDto.getIngredients()){
+                Ingredient ingredient = ingredientRepository.findFirstByName(ingredientDto.getName());
                 if (ingredient != null) {
                     ingredients.add(ingredient);
                 } else {

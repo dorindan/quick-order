@@ -44,11 +44,11 @@ public class IngredientConverter {
         return ingredients;
     }
 
-    public List<IngredientDto> toIngredientDtoList(Set<Ingredient> ingredients) {
+    public Set<IngredientDto> toIngredientDtoList(Set<Ingredient> ingredients) {
         if (ingredients == null) {
             return null;
         }
-        ArrayList<IngredientDto> ingredientDtos = new ArrayList<>();
+        Set<IngredientDto> ingredientDtos = new HashSet<>();
         ingredients.forEach(ingredient -> ingredientDtos.add(toIngredientDto(ingredient)) );
         return ingredientDtos;
     }
