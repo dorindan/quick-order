@@ -83,6 +83,24 @@
     "nameCondition": "*(Numele trebuie sa aiba minim 3 caractere) ",
     "durationCondition": "*(Durata nu poate fi negativă) ",
     "priceCondition": "*(Prețul nu poate fi negativ) "
+  },
+
+  "table": {
+    "addNew": "Adaugă o nouă masă",
+    "tableNumber": "Numar masă",
+    "seats": "Locuri",
+    "windowView": "Cu vedere la geam",
+    "floor": "Etajul",
+    "add": "adaugă",
+    "editTable": "Modifică masă",
+    "edit": "Modifică",
+    "delete": "Șterge",
+    "sure": "Esti sigur ca dorești să ștergi masa ",
+    "yes": "Da",
+    "no": "Nu",
+    "tableNumberCondition": "*(Numărul mesei trebuie să fie mai mare decât 0) ",
+    "seatsCondition": "*(Numărul de locuri trebuie să fie mai mare decât 0) ",
+    "floorCondition": "*(Etajul trebuie să fie mai mare decât -2) "
   }
 
 }

@@ -4,8 +4,8 @@ import {Observable} from 'rxjs';
 import {Ingredient} from '../../models/Ingredient';
 import {MatTableDataSource} from '@angular/material';
 import {MenuService} from '../../services/menu.service';
-import {IngredientService} from '../../services/ingredient.service';
 import {Table} from '../../models/Table';
+import {TableService} from '../../services/table.service';
 
 @Component({
   selector: 'app-table',
@@ -14,62 +14,52 @@ import {Table} from '../../models/Table';
 })
 export class TableComponent implements OnInit {
 
-  menuItems: Table[];
-  menuItemsGet: Observable<Table[]>;
-  displayedColumns: string[] = ['name', 'description', 'ingredients', 'preparationTime', 'price', 'edit'];
-  dataSource = new MatTableDataSource<Table>(this.menuItems);
+  tables: Table[];
+  tablesGet: Observable<Table[]>;
+  displayedColumns: string[] = ['tableNr', 'seats', 'windowView', 'floor', 'edit'];
+  dataSource = new MatTableDataSource<Table>(this.tables);
 
-  nameRight = true;
-  priceRight = true;
-  durationRight = true;
+  tableNrRight = true;
+  seatsRight = true;
+  floorRight = true;
 
-  name = '';
-  description = '';
-  preparationDurationInMinutes = 0;
-  ingredients = [];
-  price = 0;
+  tableNr = 0;
+  seats = 0;
+  windowView = false;
+  floor = 0;
 
-  constructor(private tableService: MenuService, private ingredientService: IngredientService) {
+  constructor(private tableService: TableService) {
   }
 
   ngOnInit() {
-    this.ingredientsList = [];
-    this.ingredientGet = this.ingredientService.getIngredient();
-    this.ingredientGet.forEach(menuItem => menuItem.forEach(m => {
-      this.ingredientsList.push(m);
-    }));
-    this.updateMenu();
+    this.updateTable();
   }
 
-  updateMenu() {
-    this.menuItemsGet = this.tableService.getMenuItems();
-    this.menuItems = [];
-    this.menuItemsGet.forEach(menuItem => menuItem.forEach(m => {
-      this.menuItems.push(m);
-      this.dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
+  updateTable() {
+    this.tablesGet = this.tableService.getAllTables();
+    this.tables = [];
+    this.tablesGet.forEach(menuItem => menuItem.forEach(m => {
+      this.tables.push(m);
+      this.dataSource = new MatTableDataSource<Table>(this.tables);
     }));
   }
 
-  setUpdate(menuItem: MenuItem): void {
-    this.name = menuItem.name;
-    this.description = menuItem.description;
-    this.preparationDurationInMinutes = menuItem.preparationDurationInMinutes;
-    menuItem.ingredients.forEach(i => {
-      this.ingredients.push(i);
-    });
-    this.price = menuItem.price;
+  setUpdate(table: Table): void {
+    this.tableNr = table.tableNr;
+    this.seats = table.seats;
+    this.windowView = table.windowView;
+    this.floor = table.floor;
   }
 
-  setDelete(menuItem: MenuItem): void {
-    this.name = menuItem.name;
+  setDelete(table: Table): void {
+    this.tableNr = table.tableNr;
   }
 
   add(): void {
     if (this.validation()) {
-      let newMenuItem: MenuItem;
-      newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
-
-      this.tableService.addMenuItem(newMenuItem);
+      let newTable: Table;
+      newTable = new Table(this.tableNr, this.seats, this.windowView, this.floor);
+      this.tableService.addTable(newTable);
       window.location.reload();
     } else {
       alert('Some date are not valid, try again!');
@@ -78,9 +68,9 @@ export class TableComponent implements OnInit {
 
   update(): void {
     if (this.validation()) {
-      let newMenuItem: MenuItem;
-      newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
-      this.tableService.editMenuItem(newMenuItem);
+      let newTable: Table;
+      newTable = new Table(this.tableNr, this.seats, this.windowView, this.floor);
+      this.tableService.editTable(newTable);
       window.location.reload();
     } else {
       alert('Some Date are not valid, try again!');
@@ -88,37 +78,34 @@ export class TableComponent implements OnInit {
   }
 
   delete(): void {
-    this.tableService.deleteMenuItem(this.name);
+    this.tableService.deleteTable(this.tableNr);
     window.location.reload();
   }
 
   clear(): void {
-    this.name = '';
-    this.description = '';
-    this.preparationDurationInMinutes = 0;
-    this.ingredients = [];
-    this.price = 0;
+    this.tableNr = 0;
+    this.seats = 0;
+    this.windowView = false;
+    this.floor = 0;
   }
 
   validation(): boolean {
-    if (this.name.length > 2) {
-      this.nameRight = true;
+    if (this.tableNr > 0) {
+      this.tableNrRight = true;
     } else {
-      this.nameRight = false;
+      this.tableNrRight = false;
     }
-
-    if (this.price < 0) {
-      this.priceRight = false;
+    if (this.seats < 0) {
+      this.seatsRight = false;
     } else {
-      this.priceRight = true;
+      this.seatsRight = true;
     }
-
-    if (this.preparationDurationInMinutes < 0) {
-      this.durationRight = false;
+    if (this.floor < -1) {
+      this.floorRight = false;
     } else {
-      this.durationRight = true;
+      this.floorRight = true;
     }
-    if (!this.durationRight || !this.nameRight || !this.priceRight) {
+    if (!this.seatsRight || !this.tableNrRight || !this.floorRight) {
       return false;
     } else {
       return true;

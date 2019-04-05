@@ -83,6 +83,24 @@
     "nameCondition": "*(Name must have at least 3 characters) ",
     "durationCondition": "*(The duration can not be negative) ",
     "priceCondition": "*(The price can not be negative) "
+  },
+
+  "table": {
+    "addNew": "Add new Table",
+    "tableNumber": "Table number",
+    "seats": "Seats",
+    "windowView": "Has window view",
+    "floor": "Floor",
+    "add": "Add",
+    "editTable": "Edit Table",
+    "edit": "Edit",
+    "delete": "Delete",
+    "sure": "Are you sure to delete Table ",
+    "yes": "Yes",
+    "no": "No",
+    "tableNumberCondition": "*(Table number must be greater than 0) ",
+    "seatsCondition": "*(Seats number must be greater than 0) ",
+    "floorCondition": "*(Floor must be greater than 0) "
   }
 
 }
