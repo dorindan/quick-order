@@ -26,6 +26,11 @@ public class ReservationResource {
         reservationService.addReservation(reservation);
     }
 
+    @RequestMapping(path = "/addConfirmed", method = RequestMethod.POST)
+    public void addReservationConfirmed(@RequestBody @NotNull ReservationDto reservationDto){
+        reservationService.addReservationConfirmed(reservationDto);
+    }
+
 
     @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
     public List<ReservationDto> getAllUnconfirmed(){
@@ -41,7 +46,4 @@ public class ReservationResource {
     public List<ReservationDto> getReservationsForTableByTableNumber (@PathVariable Integer tableNr){
         return reservationService.getReservationsForTableByTableNumber (tableNr);
     }
-
-
-
 }

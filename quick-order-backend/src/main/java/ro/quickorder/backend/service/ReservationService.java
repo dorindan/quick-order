@@ -19,6 +19,7 @@ import ro.quickorder.backend.repository.TableFoodRepository;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ReservationService {
@@ -35,11 +36,11 @@ public class ReservationService {
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
-        if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)){
+        if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)) {
             LOG.error("Number of persons for a reservation must be between 1 and 99");
             throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
         }
-        if (reservationDto.getCheckInTime().before(currentTimestamp)){
+        if (reservationDto.getCheckInTime().before(currentTimestamp)) {
             LOG.error("CheckInTime must be greater than the current date currentTimeStamp: " + currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
             throw new ForbiddenException("CheckInTime must be greater than the current date");
         }
@@ -50,6 +51,7 @@ public class ReservationService {
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
         Reservation reservation = reservationConverter.toReservation(reservationDto);
+        reservation.setReservationName(generateRandomName());
         reservationRepository.save(reservation);
     }
 
@@ -65,9 +67,9 @@ public class ReservationService {
         return results;
     }
 
-    public void confirmReservation(ReservationDto reservationDto,  List<TableFoodDto> tableFoodDtos) {
+    public void confirmReservation(ReservationDto reservationDto, List<TableFoodDto> tableFoodDtos) {
 
-        if (reservationDto.getReservationName() == null){
+        if (reservationDto.getReservationName() == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
         }
@@ -90,11 +92,10 @@ public class ReservationService {
 
     }
 
-    private Reservation getReservationEntityByName(ReservationDto reservationDto)
-    {
+    private Reservation getReservationEntityByName(ReservationDto reservationDto) {
         // find reservation
         Reservation reservation = reservationRepository.findByReservationName(reservationDto.getReservationName());
-        if(reservation.isConfirmed()) {
+        if (reservation.isConfirmed()) {
             LOG.error("Reservation is already confirmed");
             throw new NotFoundException("Reservation is already confirmed");
         }
@@ -105,7 +106,7 @@ public class ReservationService {
         return reservation;
     }
 
-    private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos){
+    private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos) {
         if (tableFoodDtos.size() == 0) {
             LOG.error("TableList can not be null");
             throw new ForbiddenException("TableList can not be null");
@@ -113,7 +114,7 @@ public class ReservationService {
         List<TableFood> tableFoodListToSet = new ArrayList<>();
         for (TableFoodDto tableFoodDto : tableFoodDtos) {
             TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
-            if (tableFood == null ) {
+            if (tableFood == null) {
                 LOG.error("Table not found");
                 throw new NotFoundException("Table not found");
             }
@@ -122,7 +123,7 @@ public class ReservationService {
         return tableFoodListToSet;
     }
 
-    private void occupyAllTable(List<TableFood> tableFoodListToSet){
+    private void occupyAllTable(List<TableFood> tableFoodListToSet) {
         for (TableFood table : tableFoodListToSet) {
             table.setFree(false);
             tableFoodRepository.save(table);
@@ -130,10 +131,10 @@ public class ReservationService {
     }
 
 
-    public List<ReservationDto> getReservationsForTableByTableNumber (Integer tableNr){
+    public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {
         List<ReservationDto> res = new ArrayList<>();
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
-        if(tableFood == null){
+        if (tableFood == null) {
             throw new NotFoundException("Table not found!");
         }
         List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
@@ -142,5 +143,36 @@ public class ReservationService {
             res.add(reservationConverter.toReservationDto(reservation));
         }
         return res;
+    }
+
+    public void addReservationConfirmed(ReservationDto reservationDto) {
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+
+        if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)) {
+            LOG.error("Number of persons for a reservation must be between 1 and 99");
+            throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
+        }
+        if (reservationDto.getCheckInTime().before(currentTimestamp)) {
+            LOG.error("CheckInTime must be greater than the current date currentTimeStamp: " + currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
+            throw new ForbiddenException("CheckInTime must be greater than the current date");
+        }
+        reservationDto.setStatus("accepted");
+        reservationDto.setConfirmed(true);
+        long twoHoursInMilliseconds = 7200000;
+        Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
+        reservationDto.setCheckOutTime(checkOutTime);
+        Reservation reservation = reservationConverter.toReservation(reservationDto);
+        reservation.setReservationName(generateRandomName());
+        reservationRepository.save(reservation);
+    }
+
+    private String generateRandomName() {
+        String name;
+        Reservation reservation;
+        do {
+            name = UUID.randomUUID().toString().substring(0, 8);
+            reservation = reservationRepository.findByReservationName(name);
+        } while (reservation != null);
+        return name;
     }
 }

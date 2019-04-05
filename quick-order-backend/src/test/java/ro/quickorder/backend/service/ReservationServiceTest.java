@@ -28,6 +28,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -247,6 +248,43 @@ public class ReservationServiceTest {
             fail("The reservation should not have been found");
         }catch (NotFoundException e){
             assertEquals("Table not found!", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAddReservationConfirmed(){
+        List<Reservation> reservationDtos = reservationRepository.findAll();
+        assertEquals(3,reservationDtos.size());
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+        long twoHoursInMilliseconds = 7200000;
+        Timestamp usedCheckInTime = new Timestamp(currentTimestamp.getTime() + twoHoursInMilliseconds);
+        ReservationDto reservationDto = new ReservationDto.Builder().withnumberOfPersons(12).withCheckInTime(usedCheckInTime).build();
+        reservationService.addReservationConfirmed(reservationDto);
+        List<Reservation> newReservationDtos = reservationRepository.findAll();
+        assertEquals(4,newReservationDtos.size());
+        Reservation reservation=reservationRepository.findByReservationName(newReservationDtos.get(3).getReservationName());
+        assertTrue(reservation.isConfirmed());
+    }
+
+    @Test
+    public void testAddReservationConfirmedCheckInTimeBeforDate() {
+        try {
+            ReservationDto reservationDto = new ReservationDto.Builder().withnumberOfPersons(12).withCheckInTime(new Timestamp(12)).build();
+            reservationService.addReservationConfirmed(reservationDto);
+
+        } catch (ForbiddenException e) {
+            assertEquals(e.getMessage(), "CheckInTime must be greater than the current date");
+        }
+    }
+
+    @Test
+    public void testAddReservationConfirmedNumberOfPersonsInvalid() {
+        try {
+            ReservationDto reservationDto = new ReservationDto.Builder().withCheckInTime(new Timestamp(System.currentTimeMillis() + 10000)).withnumberOfPersons(100).build();
+            reservationService.addReservationConfirmed(reservationDto);
+
+        } catch (ForbiddenException e) {
+            assertEquals(e.getMessage(), "Number of persons for a reservation must be between 1 and 99");
         }
     }
 
