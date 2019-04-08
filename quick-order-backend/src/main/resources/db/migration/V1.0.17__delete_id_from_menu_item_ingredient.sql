@@ -1,0 +1,1 @@
+ALTER TABLE menu_item_ingredient DROP COLUMN id;

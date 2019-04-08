@@ -51,6 +51,38 @@
     "password": "Password",
     "remember": "Remember Me",
     "forgotPass": "Forgot Password?"
+  },
+
+  "tableView": {
+    "table": "Tabel",
+    "seats": "Locuri",
+    "floor": "Etajul",
+    "view": "Cu vedere la fereastră",
+    "reservations": "Rezervări",
+    "reservation": "Rezervare",
+    "nrPersons": "Număr de persoane",
+    "confirmed": "Confirmat",
+    "in": "De la",
+    "out": "Până la"
+  },
+
+  "menuItem": {
+    "addNew": "Adaugă un nou item",
+    "name": "Nume",
+    "description": "Descriere",
+    "ingredients": "Ingrediente",
+    "preparationDuration": "Durată de preparare",
+    "price": "Preț",
+    "add": "Adaugă",
+    "editItem": "Modifică item",
+    "edit": "Modifică",
+    "delete": "Șterge",
+    "sure": "Esti sigur ca dorești să ștergi ",
+    "yes": "Da",
+    "no": "Nu",
+    "nameCondition": "*(Numele trebuie sa aiba minim 3 caractere) ",
+    "durationCondition": "*(Durata nu poate fi negativă) ",
+    "priceCondition": "*(Prețul nu poate fi negativ) "
   }
 
 }
