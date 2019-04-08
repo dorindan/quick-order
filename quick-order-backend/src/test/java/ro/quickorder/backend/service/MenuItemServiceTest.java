@@ -108,7 +108,7 @@ public class MenuItemServiceTest {
 
         assertEquals(4, newMenuItems.size());
 
-        assertEquals(2, newMenuItems.get(0).getIngredients().size());
+        assertEquals(2, newMenuItems.get(3).getIngredients().size());
     }
 
     @Test
