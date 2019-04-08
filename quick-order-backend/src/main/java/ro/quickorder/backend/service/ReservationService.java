@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.ReservationConverter;
-import ro.quickorder.backend.converter.TableFoodConverter;
-import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
@@ -80,9 +78,6 @@ public class ReservationService {
         // find tables
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
 
-        // occupy all table
-        occupyAllTable(reservationTables);
-
         // put tables in reservation
         reservation.setTables(reservationTables);
         reservation.setConfirmed(true);
@@ -123,15 +118,7 @@ public class ReservationService {
         return tableFoodListToSet;
     }
 
-    private void occupyAllTable(List<TableFood> tableFoodListToSet) {
-        for (TableFood table : tableFoodListToSet) {
-            table.setFree(false);
-            tableFoodRepository.save(table);
-        }
-    }
-
-
-    public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {
+    public List<ReservationDto> getReservationsForTableByTableNumber (Integer tableNr){
         List<ReservationDto> res = new ArrayList<>();
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
         if (tableFood == null) {

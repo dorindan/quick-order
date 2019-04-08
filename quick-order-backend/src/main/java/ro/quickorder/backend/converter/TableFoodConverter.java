@@ -21,7 +21,6 @@ public class TableFoodConverter {
         tableFood.setSeats(tableFoodDto.getSeats());
         tableFood.setWindowView(tableFoodDto.isWindowView());
         tableFood.setFloor(tableFoodDto.getFloor());
-        tableFood.setFree(tableFoodDto.isFree());
         return tableFood;
     }
 
@@ -34,7 +33,6 @@ public class TableFoodConverter {
         tableFoodDto.setSeats(tableFood.getSeats());
         tableFoodDto.setWindowView(tableFood.isWindowView());
         tableFoodDto.setFloor(tableFood.getFloor());
-        tableFoodDto.setFree(tableFood.isFree());
         return tableFoodDto;
     }
 
