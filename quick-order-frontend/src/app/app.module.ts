@@ -19,6 +19,8 @@ import {NgxPopper} from 'angular-popper';
 import { MenuComponent } from './pages/menu/menu.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
+import { MenuItemComponent } from './pages/menu-item/menu-item.component';
+import { TableViewComponent } from './pages/table-view/table-view.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -35,7 +37,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     StartLoggedInComponent,
     ReservationComponent,
     RegisterComponent,
-    MenuComponent
+    MenuComponent,
+    TableViewComponent,
+    MenuComponent,
+    MenuItemComponent
   ],
   imports: [
     BrowserModule,

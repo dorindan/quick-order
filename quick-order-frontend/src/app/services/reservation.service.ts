@@ -3,6 +3,7 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {Reservation} from '../models/Reservation';
+import {Table} from '../models/Table';
 
 
 const httpOptions = {
@@ -24,6 +25,10 @@ export class ReservationService {
 
   reserve(reservation: Reservation): Observable<any> {
     return this.apiService.postRequest('api/reservation', reservation);
+  }
+
+  getReservation(tableNr: number): Observable<any> {
+    return this.apiService.getRequest('api/reservation/reservationsForTable/' + tableNr);
   }
 }
 
