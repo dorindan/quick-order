@@ -8,7 +8,7 @@ export class MenuItem {
   public preparationDurationInMinutes: number;
   public ingredients: Ingredient[] = [];
   public price: number;
-  public menuItemType: MenuItemType;
+  public menuItemTypeDto: MenuItemType;
 
   constructor(newName: string, newDescription: string, newPreparationDurationInMinutes: number, nerIngredients: Ingredient[], newPrice: number, menuItemType: MenuItemType) {
     this.name = newName;
@@ -16,7 +16,7 @@ export class MenuItem {
     this.preparationDurationInMinutes = newPreparationDurationInMinutes;
     this.ingredients = nerIngredients;
     this.price = newPrice;
-    this.menuItemType = menuItemType;
+    this.menuItemTypeDto = menuItemType;
   }
 
 

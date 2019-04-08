@@ -52,12 +52,13 @@ public class MenuItem {
         this.price = price;
     }
 
-    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price, Set<Ingredient> ingredients) {
+    public MenuItem(String name, String description, MenuItemType menuItemType, Integer preparationDurationInMinutes, Integer price, Set<Ingredient> ingredients) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
         this.price = price;
         this.ingredients = ingredients;
+        this.menuItemType = menuItemType;
     }
 
     public MenuItem() {

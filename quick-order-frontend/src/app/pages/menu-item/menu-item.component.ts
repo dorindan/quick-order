@@ -55,6 +55,9 @@ export class MenuItemComponent implements OnInit {
     this.menuItemsGet = this.tableService.getMenuItems();
     this.menuItems = [];
     this.menuItemsGet.forEach(menuItem => menuItem.forEach(m => {
+      if (m.menuItemTypeDto == null) {
+        m.menuItemTypeDto = new MenuItemType('');
+      }
       this.menuItems.push(m);
       this.dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
     }));

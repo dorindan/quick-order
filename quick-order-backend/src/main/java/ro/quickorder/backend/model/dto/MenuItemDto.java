@@ -30,12 +30,13 @@ public class MenuItemDto {
         this.price = price;
     }
 
-    public MenuItemDto(String name, String description, Set<IngredientDto> ingredientDtos, Integer preparationDurationInMinutes, Integer price) {
+    public MenuItemDto(String name, String description, MenuItemTypeDto menuItemType, Set<IngredientDto> ingredientDtos, Integer preparationDurationInMinutes, Integer price) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredientDtos;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
         this.price = price;
+        this.menuItemTypeDto = menuItemType;
     }
 
     public String getName() {

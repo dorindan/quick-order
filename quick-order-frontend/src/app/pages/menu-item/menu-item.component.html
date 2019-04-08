@@ -39,7 +39,7 @@
                   <mat-form-field>
                     <mat-label translate="">menuItem.itemType</mat-label>
                     <mat-select  [(ngModel)]="this.itemType" >
-                      <mat-option class="form-control validate" [value]="this.itemType"
+                      <mat-option class="form-control validate" [value]="menuItemType.type"
                                   *ngFor="let menuItemType of menuItemTypes"
                       >{{menuItemType.type}}
                       </mat-option>
@@ -126,9 +126,9 @@
                   <mat-form-field>
                     <mat-label translate="">menuItem.itemType</mat-label>
                     <mat-select  [(ngModel)]="this.itemType" >
-                      <mat-option class="form-control validate" [value]="this.itemType"
-                                  *ngFor="let itemType of menuItemTypes"
-                      >{{itemType.type}}
+                      <mat-option class="form-control validate" [value]="menuItemType.type"
+                                  *ngFor="let menuItemType of menuItemTypes"
+                      >{{menuItemType.type}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -141,8 +141,8 @@
                 <div>
                   <mat-form-field>
                     <mat-label translate="">menuItem.ingredients</mat-label>
-                    <mat-select multiple [(ngModel)]="ingredients">
-                      <mat-option class="form-control validate" tabindex="-1" aria-labelledby="modalAdd" [value]="ingredient.name"
+                    <mat-select multiple [(ngModel)]="ingredients" >
+                      <mat-option class="form-control validate" tabindex="-1" aria-labelledby="modalAdd" [(value)]="ingredient.name"
                                   *ngFor="let ingredient of ingredientsList"
                       >{{ingredient.name}}
                       </mat-option>
@@ -233,7 +233,7 @@
       <th mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.itemType</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.itemType}}</td>
+      <td mat-cell *matCellDef="let element">{{element.menuItemTypeDto.type}}</td>
     </ng-container>
 
     <!-- Ingredients Column -->
