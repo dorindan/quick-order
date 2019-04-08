@@ -77,7 +77,7 @@
     "editItem": "Edit Item",
     "edit": "Edit",
     "delete": "Delete",
-    "sure": "Are you sure to delete ",
+    "sure": "Are you sure you want to delete ",
     "yes": "Yes",
     "no": "No",
     "nameCondition": "*(Name must have at least 3 characters) ",

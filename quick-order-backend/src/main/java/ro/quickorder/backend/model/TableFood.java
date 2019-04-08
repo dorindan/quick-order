@@ -25,7 +25,6 @@ public class TableFood {
     private int seats;
     private boolean windowView;
     private int floor;
-    private boolean active = true;
 
     @OneToMany(mappedBy = "table")
     private List<Command> commands;
@@ -82,7 +81,6 @@ public class TableFood {
     public void setFloor(int floor) {
         this.floor = floor;
     }
-
 
     public List<Command> getCommands() {
         return commands;
