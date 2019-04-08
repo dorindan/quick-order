@@ -71,6 +71,7 @@
     "name": "Name",
     "description": "Description",
     "ingredients": "Ingredients",
+    "itemType": "Item type",
     "preparationDuration": "Preparation duration",
     "price": "Price",
     "add": "Add",
@@ -83,6 +84,7 @@
     "nameCondition": "*(Name must have at least 3 characters) ",
     "durationCondition": "*(The duration can not be negative) ",
     "priceCondition": "*(The price can not be negative) "
+
   }
 
 }

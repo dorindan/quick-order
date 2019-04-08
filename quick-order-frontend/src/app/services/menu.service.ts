@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Menu} from '../models/Menu';
 import {MenuItem} from '../models/MenuItem';
 import {Ingredient} from '../models/Ingredient';
+import {MenuItemType} from '../models/MenuItemType';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class MenuService {
   }
 
   getMenu(): Observable<Menu[]> {
+    return this.apiService.getRequest('api/menuItemType/all');
+  }
+
+  getMenuItemType(): Observable<MenuItemType[]> {
     return this.apiService.getRequest('api/menuItemType/all');
   }
 

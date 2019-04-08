@@ -71,6 +71,7 @@
     "name": "Nume",
     "description": "Descriere",
     "ingredients": "Ingrediente",
+    "itemType": "Tip produs",
     "preparationDuration": "Durată de preparare",
     "price": "Preț",
     "add": "Adaugă",
