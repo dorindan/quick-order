@@ -95,7 +95,7 @@
     "editTable": "Edit Table",
     "edit": "Edit",
     "delete": "Delete",
-    "sure": "Are you sure to delete Table ",
+    "sure": "Are you sure you want to delete Table ",
     "yes": "Yes",
     "no": "No",
     "tableNumberCondition": "*(Table number must be greater than 0) ",
