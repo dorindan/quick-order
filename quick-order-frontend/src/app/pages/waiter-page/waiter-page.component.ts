@@ -6,7 +6,6 @@ import {ReservationService} from '../../services/reservation.service';
 import {Reservation} from '../../models/Reservation';
 
 
-
 @Component({
   selector: 'app-waiter-page',
   templateUrl: './waiter-page.component.html',
@@ -29,10 +28,6 @@ export class WaiterPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tablesGet = this.tableService.getTables();
-    this.tables = [];
-    this.tablesGet.forEach(table => table.forEach(t => this.tables.push(t)));
-
     this.reservationsGet = this.reservationService.getUnacceptedReservation();
     this.reservations = [];
     this.reservationsGet.forEach(reservation => reservation.forEach(r => this.reservations.push(r)));
@@ -59,8 +54,6 @@ export class WaiterPageComponent implements OnInit {
       this.indexExpanded = -1;
       this.disabledElements.push(index);
     }
-   /* console.log(this.indexExpanded);
-    console.log(reservation.reservationName + ' ' + this.selectedOptions);*/
   }
 
   hint(reservation: Reservation, index: number): String {
@@ -80,10 +73,19 @@ export class WaiterPageComponent implements OnInit {
     return '';
   }
 
-  openGroup(any, index: number) {
+  openGroup(any, index: number, reservation: Reservation) {
     console.log(any);
     this.selectedOptions = [];
     this.indexExpanded = index;
+    let checkInTimeFormatted = '';
+    checkInTimeFormatted = reservation.checkInTime.substr(0, 10).replace('/', '+').replace('/', '+')
+      + '+' + reservation.checkInTime.substr(11, 5);
+    let checkOutTimeFormatted = ' ';
+    checkOutTimeFormatted = reservation.checkOutTime.substr(0, 10).replace('/', '+').replace('/', '+') + '+' +
+      reservation.checkOutTime.substr(11, 5);
+    this.tablesGet = this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted);
+    this.tables = [];
+    this.tablesGet.forEach(table => table.forEach(t => this.tables.push(t)));
   }
 
   checkDisabled(i: number): boolean {

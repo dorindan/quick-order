@@ -2,6 +2,7 @@ package ro.quickorder.backend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
@@ -18,5 +19,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAll();
 
     @Query(value = "Select r.tables From Reservation r where r.checkInTime < :maxCheckOutTime and  r.checkOutTime > :minCheckInTime")
-    List<TableFood> findTablesWithReservationsBetween(Timestamp minCheckInTime, Timestamp maxCheckOutTime);
+    List<TableFood> findTablesWithReservationsBetween(@Param("minCheckInTime") Timestamp minCheckInTime,@Param("maxCheckOutTime") Timestamp maxCheckOutTime);
 }

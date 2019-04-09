@@ -2,7 +2,7 @@
 <div class="container-fluid ">
   <mat-accordion>
     <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let reservation of reservations ; let i = index"
-                         (opened)="openGroup(reservation.reservationName, i)" [disabled]="checkDisabled(i)">
+                         (opened)="openGroup(reservation.reservationName, i, reservation)" [disabled]="checkDisabled(i)">
 
       <mat-expansion-panel-header>
 
