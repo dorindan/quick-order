@@ -23,11 +23,11 @@
         </div>
 
       </mat-expansion-panel-header>
-        <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="selection()">
+        <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="selection(tables)">
           <hr>
           <p>TABLES</p>
           <hr>
-          <mat-list-option *ngFor="let table of tables" [value]="table.tableNr">
+          <mat-list-option *ngFor="let table of tables" [value]="table">
             <pre class="mainDetails">Table: {{table.tableNr }}     Seats: {{table.seats}} <p class="extraDetails">     Floor: {{table.floor}}     Has window view: {{table.windowView}}</p></pre>
           </mat-list-option>
         </mat-selection-list>

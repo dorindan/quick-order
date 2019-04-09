@@ -4,6 +4,7 @@ import {TableService} from '../../services/table.service';
 import {Observable} from 'rxjs';
 import {ReservationService} from '../../services/reservation.service';
 import {Reservation} from '../../models/Reservation';
+import {ConfirmReservation} from '../../models/ConfirmReservation';
 
 
 @Component({
@@ -16,13 +17,12 @@ export class WaiterPageComponent implements OnInit {
   tables: Table[];
   reservationsGet: Observable<Reservation[]>;
   reservations: Reservation[];
-  selectedOptions: number[];
+  selectedOptions: Table[];
   indexExpanded: number;
   disabledElements: number[];
   totalOfSelectedSeats: number;
   i: number;
   j: number;
-  @ViewChild('myExpansionPanel') myExpansionPanel: ElementRef;
 
   constructor(private tableService: TableService, private reservationService: ReservationService) {
   }
@@ -37,7 +37,7 @@ export class WaiterPageComponent implements OnInit {
   }
 
   selection() {
-    this.selectedOptions.forEach(item => console.log(item));
+    this.selectedOptions.forEach(table => console.log(table));
   }
 
   getFormattedTime(reservation: Reservation): string {
@@ -54,6 +54,8 @@ export class WaiterPageComponent implements OnInit {
       this.indexExpanded = -1;
       this.disabledElements.push(index);
     }
+    console.log(reservation);
+    this.reservationService.confirmReservation(new ConfirmReservation(reservation, this.selectedOptions));
   }
 
   hint(reservation: Reservation, index: number): String {
@@ -62,7 +64,7 @@ export class WaiterPageComponent implements OnInit {
     this.j = 0;
     for (const option of this.selectedOptions) {
       for (const table of this.tables) {
-        if (table.tableNr === option) {
+        if (table.tableNr === option.tableNr) {
           this.totalOfSelectedSeats = this.totalOfSelectedSeats + table.seats;
         }
       }

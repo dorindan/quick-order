@@ -3,7 +3,7 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {Reservation} from '../models/Reservation';
-import {Table} from "../models/Table";
+import {ConfirmReservation} from '../models/ConfirmReservation';
 
 
 const httpOptions = {
@@ -29,6 +29,10 @@ export class ReservationService {
 
   getUnacceptedReservation(): Observable<Reservation[]> {
     return this.apiService.getRequest('api/reservation/unconfirmed');
+  }
+
+  confirmReservation(confirmReservation: ConfirmReservation): Observable<any> {
+    return this.apiService.postRequest('api/reservation/confirm', confirmReservation);
   }
 }
 
