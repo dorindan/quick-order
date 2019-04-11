@@ -42,7 +42,7 @@ public class ReservationResource {
 
     @RequestMapping(path = "/confirm", method = RequestMethod.POST)
     public void confirmReservation(@RequestBody ConfirmReservationDto confirmReservationDto){
-        reservationService.confirmReservation(confirmReservationDto.getReservationDto(), confirmReservationDto.getTableFoodListDto());
+        reservationService.confirmReservation(new ReservationDto(confirmReservationDto.getCheckInTime(),confirmReservationDto.getCheckOutTime(),confirmReservationDto.getStatus(), confirmReservationDto.isConfirmed(),confirmReservationDto.getNumberOfPersons(),confirmReservationDto.getReservationName()), confirmReservationDto.getTableFoodListDto());
     }
 
 
