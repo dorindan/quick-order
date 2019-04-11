@@ -55,8 +55,9 @@ export class WaiterPageComponent implements OnInit {
       this.disabledElements.push(index);
     }
     console.log(reservation);
-    this.reservationService.confirmReservation(new ConfirmReservation(reservation, this.selectedOptions));
-  }
+    this.reservationService.confirmReservation(new ConfirmReservation(reservation.checkInTime,
+  reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions));
+}
 
   hint(reservation: Reservation, index: number): String {
     this.totalOfSelectedSeats = 0;
