@@ -3,16 +3,14 @@ package ro.quickorder.backend.model.dto;
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.MenuItem}
  *
- *  *@author R. Lupoaie
+ * @author R. Lupoaie
  */
 public class MenuItemDto {
-
     private String name;
     private String description;
     private Integer preparationDurationInMinutes;
 
     public MenuItemDto() {
-
     }
 
     public MenuItemDto(String name, String description, Integer preparationDurationInMinutes) {

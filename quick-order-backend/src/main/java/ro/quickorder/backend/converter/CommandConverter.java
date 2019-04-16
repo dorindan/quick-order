@@ -5,8 +5,9 @@ import ro.quickorder.backend.model.Command;
 import ro.quickorder.backend.model.dto.CommandDto;
 
 /**
- Converts Commands to their corresponding DTO and vice versa.
- *@author R. Lupoaie
+ * Converts Commands to their corresponding DTO and vice versa.
+ *
+ * @author R. Lupoaie
  */
 
 @Component
@@ -35,5 +36,4 @@ public class CommandConverter {
         commandDto.setStatus(command.getStatus());
         return commandDto;
     }
-
 }

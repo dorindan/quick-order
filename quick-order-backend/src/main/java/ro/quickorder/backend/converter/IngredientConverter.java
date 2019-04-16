@@ -5,8 +5,9 @@ import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.dto.IngredientDto;
 
 /**
- Converts Commands to their corresponding DTO and vice versa.
- *@author R. Lupoaie
+ * Converts Commands to their corresponding DTO and vice versa.
+ *
+ * @author R. Lupoaie
  */
 
 @Component
@@ -29,5 +30,4 @@ public class IngredientConverter {
         ingredientDto.setName(ingredient.getName());
         return ingredientDto;
     }
-
 }

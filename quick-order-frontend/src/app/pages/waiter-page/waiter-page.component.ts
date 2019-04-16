@@ -1,11 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
 import {Observable} from 'rxjs';
 import {ReservationService} from '../../services/reservation.service';
 import {Reservation} from '../../models/Reservation';
 import {ConfirmReservation} from '../../models/ConfirmReservation';
-
 
 @Component({
   selector: 'app-waiter-page',
@@ -56,8 +55,8 @@ export class WaiterPageComponent implements OnInit {
     }
     console.log(reservation);
     this.reservationService.confirmReservation(new ConfirmReservation(reservation.checkInTime,
-  reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions));
-}
+      reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions));
+  }
 
   hint(reservation: Reservation, index: number): String {
     this.totalOfSelectedSeats = 0;
@@ -92,15 +91,10 @@ export class WaiterPageComponent implements OnInit {
   }
 
   checkDisabled(i: number): boolean {
-    if (this.disabledElements.includes(i)) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.disabledElements.includes(i);
   }
 
   enableEdit(i: number) {
     this.disabledElements = this.disabledElements.filter(item => item !== i);
   }
 }
-

@@ -21,7 +21,7 @@ public class BillResource {
     public Optional<Bill> findById(@RequestParam(value = "id", defaultValue = "0") Long id) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String valueAsString=objectMapper.writeValueAsString(billRepository.findById(id));
+            String valueAsString = objectMapper.writeValueAsString(billRepository.findById(id));
             System.out.println(valueAsString);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -29,8 +29,8 @@ public class BillResource {
         return billRepository.findById(id);
     }
 
-    @PostMapping(path="/bill")
-    public void createBill(@RequestBody Bill bill){
+    @PostMapping(path = "/bill")
+    public void createBill(@RequestBody Bill bill) {
         System.out.println(bill.getTotal());
     }
 }

@@ -1,13 +1,13 @@
 package ro.quickorder.backend.converter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.UserDto;
 
 /**
- Converts Commands to their corresponding DTO and vice versa.
- *@author R. Lupoaie
+ * Converts Commands to their corresponding DTO and vice versa.
+ *
+ * @author R. Lupoaie
  */
 
 @Component

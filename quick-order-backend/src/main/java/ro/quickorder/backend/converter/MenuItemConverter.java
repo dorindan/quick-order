@@ -5,9 +5,9 @@ import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 
 /**
- *Converts Commands to their corresponding DTO and vice versa.
+ * Converts Commands to their corresponding DTO and vice versa.
  *
- *@author R. Lupoaie
+ * @author R. Lupoaie
  */
 @Component
 public class MenuItemConverter {
@@ -33,5 +33,4 @@ public class MenuItemConverter {
         menuItemDto.setPreparationDurationInMinutes(menuItem.getPreparationDurationInMinutes());
         return menuItemDto;
     }
-
 }

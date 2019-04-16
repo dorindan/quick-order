@@ -2,7 +2,6 @@ package ro.quickorder.backend.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.service.CustomDateDeserializer;
 import ro.quickorder.backend.service.CustomDateSerializer;
 

@@ -1,6 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { WaiterPageComponent } from './waiter-page.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {WaiterPageComponent} from './waiter-page.component';
 
 describe('WaiterPageComponent', () => {
   let component: WaiterPageComponent;
@@ -8,9 +7,9 @@ describe('WaiterPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WaiterPageComponent ]
+      declarations: [WaiterPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

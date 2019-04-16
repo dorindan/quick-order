@@ -8,7 +8,6 @@ import {Table} from '../models/Table';
   providedIn: 'root'
 })
 export class TableService {
-
   constructor(private http: HttpClient,
               private apiService: ApiService) {
   }

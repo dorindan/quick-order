@@ -14,34 +14,26 @@ import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
 
-import javax.inject.Inject;
-
 
 @Service
 public class UserAttributeService {
-
     private static final Logger LOG = LoggerFactory.getLogger(UserAttributeService.class);
-
     @Autowired
     private UserAttributeConverter userAttributeConverter;
-
     @Autowired
     private UserRepository userRepository;
-    @Inject
+    @Autowired
     private UserAttributeRepository userAttributeRepository;
 
     public void setPreference(UserDto userDto, UserAttributeDto userAttributeDto) {
-
-        if(userAttributeDto == null){
+        if (userAttributeDto == null) {
             LOG.error("No attribute!");
             throw new BadRequestException("No attribute!");
         }
-
         UserAttribute userAttribute = userAttributeConverter.toUserAttribute(userAttributeDto);
-
         // identify user using userName
-        User user=userRepository.findByUsername(userDto.getUsername());
-        if(user == null){
+        User user = userRepository.findByUsername(userDto.getUsername());
+        if (user == null) {
             LOG.error("User not found");
             throw new NotFoundException("User not found");
         }

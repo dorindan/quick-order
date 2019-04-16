@@ -1,10 +1,7 @@
 package ro.quickorder.backend.model;
 
 
-
 import org.hibernate.annotations.GenericGenerator;
-
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +9,6 @@ import java.util.Objects;
 
 @Entity
 public class TableFood {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -26,12 +22,13 @@ public class TableFood {
     private boolean windowView;
     private int floor;
     private boolean free;
-
     @OneToMany(mappedBy = "table")
     private List<Command> commands;
-
     @ManyToMany(mappedBy = "tables")
     private List<Reservation> reservations;
+
+    public TableFood() {
+    }
 
     public TableFood(int tableNr, int seats, boolean windowView, int floor, boolean free) {
         this.tableNr = tableNr;
@@ -39,9 +36,6 @@ public class TableFood {
         this.windowView = windowView;
         this.floor = floor;
         this.free = free;
-    }
-
-    public TableFood() {
     }
 
     public String getId() {
@@ -118,7 +112,7 @@ public class TableFood {
                 windowView == tableFood.windowView &&
                 floor == tableFood.floor &&
                 free == tableFood.free &&
-                Objects.equals(id, tableFood.id) ;
+                Objects.equals(id, tableFood.id);
     }
 
     @Override

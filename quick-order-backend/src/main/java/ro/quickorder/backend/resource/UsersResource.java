@@ -22,7 +22,7 @@ public class UsersResource {
     private UserService userService;
 
 
-    @RequestMapping(path = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public String findById(@PathVariable(value = "id") Long id) {
         return userRepository.findById(id).toString();
     }
@@ -43,9 +43,7 @@ public class UsersResource {
     }
 
     @PostMapping(path = "/attributes")
-    public void setPreference(@NotNull @RequestBody UserDto userDto)
-    {
+    public void setPreference(@NotNull @RequestBody UserDto userDto) {
         userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
     }
-
 }

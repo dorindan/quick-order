@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.Period;
 import java.util.List;
 import java.util.Objects;
+
 @Entity
 public class MenuItem {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -33,14 +32,14 @@ public class MenuItem {
 
     @ManyToMany
     @JoinTable(name = "menu_item_ingredient",
-            joinColumns = { @JoinColumn(name = "menu_item_id") },
-            inverseJoinColumns = { @JoinColumn(name = "ingredient_id") })
+            joinColumns = {@JoinColumn(name = "menu_item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
     private List<Ingredient> ingredients;
 
     @ManyToMany
     @JoinTable(name = "menu_item_command",
-            joinColumns = { @JoinColumn(name = "menu_item_id") },
-            inverseJoinColumns = { @JoinColumn(name = "command_id") })
+            joinColumns = {@JoinColumn(name = "menu_item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "command_id")})
     private List<Command> commands;
 
     public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price) {

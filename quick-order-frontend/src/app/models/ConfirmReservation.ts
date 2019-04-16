@@ -1,4 +1,3 @@
-import {Reservation} from './Reservation';
 import {Table} from './Table';
 
 export class ConfirmReservation {

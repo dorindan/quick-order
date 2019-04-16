@@ -1,7 +1,5 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.TableFood;
-
 import java.util.List;
 
 public class TableFoodListDto {

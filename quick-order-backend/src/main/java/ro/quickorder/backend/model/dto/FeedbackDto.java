@@ -2,24 +2,20 @@ package ro.quickorder.backend.model.dto;
 
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.Feedback}
- *
- *  *@author R. Lupoaie
+ * <p>
+ * @author R. Lupoaie
  */
 public class FeedbackDto {
-
     private int rating;
     private String message;
 
-
     public FeedbackDto() {
-
     }
 
     public FeedbackDto(int rating, String message) {
         this.rating = rating;
         this.message = message;
     }
-
 
     public int getRating() {
         return rating;

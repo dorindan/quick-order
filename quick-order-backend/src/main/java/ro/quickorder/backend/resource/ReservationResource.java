@@ -36,13 +36,13 @@ public class ReservationResource {
 
 
     @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
-    public List<ReservationDto> getAllUnconfirmed(){
+    public List<ReservationDto> getAllUnconfirmed() {
         return reservationService.getAllUnconfirmed();
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.POST)
-    public void confirmReservation(@RequestBody ConfirmReservationDto confirmReservationDto){
-        reservationService.confirmReservation(new ReservationDto(confirmReservationDto.getCheckInTime(),confirmReservationDto.getCheckOutTime(),confirmReservationDto.getStatus(), confirmReservationDto.isConfirmed(),confirmReservationDto.getNumberOfPersons(),confirmReservationDto.getReservationName()), confirmReservationDto.getTableFoodListDto());
+    public void confirmReservation(@RequestBody ConfirmReservationDto confirmReservationDto) {
+        reservationService.confirmReservation(new ReservationDto(confirmReservationDto.getCheckInTime(), confirmReservationDto.getCheckOutTime(), confirmReservationDto.getStatus(), confirmReservationDto.isConfirmed(), confirmReservationDto.getNumberOfPersons(), confirmReservationDto.getReservationName()), confirmReservationDto.getTableFoodListDto());
     }
 
 
