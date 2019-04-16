@@ -5,10 +5,10 @@ import ro.quickorder.backend.model.Bill;
 import ro.quickorder.backend.model.dto.BillDto;
 
 /**
- Converts Commands to their corresponding DTO and vice versa.
- *@author R. Lupoaie
+ * Converts Commands to their corresponding DTO and vice versa.
+ *
+ * @author R. Lupoaie
  */
-
 @Component
 public class BillConverter {
 
@@ -33,5 +33,4 @@ public class BillConverter {
         billDto.setTotal(bill.getTotal());
         return billDto;
     }
-
 }

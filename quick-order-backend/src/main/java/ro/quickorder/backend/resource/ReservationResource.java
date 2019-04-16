@@ -4,15 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.dto.ConfirmReservationDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
-import ro.quickorder.backend.model.dto.TableFoodDto;
-import ro.quickorder.backend.model.dto.TableFoodListDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.service.ReservationService;
 
-import javax.validation.constraints.NotNull;
-import java.text.ParseException;
 import java.util.List;
-
 
 @RestController
 @CrossOrigin
@@ -30,10 +25,9 @@ public class ReservationResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void addReservation(@RequestBody ReservationDto reservation) throws ParseException {
+    public void addReservation(@RequestBody ReservationDto reservation) {
         reservationService.addReservation(reservation);
     }
-
 
     @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
     public List<ReservationDto> getAllUnconfirmed() {
@@ -44,7 +38,4 @@ public class ReservationResource {
     public void confirmReservation(@RequestBody ConfirmReservationDto confirmReservationDto) {
         reservationService.confirmReservation(new ReservationDto(confirmReservationDto.getCheckInTime(), confirmReservationDto.getCheckOutTime(), confirmReservationDto.getStatus(), confirmReservationDto.isConfirmed(), confirmReservationDto.getNumberOfPersons(), confirmReservationDto.getReservationName()), confirmReservationDto.getTableFoodListDto());
     }
-
-
-
 }
