@@ -11,7 +11,6 @@ import ro.quickorder.backend.model.dto.BillDto;
  */
 @Component
 public class BillConverter {
-
     public Bill toBill(BillDto billDto) {
         if (billDto == null) {
             return null;
