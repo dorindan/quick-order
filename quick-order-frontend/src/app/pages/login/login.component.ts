@@ -14,6 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class LoginComponent implements OnInit {
   model: any = {};
+  hide = true;
 
   constructor(private translateService: TranslateService,
               private route: ActivatedRoute,
