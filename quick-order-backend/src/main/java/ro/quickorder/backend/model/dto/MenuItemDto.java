@@ -1,8 +1,5 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.MenuItemType;
-
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -83,7 +80,6 @@ public class MenuItemDto {
     public void setIngredients(Set<IngredientDto> ingredients) {
         this.ingredients = ingredients;
     }
-
 
 
 }

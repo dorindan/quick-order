@@ -19,9 +19,9 @@ import java.util.List;
 public class TableFoodService {
     private static final Logger LOG = LoggerFactory.getLogger(TableFoodService.class);
     @Autowired
-    private TableFoodConverter tableFoodConverter;
-    @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    private TableFoodConverter tableFoodConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
@@ -43,5 +43,4 @@ public class TableFoodService {
         tableFoodRepository.findAll().stream().map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).forEach(allTables::add);
         return allTables;
     }
-
 }

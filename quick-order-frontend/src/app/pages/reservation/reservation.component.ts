@@ -6,7 +6,6 @@ import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {PropertyService} from '../../services/property.service';
 
-
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
@@ -27,7 +26,6 @@ export class ReservationComponent implements OnInit {
   currentDate = new Date();
   hours: string[] = [];
   hourControl = new FormControl('', [Validators.required]);
-
 
   constructor(private _formBuilder: FormBuilder,
               private reservationService: ReservationService,

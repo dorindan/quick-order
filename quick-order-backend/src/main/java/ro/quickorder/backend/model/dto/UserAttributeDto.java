@@ -6,6 +6,7 @@ import ro.quickorder.backend.model.UserAttribute;
 /**
  *  Data transfer object for {@link UserAttribute}
  * <p>
+ *
  * @author R. Lupoaie
  */
 public class UserAttributeDto {

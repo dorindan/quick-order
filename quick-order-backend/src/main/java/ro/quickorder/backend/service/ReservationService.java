@@ -22,9 +22,9 @@ import java.util.List;
 public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
-    private ReservationConverter reservationConverter;
-    @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    private ReservationConverter reservationConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
@@ -103,14 +103,14 @@ public class ReservationService {
     }
 
     public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {
-        List<ReservationDto> res = new ArrayList<>();
+        List<ReservationDto> reservationForTableByTableNumberDtos = new ArrayList<>();
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
         if (tableFood == null) {
             throw new NotFoundException("Table not found!");
         }
         List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
-        reservations.stream().map(reservation -> reservationConverter.toReservationDto(reservation)).forEach(res::add);
-        return res;
+        reservations.stream().map(reservation -> reservationConverter.toReservationDto(reservation)).forEach(reservationForTableByTableNumberDtos::add);
+        return reservationForTableByTableNumberDtos;
     }
 
 }

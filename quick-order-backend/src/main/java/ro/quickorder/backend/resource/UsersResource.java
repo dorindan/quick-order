@@ -30,5 +30,4 @@ public class UsersResource {
     public void setPreference(@NotNull @RequestBody UserDto userDto) {
         userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
     }
-
 }

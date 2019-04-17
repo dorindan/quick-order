@@ -27,5 +27,4 @@ public class TableFoodResource {
     public List<TableFoodDto> getAllTables() {
         return tableFoodService.getAll();
     }
-
 }

@@ -44,7 +44,6 @@ public class UserService {
             LOG.error("User or password are incorrect!");
             throw new NotFoundException("User or password are incorrect!");
         }
-
     }
 
     public UserDto signUp(UserDto userDto) {

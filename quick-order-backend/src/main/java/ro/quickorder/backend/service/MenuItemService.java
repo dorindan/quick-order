@@ -4,25 +4,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.quickorder.backend.converter.IngredientConverter;
 import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.converter.MenuItemTypeConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
-import ro.quickorder.backend.model.dto.IngredientDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author R. Lupoaie
  */
 @Service
 public class MenuItemService {
-
     private static final Logger LOG = LoggerFactory.getLogger(MenuItemService.class);
     @Autowired
     private MenuItemRepository menuItemRepository;
@@ -33,17 +33,10 @@ public class MenuItemService {
     @Autowired
     private MenuItemTypeConverter menuItemTypeConverter;
 
-    @Autowired
-    private IngredientConverter ingredientConverter;
-
     public List<MenuItemDto> getMenuItems() {
-        List<MenuItemDto> result = new ArrayList<>();
-        List<MenuItem> menuItems = menuItemRepository.findAll();
-
-        for (MenuItem menuItem : menuItems) {
-            result.add(menuItemConverter.toMenuItemDto(menuItem));
-        }
-        return result;
+        List<MenuItemDto> menuItems = new ArrayList<>();
+        menuItemRepository.findAll().stream().map(menuItem -> menuItemConverter.toMenuItemDto(menuItem)).forEach(menuItems::add);
+        return menuItems;
     }
 
     public void addMenuItem(MenuItemDto menuItemDto) {
@@ -56,9 +49,7 @@ public class MenuItemService {
             LOG.error("MenuItem already exists!");
             throw new NotFoundException("MenuItem already exists!");
         }
-
         Set<Ingredient> ingredients = setIngredients(menuItemDto);
-
         menuItem = new MenuItem(menuItemDto.getName(), menuItemDto.getDescription(), menuItemDto.getPrice(), menuItemDto.getPreparationDurationInMinutes(), ingredients);
         menuItemRepository.save(menuItem);
     }
@@ -69,23 +60,19 @@ public class MenuItemService {
             LOG.error("MenuItem not found!");
             throw new NotFoundException("MenuItem not found!");
         }
-
-
         Set<Ingredient> ingredients = setIngredients(menuItemDto);
-
         menuItem.setIngredients(ingredients);
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setDescription(menuItemDto.getDescription());
         menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
-
         menuItemRepository.save(menuItem);
     }
 
     private Set<Ingredient> setIngredients(MenuItemDto menuItemDto) {
         Set<Ingredient> ingredients = new HashSet<>();
-        if (menuItemDto.getIngredients() != null)
-           for(IngredientDto ingredientDto:  menuItemDto.getIngredients()){
+        if (menuItemDto.getIngredients() != null) {
+            menuItemDto.getIngredients().forEach(ingredientDto -> {
                 Ingredient ingredient = ingredientRepository.findFirstByName(ingredientDto.getName());
                 if (ingredient != null) {
                     ingredients.add(ingredient);
@@ -93,7 +80,8 @@ public class MenuItemService {
                     LOG.error("Ingredient was not found!");
                     throw new NotFoundException("Ingredient was not found!");
                 }
-            }
+            });
+        }
         return ingredients;
     }
 
@@ -105,5 +93,4 @@ public class MenuItemService {
         }
         menuItemRepository.delete(menuItem);
     }
-
 }

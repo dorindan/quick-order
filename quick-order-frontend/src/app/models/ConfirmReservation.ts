@@ -7,7 +7,6 @@ export class ConfirmReservation {
   reservationName: string;
   public tableFoodListDto: Table[];
 
-
   constructor(checkInTime: string, numberOfPersons: number, checkOutTime: string, reservationName: string, tablesFoodListDto: Table[]) {
     this.checkInTime = checkInTime;
     this.numberOfPersons = numberOfPersons;

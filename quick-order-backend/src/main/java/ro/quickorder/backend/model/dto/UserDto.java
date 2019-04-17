@@ -3,6 +3,7 @@ package ro.quickorder.backend.model.dto;
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.User}
  * <p>
+ *
  * @author R. Lupoaie
  */
 public class UserDto {

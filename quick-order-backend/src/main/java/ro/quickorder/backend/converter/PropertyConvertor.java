@@ -7,9 +7,8 @@ import ro.quickorder.backend.model.dto.PropertyDto;
 @Component
 public class PropertyConvertor {
 
-    public Property toProperty(PropertyDto propertyDto){
-
-        if (propertyDto == null){
+    public Property toProperty(PropertyDto propertyDto) {
+        if (propertyDto == null) {
             return null;
         }
         Property property = new Property();
@@ -19,8 +18,8 @@ public class PropertyConvertor {
         return property;
     }
 
-    public PropertyDto toPropertyDto(Property property){
-        if (property == null){
+    public PropertyDto toPropertyDto(Property property) {
+        if (property == null) {
             return null;
         }
         PropertyDto propertyDto = new PropertyDto();
