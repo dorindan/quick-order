@@ -5,14 +5,12 @@ import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.dto.ReservationDto;
 
 /**
- * Converts Commands to their corresponding DTO and vice versa.
- *
+ *  Converts Reservations to their corresponding DTO and vice versa.
  * @author R. Lupoaie
  */
 
 @Component
 public class ReservationConverter {
-
     public Reservation toReservation(ReservationDto reservationDto) {
         if (reservationDto == null) {
             return null;

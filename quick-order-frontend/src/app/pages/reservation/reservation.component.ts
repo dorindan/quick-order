@@ -4,15 +4,14 @@ import {ReservationService} from '../../services/reservation.service';
 import {MatDatepickerInputEvent} from '@angular/material';
 import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {PropertyService} from '../../services/property.service';
 
-export interface Hour {
-  name: string;
-}
 
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.scss'],
+
 })
 export class ReservationComponent implements OnInit {
   firstFormGroup: FormGroup;
@@ -26,38 +25,14 @@ export class ReservationComponent implements OnInit {
   reservation: Reservation;
   events: string[] = [];
   currentDate = new Date();
+  hours: string[] = [];
   hourControl = new FormControl('', [Validators.required]);
-  selectFormControl = new FormControl('', Validators.required)
-  hours: Hour[] = [
-    {name: '10:00'},
-    {name: '10:30'},
-    {name: '11:00'},
-    {name: '11:30'},
-    {name: '12:00'},
-    {name: '12:30'},
-    {name: '13:00'},
-    {name: '13:30'},
-    {name: '14:00'},
-    {name: '14:30'},
-    {name: '15:00'},
-    {name: '15:30'},
-    {name: '16:00'},
-    {name: '16:30'},
-    {name: '17:00'},
-    {name: '17:30'},
-    {name: '18:00'},
-    {name: '18:30'},
-    {name: '19:00'},
-    {name: '19:30'},
-    {name: '20:00'},
-    {name: '20:30'},
-    {name: '21:00'},
-    {name: '21:30'},
-    {name: '22:00'}
-  ];
+
 
   constructor(private _formBuilder: FormBuilder,
-              private reservationService: ReservationService, private snackBar: MatSnackBar) {
+              private reservationService: ReservationService,
+              private snackBar: MatSnackBar,
+              private propertyService: PropertyService) {
   }
 
   ngOnInit() {
@@ -66,6 +41,15 @@ export class ReservationComponent implements OnInit {
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
+    });
+    this.propertyService.getBistroProperty().subscribe(response => {
+      const startHours: string[] = response.startProgramTime.split(':', 3);
+      const startHour = new Date();
+      startHour.setHours(+startHours[0], +startHours[1], +startHours[2]);
+      const endHours: string[] = response.endProgramTime.split(':', 3);
+      const endHour = new Date();
+      endHour.setHours(+endHours[0], +endHours[1], +endHours[2]);
+      this.fillHours(startHour, endHour);
     });
   }
 
@@ -76,7 +60,7 @@ export class ReservationComponent implements OnInit {
   }
 
   onChange(event) {
-    this.time = event.value.name;
+    this.time = event.value;
   }
 
   addNrOfPersons(event) {
@@ -85,7 +69,7 @@ export class ReservationComponent implements OnInit {
 
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
-    this.reservation = new Reservation(this.dateTime, this.nrOfPersons);
+    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'Add Reservation needs change!', false);
     this.reservationService.reserve(this.reservation)
       .subscribe(data => {
         this.showSnackbar('Reservation sent successfully.');
@@ -101,11 +85,47 @@ export class ReservationComponent implements OnInit {
     });
   }
 
-  numberOnly(event): boolean {
-    const charCode = (event.which) ? event.which : event.key;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+  validateHour(time: string) {
+    const splittedHour = time.split(':', 2);
+    const splittedDate = this.date.split('/', 3);
+    const day = +splittedDate[0];
+    const month = +splittedDate[1];
+    const year = +splittedDate[2];
+    const hour = +splittedHour[0];
+    const minutes = +splittedHour[1];
+    if (this.currentDate.getFullYear() < year) {
+      return true;
+    }
+    if (this.currentDate.getMonth() + 1 < month) {
+      return true;
+    }
+    if (this.currentDate.getDate() < day) {
+      return true;
+    }
+    if (hour < this.currentDate.getHours()) {
       return false;
     }
-    return true;
+    return !(hour === this.currentDate.getHours() && minutes <= this.currentDate.getMinutes());
+  }
+
+  fillHours(startHour: Date, finishHour: Date) {
+    let i: number;
+    let j: number;
+    for (i = startHour.getHours(); i < finishHour.getHours(); i++) {
+      for (j = 0; j <= 55; j += 5) {
+        if (j === 0) {
+          this.hours.push(i + ':' + '00');
+        } else if (j === 5) {
+          this.hours.push(i + ':' + '05');
+        } else {
+          this.hours.push(i + ':' + j);
+        }
+      }
+    }
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.key;
+    return !(charCode > 31 && (charCode < 48 || charCode > 57));
   }
 }

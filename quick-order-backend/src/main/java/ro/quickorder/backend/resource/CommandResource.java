@@ -8,12 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.quickorder.backend.repository.CommandRepository;
 
 @RestController
+@RequestMapping(value = "/command")
 public class CommandResource {
-    @Autowired
-    CommandRepository commandRepository;
 
-    @RequestMapping(path = "/command", method = RequestMethod.GET)
-    public String findById(@RequestParam(value = "id", defaultValue = "0") Long id) {
-        return commandRepository.findById(id).toString();
-    }
 }

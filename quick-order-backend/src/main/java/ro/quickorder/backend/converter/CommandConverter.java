@@ -5,14 +5,11 @@ import ro.quickorder.backend.model.Command;
 import ro.quickorder.backend.model.dto.CommandDto;
 
 /**
- * Converts Commands to their corresponding DTO and vice versa.
- *
+ *  Converts Commands to their corresponding DTO and vice versa.
  * @author R. Lupoaie
  */
-
 @Component
 public class CommandConverter {
-
     public Command toCommand(CommandDto commandDto) {
         if (commandDto == null) {
             return null;

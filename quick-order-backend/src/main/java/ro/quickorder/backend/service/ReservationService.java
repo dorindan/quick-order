@@ -22,9 +22,9 @@ import java.util.List;
 public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
-    ReservationRepository reservationRepository;
-    @Autowired
     private ReservationConverter reservationConverter;
+    @Autowired
+    ReservationRepository reservationRepository;
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
@@ -35,9 +35,10 @@ public class ReservationService {
             throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
         }
         if (reservationDto.getCheckInTime().before(currentTimestamp)) {
-            LOG.error("CheckInTime must be greater than the current date");
+            LOG.error("CheckInTime must be greater than the current date currentTimeStamp: " + currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
             throw new ForbiddenException("CheckInTime must be greater than the current date");
         }
+        LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
         reservationDto.setStatus("not accepted");
         reservationDto.setConfirmed(false);
         long twoHoursInMilliseconds = 7200000;
@@ -63,8 +64,6 @@ public class ReservationService {
         Reservation reservation = getReservationEntityByName(reservationDto);
         // find tables
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
-        // occupy all table
-        occupyAllTable(reservationTables);
         // put tables in reservation
         reservation.setTables(reservationTables);
         reservation.setConfirmed(true);
@@ -103,8 +102,15 @@ public class ReservationService {
         return tableFoods;
     }
 
-    private void occupyAllTable(List<TableFood> tableFoods) {
-        tableFoods.stream().peek(tableFood -> tableFood.setFree(false)).forEach(tableFoodRepository::save);
+    public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {
+        List<ReservationDto> res = new ArrayList<>();
+        TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
+        if (tableFood == null) {
+            throw new NotFoundException("Table not found!");
+        }
+        List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
+        reservations.stream().map(reservation -> reservationConverter.toReservationDto(reservation)).forEach(res::add);
+        return res;
     }
 
 }

@@ -38,4 +38,13 @@ export class ApiService {
     this.checkResponse($response);
     return $response;
   }
+
+  deleteRequest(path: string,  params?, options?): Observable<any> {
+    const $response = this.http.delete(`${this.apiEndpoint}/${path}`, params)
+      .pipe(share());
+    this.checkResponse($response);
+    return $response;
+  }
+
+
 }

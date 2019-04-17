@@ -6,5 +6,5 @@ import ro.quickorder.backend.model.Ingredient;
 
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
-    public Ingredient findFirstByName(String name);
+    Ingredient findFirstByName(String name);
 }

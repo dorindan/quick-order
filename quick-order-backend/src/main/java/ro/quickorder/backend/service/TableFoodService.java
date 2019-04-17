@@ -19,9 +19,9 @@ import java.util.List;
 public class TableFoodService {
     private static final Logger LOG = LoggerFactory.getLogger(TableFoodService.class);
     @Autowired
-    ReservationRepository reservationRepository;
-    @Autowired
     private TableFoodConverter tableFoodConverter;
+    @Autowired
+    ReservationRepository reservationRepository;
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
@@ -30,11 +30,18 @@ public class TableFoodService {
             LOG.error("Time parameters can not be null");
             throw new BadRequestException("Time parameters can not be null");
         }
-        List<TableFoodDto> reservedTables = new ArrayList<>();
+        List<TableFoodDto> allFreeTables = new ArrayList<>();
         List<TableFood> tables = tableFoodRepository.findAll();
         List<TableFood> occupiedTableFoods = reservationRepository.findTablesWithReservationsBetween(checkInTime, checkOutTime);
         occupiedTableFoods.forEach(tables::remove);
-        tables.stream().map(tableFoodConverter::toTableFoodDto).forEach(reservedTables::add);
-        return reservedTables;
+        tables.stream().map(tableFoodConverter::toTableFoodDto).forEach(allFreeTables::add);
+        return allFreeTables;
     }
+
+    public List<TableFoodDto> getAll() {
+        List<TableFoodDto> allTables = new ArrayList<>();
+        tableFoodRepository.findAll().stream().map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).forEach(allTables::add);
+        return allTables;
+    }
+
 }

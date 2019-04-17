@@ -5,7 +5,7 @@ import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 
 /**
- * Converts Commands to their corresponding DTO and vice versa.
+ * Converts TableFoods to their corresponding DTO and vice versa.
  *
  * @author R. Lupoaie
  */
@@ -22,7 +22,6 @@ public class TableFoodConverter {
         tableFood.setSeats(tableFoodDto.getSeats());
         tableFood.setWindowView(tableFoodDto.isWindowView());
         tableFood.setFloor(tableFoodDto.getFloor());
-        tableFood.setFree(tableFoodDto.isFree());
         return tableFood;
     }
 
@@ -35,7 +34,6 @@ public class TableFoodConverter {
         tableFoodDto.setSeats(tableFood.getSeats());
         tableFoodDto.setWindowView(tableFood.isWindowView());
         tableFoodDto.setFloor(tableFood.getFloor());
-        tableFoodDto.setFree(tableFood.isFree());
         return tableFoodDto;
     }
 }

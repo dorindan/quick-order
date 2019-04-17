@@ -15,7 +15,7 @@ import {
   MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
-  MatExpansionModule,
+  MatExpansionModule, MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
@@ -59,6 +59,7 @@ import {
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
+    MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
@@ -81,7 +82,7 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    ScrollingModule,
+    ScrollingModule
   ]
 })
 export class MaterialModule {

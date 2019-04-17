@@ -5,8 +5,7 @@ import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
 
 /**
- * Converts Commands to their corresponding DTO and vice versa.
- *
+ *  Converts UserAttributes to their corresponding DTO and vice versa.
  * @author R. Lupoaie
  */
 
@@ -30,4 +29,5 @@ public class UserAttributeConverter {
         userAttributeDto.setLanguage(userAttribute.getLanguage());
         return userAttributeDto;
     }
+
 }

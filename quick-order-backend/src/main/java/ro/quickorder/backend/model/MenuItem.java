@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class MenuItem {
@@ -21,21 +22,17 @@ public class MenuItem {
     private String description;
     private Integer preparationDurationInMinutes;
     private Integer price;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "menu_item_type_id")
     private MenuItemType menuItemType;
-
     @OneToMany(mappedBy = "menuItem")
     private List<Feedback> feedbacks;
-
     @ManyToMany
     @JoinTable(name = "menu_item_ingredient",
             joinColumns = {@JoinColumn(name = "menu_item_id")},
             inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
-    private List<Ingredient> ingredients;
-
+    private Set<Ingredient> ingredients;
     @ManyToMany
     @JoinTable(name = "menu_item_command",
             joinColumns = {@JoinColumn(name = "menu_item_id")},
@@ -47,6 +44,14 @@ public class MenuItem {
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
         this.price = price;
+    }
+
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price, Set<Ingredient> ingredients) {
+        this.name = name;
+        this.description = description;
+        this.preparationDurationInMinutes = preparationDurationInMinutes;
+        this.price = price;
+        this.ingredients = ingredients;
     }
 
     public MenuItem() {
@@ -108,11 +113,11 @@ public class MenuItem {
         this.feedbacks = feedbacks;
     }
 
-    public List<Ingredient> getIngredients() {
+    public Set<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 

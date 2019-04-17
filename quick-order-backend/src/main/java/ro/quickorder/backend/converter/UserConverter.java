@@ -5,7 +5,7 @@ import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.UserDto;
 
 /**
- * Converts Commands to their corresponding DTO and vice versa.
+ * Converts Users to their corresponding DTO and vice versa.
  *
  * @author R. Lupoaie
  */

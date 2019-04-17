@@ -5,18 +5,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ro.quickorder.backend.model.MenuItemType;
+import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
+import ro.quickorder.backend.service.MenuItemTypeService;
 
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/menuItemType")
 public class MenuItemTypeResource {
     @Autowired
-    MenuItemTypeRepository menuItemTypeRepository;
+    MenuItemTypeService menuItemTypeService;
 
-    @RequestMapping(path = "/menuItemType/all", method = RequestMethod.GET)
-    public List<MenuItemType> getAllMenuItemTypes() {
-        return menuItemTypeRepository.findAll();
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public List<MenuItemTypeDto> getAllMenuItemTypes() {
+        return menuItemTypeService.getAllMenuItemTypes();
     }
 
 }

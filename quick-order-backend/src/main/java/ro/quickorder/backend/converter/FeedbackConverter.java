@@ -5,14 +5,11 @@ import ro.quickorder.backend.model.Feedback;
 import ro.quickorder.backend.model.dto.FeedbackDto;
 
 /**
- * Converts Commands to their corresponding DTO and vice versa.
- *
+ *  Converts Feedbacks to their corresponding DTO and vice versa.
  * @author R. Lupoaie
  */
-
 @Component
 public class FeedbackConverter {
-
     public Feedback toFeedback(FeedbackDto feedbackDto) {
         if (feedbackDto == null) {
             return null;

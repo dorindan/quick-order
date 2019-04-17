@@ -8,12 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.quickorder.backend.repository.FeedbackRepository;
 
 @RestController
+@RequestMapping(value = "/feedback")
 public class FeedbackResource {
-    @Autowired
-    FeedbackRepository feedbackRepository;
 
-    @RequestMapping(path = "/feedback", method = RequestMethod.GET)
-    public String findById(@RequestParam(value = "id", defaultValue = "0") Long id) {
-        return feedbackRepository.findById(id).toString();
-    }
 }
