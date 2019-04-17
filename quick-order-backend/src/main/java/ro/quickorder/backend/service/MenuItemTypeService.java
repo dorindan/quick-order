@@ -21,7 +21,8 @@ public class MenuItemTypeService {
 
     public List<MenuItemTypeDto> getAllMenuItemTypes() {
         List<MenuItemTypeDto> menuItemTypes = new ArrayList<>();
-        menuItemTypeRepository.findAll().stream().map(menuItemType -> menuItemTypeConverter.toMenuItemTypeDto(menuItemType)).forEach(menuItemTypes::add);
+        menuItemTypeRepository.findAll().stream().map(menuItemType -> menuItemTypeConverter
+                .toMenuItemTypeDto(menuItemType)).forEach(menuItemTypes::add);
         return menuItemTypes;
     }
 }

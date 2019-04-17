@@ -24,6 +24,10 @@ public class MenuItemType {
     public MenuItemType() {
     }
 
+    public MenuItemType(String type) {
+        this.type = type;
+    }
+
     public String getId() {
         return id;
     }

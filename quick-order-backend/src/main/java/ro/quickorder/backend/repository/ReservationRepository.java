@@ -16,7 +16,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Reservation findByReservationName(String name);
 
     @Query(value = "FROM Reservation r WHERE :tableFood member of r.tables ORDER BY r.checkInTime ASC ")
-    List<Reservation> findReservationByTable(TableFood tableFood);
+    List<Reservation> findReservationByTable(@Param("tableFood") TableFood tableFood);
 
     List<Reservation> findAll();
 
