@@ -6,8 +6,8 @@ import ro.quickorder.backend.converter.MenuItemTypeConverter;
 import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author R. Lupoaie
@@ -20,9 +20,8 @@ public class MenuItemTypeService {
     MenuItemTypeConverter menuItemTypeConverter;
 
     public List<MenuItemTypeDto> getAllMenuItemTypes() {
-        List<MenuItemTypeDto> menuItemTypes = new ArrayList<>();
-        menuItemTypeRepository.findAll().stream().map(menuItemType -> menuItemTypeConverter
-                .toMenuItemTypeDto(menuItemType)).forEach(menuItemTypes::add);
-        return menuItemTypes;
+        return menuItemTypeRepository.findAll().stream()
+                .map(menuItemTypeConverter::toMenuItemTypeDto)
+                .collect(Collectors.toList());
     }
 }

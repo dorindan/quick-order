@@ -13,10 +13,10 @@ import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author R. Lupoaie
@@ -34,9 +34,8 @@ public class MenuItemService {
     private MenuItemTypeConverter menuItemTypeConverter;
 
     public List<MenuItemDto> getMenuItems() {
-        List<MenuItemDto> menuItems = new ArrayList<>();
-        menuItemRepository.findAll().stream().map(menuItem -> menuItemConverter.toMenuItemDto(menuItem)).forEach(menuItems::add);
-        return menuItems;
+        return menuItemRepository.findAll().stream().map(menuItemConverter::toMenuItemDto).collect(Collectors.toList());
+
     }
 
     public void addMenuItem(MenuItemDto menuItemDto) {
@@ -77,8 +76,8 @@ public class MenuItemService {
                 if (ingredient != null) {
                     ingredients.add(ingredient);
                 } else {
-                    LOG.error("Ingredient was not found!");
-                    throw new NotFoundException("Ingredient was not found!");
+                    LOG.error("Ingredient " + ingredient.toString() + " was not found!");
+                    throw new NotFoundException("Ingredient " + ingredient.toString() + " was not found!");
                 }
             });
         }

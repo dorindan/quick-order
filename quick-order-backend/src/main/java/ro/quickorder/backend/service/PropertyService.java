@@ -14,8 +14,8 @@ public class PropertyService {
     @Autowired
     PropertyRepository propertyRepository;
 
-    public PropertyDto findByRestaurant(String nume_restaurant) {
-        Property property = propertyRepository.findByNumeRestaurant(nume_restaurant);
+    public PropertyDto findByRestaurant(String numeRestaurant) {
+        Property property = propertyRepository.findByNumeRestaurant(numeRestaurant);
         return propertyConvertor.toPropertyDto(property);
     }
 }

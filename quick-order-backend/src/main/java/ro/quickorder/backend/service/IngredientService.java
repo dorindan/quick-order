@@ -6,8 +6,8 @@ import ro.quickorder.backend.converter.IngredientConverter;
 import ro.quickorder.backend.model.dto.IngredientDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author R. Lupoaie
@@ -20,8 +20,6 @@ public class IngredientService {
     IngredientConverter ingredientConverter;
 
     public List<IngredientDto> getAll() {
-        List<IngredientDto> ingredientDtos = new ArrayList<>();
-        ingredientRepository.findAll().stream().map(ingredient -> ingredientConverter.toIngredientDto(ingredient)).forEach(ingredientDtos::add);
-        return ingredientDtos;
+        return ingredientRepository.findAll().stream().map(ingredientConverter::toIngredientDto).collect(Collectors.toList());
     }
 }

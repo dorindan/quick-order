@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+/**
+ * Serializer is needed to prevent Timezone differences
+ */
 public class CustomDateSerializer extends JsonSerializer<Timestamp> {
     private static final Logger LOG = LoggerFactory.getLogger(CustomDateSerializer.class);
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");

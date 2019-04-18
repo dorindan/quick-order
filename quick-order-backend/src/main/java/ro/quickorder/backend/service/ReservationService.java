@@ -17,6 +17,7 @@ import ro.quickorder.backend.repository.TableFoodRepository;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -50,9 +51,7 @@ public class ReservationService {
 
     public List<ReservationDto> getAllUnconfirmed() {
         List<Reservation> reservations = reservationRepository.findAll();
-        List<ReservationDto> results = new ArrayList<>();
-        reservations.stream().filter(reservation -> !reservation.isConfirmed()).map(reservationConverter::toReservationDto).forEach(results::add);
-        return results;
+        return reservations.stream().filter(reservation -> !reservation.isConfirmed()).map(reservationConverter::toReservationDto).collect(Collectors.toList());
     }
 
     public void confirmReservation(ReservationDto reservationDto, List<TableFoodDto> tableFoodDtos) {
@@ -103,14 +102,11 @@ public class ReservationService {
     }
 
     public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {
-        List<ReservationDto> reservationForTableByTableNumberDtos = new ArrayList<>();
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
         if (tableFood == null) {
             throw new NotFoundException("Table not found!");
         }
         List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
-        reservations.stream().map(reservation -> reservationConverter.toReservationDto(reservation)).forEach(reservationForTableByTableNumberDtos::add);
-        return reservationForTableByTableNumberDtos;
+        return reservations.stream().map(reservationConverter::toReservationDto).collect(Collectors.toList());
     }
-
 }
