@@ -11,20 +11,21 @@
   font-size: 80%;
 }
 
-.signUP-panel {
-  border-style: groove;
-  margin-top: 5%;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
-  min-height: 450px;
+@media (min-width: 768px) {
+  .signUP-panel {
+    border-style: groove;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    min-height: 450px;
+  }
 }
+
 .signUP-panel>.panel-heading {
   color: darkgreen;
   opacity: 0.8;
-  background-color: #fff;
-  border-color: #fff;
-  text-align:center;
+  text-align: center;
 }
 
 .signUP-panel input[type="text"],.signUP-panel input[type="email"],.signUP-panel input[type="password"] {
