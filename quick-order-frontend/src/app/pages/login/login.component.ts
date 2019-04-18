@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../../models/User';
 import {LoginService} from '../../services/login.service';
 import {TranslateService} from '@ngx-translate/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -20,10 +21,19 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private http: HttpClient,
-              private loginService: LoginService) { }
+              private loginService: LoginService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     sessionStorage.setItem('token', '');
+  }
+
+  showSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: ['snackbar']
+    });
   }
 
   login() {
@@ -40,7 +50,7 @@ export class LoginComponent implements OnInit {
         this.switchLanguage(language);
           this.router.navigate(['loggedStart']);
       }, error1 => {
-        alert('Authentication failed.');
+        this.showSnackbar("Username or password is incorrect. Please try again.");
       });
   }
 
