@@ -50,4 +50,10 @@ public class TableFoodService {
         return rez;
     }
 
+    public void occupyAllTables(List<TableFood> tableFoodListToSet) {
+        tableFoodListToSet.forEach(tableFood -> {
+            tableFood.setFree(false);
+            tableFoodRepository.save(tableFood);
+        });
+    }
 }

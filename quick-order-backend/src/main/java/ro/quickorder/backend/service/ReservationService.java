@@ -28,6 +28,8 @@ public class ReservationService {
     ReservationRepository reservationRepository;
     @Autowired
     private TableFoodRepository tableFoodRepository;
+    @Autowired
+    private TableFoodService tableFoodService;
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -74,8 +76,8 @@ public class ReservationService {
         // find tables
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
 
-        // occupy all table
-        occupyAllTable(reservationTables);
+        // occupy all tables
+        tableFoodService.occupyAllTables(reservationTables);
 
         // put tables in reservation
         reservation.setTables(reservationTables);
@@ -83,7 +85,6 @@ public class ReservationService {
 
         // save reservation in database
         reservationRepository.save(reservation);
-
     }
 
     private Reservation getReservationEntityByName(ReservationDto reservationDto)
@@ -116,12 +117,5 @@ public class ReservationService {
             tableFoodListToSet.add(tableFood);
         }
         return tableFoodListToSet;
-    }
-
-    private void occupyAllTable(List<TableFood> tableFoodListToSet){
-        for (TableFood table : tableFoodListToSet) {
-            table.setFree(false);
-            tableFoodRepository.save(table);
-        }
     }
 }
