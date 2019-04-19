@@ -150,56 +150,54 @@
 
     <!-- Table Number Column -->
     <ng-container matColumnDef="tableNr">
-      <th mat-header-cell *matHeaderCellDef>
-        <h5 class="color" translate="">table.tableNumber</h5>
+      <th width="20%" mat-header-cell *matHeaderCellDef>
+        <h5 align="center" class="color" translate="">table.tableNumber</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.tableNr}}</td>
+      <td align="center" width="20%" mat-cell *matCellDef="let element">{{element.tableNr}}</td>
     </ng-container>
 
     <!-- Seats Column -->
     <ng-container matColumnDef="seats">
-      <th mat-header-cell *matHeaderCellDef>
-        <h5 class="color" translate="">table.seats</h5>
+      <th width="20%" mat-header-cell *matHeaderCellDef>
+        <h5 class="color" align="center" translate="">table.seats</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.seats}}</td>
+      <td width="20%" align="center" mat-cell *matCellDef="let element">{{element.seats}}</td>
     </ng-container>
 
     <!-- Window View Column -->
     <ng-container matColumnDef="windowView">
-      <th mat-header-cell *matHeaderCellDef>
-        <h5 class="color" translate="">table.windowView</h5>
+      <th width="20%" mat-header-cell *matHeaderCellDef>
+        <h5 class="color" align="center" translate="">table.windowView</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.windowView}}</td>
+      <td width="20%" align="center" mat-cell *matCellDef="let element"><input type="checkbox" [(ngModel)]="element.windowView" disabled></td>
     </ng-container>
 
     <!-- Price Column -->
     <ng-container matColumnDef="floor">
-      <th mat-header-cell *matHeaderCellDef>
-        <h5 class="color" translate="">table.floor</h5>
+      <th width="20%" mat-header-cell *matHeaderCellDef>
+        <h5 class="color" align="center" translate="">table.floor</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.floor}}</td>
+      <td width="20%" align="center" mat-cell *matCellDef="let element">{{element.floor}}</td>
     </ng-container>
 
     <!-- Edit and Delete Column -->
     <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef>
-        <div class="text-center">
+      <th width="5%" mat-header-cell *matHeaderCellDef>
+        <div align="center" class="text-center">
           <a href="" class="btn btn-info btn-rounded btn-sm" data-toggle="modal"
              data-target="#modalAdd" translate="">table.add
           </a>
         </div>
       </th>
-      <td mat-cell *matCellDef="let element">
-        <div class="d-md-inline">
+      <td width="5%" mat-cell *matCellDef="let element">
+        <div align="center" class="d-md-inline">
           <div class="text-center buttonEditWrapper">
-            <button class="btn btn-info btn-rounded btn-sm buttonEdit"
-                    data-toggle="modal" data-target="#modalEdit" (click)="setUpdate(element)" translate="">
-              table.edit
-            </button>
-            <button class="btn btn-danger btn-sm btn-rounded "
-                    data-toggle="modal" data-target="#modalDelete" (click)="setDelete(element)" translate="">
-              table.delete
-            </button>
+            <a size="5%" class="dropdown-item" data-toggle="modal" data-target="#modalEdit" (click)="setUpdate(element)">
+              <img src="assets/edit-delete/edit.svg">
+            </a>
+            <a size="5%" class="dropdown-item"  data-toggle="modal" data-target="#modalDelete" (click)="setDelete(element)">
+              <img src="assets/edit-delete/delete.svg">
+            </a>
           </div>
         </div>
       </td>
