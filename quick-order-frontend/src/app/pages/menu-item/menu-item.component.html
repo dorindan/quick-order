@@ -100,7 +100,7 @@
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.name</label>
-                <input type="text" disabled [(ngModel)]="name" class="form-control validate" >
+                <input type="text" disabled [(ngModel)]="name" class="form-control validate">
               </div>
 
               <div class="md-form mb-5">
@@ -243,7 +243,7 @@
     <!-- Edit and Delete Column -->
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>
-        <div  class="text-center ">
+        <div class="text-center ">
           <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
              data-target="#modalAdd" translate="">menuItem.add
           </a>
@@ -255,7 +255,7 @@
             <a class="dropdown-item" data-toggle="modal" data-target="#modalEdit" (click)="setUpdate(element)">
               <img src="assets/edit-delete/edit.svg">
             </a>
-            <a class="dropdown-item"  data-toggle="modal" data-target="#modalDelete" (click)="setDelete(element)">
+            <a class="dropdown-item" data-toggle="modal" data-target="#modalDelete" (click)="setDelete(element)">
               <img src="assets/edit-delete/delete.svg">
             </a>
           </div>
