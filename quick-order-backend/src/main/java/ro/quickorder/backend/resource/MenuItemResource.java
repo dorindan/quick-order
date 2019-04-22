@@ -25,7 +25,7 @@ public class MenuItemResource {
         menuItemService.addMenuItem(menuItemDto);
     }
 
-    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    @RequestMapping(path = "/update", method = RequestMethod.PUT)
     public void updateMenuItem(@RequestBody @NotNull MenuItemDto menuItemDto) {
         menuItemService.updateMenuItem(menuItemDto);
     }

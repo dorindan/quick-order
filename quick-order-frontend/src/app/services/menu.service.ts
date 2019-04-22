@@ -29,7 +29,7 @@ export class MenuService {
   }
 
   editMenuItem(menuItem: MenuItem): void {
-    this.apiService.postRequest('api/menuItem/update', menuItem);
+    this.apiService.putRequest('api/menuItem/update', menuItem);
   }
 
   deleteMenuItem(menuItemName: string): void {

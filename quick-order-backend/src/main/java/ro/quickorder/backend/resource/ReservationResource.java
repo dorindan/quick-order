@@ -32,7 +32,7 @@ public class ReservationResource {
         return reservationService.getAllUnconfirmed();
     }
 
-    @RequestMapping(path = "/confirm", method = RequestMethod.POST)
+    @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
     public void confirmReservation(@NotNull ReservationDto reservationDto,@NotNull List<TableFoodDto> tableFoodDtos){
         reservationService.confirmReservation(reservationDto, tableFoodDtos);
     }
