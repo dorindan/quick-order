@@ -5,7 +5,6 @@ export class Reservation {
   public confirmed: boolean;
   public reservationName: string;
 
-
   constructor(dateTimeIn: string, dateTimeOut: string, numberOfPersons: number, reservationName: string, confirmed: boolean) {
     this.checkInTime = dateTimeIn;
     this.checkOutTime = dateTimeOut;

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ro.quickorder.backend.model.Bill;
 
 @Repository
-public interface BillRepository extends JpaRepository<Bill,Long> {
+public interface BillRepository extends JpaRepository<Bill, Long> {
 }

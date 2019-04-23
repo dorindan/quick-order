@@ -5,7 +5,7 @@ import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 
 /**
- *Converts MenuItemType to their corresponding DTO and vice versa.
+ * Converts MenuItemType to their corresponding DTO and vice versa.
  *
  * @author R. Lupoaie
  */
@@ -18,7 +18,6 @@ public class MenuItemTypeConverter {
         }
         MenuItemType menuItemType = new MenuItemType();
         menuItemType.setType(menuItemTypeDto.getType());
-
         return menuItemType;
     }
 

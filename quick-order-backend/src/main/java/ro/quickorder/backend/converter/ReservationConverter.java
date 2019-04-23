@@ -5,7 +5,8 @@ import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.dto.ReservationDto;
 
 /**
- *  Converts Reservations to their corresponding DTO and vice versa.
+ * Converts Reservations to their corresponding DTO and vice versa.
+ *
  * @author R. Lupoaie
  */
 
@@ -39,5 +40,4 @@ public class ReservationConverter {
         reservationDto.setReservationName(reservation.getReservationName());
         return reservationDto;
     }
-
 }

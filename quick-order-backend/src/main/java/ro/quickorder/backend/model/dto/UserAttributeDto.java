@@ -5,11 +5,11 @@ import ro.quickorder.backend.model.UserAttribute;
 
 /**
  *  Data transfer object for {@link UserAttribute}
+ * <p>
  *
- *  *@author R. Lupoaie
+ * @author R. Lupoaie
  */
 public class UserAttributeDto {
-
     private Language language;
 
     public UserAttributeDto() {

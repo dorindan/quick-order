@@ -1,13 +1,10 @@
 <html>
 <head>
-
 </head>
 <body>
 <div class="jumbotron">
   <form id="Login" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-
       <input type="text" class="form-control" id="userName" placeholder="Username" name="username"
              [(ngModel)]="model.username"
              #username="ngModel" required/>
@@ -15,27 +12,18 @@
                 && !username.valid">Username is required
       </div>
     </div>
-
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-
       <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password"
              [(ngModel)]="model.password"
              #password="ngModel" required/>
-
     </div>
-
     <div class="forgot">
       <a href="reset.html">Forgot password?</a>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <a href="signUp">SignUp?</a>
     </div>
     <button type="submit" class="btn">Login</button>
-
   </form>
-
-
 </div>
-
-
 </body>
 </html>

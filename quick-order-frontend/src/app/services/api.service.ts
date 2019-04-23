@@ -1,24 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {share} from 'rxjs/operators';
-import { Observable } from 'rxjs';
-
-import { environment } from '../../environments/environment';
+import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
   apiEndpoint: string;
 
-  constructor(
-    private http: HttpClient,
-  ) {
+  constructor(private http: HttpClient) {
     this.apiEndpoint = environment.apiEndpoint;
   }
-
 
   checkResponse($response: Observable<any>, showSuccess = null) {
     $response.subscribe((resp) => {
@@ -27,7 +21,7 @@ export class ApiService {
       }
     }, (err) => {
       console.error(err);
-      const { error: respError } = err;
+      const {error: respError} = err;
     });
   }
 
@@ -38,7 +32,7 @@ export class ApiService {
     return $response;
   }
 
-  postRequest(path: string,  params, options?): Observable<any> {
+  postRequest(path: string, params, options?): Observable<any> {
     const $response = this.http.post(`${this.apiEndpoint}/${path}`, params)
       .pipe(share());
     this.checkResponse($response);

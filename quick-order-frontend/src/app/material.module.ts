@@ -39,7 +39,6 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatTreeModule
-
 } from '@angular/material';
 
 @NgModule({
@@ -86,8 +85,8 @@ import {
     ScrollingModule
   ]
 })
-export class MaterialModule {}
-
+export class MaterialModule {
+}
 
 /**  Copyright 2018 Google Inc. All Rights Reserved.
  Use of this source code is governed by an MIT-style license that

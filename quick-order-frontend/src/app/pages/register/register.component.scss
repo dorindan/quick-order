@@ -2,9 +2,9 @@
   color: red;
 }
 
-.green{
+.green {
   color: darkgreen !important;
-  opacity:0.6;
+  opacity: 0.6;
 }
 
 .small {
@@ -13,19 +13,20 @@
 
 .signUP-panel { // conture to the panel
   border-color: #ccc;
-  -webkit-box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2);
-  -moz-box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2);
-  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
-.signUP-panel>.panel-heading {
+
+.signUP-panel > .panel-heading {
   color: darkgreen;
   opacity: 0.8;
   background-color: #fff;
   border-color: #fff;
-  text-align:center;
+  text-align: center;
 }
 
-.signUP-panel input[type="text"],.signUP-panel input[type="email"],.signUP-panel input[type="password"] {
+.signUP-panel input[type="text"], .signUP-panel input[type="email"], .signUP-panel input[type="password"] {
   height: 45px;
   border: 1px solid #029f5b;
   font-size: 100%;
@@ -33,17 +34,19 @@
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
+
 .signUP-panel input:hover,
 .signUP-panel input:focus {
-  outline:none;
+  outline: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   border-color: #ccc;
 }
+
 .btn-signUP {
   background-color: darkgreen !important;
-  opacity:0.4;
+  opacity: 0.4;
   outline: none;
   color: #fff;
   font-size: 100%;
@@ -53,6 +56,7 @@
   text-transform: uppercase;
   border-color: darkgreen;
 }
+
 .btn-login:hover,
 .btn-login:focus {
   color: #fff;
@@ -60,8 +64,6 @@
   border-color: #285028;
 }
 
-.btn{
+.btn {
   color: #ffffff !important;
 }
-
-

@@ -13,10 +13,9 @@ import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
-import javax.inject.Inject;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author R. Lupoaie
@@ -25,39 +24,31 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MenuItemTypeServiceTest {
-
-    @Inject
+    @Autowired
     MenuItemTypeService menuItemTypeService;
-    @Inject
+    @Autowired
     MenuItemTypeRepository menuItemTypeRepository;
-
-    @Inject
+    @Autowired
     MenuItemTypeConverter menuItemTypeConverter;
 
     @Before
     public void setUp() {
-
         MenuItemType menuItemType1 = new MenuItemType("condiment");
         MenuItemType menuItemType2 = new MenuItemType("legume");
         MenuItemType menuItemType3 = new MenuItemType("carne");
-
-
         menuItemTypeRepository.save(menuItemType1);
         menuItemTypeRepository.save(menuItemType2);
         menuItemTypeRepository.save(menuItemType3);
-
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         menuItemTypeRepository.deleteAll();
     }
-
 
     @Test
     public void testGetAllMenuItemTypes() {
         List<MenuItemTypeDto> menuItemTypes = menuItemTypeService.getAllMenuItemTypes();
-
         assertEquals(3, menuItemTypes.size());
     }
 }

@@ -1,16 +1,11 @@
 <div class="wrapper-editor">
-
   <div class="row d-flex justify-content-center modalWrapper">
-
     <!--   Add   -->
     <div>
-
       <div class="modal fade addNewInputs" id="modalAdd" tabindex="-1" aria-labelledby="modalAdd"
            aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-
-
             <div class="modal-header text-center">
               <h4 class="modal-title w-100 font-weight-bold text-primary ml-5" translate="">menuItem.addNew</h4>
               <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close"
@@ -18,7 +13,6 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" for="inputName" translate="">menuItem.name</label>
@@ -27,14 +21,12 @@
                 <input type="text" id="inputName" [(ngModel)]="name" class="form-control validate"
                        (focusout)="validation()">
               </div>
-
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" for="inputDescription" translate="">
                   menuItem.description
                 </label>
                 <input type="text" id="inputDescription" [(ngModel)]="description" class="form-control validate">
               </div>
-
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.ingredients</label>
                 <br>
@@ -50,7 +42,6 @@
                   </mat-form-field>
                 </div>
               </div>
-
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.preparationDuration</label>
                 &nbsp;
@@ -58,37 +49,28 @@
                 <input type="number" min="0" [(ngModel)]="preparationDurationInMinutes" class="form-control validate"
                        (focusout)="validation()">
               </div>
-
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.price</label>
                 &nbsp;
                 <label class="red small" *ngIf="!priceRight" translate="">menuItem.priceCondition</label>
                 <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validation()">
               </div>
-
             </div>
-
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
               <button class="btn btn-outline-secondary btn-block editInside" data-dismiss="modal" (click)="add()"
                       translate="">
                 menuItem.add
               </button>
             </div>
-
           </div>
         </div>
       </div>
-
     </div>
-
     <!--   Edit   -->
     <div>
-
-      <div class="modal fade modalEditClass" id="modalEdit" tabindex="-1" role="dialog"
-      >
+      <div class="modal fade modalEditClass" id="modalEdit" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-
             <div class="modal-header text-center">
               <h4 class="modal-title w-100 font-weight-bold text-secondary ml-5" translate="">menuItem.editItem</h4>
               <button type="button" class="close text-secondary" data-dismiss="modal" aria-label="Close"
@@ -96,18 +78,15 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.name</label>
                 <input type="text" disabled [(ngModel)]="name" class="form-control validate">
               </div>
-
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.description</label>
                 <input type="text" [(ngModel)]="description" class="form-control validate">
               </div>
-
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.ingredients</label>
                 <br>
@@ -124,7 +103,6 @@
                   </mat-form-field>
                 </div>
               </div>
-
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.preparationDuration</label>
                 &nbsp;
@@ -132,16 +110,13 @@
                 <input type="number" min="0" [(ngModel)]="preparationDurationInMinutes" class="form-control validate"
                        (focusout)="validation()">
               </div>
-
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" translate="">menuItem.price</label>
                 &nbsp;
                 <label class="red small" *ngIf="!priceRight" translate="">menuItem.priceCondition</label>
                 <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validation()">
               </div>
-
             </div>
-
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
               <button class="btn btn-outline-secondary btn-block editInside" data-dismiss="modal" (click)="update()"
                       translate="">
@@ -151,12 +126,9 @@
           </div>
         </div>
       </div>
-
     </div>
-
     <!--   Delete   -->
     <div>
-
       <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete"
            aria-hidden="false">
         <div class="modal-dialog" role="document">
@@ -184,29 +156,27 @@
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
-
   <table mat-table align="center" [dataSource]="dataSource" class="table-hover mat-elevation-z8">
-
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.name</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      <td mat-cell *matCellDef="let element">
+        {{element.name}}
+      </td>
     </ng-container>
-
     <!-- Description Column -->
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.description</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.description}}</td>
+      <td mat-cell *matCellDef="let element">
+        {{element.description}}
+      </td>
     </ng-container>
-
     <!-- Ingredients Column -->
     <ng-container matColumnDef="ingredients">
       <th mat-header-cell *matHeaderCellDef>
@@ -214,7 +184,9 @@
       </th>
       <td mat-cell *matCellDef="let element">
         <div ngbDropdown class="d-inline-block">
-          <button class="btn " id="dropdownBasic1" ngbDropdownToggle translate="">menuItem.ingredients</button>
+          <button class="btn " id="dropdownBasic1" ngbDropdownToggle translate="">
+            menuItem.ingredients
+          </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
             <li *ngFor="let ingredient of element.ingredients">
               <span class="badge">{{ingredient.name}}</span>
@@ -223,29 +195,31 @@
         </div>
       </td>
     </ng-container>
-
     <!-- Preparation time Column -->
     <ng-container matColumnDef="preparationTime">
       <th mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.preparationDuration</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.preparationDurationInMinutes}}</td>
+      <td mat-cell *matCellDef="let element">
+        {{element.preparationDurationInMinutes}}
+      </td>
     </ng-container>
-
     <!-- Price Column -->
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.price</h5>
       </th>
-      <td mat-cell *matCellDef="let element">{{element.price}}</td>
+      <td mat-cell *matCellDef="let element">
+        {{element.price}}
+      </td>
     </ng-container>
-
     <!-- Edit and Delete Column -->
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>
         <div class="text-center ">
           <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
-             data-target="#modalAdd" translate="">menuItem.add
+             data-target="#modalAdd" translate="">
+            menuItem.add
           </a>
         </div>
       </th>
@@ -262,13 +236,9 @@
         </div>
       </td>
     </ng-container>
-
     <!--  The Description of columns  -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
     <!--  Puts every line  -->
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
   </table>
-
 </div>
