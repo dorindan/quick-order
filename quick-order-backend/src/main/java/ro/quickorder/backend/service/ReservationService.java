@@ -23,7 +23,6 @@ public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
     private ReservationConverter reservationConverter;
-
     @Autowired
     ReservationRepository reservationRepository;
     @Autowired
@@ -33,15 +32,15 @@ public class ReservationService {
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-
-        if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)){
+        if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)) {
             LOG.error("Number of persons for a reservation must be between 1 and 99");
             throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
         }
-        if (reservationDto.getCheckInTime().before(currentTimestamp)){
-            LOG.error("CheckInTime must be greater than the current date");
+        if (reservationDto.getCheckInTime().before(currentTimestamp)) {
+            LOG.error("CheckInTime must be greater than the current date currentTimeStamp: " + currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
             throw new ForbiddenException("CheckInTime must be greater than the current date");
         }
+        LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
         reservationDto.setStatus("not accepted");
         reservationDto.setConfirmed(false);
         long twoHoursInMilliseconds = 7200000;
@@ -54,7 +53,6 @@ public class ReservationService {
     public List<ReservationDto> getAllUnconfirmed() {
         List<Reservation> reservations = reservationRepository.findAll();
         List<ReservationDto> results = new ArrayList<>();
-
         for (Reservation res : reservations) {
             if (!res.isConfirmed()) {
                 results.add(reservationConverter.toReservationDto(res));
@@ -63,9 +61,9 @@ public class ReservationService {
         return results;
     }
 
-    public void confirmReservation(ReservationDto reservationDto,  List<TableFoodDto> tableFoodDtos) {
+    public void confirmReservation(ReservationDto reservationDto, List<TableFoodDto> tableFoodDtos) {
 
-        if (reservationDto.getReservationName() == null){
+        if (reservationDto.getReservationName() == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
         }
@@ -84,22 +82,21 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    private Reservation getReservationEntityByName(ReservationDto reservationDto)
-    {
+    private Reservation getReservationEntityByName(ReservationDto reservationDto) {
         // find reservation
         Reservation reservation = reservationRepository.findByReservationName(reservationDto.getReservationName());
-        if(reservation.isConfirmed()) {
-            LOG.error("Reservation is already confirmed");
-            throw new NotFoundException("Reservation is already confirmed");
-        }
         if (reservation == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
         }
+        if (reservation.isConfirmed()) {
+            LOG.error("Reservation is already confirmed");
+            throw new NotFoundException("Reservation is already confirmed");
+        }
         return reservation;
     }
 
-    private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos){
+    private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos) {
         if (tableFoodDtos.size() == 0) {
             LOG.error("TableList can not be null");
             throw new ForbiddenException("TableList can not be null");
@@ -107,7 +104,7 @@ public class ReservationService {
         List<TableFood> tableFoodListToSet = new ArrayList<>();
         for (TableFoodDto tableFoodDto : tableFoodDtos) {
             TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
-            if (tableFood == null ) {
+            if (tableFood == null) {
                 LOG.error("Table not found");
                 throw new NotFoundException("Table not found");
             }
