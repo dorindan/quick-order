@@ -4,7 +4,7 @@
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
 
   "register": {
-    "singUp": "Sign up",
+    "signUp": "Sign up",
     "username": "Username",
     "email": "Email",
     "password": "Password",
@@ -40,8 +40,8 @@
   "startPage": {
     "quickOrder": "Quick Order",
     "motto": "Faster than you can imagine.",
-    "singIn": "Login",
-    "singUp": "Sign up"
+    "signIn": "Login",
+    "signUp": "Sign up"
   },
 
   "login": {
