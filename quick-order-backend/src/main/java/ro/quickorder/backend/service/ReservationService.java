@@ -76,9 +76,6 @@ public class ReservationService {
         // find tables
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
 
-        // occupy all tables
-        tableFoodService.occupyAllTables(reservationTables);
-
         // put tables in reservation
         reservation.setTables(reservationTables);
         reservation.setConfirmed(true);
@@ -117,5 +114,19 @@ public class ReservationService {
             tableFoodListToSet.add(tableFood);
         }
         return tableFoodListToSet;
+    }
+
+    public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {
+        List<ReservationDto> res = new ArrayList<>();
+        TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
+        if (tableFood == null) {
+            throw new NotFoundException("Table not found!");
+        }
+        List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
+
+        for (Reservation reservation : reservations) {
+            res.add(reservationConverter.toReservationDto(reservation));
+        }
+        return res;
     }
 }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.client.HttpClientErrorException;
 import ro.quickorder.backend.exception.NotAcceptableException;
 
 import java.io.IOException;
@@ -21,12 +20,12 @@ public class CustomDateDeserializer extends JsonDeserializer<Timestamp> {
 
     @Override
     public Timestamp deserialize(JsonParser jsonParser,
-                            DeserializationContext deserializationContext) throws IOException {
+                                 DeserializationContext deserializationContext) throws IOException {
         try {
             Date parsedDate = DATE_FORMAT.parse(jsonParser.getText());
             return new java.sql.Timestamp(parsedDate.getTime());
         } catch (ParseException e) {
-            LOG.error("Could not parse " + jsonParser.getText(),e);
+            LOG.error("Could not parse " + jsonParser.getText(), e);
             throw new RuntimeException(e);
         }
     }

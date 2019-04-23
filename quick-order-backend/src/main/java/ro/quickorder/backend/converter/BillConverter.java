@@ -5,8 +5,9 @@ import ro.quickorder.backend.model.Bill;
 import ro.quickorder.backend.model.dto.BillDto;
 
 /**
- Converts Commands to their corresponding DTO and vice versa.
- *@author R. Lupoaie
+ * Converts Bills to their corresponding DTO and vice versa.
+ *
+ * @author R. Lupoaie
  */
 
 @Component

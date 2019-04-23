@@ -5,8 +5,8 @@ import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
 
 /**
- Converts Commands to their corresponding DTO and vice versa.
- *@author R. Lupoaie
+ *  Converts UserAttributes to their corresponding DTO and vice versa.
+ * @author R. Lupoaie
  */
 
 @Component

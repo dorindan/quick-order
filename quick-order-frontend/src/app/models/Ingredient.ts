@@ -1,25 +1,11 @@
-export class Ingredient{
-  private _id:number;
-  private _name:string;
+export class Ingredient {
 
-  get id(): number {
-    return this._id;
+  public name: string;
+
+  constructor(name: string) {
+    this.name = name;
   }
 
-  set id(value: number) {
-    this._id = value;
-  }
 
-  get name(): string {
-    return this._name;
-  }
 
-  set name(value: string) {
-    this._name = value;
-  }
-
-  constructor(id: number, name: string) {
-    this._id = id;
-    this._name = name;
-  }
 }

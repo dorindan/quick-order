@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.quickorder.backend.converter.ReservationConverter;
 import ro.quickorder.backend.converter.TableFoodConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.model.TableFood;
@@ -18,13 +17,11 @@ import java.util.List;
 
 @Service
 public class TableFoodService {
-
     private static final Logger LOG = LoggerFactory.getLogger(TableFoodService.class);
-
-    @Autowired
-    private TableFoodConverter tableFoodConverter;
     @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    private TableFoodConverter tableFoodConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
@@ -39,10 +36,7 @@ public class TableFoodService {
 
         List<TableFood> busyTableFoods = reservationRepository.findTablesWithReservationsBetween(checkInTime, checkOutTime);
 
-        for (TableFood busyTableFood : busyTableFoods) {
-            if (tables.contains(busyTableFood))
-                tables.remove(busyTableFood);
-        }
+        tables.removeIf(busyTableFoods::contains);
 
         for (TableFood table : tables) {
             rez.add(tableFoodConverter.toTableFoodDto(table));
@@ -50,10 +44,12 @@ public class TableFoodService {
         return rez;
     }
 
-    public void occupyAllTables(List<TableFood> tableFoodListToSet) {
-        tableFoodListToSet.forEach(tableFood -> {
-            tableFood.setFree(false);
-            tableFoodRepository.save(tableFood);
-        });
+    public List<TableFoodDto> getAll() {
+        List<TableFoodDto> rez = new ArrayList<>();
+        List<TableFood> tables = tableFoodRepository.findAll();
+        for (TableFood table : tables)
+            rez.add(tableFoodConverter.toTableFoodDto(table));
+        return rez;
     }
+
 }
