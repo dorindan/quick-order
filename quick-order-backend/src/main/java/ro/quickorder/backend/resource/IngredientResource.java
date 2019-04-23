@@ -19,5 +19,4 @@ public class IngredientResource {
     public List<IngredientDto> getAll() {
         return ingredientService.getAll();
     }
-
 }

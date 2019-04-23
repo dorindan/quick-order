@@ -1,14 +1,10 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationService} from '../../services/reservation.service';
-import {MatDatepickerInputEvent, MatOptionSelectionChange, MatSelectChange} from '@angular/material';
+import {MatDatepickerInputEvent} from '@angular/material';
 import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {PropertyService} from '../../services/property.service';
-
-export interface Hour {
-  name: string;
-}
 
 @Component({
   selector: 'app-reservation',
@@ -29,10 +25,7 @@ export class ReservationComponent implements OnInit {
   events: string[] = [];
   currentDate = new Date();
   hours: string[] = [];
-
   hourControl = new FormControl('', [Validators.required]);
-  selectFormControl = new FormControl('', Validators.required);
-
 
   constructor(private _formBuilder: FormBuilder,
               private reservationService: ReservationService,
@@ -47,20 +40,16 @@ export class ReservationComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
-
     this.propertyService.getBistroProperty().subscribe(response => {
       const startHours: string[] = response.startProgramTime.split(':', 3);
       const startHour = new Date();
       startHour.setHours(+startHours[0], +startHours[1], +startHours[2]);
-
       const endHours: string[] = response.endProgramTime.split(':', 3);
       const endHour = new Date();
       endHour.setHours(+endHours[0], +endHours[1], +endHours[2]);
       this.fillHours(startHour, endHour);
     });
-
   }
-
 
   addDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
@@ -78,7 +67,7 @@ export class ReservationComponent implements OnInit {
 
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
-    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'Add Reservation needs change!', false);
+    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'Add', false);
     this.reservationService.reserve(this.reservation)
       .subscribe(data => {
         this.showSnackbar('Reservation sent successfully.');
@@ -102,28 +91,19 @@ export class ReservationComponent implements OnInit {
     const year = +splittedDate[2];
     const hour = +splittedHour[0];
     const minutes = +splittedHour[1];
-
     if (this.currentDate.getFullYear() < year) {
       return true;
     }
-
     if (this.currentDate.getMonth() + 1 < month) {
       return true;
     }
-
     if (this.currentDate.getDate() < day) {
       return true;
     }
-
     if (hour < this.currentDate.getHours()) {
       return false;
     }
-
-    if (hour === this.currentDate.getHours() && minutes <= this.currentDate.getMinutes()) {
-      return false;
-    }
-
-    return true;
+    return !(hour === this.currentDate.getHours() && minutes <= this.currentDate.getMinutes());
   }
 
   fillHours(startHour: Date, finishHour: Date) {
@@ -144,10 +124,6 @@ export class ReservationComponent implements OnInit {
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.key;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
-
+    return !(charCode > 31 && (charCode < 48 || charCode > 57));
   }
 }

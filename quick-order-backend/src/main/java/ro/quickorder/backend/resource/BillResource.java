@@ -1,18 +1,11 @@
 package ro.quickorder.backend.resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import ro.quickorder.backend.model.Bill;
-import ro.quickorder.backend.repository.BillRepository;
-
-import javax.ws.rs.Produces;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "/bill")
 public class BillResource {
-
 }

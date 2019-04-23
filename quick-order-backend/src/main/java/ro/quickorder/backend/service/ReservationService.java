@@ -17,22 +17,20 @@ import ro.quickorder.backend.repository.TableFoodRepository;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
-    private ReservationConverter reservationConverter;
-
-
-    @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    private ReservationConverter reservationConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-
         if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)) {
             LOG.error("Number of persons for a reservation must be between 1 and 99");
             throw new ForbiddenException("Number of persons for a reservation must be between 1 and 99");
@@ -53,36 +51,23 @@ public class ReservationService {
 
     public List<ReservationDto> getAllUnconfirmed() {
         List<Reservation> reservations = reservationRepository.findAll();
-        List<ReservationDto> results = new ArrayList<>();
-
-        for (Reservation res : reservations) {
-            if (!res.isConfirmed()) {
-                results.add(reservationConverter.toReservationDto(res));
-            }
-        }
-        return results;
+        return reservations.stream().filter(reservation -> !reservation.isConfirmed()).map(reservationConverter::toReservationDto).collect(Collectors.toList());
     }
 
     public void confirmReservation(ReservationDto reservationDto, List<TableFoodDto> tableFoodDtos) {
-
         if (reservationDto.getReservationName() == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
         }
-
         // find reservation
         Reservation reservation = getReservationEntityByName(reservationDto);
-
         // find tables
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
-
         // put tables in reservation
         reservation.setTables(reservationTables);
         reservation.setConfirmed(true);
-
         // save reservation in database
         reservationRepository.save(reservation);
-
     }
 
     private Reservation getReservationEntityByName(ReservationDto reservationDto) {
@@ -104,29 +89,24 @@ public class ReservationService {
             LOG.error("TableList can not be null");
             throw new ForbiddenException("TableList can not be null");
         }
-        List<TableFood> tableFoodListToSet = new ArrayList<>();
-        for (TableFoodDto tableFoodDto : tableFoodDtos) {
+        List<TableFood> tableFoods = new ArrayList<>();
+        tableFoodDtos.forEach(tableFoodDto -> {
             TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
             if (tableFood == null) {
                 LOG.error("Table not found");
                 throw new NotFoundException("Table not found");
             }
-            tableFoodListToSet.add(tableFood);
-        }
-        return tableFoodListToSet;
+            tableFoods.add(tableFood);
+        });
+        return tableFoods;
     }
 
     public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {
-        List<ReservationDto> res = new ArrayList<>();
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
         if (tableFood == null) {
             throw new NotFoundException("Table not found!");
         }
         List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
-
-        for (Reservation reservation : reservations) {
-            res.add(reservationConverter.toReservationDto(reservation));
-        }
-        return res;
+        return reservations.stream().map(reservationConverter::toReservationDto).collect(Collectors.toList());
     }
 }

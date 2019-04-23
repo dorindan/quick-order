@@ -1,5 +1,4 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <br class="xxl">
@@ -17,20 +16,16 @@
       <br>
     </div>
     <div class="d-none d-lg-block">
-
-
       <mat-horizontal-stepper linear #stepper>
         <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Pick a date</ng-template>
-
             <mat-form-field>
               <input matInput [min]="currentDate" [matDatepicker]="picker" placeholder="Choose a date"
                      formControlName="firstCtrl" (dateInput)="addDate('input', $event)">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-
             <mat-form-field>
               <mat-select placeholder="Choose an Hour" [formControl]="hourControl" (selectionChange)="onChange($event)"
                           required>
@@ -44,7 +39,6 @@
               <mat-error *ngIf="hourControl.hasError('required')"></mat-error>
               <mat-hint>{{hourControl.value?.sound}}</mat-hint>
             </mat-form-field>
-
             <div>
               <button mat-button matStepperNext>Next</button>
             </div>
@@ -72,7 +66,6 @@
           </div>
         </mat-step>
       </mat-horizontal-stepper>
-
     </div>
     <div class="d-lg-none">
       <mat-vertical-stepper linear #stepper>
@@ -85,7 +78,6 @@
               <mat-datepicker-toggle matSuffix [for]="pickerVertical"></mat-datepicker-toggle>
               <mat-datepicker #pickerVertical></mat-datepicker>
             </mat-form-field>
-
             <mat-form-field>
               <mat-select placeholder="Choose an Hour" [formControl]="hourControl" (selectionChange)="onChange($event)"
                           required>
@@ -99,8 +91,6 @@
               <mat-error *ngIf="hourControl.hasError('required')"></mat-error>
               <mat-hint>{{hourControl.value?.sound}}</mat-hint>
             </mat-form-field>
-
-
             <div>
               <button mat-button matStepperNext>Next</button>
             </div>

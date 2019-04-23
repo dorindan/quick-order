@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../models/User';
 import {LoginService} from '../../services/login.service';
@@ -22,7 +21,8 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private http: HttpClient,
               private loginService: LoginService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
     sessionStorage.setItem('token', '');
@@ -37,26 +37,24 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-      const user = new User(this.model.username, this.model.password);
-      this.loginService.login(user).subscribe(rez => {
-          sessionStorage.setItem(
-            'token',
-            rez.username
-          );
-        localStorage.setItem('defaultLanguage', rez.userAttributeDto.language);
-        let language: string ;
-        language = localStorage.getItem('defaultLanguage');
-        this.translateService.setDefaultLang(language);
-        this.switchLanguage(language);
-          this.router.navigate(['loggedStart']);
-      }, error1 => {
-        this.showSnackbar("Username or password is incorrect. Please try again.");
-      });
+    const user = new User(this.model.username, this.model.password);
+    this.loginService.login(user).subscribe(rez => {
+      sessionStorage.setItem(
+        'token',
+        rez.username
+      );
+      localStorage.setItem('defaultLanguage', rez.userAttributeDto.language);
+      let language: string;
+      language = localStorage.getItem('defaultLanguage');
+      this.translateService.setDefaultLang(language);
+      this.switchLanguage(language);
+      this.router.navigate(['loggedStart']);
+    }, error1 => {
+      this.showSnackbar('Username or password is incorrect. Please try again.');
+    });
   }
 
   public switchLanguage(language: string) {
     this.translateService.use(language);
   }
-
-
 }

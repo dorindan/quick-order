@@ -5,7 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 import ro.quickorder.backend.service.CustomDateDeserializer;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +12,6 @@ import java.util.UUID;
 
 @Entity
 public class Reservation {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -27,20 +25,15 @@ public class Reservation {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     private Timestamp checkOutTime;
     private String reservationName;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne
     @JoinColumn(name = "command_id")
     private Command command;
-
     private Integer numberOfPersons;
     private boolean confirmed;
     private String status;
-
-
     @ManyToMany
     @JoinTable(name = "table_reservation",
             joinColumns = {@JoinColumn(name = "reservation_id")},
@@ -134,16 +127,16 @@ public class Reservation {
         return tables;
     }
 
+    public void setTables(List<TableFood> tables) {
+        this.tables = tables;
+    }
+
     public Integer getNumberOfPersons() {
         return numberOfPersons;
     }
 
     public void setNumberOfPersons(Integer numberOfPersons) {
         this.numberOfPersons = numberOfPersons;
-    }
-
-    public void setTables(List<TableFood> tables) {
-        this.tables = tables;
     }
 
     @Override
@@ -203,6 +196,7 @@ public class Reservation {
             this.numberOfPersons = numberOfPersons;
             return this;
         }
+
         public Reservation build() {
             return new Reservation(checkInTime, checkOutTime, user, command, numberOfPersons, confirmed, status, tables);
         }
