@@ -3,6 +3,7 @@ package ro.quickorder.backend.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.MenuItemTypeConverter;
+import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
@@ -23,5 +24,10 @@ public class MenuItemTypeService {
         return menuItemTypeRepository.findAll().stream()
                 .map(menuItemTypeConverter::toMenuItemTypeDto)
                 .collect(Collectors.toList());
+
+    }
+
+    public List<MenuItemType> getAllAttributesMenuItemType() {
+        return menuItemTypeRepository.findAll();
     }
 }

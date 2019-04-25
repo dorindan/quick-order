@@ -7,17 +7,11 @@ import {BillService} from '../../bill.service';
   styleUrls: ['./start-page.component.scss']
 })
 export class StartPageComponent implements OnInit {
-  private bill: any;
 
-  constructor(private billService: BillService) {
+  constructor() {
   }
 
   ngOnInit() {
   }
 
-  public getBill(): void {
-    this.billService.getBill(0).subscribe((res) => {
-      this.bill = res;
-    });
-  }
 }
