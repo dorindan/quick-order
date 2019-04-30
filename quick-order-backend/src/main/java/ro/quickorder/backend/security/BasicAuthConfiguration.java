@@ -30,7 +30,7 @@ public class BasicAuthConfiguration
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("PUT", "DELETE","GET","POST","OPTIONS","PATCH","HEAD")
+                        .allowedMethods("PUT", "DELETE", "GET", "POST", "OPTIONS", "PATCH", "HEAD")
                         .allowCredentials(true).maxAge(3600);
             }
         };

@@ -4,7 +4,7 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
 import {Menu} from '../models/Menu';
 import {MenuItem} from '../models/MenuItem';
-import {Ingredient} from '../models/Ingredient';
+import {MenuItemType} from '../models/MenuItemType';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,10 @@ export class MenuService {
     return this.apiService.getRequest('api/menuItemType/all');
   }
 
+  getMenuItemType(): Observable<MenuItemType[]> {
+    return this.apiService.getRequest('api/menuItemType/all');
+  }
+
   getMenuItems(): Observable<MenuItem[]> {
     return this.apiService.getRequest('api/menuItem/all');
   }
@@ -29,7 +33,7 @@ export class MenuService {
   }
 
   editMenuItem(menuItem: MenuItem): void {
-    this.apiService.postRequest('api/menuItem/update', menuItem);
+    this.apiService.putRequest('api/menuItem/update', menuItem);
   }
 
   deleteMenuItem(menuItemName: string): void {

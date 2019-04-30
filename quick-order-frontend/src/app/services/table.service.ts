@@ -2,9 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {Reservation} from '../models/Reservation';
 import {Table} from '../models/Table';
-
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -40,5 +38,3 @@ export class TableService {
   }
 
 }
-
-

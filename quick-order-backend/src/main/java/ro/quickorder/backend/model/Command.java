@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @Entity
 public class Command {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -21,25 +20,20 @@ public class Command {
     private String specification;
     private boolean isPacked;
     private String status;
-
     @ManyToMany(mappedBy = "commands")
     private List<MenuItem> menuItems;
-
     @OneToOne
-    @JoinColumn(name="bill_id")
+    @JoinColumn(name = "bill_id")
     private Bill bill;
-
     @ManyToOne
     @JoinColumn(name = "table_id")
     private TableFood table;
-
     @OneToMany(mappedBy = "command")
     private List<Reservation> reservations;
-
     @ManyToMany(mappedBy = "commands")
     private List<User> users;
 
-    public Command( String commandName, String specification, boolean isPacked, String status, TableFood table) {
+    public Command(String commandName, String specification, boolean isPacked, String status, TableFood table) {
         this.commandName = commandName;
         this.specification = specification;
         this.isPacked = isPacked;

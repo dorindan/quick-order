@@ -12,8 +12,10 @@ import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.IngredientDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
+import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 
@@ -112,12 +114,23 @@ public class MenuItemServiceTest {
     @Test
     public void testAddMenuItemWhenNameIsNull() {
         MenuItemDto menuItemDto= new MenuItemDto();
-
         try {
             menuItemService.addMenuItem(menuItemDto);
             fail("MenuItem has name equals with null, error should pop-up");
         } catch (NotFoundException e){
             assertEquals("Name can not be null",  e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAddMenuItemWhenTypeIsNotFound() {
+        MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("dose not exist");
+        MenuItemDto menuItemDto= new MenuItemDto("Salad", "the most original description!", menuItemTypeDto, null, 5, 18);
+        try {
+            menuItemService.addMenuItem(menuItemDto);
+            fail("MenuItem has has type that should not been found");
+        } catch (NotFoundException e){
+            assertEquals("MenuItemType was not found!",  e.getMessage());
         }
     }
 
@@ -156,6 +169,18 @@ public class MenuItemServiceTest {
             fail("User dose not exist, error should pop-up");
         } catch (NotFoundException e){
             assertEquals("MenuItem not found!", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testUpdateMenuItemWhenTypeIsNotFound() {
+        MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("dose not exist");
+        MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", menuItemTypeDto, null, 5, 18);
+        try {
+            menuItemService.updateMenuItem(menuItemDto);
+            fail("MenuItem has has type that should not been found");
+        } catch (NotFoundException e){
+            assertEquals("MenuItemType was not found!",  e.getMessage());
         }
     }
 

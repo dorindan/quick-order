@@ -1,7 +1,6 @@
 package ro.quickorder.backend.model;
 
-public enum Language
-{
+public enum Language {
     EN,
     RO
 }

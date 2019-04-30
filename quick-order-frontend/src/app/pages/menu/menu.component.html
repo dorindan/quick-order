@@ -8,7 +8,7 @@
       <div class="menu-item-price">
         {{menuItem.price}} lei
       </div>
-      <span class="menu-item-description" *ngFor="let ingredient of menuItem.ingredients;let i = index" >
+      <span class="menu-item-description" *ngFor="let ingredient of menuItem.ingredients;let i = index">
         <span *ngIf="i > 0">,</span>
         <span>{{ingredient.name}}</span>
       </span>

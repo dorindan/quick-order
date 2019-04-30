@@ -2,13 +2,14 @@ package ro.quickorder.backend.model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Ingredient {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -19,7 +20,7 @@ public class Ingredient {
     private String id;
     private String name;
 
-    public Ingredient( String name) {
+    public Ingredient(String name) {
         this.name = name;
     }
 

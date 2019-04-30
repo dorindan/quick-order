@@ -7,11 +7,10 @@ public class MenuItemTypeDto {
 
     private String type;
 
-    public MenuItemTypeDto(){
-
+    public MenuItemTypeDto() {
     }
 
-    public MenuItemTypeDto(String type){
+    public MenuItemTypeDto(String type) {
         this.type = type;
     }
 
