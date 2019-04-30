@@ -4,17 +4,16 @@ import java.math.BigDecimal;
 
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.Bill}
+ * <p>
  *
- *  *@author R. Lupoaie
+ * @author R. Lupoaie
  */
 public class BillDto {
-
     private boolean voucher;
     private int salePercentage;
     private BigDecimal total;
 
     public BillDto() {
-
     }
 
     public BillDto(boolean voucher, int salePercentage, BigDecimal total) {

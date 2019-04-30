@@ -8,10 +8,8 @@ import ro.quickorder.backend.model.dto.FeedbackDto;
  *  Converts Feedbacks to their corresponding DTO and vice versa.
  * @author R. Lupoaie
  */
-
 @Component
 public class FeedbackConverter {
-
     public Feedback toFeedback(FeedbackDto feedbackDto) {
         if (feedbackDto == null) {
             return null;
@@ -31,5 +29,4 @@ public class FeedbackConverter {
         feedbackDto.setMessage(feedback.getMessage());
         return feedbackDto;
     }
-
 }

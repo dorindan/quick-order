@@ -4,7 +4,7 @@
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
 
   "register": {
-    "singUp" : "Înregistrare",
+    "signUp" : "Înregistrare",
     "username": "Numele de utilizator",
     "email": "Email",
     "password": "Parolă",
@@ -40,8 +40,8 @@
   "startPage": {
     "quickOrder": "Quick Order",
     "motto": "Mai rapid decât îți poți imagina.",
-    "singIn": "Logare",
-    "singUp": "Înregistrare"
+    "signIn": "Logare",
+    "signUp": "Înregistrare"
   },
 
   "login": {

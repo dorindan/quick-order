@@ -8,13 +8,11 @@ import {ApiService} from './api.service';
   providedIn: 'root'
 })
 export class LoginService {
-
   constructor(
     private http: HttpClient,
     private apiService: ApiService
   ) {
   }
-
 
   login(authData: User): Observable<any> {
     return this.apiService.postRequest('api/users/login', authData);

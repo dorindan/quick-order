@@ -7,7 +7,8 @@ import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
 import ro.quickorder.backend.model.dto.UserDto;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Unit test for {@link UserConverter}
@@ -15,7 +16,6 @@ import static org.junit.Assert.*;
  * @author R. Lupoaie
  */
 public class UserConverterTest {
-
     private UserConverter userConverter = new UserConverter();
 
     @Test
@@ -23,9 +23,7 @@ public class UserConverterTest {
         User user = new User("name", "password", "email");
         UserAttribute userAttribute = new UserAttribute(Language.RO);
         user.setAttribute(userAttribute);
-
         UserDto userDto = userConverter.toUserDto(user);
-
         assertEquals(user.getPassword(), userDto.getPassword());
         assertEquals(user.getUsername(), userDto.getUsername());
         assertEquals(user.getEmail(), userDto.getEmail());
@@ -35,7 +33,6 @@ public class UserConverterTest {
     @Test
     public void testConverterUserToDtoWhenUserIsNull() {
         UserDto userDto = userConverter.toUserDto(null);
-
         assertNull(userDto);
     }
 
@@ -43,9 +40,7 @@ public class UserConverterTest {
     public void testConverterDtoToUser() {
         UserAttributeDto userAttributeDto = new UserAttributeDto(Language.RO);
         UserDto userDto = new UserDto("name", "password", "email", userAttributeDto);
-
         User user = userConverter.toUser(userDto);
-
         assertEquals(userDto.getPassword(), user.getPassword());
         assertEquals(userDto.getUsername(), user.getUsername());
         assertEquals(userDto.getEmail(), user.getEmail());
@@ -58,7 +53,6 @@ public class UserConverterTest {
     @Test
     public void testConverterDtoToUserWhenDtoIsNull() {
         User user = userConverter.toUser(null);
-
         assertNull(user);
     }
 }

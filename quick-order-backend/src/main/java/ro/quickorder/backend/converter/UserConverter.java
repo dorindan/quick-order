@@ -1,18 +1,17 @@
 package ro.quickorder.backend.converter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.UserDto;
 
 /**
- *  Converts Users to their corresponding DTO and vice versa.
+ * Converts Users to their corresponding DTO and vice versa.
+ *
  * @author R. Lupoaie
  */
 
 @Component
 public class UserConverter {
-
     private UserAttributeConverter userAttributeConverter = new UserAttributeConverter();
 
     public User toUser(UserDto userDto) {
