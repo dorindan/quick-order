@@ -4,7 +4,7 @@
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
 
   "register": {
-    "singUp": "Sign up",
+    "signUp": "Sign up",
     "username": "Username",
     "email": "Email",
     "password": "Password",
@@ -40,8 +40,8 @@
   "startPage": {
     "quickOrder": "Quick Order",
     "motto": "Faster than you can imagine.",
-    "singIn": "Sign in",
-    "singUp": "Sign up"
+    "signIn": "Login",
+    "signUp": "Sign up"
   },
 
   "login": {
@@ -77,7 +77,7 @@
     "editItem": "Edit Item",
     "edit": "Edit",
     "delete": "Delete",
-    "sure": "Are you sure to delete ",
+    "sure": "Are you sure you want to delete ",
     "yes": "Yes",
     "no": "No",
     "nameCondition": "*(Name must have at least 3 characters) ",

@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatSelectChange, MatTableDataSource} from '@angular/material';
+import {MatTableDataSource} from '@angular/material';
 import {Ingredient} from '../../models/Ingredient';
 import {MenuItem} from '../../models/MenuItem';
 import {Observable} from 'rxjs';
-import {Reservation} from '../../models/Reservation';
 import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
-
 
 @Component({
   selector: 'app-menu-item',
@@ -22,11 +19,9 @@ export class MenuItemComponent implements OnInit {
   displayedColumns: string[] = ['name', 'description', 'ingredients', 'preparationTime', 'price', 'edit'];
   dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
   ingredientsList: Ingredient[];
-
   nameRight = true;
   priceRight = true;
   durationRight = true;
-
   name = '';
   description = '';
   preparationDurationInMinutes = 0;
@@ -72,7 +67,6 @@ export class MenuItemComponent implements OnInit {
     if (this.validation()) {
       let newMenuItem: MenuItem;
       newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
-
       this.tableService.addMenuItem(newMenuItem);
       window.location.reload();
     } else {
@@ -82,10 +76,10 @@ export class MenuItemComponent implements OnInit {
 
   update(): void {
     if (this.validation()) {
-    let newMenuItem: MenuItem;
-    newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
-    this.tableService.editMenuItem(newMenuItem);
-    window.location.reload();
+      let newMenuItem: MenuItem;
+      newMenuItem = new MenuItem(this.name, this.description, this.preparationDurationInMinutes, this.ingredients, this.price);
+      this.tableService.editMenuItem(newMenuItem);
+      window.location.reload();
     } else {
       alert('Some Date are not valid, try again!');
     }
@@ -110,13 +104,11 @@ export class MenuItemComponent implements OnInit {
     } else {
       this.nameRight = false;
     }
-
     if (this.price < 0) {
       this.priceRight = false;
     } else {
       this.priceRight = true;
     }
-
     if (this.preparationDurationInMinutes < 0) {
       this.durationRight = false;
     } else {
@@ -128,5 +120,4 @@ export class MenuItemComponent implements OnInit {
       return true;
     }
   }
-
 }

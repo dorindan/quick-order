@@ -3,26 +3,22 @@ package ro.quickorder.backend.model.dto;
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.TableFood}
  *
- *  *@author R. Lupoaie
+ * @author R. Lupoaie
  */
 public class TableFoodDto {
-
     private int tableNr;
     private int seats;
     private boolean windowView;
     private int floor;
-    private boolean free;
 
     public TableFoodDto() {
-
     }
 
-    public TableFoodDto(int tableNr, int seats, boolean windowView, int floor, boolean free) {
+    public TableFoodDto(int tableNr, int seats, boolean windowView, int floor) {
         this.tableNr = tableNr;
         this.seats = seats;
         this.windowView = windowView;
         this.floor = floor;
-        this.free = free;
     }
 
     public int getTableNr() {
@@ -57,11 +53,4 @@ public class TableFoodDto {
         this.floor = floor;
     }
 
-    public boolean isFree() {
-        return free;
-    }
-
-    public void setFree(boolean free) {
-        this.free = free;
-    }
 }

@@ -1,6 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { StartPageComponent } from './start-page.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {StartPageComponent} from './start-page.component';
 
 describe('StartPageComponent', () => {
   let component: StartPageComponent;
@@ -8,9 +7,9 @@ describe('StartPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StartPageComponent ]
+      declarations: [StartPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

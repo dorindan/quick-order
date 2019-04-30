@@ -9,7 +9,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -21,16 +20,12 @@ public class User {
     private String username;
     private String password;
     private String email;
-
     @OneToOne(mappedBy = "user")
     private UserAttribute attribute;
-
     @OneToMany(mappedBy = "user")
     private List<Feedback> feedbacks;
-
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations;
-
     @ManyToMany
     @JoinTable(name = "user_command",
             joinColumns = {@JoinColumn(name = "user_id")},

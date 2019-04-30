@@ -1,8 +1,11 @@
 export class Property {
+  constructor(numeRestaurant: string, startProgramTime: string, endProgramTime: string) {
+    this._numeRestaurant = numeRestaurant;
+    this._startProgramTime = startProgramTime;
+    this._endProgramTime = endProgramTime;
+  }
 
   private _numeRestaurant: string;
-  private _startProgramTime: string;
-  private _endProgramTime: string;
 
   get numeRestaurant(): string {
     return this._numeRestaurant;
@@ -12,6 +15,8 @@ export class Property {
     this._numeRestaurant = value;
   }
 
+  private _startProgramTime: string;
+
   get startProgramTime(): string {
     return this._startProgramTime;
   }
@@ -20,18 +25,13 @@ export class Property {
     this._startProgramTime = value;
   }
 
+  private _endProgramTime: string;
+
   get endProgramTime(): string {
     return this._endProgramTime;
   }
 
   set endProgramTime(value: string) {
     this._endProgramTime = value;
-  }
-
-
-  constructor(numeRestaurant: string, startProgramTime: string, endProgramTime: string) {
-    this._numeRestaurant = numeRestaurant;
-    this._startProgramTime = startProgramTime;
-    this._endProgramTime = endProgramTime;
   }
 }

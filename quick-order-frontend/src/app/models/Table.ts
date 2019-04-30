@@ -1,6 +1,4 @@
-
 export class Table {
-
   public tableNr: number;
   public seats: number;
   public windowView: boolean;
@@ -12,5 +10,4 @@ export class Table {
     this.windowView = windowView;
     this.floor = floor;
   }
-
 }

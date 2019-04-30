@@ -9,7 +9,6 @@ import java.util.Objects;
 
 @Entity
 public class Bill {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -21,13 +20,10 @@ public class Bill {
     private boolean voucher;
     private int salePercentage;
     private BigDecimal total;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
-
-
     @OneToOne(mappedBy = "bill")
     @JsonIgnore
     private Command command;

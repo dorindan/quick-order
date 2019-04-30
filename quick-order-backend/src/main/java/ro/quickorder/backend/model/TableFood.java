@@ -1,10 +1,7 @@
 package ro.quickorder.backend.model;
 
 
-
 import org.hibernate.annotations.GenericGenerator;
-
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +9,6 @@ import java.util.Objects;
 
 @Entity
 public class TableFood {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -25,23 +21,20 @@ public class TableFood {
     private int seats;
     private boolean windowView;
     private int floor;
-    private boolean free;
 
     @OneToMany(mappedBy = "table")
     private List<Command> commands;
-
     @ManyToMany(mappedBy = "tables")
     private List<Reservation> reservations;
+
+    public TableFood() {
+    }
 
     public TableFood(int tableNr, int seats, boolean windowView, int floor, boolean free) {
         this.tableNr = tableNr;
         this.seats = seats;
         this.windowView = windowView;
         this.floor = floor;
-        this.free = free;
-    }
-
-    public TableFood() {
     }
 
     public String getId() {
@@ -84,14 +77,6 @@ public class TableFood {
         this.floor = floor;
     }
 
-    public boolean isFree() {
-        return free;
-    }
-
-    public void setFree(boolean free) {
-        this.free = free;
-    }
-
     public List<Command> getCommands() {
         return commands;
     }
@@ -117,13 +102,12 @@ public class TableFood {
                 seats == tableFood.seats &&
                 windowView == tableFood.windowView &&
                 floor == tableFood.floor &&
-                free == tableFood.free &&
-                Objects.equals(id, tableFood.id) ;
+                Objects.equals(id, tableFood.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tableNr, seats, windowView, floor, free, commands, reservations);
+        return Objects.hash(id, tableNr, seats, windowView, floor, commands, reservations);
     }
 
     @Override
@@ -134,7 +118,6 @@ public class TableFood {
                 ", seats=" + seats +
                 ", windowView=" + windowView +
                 ", floor=" + floor +
-                ", free=" + free +
                 '}';
     }
 }

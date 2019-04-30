@@ -1,23 +1,24 @@
 package ro.quickorder.backend.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import ro.quickorder.backend.model.Command;
-import ro.quickorder.backend.model.TableFood;
-import ro.quickorder.backend.model.User;
-import ro.quickorder.backend.service.CustomDateDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ro.quickorder.backend.model.Reservation;
+import ro.quickorder.backend.service.CustomDateDeserializer;
+import ro.quickorder.backend.service.CustomDateSerializer;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  *  Data transfer object for {@link Reservation}
  *
- *  *@author R. Lupoaie
+ * @author R. Lupoaie
  */
 public class ReservationDto {
     @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Timestamp checkInTime;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Timestamp checkOutTime;
     private String status;
     private boolean confirmed;
@@ -92,7 +93,6 @@ public class ReservationDto {
         private String status;
         private String reservationName;
 
-
         public ReservationDto.Builder withCheckInTime(Timestamp checkInTime) {
             this.checkInTime = checkInTime;
             return this;
@@ -102,6 +102,7 @@ public class ReservationDto {
             this.numberOfPersons = numberOfPersons;
             return this;
         }
+
         public ReservationDto build() {
             return new ReservationDto(checkInTime, checkOutTime, status, confirmed, numberOfPersons, reservationName);
         }
