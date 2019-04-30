@@ -4,45 +4,39 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.Period;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class MenuItem {
-
     @Id
-    @Column(updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
+    @Column(updatable = false, nullable = false)
     private String id;
     private String name;
     private String description;
     private Integer preparationDurationInMinutes;
     private Integer price;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "menu_item_type_id")
     private MenuItemType menuItemType;
-
     @OneToMany(mappedBy = "menuItem")
     private List<Feedback> feedbacks;
-
     @ManyToMany
     @JoinTable(name = "menu_item_ingredient",
-            joinColumns = { @JoinColumn(name = "menu_item_id") },
-            inverseJoinColumns = { @JoinColumn(name = "ingredient_id")  })
+            joinColumns = {@JoinColumn(name = "menu_item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
     private Set<Ingredient> ingredients;
-
     @ManyToMany
     @JoinTable(name = "menu_item_command",
-            joinColumns = { @JoinColumn(name = "menu_item_id") },
-            inverseJoinColumns = { @JoinColumn(name = "command_id") })
+            joinColumns = {@JoinColumn(name = "menu_item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "command_id")})
     private List<Command> commands;
 
     public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price) {

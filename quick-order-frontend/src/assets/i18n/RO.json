@@ -4,7 +4,7 @@
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
 
   "register": {
-    "singUp" : "Înregistrare",
+    "signUp" : "Înregistrare",
     "username": "Numele de utilizator",
     "email": "Email",
     "password": "Parolă",
@@ -40,8 +40,8 @@
   "startPage": {
     "quickOrder": "Quick Order",
     "motto": "Mai rapid decât îți poți imagina.",
-    "singIn": "Logare",
-    "singUp": "Înregistrare"
+    "signIn": "Logare",
+    "signUp": "Înregistrare"
   },
 
   "login": {
@@ -84,6 +84,18 @@
     "nameCondition": "*(Numele trebuie sa aiba minim 3 caractere) ",
     "durationCondition": "*(Durata nu poate fi negativă) ",
     "priceCondition": "*(Prețul nu poate fi negativ) "
-  }
+  },
 
+  "reservation": {
+    "motto": "Găseșteți masa pentru orice ocazie",
+    "dataPicker": "Alege o dată",
+    "next": "Pasul următor",
+    "chooseHour": "Alege o oră",
+    "chooseDate": "Alege o dată",
+    "pickNrPersons": "Alege numărul de persoane",
+    "nrPersons": "Număr persoane",
+    "back": "Înapoi",
+    "sendReservation": "Trimite Rezervarea",
+    "finish": "Trimite"
+  }
 }

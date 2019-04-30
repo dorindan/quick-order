@@ -2,18 +2,17 @@ package ro.quickorder.backend.model.dto;
 
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.Command}
+ * <p>
  *
- *  *@author R. Lupoaie
+ * @author R. Lupoaie
  */
 public class CommandDto {
-
     private String commandName;
     private String specification;
     private boolean isPacked;
     private String status;
 
     public CommandDto() {
-
     }
 
     public CommandDto(String commandName, String specification, boolean isPacked, String status) {

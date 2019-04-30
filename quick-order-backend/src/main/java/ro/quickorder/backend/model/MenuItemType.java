@@ -9,7 +9,6 @@ import java.util.Objects;
 
 @Entity
 public class MenuItemType {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -19,15 +18,14 @@ public class MenuItemType {
     @Column(updatable = false, nullable = false)
     private String id;
     private String type;
-
     @OneToMany(mappedBy = "menuItemType")
     private List<MenuItem> menuItems;
 
-    public MenuItemType(String type) {
-        this.type = type;
+    public MenuItemType() {
     }
 
-    public MenuItemType() {
+    public MenuItemType(String type) {
+        this.type = type;
     }
 
     public String getId() {

@@ -4,16 +4,14 @@ import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.dto.IngredientDto;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- *  Converts Ingredients to their corresponding DTO and vice versa.
+ * Converts Ingredients to their corresponding DTO and vice versa.
+ *
  * @author R. Lupoaie
  */
-
 @Component
 public class IngredientConverter {
 
@@ -39,20 +37,13 @@ public class IngredientConverter {
         if (ingredientDtos == null) {
             return null;
         }
-        Set<Ingredient> ingredients = new HashSet<>();
-        ingredientDtos.forEach(ingredientDto -> ingredients.add(toIngredient(ingredientDto)) );
-        return ingredients;
+        return ingredientDtos.stream().map(this::toIngredient).collect(Collectors.toSet());
     }
 
     public Set<IngredientDto> toIngredientDtoList(Set<Ingredient> ingredients) {
         if (ingredients == null) {
             return null;
         }
-        Set<IngredientDto> ingredientDtos = new HashSet<>();
-        ingredients.forEach(ingredient -> ingredientDtos.add(toIngredientDto(ingredient)) );
-        return ingredientDtos;
+        return ingredients.stream().map(this::toIngredientDto).collect(Collectors.toSet());
     }
-
-
-
 }

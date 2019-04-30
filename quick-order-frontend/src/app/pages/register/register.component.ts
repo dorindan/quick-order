@@ -1,33 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-
-import {ActivatedRoute, Router} from '@angular/router';
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpXsrfTokenExtractor, HttpClientModule } from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 import {User} from '../../models/User';
 import {ApiService} from '../../services/api.service';
-import {forEach} from '@angular/router/src/utils/collection';
-
-@Injectable()
-export class ConfigService {
-  constructor(private http: HttpClient) { }
-}
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-
 export class RegisterComponent implements OnInit {
-
-
   public userName = '';
   public password = '';
   public email = '';
   public re_password = '';
   public termsAndConditions = false;
+  hide = true;
 
   public rightPass = true;
   public rightRe_pass = true;
@@ -36,7 +24,9 @@ export class RegisterComponent implements OnInit {
   public rightTermsAndConditions = true;
   public isActive = false;
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private apiService: ApiService, private router: Router) {
+  }
+
   ngOnInit() {
   }
 
@@ -44,50 +34,51 @@ export class RegisterComponent implements OnInit {
     this.isActive = !this.isActive;
   }
 
-  private isValidMailFormat(email: string): boolean {
-    let control: FormControl;
-    control = new FormControl(email);
-    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-    if (control.value === '' || (control.value.length <= 5 || !EMAIL_REGEXP.test(control.value))) {
-      return false;
-    }
-    return true;
-  }
-
   public validateUsername(): void {
     const USER_REGEXP = /^[a-zA-Z0-9_.]{5,}$/i;
     let control: FormControl;
     control = new FormControl(this.userName);
-    if (!USER_REGEXP.test(control.value)) {
-      this.rightUsername = false;
-    } else {
-      this.rightUsername = true;
-    }
+    this.rightUsername = USER_REGEXP.test(control.value);
   }
+
   public validatePassword(): void {
-    if (this.password.length >= 6) {
-      this.rightPass = true;
-    } else {
-      this.rightPass = false;
-    }
+    this.rightPass = this.password.length >= 6;
   }
+
   public validateRe_Password(): void {
-    if (this.re_password.length < 6 || this.password.match(this.re_password) === null ) {
-      this.rightRe_pass = false;
-    } else {
-      this.rightRe_pass = true;
-    }
+    this.rightRe_pass = !(this.re_password.length < 6 || this.password.match(this.re_password) === null);
   }
+
   public validateEmail(): void {
-    if (this.isValidMailFormat(this.email)) {
-      this.rightEmail = true;
-    } else {
-      this.rightEmail = false;
-    }
+    this.rightEmail = this.isValidMailFormat(this.email);
   }
 
   public validateTermsAndConditions(): void {
     this.rightTermsAndConditions = this.termsAndConditions;
+  }
+
+  public register() {
+    if (this.checkIfAllIsValid()) {
+      const user = new User(this.userName, this.password);
+      user.email = this.email;
+      const url = 'api/users/signUp';
+      this.apiService.postRequest(url, user).subscribe(rez => {
+        this.router.navigate(['']);
+        alert('Register successful.');
+      }, error1 => {
+        alert('Register failed. ');
+        return;
+      });
+    } else {
+      alert('Complete all boxes with the appropriate data first!');
+    }
+  }
+
+  private isValidMailFormat(email: string): boolean {
+    let control: FormControl;
+    control = new FormControl(email);
+    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    return !(control.value === '' || (control.value.length <= 5 || !EMAIL_REGEXP.test(control.value)));
   }
 
   private checkIfAllIsValid(): boolean {
@@ -102,22 +93,5 @@ export class RegisterComponent implements OnInit {
       this.validateTermsAndConditions();
       return false;
     }
-  }
-
-  public register() {
-     if (this.checkIfAllIsValid()) {
-      const user = new User(this.userName, this.password);
-      user.email = this.email;
-      const url = 'api/users/signUp';
-      this.apiService.postRequest(url, user).subscribe(rez => {
-        this.router.navigate(['']);
-        alert('Register successful.');
-      }, error1 => {
-        alert('Register failed. ');
-        return;
-      });
-     } else {
-       alert('Complete all boxes with the appropriate data first!');
-     }
   }
 }

@@ -2,8 +2,9 @@ package ro.quickorder.backend.model.dto;
 
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.User}
+ * <p>
  *
- *  *@author R. Lupoaie
+ * @author R. Lupoaie
  */
 public class UserDto {
     private String username;
@@ -32,7 +33,6 @@ public class UserDto {
         this.email = email;
         this.userAttributeDto = userAttributeDto;
     }
-
 
     public String getUsername() {
         return username;

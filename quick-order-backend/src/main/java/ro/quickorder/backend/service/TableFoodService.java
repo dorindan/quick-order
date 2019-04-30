@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.quickorder.backend.converter.ReservationConverter;
 import ro.quickorder.backend.converter.TableFoodConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.model.TableFood;
@@ -18,13 +17,11 @@ import java.util.List;
 
 @Service
 public class TableFoodService {
-
     private static final Logger LOG = LoggerFactory.getLogger(TableFoodService.class);
-
-    @Autowired
-    private TableFoodConverter tableFoodConverter;
     @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    private TableFoodConverter tableFoodConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
 
@@ -33,29 +30,17 @@ public class TableFoodService {
             LOG.error("Time parameters can not be null");
             throw new BadRequestException("Time parameters can not be null");
         }
-
-        List<TableFoodDto> rez = new ArrayList<>();
+        List<TableFoodDto> allFreeTables = new ArrayList<>();
         List<TableFood> tables = tableFoodRepository.findAll();
-
-        List<TableFood> busyTableFoods = reservationRepository.findTablesWithReservationsBetween(checkInTime, checkOutTime);
-
-        for (TableFood busyTableFood : busyTableFoods) {
-            if (tables.contains(busyTableFood))
-                tables.remove(busyTableFood);
-        }
-
-        for (TableFood table : tables) {
-            rez.add(tableFoodConverter.toTableFoodDto(table));
-        }
-        return rez;
+        List<TableFood> occupiedTableFoods = reservationRepository.findTablesWithReservationsBetween(checkInTime, checkOutTime);
+        occupiedTableFoods.forEach(tables::remove);
+        tables.stream().map(tableFoodConverter::toTableFoodDto).forEach(allFreeTables::add);
+        return allFreeTables;
     }
 
-    public List<TableFoodDto> getAll(){
-        List<TableFoodDto> rez = new ArrayList<>();
-        List<TableFood> tables = tableFoodRepository.findAll();
-        for (TableFood table: tables)
-            rez.add(tableFoodConverter.toTableFoodDto(table));
-        return rez;
+    public List<TableFoodDto> getAll() {
+        List<TableFoodDto> allTables = new ArrayList<>();
+        tableFoodRepository.findAll().stream().map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).forEach(allTables::add);
+        return allTables;
     }
-
 }

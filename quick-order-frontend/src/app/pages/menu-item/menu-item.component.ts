@@ -1,14 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatSelectChange, MatTableDataSource} from '@angular/material';
+import {MatTableDataSource} from '@angular/material';
 import {Ingredient} from '../../models/Ingredient';
 import {MenuItem} from '../../models/MenuItem';
 import {Observable} from 'rxjs';
-import {Reservation} from '../../models/Reservation';
 import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
-
 
 @Component({
   selector: 'app-menu-item',
@@ -26,11 +23,9 @@ export class MenuItemComponent implements OnInit {
   displayedColumns: string[] = ['name', 'description', 'type', 'ingredients', 'preparationTime', 'price', 'edit'];
   dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
   typeSource = new MatTableDataSource<MenuItemType>(this.menuItemTypes);
-
   nameRight = true;
   priceRight = true;
   durationRight = true;
-
   name = '';
   description = '';
   itemType = '';
@@ -132,13 +127,11 @@ export class MenuItemComponent implements OnInit {
     } else {
       this.nameRight = false;
     }
-
     if (this.price < 0) {
       this.priceRight = false;
     } else {
       this.priceRight = true;
     }
-
     if (this.preparationDurationInMinutes < 0) {
       this.durationRight = false;
     } else {
@@ -150,5 +143,4 @@ export class MenuItemComponent implements OnInit {
       return true;
     }
   }
-
 }

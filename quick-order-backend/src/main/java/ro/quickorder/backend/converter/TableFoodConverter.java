@@ -5,7 +5,8 @@ import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 
 /**
- *  Converts TableFoods to their corresponding DTO and vice versa.
+ * Converts TableFoods to their corresponding DTO and vice versa.
+ *
  * @author R. Lupoaie
  */
 
@@ -35,5 +36,4 @@ public class TableFoodConverter {
         tableFoodDto.setFloor(tableFood.getFloor());
         return tableFoodDto;
     }
-
 }

@@ -1,10 +1,15 @@
-import {MenuItem} from "./MenuItem";
-import {Ingredient} from "./Ingredient";
+import {MenuItem} from './MenuItem';
+import {Ingredient} from './Ingredient';
 
-export class Menu{
+export class Menu {
+  constructor(id: number, type: string, menuItems: MenuItem[], ingredients: Ingredient[]) {
+    this._id = id;
+    this._type = type;
+    this._menuItems = menuItems;
+    this._ingredients = ingredients;
+  }
+
   private _id: number;
-  private _type:string;
-  private _menuItems:MenuItem[];
 
   get id(): number {
     return this._id;
@@ -14,6 +19,8 @@ export class Menu{
     this._id = value;
   }
 
+  private _type: string;
+
   get type(): string {
     return this._type;
   }
@@ -21,6 +28,8 @@ export class Menu{
   set type(value: string) {
     this._type = value;
   }
+
+  private _menuItems: MenuItem[];
 
   get menuItems(): MenuItem[] {
     return this._menuItems;
@@ -30,20 +39,13 @@ export class Menu{
     this._menuItems = value;
   }
 
+  private _ingredients: Ingredient[];
+
   get ingredients(): Ingredient[] {
     return this._ingredients;
   }
 
   set ingredients(value: Ingredient[]) {
     this._ingredients = value;
-  }
-
-  private _ingredients:Ingredient[];
-
-  constructor(id: number, type: string, menuItems: MenuItem[], ingredients: Ingredient[]) {
-    this._id = id;
-    this._type = type;
-    this._menuItems = menuItems;
-    this._ingredients = ingredients;
   }
 }
