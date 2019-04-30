@@ -12,7 +12,7 @@
 
 
             <div class="modal-header text-center">
-              <h4 class="modal-title w-100 font-weight-bold text-primary ml-5" translate="">table.addNew</h4>
+              <h4 class="green modal-title w-100 font-weight-bold text-primary ml-5" translate="">table.addNew</h4>
               <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close"
                       (click)="clear()">
                 <span aria-hidden="true">&times;</span>
@@ -21,34 +21,40 @@
 
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
-                <label data-error="wrong" data-success="right" for="inputTableNumber" translate="">table.tableNumber</label>
+                <label data-error="wrong" data-success="right" for="inputTableNumber"
+                       translate="">table.tableNumber</label>
                 &nbsp;
-                <label class = "red small" *ngIf="!tableNrRight" translate="">table.tableNumberCondition</label>
-                <input type="number" min="1" id="inputTableNumber" [(ngModel)]="tableNr" class="form-control validate" (focusout)="validation()">
+                <label class="red small" *ngIf="!tableNrRight" translate="">table.tableNumberCondition</label>
+                <input type="number" min="1" id="inputTableNumber" [(ngModel)]="tableNr" class="form-control validate"
+                       (focusout)="validation()">
               </div>
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" for="inputSeats" translate="">table.seats</label>
                 &nbsp;
-                <label class = "red small" *ngIf="!seatsRight" translate="">table.seatsCondition</label>
-                <input type="number" min="1" id="inputSeats" [(ngModel)]="seats" class="form-control validate" (focusout)="validation()">
+                <label class="red small" *ngIf="!seatsRight" translate="">table.seatsCondition</label>
+                <input type="number" min="1" id="inputSeats" [(ngModel)]="seats" class="form-control validate"
+                       (focusout)="validation()">
               </div>
 
               <div class="md-form mb-5">
-                <label data-error="wrong" data-success="right" for="inputWindowView" translate="">table.windowView</label>
-                <input type="checkbox" id="inputWindowView"  [(ngModel)]="windowView" class="form-control validate">
+                <label data-error="wrong" data-success="right" for="inputWindowView"
+                       translate="">table.windowView</label>
+                <input type="checkbox" id="inputWindowView" [(ngModel)]="windowView" class="form-control validate">
               </div>
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" for="inputWindowView" translate="">table.floor</label>
                 &nbsp;
-                <label class = "red small" *ngIf="!floorRight" for="inputFloor" translate="">table.floorCondition</label>
-                <input type="number" min="-1" id="inputFloor" [(ngModel)]="floor" class="form-control" (focusout)="validation()">
+                <label class="red small" *ngIf="!floorRight" for="inputFloor" translate="">table.floorCondition</label>
+                <input type="number" min="-1" id="inputFloor" [(ngModel)]="floor" class="form-control"
+                       (focusout)="validation()">
               </div>
             </div>
 
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
-              <button class="btn btn-outline-secondary btn-block editInside" data-dismiss="modal" (click)="add()" translate="">
+              <button class="btn btn-outline-secondary btn-block editInside" data-dismiss="modal" (click)="add()"
+                      translate="">
                 table.add
               </button>
             </div>
@@ -68,7 +74,7 @@
           <div class="modal-content">
 
             <div class="modal-header text-center">
-              <h4 class="modal-title w-100 font-weight-bold text-secondary ml-5" translate="">table.editTable</h4>
+              <h4 class="green modal-title w-100 font-weight-bold text-secondary ml-5" translate="">table.editTable</h4>
               <button type="button" class="close text-secondary" data-dismiss="modal" aria-label="Close"
                       (click)="clear()">
                 <span aria-hidden="true">&times;</span>
@@ -77,34 +83,41 @@
 
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
-                <label data-error="wrong" data-success="right" for="inputTableNumberEdit" translate="">table.tableNumber</label>
+                <label data-error="wrong" data-success="right" for="inputTableNumberEdit"
+                       translate="">table.tableNumber</label>
                 &nbsp;
-                <label class = "red small" *ngIf="!tableNrRight" translate="">table.tableNumberCondition</label>
-                <input type="number" min="1" disabled id="inputTableNumberEdit" [(ngModel)]="tableNr" class="form-control validate" (focusout)="validation()">
+                <label class="red small" *ngIf="!tableNrRight" translate="">table.tableNumberCondition</label>
+                <input type="number" min="1" disabled id="inputTableNumberEdit" [(ngModel)]="tableNr"
+                       class="form-control validate" (focusout)="validation()">
               </div>
 
               <div class="md-form mb-5">
                 <label data-error="wrong" data-success="right" for="inputSeatsEdit" translate="">table.seats</label>
                 &nbsp;
-                <label class = "red small" *ngIf="!seatsRight" translate="">table.seatsCondition</label>
-                <input type="number" min="1" id="inputSeatsEdit" [(ngModel)]="seats" class="form-control validate" (focusout)="validation()">
+                <label class="red small" *ngIf="!seatsRight" translate="">table.seatsCondition</label>
+                <input type="number" min="1" id="inputSeatsEdit" [(ngModel)]="seats" class="form-control validate"
+                       (focusout)="validation()">
               </div>
 
               <div class="md-form mb-5">
-                <label data-error="wrong" data-success="right" for="inputWindowViewEdit" translate="">table.windowView</label>
-                <input type="checkbox" id="inputWindowViewEdit"  [(ngModel)]="windowView" class="form-control validate">
+                <label data-error="wrong" data-success="right" for="inputWindowViewEdit"
+                       translate="">table.windowView</label>
+                <input type="checkbox" id="inputWindowViewEdit" [(ngModel)]="windowView" class="form-control validate">
               </div>
 
               <div class="md-form mb-5">
-                <label data-error="wrong" data-success="right" for="inputWindowViewEdit" translate="">table.floor</label>
+                <label data-error="wrong" data-success="right" for="inputWindowViewEdit"
+                       translate="">table.floor</label>
                 &nbsp;
-                <label class = "red small" *ngIf="!floorRight" for="inputFloor" translate="">table.floorCondition</label>
-                <input type="number" min="-1" id="inputFloorEdit" [(ngModel)]="floor" class="form-control" (focusout)="validation()">
+                <label class="red small" *ngIf="!floorRight" for="inputFloor" translate="">table.floorCondition</label>
+                <input type="number" min="-1" id="inputFloorEdit" [(ngModel)]="floor" class="form-control"
+                       (focusout)="validation()">
               </div>
             </div>
 
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
-              <button class="btn btn-outline-secondary btn-block editInside" data-dismiss="modal" (click)="update()" translate="">
+              <button class="btn btn-outline-secondary btn-block editInside" data-dismiss="modal" (click)="update()"
+                      translate="">
                 table.edit
               </button>
             </div>
@@ -128,7 +141,7 @@
               </button>
             </div>
             <div class="modal-body mx-3">
-              <p class="text-center h4" ><label translate="">table.sure</label> {{tableNr}}?</p>
+              <p class="text-center h4"><label translate="">table.sure</label> {{tableNr}}?</p>
             </div>
             <div class="modal-footer d-flex justify-content-center deleteButtonsWrapper">
               <button type="button" class="btn btn-danger btnYesClass" id="btnYes" data-dismiss="modal"
@@ -169,7 +182,9 @@
       <th width="20%" mat-header-cell *matHeaderCellDef>
         <h5 class="color" align="center" translate="">table.windowView</h5>
       </th>
-      <td width="20%" align="center" mat-cell *matCellDef="let element"><input type="checkbox" [(ngModel)]="element.windowView" disabled></td>
+      <td width="20%" align="center" mat-cell *matCellDef="let element"><input type="checkbox"
+                                                                               [(ngModel)]="element.windowView"
+                                                                               disabled></td>
     </ng-container>
 
     <!-- Price Column -->
@@ -184,7 +199,7 @@
     <ng-container matColumnDef="edit">
       <th width="5%" mat-header-cell *matHeaderCellDef>
         <div align="center" class="text-center">
-          <a href="" class="btn btn-info btn-rounded btn-sm" data-toggle="modal"
+          <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
              data-target="#modalAdd" translate="">table.add
           </a>
         </div>
@@ -192,10 +207,12 @@
       <td width="20%" mat-cell *matCellDef="let element">
         <div align="center" class="d-md-inline">
           <div class="text-center buttonEditWrapper">
-            <a size="5%" class="dropdown-item" data-toggle="modal" data-target="#modalEdit" (click)="setUpdate(element)">
+            <a size="5%" class="dropdown-item" data-toggle="modal" data-target="#modalEdit"
+               (click)="setUpdate(element)">
               <img src="assets/edit-delete/edit.svg">
             </a>
-            <a size="20%" class="dropdown-item"  data-toggle="modal" data-target="#modalDelete" (click)="setDelete(element)">
+            <a size="20%" class="dropdown-item" data-toggle="modal" data-target="#modalDelete"
+               (click)="setDelete(element)">
               <img src="assets/edit-delete/delete.svg">
             </a>
           </div>

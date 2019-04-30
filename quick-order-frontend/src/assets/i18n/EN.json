@@ -65,6 +65,7 @@
     "name": "Name",
     "description": "Description",
     "ingredients": "Ingredients",
+    "itemType": "Item type",
     "preparationDuration": "Preparation duration",
     "price": "Price",
     "add": "Add",
