@@ -22,7 +22,6 @@ export class MenuItemComponent implements OnInit {
   menuItemTypesGet: Observable<MenuItemType[]>;
   displayedColumns: string[] = ['name', 'description', 'type', 'ingredients', 'preparationTime', 'price', 'edit'];
   dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
-  typeSource = new MatTableDataSource<MenuItemType>(this.menuItemTypes);
   nameRight = true;
   priceRight = true;
   durationRight = true;
@@ -32,6 +31,8 @@ export class MenuItemComponent implements OnInit {
   preparationDurationInMinutes = 0;
   ingredients = [];
   price = 0;
+  activateIngredientAdd = false;
+  activateTypeAdd = false;
 
   constructor(private tableService: MenuService, private ingredientService: IngredientService) {
   }
@@ -103,7 +104,6 @@ export class MenuItemComponent implements OnInit {
     this.menuItemTypes = [];
     this.menuItemTypesGet.forEach(menuItemType => menuItemType.forEach(m => {
       this.menuItemTypes.push(m);
-      this.typeSource = new MatTableDataSource<MenuItemType>(this.menuItemTypes);
     }));
   }
 
@@ -119,6 +119,30 @@ export class MenuItemComponent implements OnInit {
     this.ingredients = [];
     this.price = 0;
     this.itemType = '';
+    this.activateIngredientAdd = false;
+    this.activateTypeAdd = false;
+  }
+
+  addIngredient(): void {
+    if (this.activateIngredientAdd) {
+      // add ingredient
+      const ingredient = new Ingredient('test');
+      this.ingredientsList.push(ingredient);
+      this.activateIngredientAdd = false;
+    } else {
+      this.activateIngredientAdd = true;
+    }
+  }
+
+  addItemType(): void {
+    if (this.activateTypeAdd) {
+      // add ingredient
+      const itemType = new MenuItemType('test');
+      this.menuItemTypes.push(itemType);
+      this.activateTypeAdd = false;
+    } else {
+      this.activateTypeAdd = true;
+    }
   }
 
   validation(): boolean {
