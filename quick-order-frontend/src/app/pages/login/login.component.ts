@@ -14,6 +14,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
   model: any = {};
+  hide = true;
 
   constructor(private translateService: TranslateService,
               private route: ActivatedRoute,

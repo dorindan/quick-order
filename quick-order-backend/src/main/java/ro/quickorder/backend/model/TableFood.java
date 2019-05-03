@@ -21,20 +21,21 @@ public class TableFood {
     private int seats;
     private boolean windowView;
     private int floor;
+    private boolean active = true;
 
     @OneToMany(mappedBy = "table")
     private List<Command> commands;
     @ManyToMany(mappedBy = "tables")
     private List<Reservation> reservations;
 
-    public TableFood() {
-    }
-
-    public TableFood(int tableNr, int seats, boolean windowView, int floor, boolean free) {
+    public TableFood(int tableNr, int seats, boolean windowView, int floor) {
         this.tableNr = tableNr;
         this.seats = seats;
         this.windowView = windowView;
         this.floor = floor;
+    }
+
+    public TableFood() {
     }
 
     public String getId() {
@@ -119,5 +120,13 @@ public class TableFood {
                 ", windowView=" + windowView +
                 ", floor=" + floor +
                 '}';
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -32,4 +32,17 @@ export class TableService {
   getAllTables(): Observable<Table[]> {
     return this.apiService.getRequest('api/table/all');
   }
+
+  addTable(table: Table): void {
+    this.apiService.postRequest('api/table/add', table);
+  }
+
+  editTable(table: Table): void {
+    this.apiService.postRequest('api/table/update', table);
+  }
+
+  deleteTable(tableNr: number): void {
+    this.apiService.deleteRequest('api/table/remove/' + tableNr);
+  }
+
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.dto.ConfirmReservationDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
+import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.service.ReservationService;
 
 import java.text.ParseException;

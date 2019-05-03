@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.TableFoodConverter;
 import ro.quickorder.backend.exception.BadRequestException;
+import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
@@ -53,4 +54,37 @@ public class TableFoodService {
         tableFoodRepository.findAll().stream().map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).forEach(allTables::add);
         return allTables;
     }
+
+    public void addTable(TableFoodDto tableFoodDto){
+        TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
+        if(tableFood != null){
+            LOG.error("Table already exists");
+            throw new BadRequestException("Table already exists");
+        }
+        tableFood = tableFoodConverter.toTableFood(tableFoodDto);
+        tableFoodRepository.save(tableFood);
+    }
+
+    public void updateTable(TableFoodDto tableFoodDto){
+        TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
+        if(tableFood == null){
+            LOG.error("Table not found");
+            throw new NotFoundException("Table not found");
+        }
+        tableFood.setFloor(tableFoodDto.getFloor());
+        tableFood.setWindowView(tableFoodDto.isWindowView());
+        tableFood.setSeats(tableFoodDto.getSeats());
+        tableFoodRepository.save(tableFood);
+    }
+
+    public void removeTable( int tableNr){
+        TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
+        if(tableFood == null){
+            LOG.error("Table not found");
+            throw new NotFoundException("Table not found");
+        }
+        tableFood.setActive(false);
+        tableFoodRepository.save(tableFood);
+    }
+
 }

@@ -1,76 +1,71 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<div class="container">
-  <div class="col-md-6 col-md-offset-3">
-    <div class="panel signUP-panel">
-      <div class="panel-heading">
-        <h1 translate="">register.singUp</h1>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-lg-12">
-            <form style="display: block;">
-              <div class="form-group">
-                <div>
-                  <label><b translate="">register.username</b></label>
-                  &nbsp;
-                  <label class="red small" *ngIf="!this.rightUsername" translate="">register.usernameConditions</label>
-                </div>
-                <input type="text" (focusout)="validateUsername()" class="form-control"
-                       placeholder="{{ 'register.enterUser' | translate }}" [(ngModel)]="userName" name="username"
-                       required>
-              </div>
-              <div class="form-group">
-                <div>
-                  <label><b translate="">register.email</b></label>
-                  &nbsp;
-                  <label class="red small" *ngIf="!this.rightEmail" translate="">register.emailConditions</label>
-                </div>
-                <input type="text" (focusout)="validateEmail()" class="form-control"
-                       placeholder="{{ 'register.enterEmail' | translate }}" [(ngModel)]="email" name="email" required>
-              </div>
-              <div class="form-group">
-                <div>
-                  <label><b translate="">register.password</b></label>
-                  &nbsp;
-                  <label class="red small" *ngIf="!this.rightPass" translate="">register.passwordConditions</label>
-                  &nbsp;
-                  <label class="red small" *ngIf="!this.rightRe_pass && this.rightPass" translate="">register.Re_PasswordConditions</label>
-                </div>
-                <input class="form-control" type="text" name="psw" (focusout)="validatePassword()"
-                       [type]="isActive ? 'text' : 'password'" placeholder="{{ 'register.enterPassword' | translate }}"
-                       [(ngModel)]="password" required>
-                <br>
-                <input type="text" (focusout)="validateRe_Password()" class="form-control "
-                       [type]="isActive ? 'text' : 'password'"
-                       placeholder="{{ 'register.enterRe_Password' | translate }}" [(ngModel)]="re_password"
-                       name="rePassword" required>
-                &nbsp;
-                <i [class]=" (isActive) ? 'glyphicon glyphicon-eye-open' : 'glyphicon glyphicon-eye-close' "
-                   (click)="changePasswordVisibility()"></i>
-              </div>
-              <div class="form-group">
-                <p translate="">
-                  <label class="red " *ngIf="!this.rightTermsAndConditions" translate="">register.termsAndConditionsAlert</label>
-                  &nbsp;
-                  <input type="checkbox" name='thing' (change)="this.validateTermsAndConditions()"
-                         [(ngModel)]="termsAndConditions" checked="unchecked">
-                  register.agreements1
-                  <a translate="" href="#" style="color:dodgerblue" class="green">register.termsAndConditions</a>
-                  register.agreements2
-                  <a translate="" href="#" style="color:dodgerblue" class="green">register.privacyPolicy</a>.
-                </p>
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3">
-                    <button class="form-control btn btn-signUP" translate="" type="submit" (click)='register()'>
-                      register.singUp
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
+<div class="card signUP-panel">
+  <div class="card-header panel-heading">
+    <h1 translate="">register.signUp</h1>
+  </div>
+  <div class="card-body">
+    <form style="display: block;">
+      <div class="form-group">
+        <div>
+          <label><b translate="">register.username</b></label>
+          &nbsp;
+          <label class="red small" *ngIf="!this.rightUsername" translate="">register.usernameConditions</label>
         </div>
+        <input type="text" (focusout)="validateUsername()" class="form-control"
+               placeholder="{{ 'register.enterUser' | translate }}" [(ngModel)]="userName" name="username"
+               required>
       </div>
-    </div>
+      <div class="form-group">
+        <div>
+          <label><b translate="">register.email</b></label>
+          &nbsp;
+          <label class="red small" *ngIf="!this.rightEmail" translate="">register.emailConditions</label>
+        </div>
+        <input type="text" (focusout)="validateEmail()" class="form-control"
+               placeholder="{{ 'register.enterEmail' | translate }}" [(ngModel)]="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <div>
+          <label><b translate="">register.password</b></label>
+          &nbsp;
+          <label class="red small" *ngIf="!this.rightPass" translate="">register.passwordConditions</label>
+          &nbsp;
+          <label class="red small" *ngIf="!this.rightRe_pass && this.rightPass" translate="">register.Re_PasswordConditions</label>
+        </div>
+        <input class="form-control" [type]="hide ? 'password' : 'text'" name="psw" (focusout)="validatePassword()"
+               [type]="isActive ? 'text' : 'password'" placeholder="{{ 'register.enterPassword' | translate }}"
+               [(ngModel)]="password" required>
+        <br>
+
+        <input [type]="hide ? 'password' : 'text'" (focusout)="validateRe_Password()" class="form-control "
+               [type]="isActive ? 'text' : 'password'"
+               placeholder="{{ 'register.enterRe_Password' | translate }}" [(ngModel)]="re_password"
+               name="rePassword" required>
+        <mat-icon (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+      </div>
+      <div class="form-group">
+        <p translate="">
+          <label class="red " *ngIf="!this.rightTermsAndConditions"
+                 translate="">register.termsAndConditionsAlert</label>
+          &nbsp;
+          <input type="checkbox" name='thing' (change)="this.validateTermsAndConditions()"
+                 [(ngModel)]="termsAndConditions" checked="unchecked">
+          register.agreements1
+          <a translate="" href="#" style="color:dodgerblue" class="green">register.termsAndConditions</a>
+          register.agreements2
+          <a translate="" href="#" style="color:dodgerblue" class="green">register.privacyPolicy</a>.
+        </p>
+
+        <button class="form-control btn-signUP" translate="" type="submit" (click)='register()'>
+          register.signUp
+        </button>
+
+
+      </div>
+    </form>
   </div>
 </div>
+
+
+
+

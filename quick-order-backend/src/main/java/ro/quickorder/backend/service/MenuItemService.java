@@ -9,9 +9,11 @@ import ro.quickorder.backend.converter.MenuItemTypeConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
+import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +29,8 @@ public class MenuItemService {
     @Autowired
     private MenuItemRepository menuItemRepository;
     @Autowired
+    private MenuItemTypeRepository menuItemTypeRepository;
+    @Autowired
     private IngredientRepository ingredientRepository;
     @Autowired
     private MenuItemConverter menuItemConverter;
@@ -35,7 +39,6 @@ public class MenuItemService {
 
     public List<MenuItemDto> getMenuItems() {
         return menuItemRepository.findAll().stream().map(menuItemConverter::toMenuItemDto).collect(Collectors.toList());
-
     }
 
     public void addMenuItem(MenuItemDto menuItemDto) {
@@ -48,8 +51,14 @@ public class MenuItemService {
             LOG.error("MenuItem already exists!");
             throw new NotFoundException("MenuItem already exists!");
         }
+        MenuItemType menuItemType = menuItemTypeRepository.findByType(menuItemDto.getMenuItemTypeDto().getType());
+        if (menuItemType == null) {
+            LOG.error("MenuItemType was not found!");
+            throw new NotFoundException("MenuItemType was not found!");
+        }
+
         Set<Ingredient> ingredients = setIngredients(menuItemDto);
-        menuItem = new MenuItem(menuItemDto.getName(), menuItemDto.getDescription(), menuItemDto.getPrice(), menuItemDto.getPreparationDurationInMinutes(), ingredients);
+        menuItem = new MenuItem(menuItemDto.getName(), menuItemDto.getDescription(), menuItemType, menuItemDto.getPrice(), menuItemDto.getPreparationDurationInMinutes(), ingredients);
         menuItemRepository.save(menuItem);
     }
 
@@ -59,11 +68,17 @@ public class MenuItemService {
             LOG.error("MenuItem not found!");
             throw new NotFoundException("MenuItem not found!");
         }
+        MenuItemType menuItemType = menuItemTypeRepository.findByType(menuItemDto.getMenuItemTypeDto().getType());
+        if (menuItemType == null) {
+            LOG.error("MenuItemType was not found!");
+            throw new NotFoundException("MenuItemType was not found!");
+        }
+
         Set<Ingredient> ingredients = setIngredients(menuItemDto);
         menuItem.setIngredients(ingredients);
         menuItem.setPrice(menuItemDto.getPrice());
         menuItem.setDescription(menuItemDto.getDescription());
-        menuItem.setMenuItemType(menuItemTypeConverter.toMenuItemType(menuItemDto.getMenuItemTypeDto()));
+        menuItem.setMenuItemType(menuItemType);
         menuItem.setPreparationDurationInMinutes(menuItemDto.getPreparationDurationInMinutes());
         menuItemRepository.save(menuItem);
     }

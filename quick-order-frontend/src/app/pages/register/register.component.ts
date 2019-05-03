@@ -15,6 +15,8 @@ export class RegisterComponent implements OnInit {
   public email = '';
   public re_password = '';
   public termsAndConditions = false;
+  hide = true;
+
   public rightPass = true;
   public rightRe_pass = true;
   public rightUsername = true;

@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.exception.BadRequestException;
+import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
@@ -20,6 +21,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -36,15 +38,16 @@ public class TableFoodServiceTest {
 
     @Before
     public void setUp() {
-        TableFood table4 = new TableFood(4, 6, true, 1, true);
-        TableFood table5 = new TableFood(5, 5, false, 1, true);
+        TableFood table4 = new TableFood(4, 6, true, 1);
+        TableFood table5 = new TableFood(5, 5, false, 1);
+
         Timestamp timestampIn1 = Timestamp.valueOf("2007-09-23 8:10:10.0");
         Timestamp timestampOut1 = Timestamp.valueOf("2007-09-23 11:10:10.0");
-        TableFood table1 = new TableFood(1, 5, false, 1, false);
-        TableFood table2 = new TableFood(2, 4, true, 1, true);
-        TableFood table3 = new TableFood(3, 4, false, 1, true);
-        Reservation res2 = new Reservation(timestampIn1, timestampOut1, null, null, 1,
-                true, null, new ArrayList<>());
+        TableFood table1 = new TableFood(1, 5, false, 1);
+        TableFood table2 = new TableFood(2, 4, true, 1);
+        TableFood table3 = new TableFood(3, 4, false, 1);
+        Reservation res2 = new Reservation(timestampIn1, timestampOut1, null, null, 1, true, null, new ArrayList<>());
+
         Timestamp timestampIn2 = Timestamp.valueOf("2007-09-23 9:10:10.0");
         Timestamp timestampOut2 = Timestamp.valueOf("2007-09-23 12:10:10.0");
         Reservation res3 = new Reservation(timestampIn2, timestampOut2, null, null, 1,
@@ -77,7 +80,7 @@ public class TableFoodServiceTest {
     }
 
     @Test
-    public void testgetAllFreeTables() {
+    public void testGetAllFreeTables() {
         Timestamp timestampIn1 = Timestamp.valueOf("2007-09-23 10:10:10.0");
         Timestamp timestampOut1 = Timestamp.valueOf("2007-09-23 12:10:10.0");
         List<TableFoodDto> rezFree1 = tableFoodService.getAllFree(timestampIn1, timestampOut1);
@@ -105,7 +108,7 @@ public class TableFoodServiceTest {
     }
 
     @Test
-    public void testgetAllFreeTablesTimestempIsNull() {
+    public void testGetAllFreeTablesTimestempIsNull() {
         try {
             tableFoodService.getAllFree(null, null);
             fail("Time parameter is null, it should throw an error");
@@ -113,4 +116,76 @@ public class TableFoodServiceTest {
             assertEquals("Time parameters can not be null", e.getMessage());
         }
     }
+
+    @Test
+    public void testAddTable() {
+        TableFoodDto tableFoodDto = new TableFoodDto(47, 12, true, 1);
+
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        assertEquals(5, tableFoods.size());
+
+        tableFoodService.addTable(tableFoodDto);
+
+        List<TableFood> newTableFoods = tableFoodRepository.findAll();
+        assertEquals(6, newTableFoods.size());
+    }
+
+    @Test
+    public void testAddTableWhenTableAlreadyExists() {
+        TableFoodDto tableFoodDto = new TableFoodDto(1, 12, true, 1);
+        try {
+            tableFoodService.addTable(tableFoodDto);
+            fail("Table already exists, BadRequestException should be thrown");
+        } catch (BadRequestException e){
+            assertEquals("Table already exists", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testUpdateTable() {
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        assertEquals(5, tableFoods.size());
+
+        TableFoodDto tableFoodDto = new TableFoodDto(tableFoods.get(0).getTableNr(), 12, true, 1);
+
+        tableFoodService.updateTable(tableFoodDto);
+
+        TableFood newTableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
+        assertEquals(1, newTableFood.getFloor());
+        assertEquals(12, newTableFood.getSeats());
+        assertTrue( newTableFood.isWindowView());
+    }
+
+    @Test
+    public void testUpdateTableWhenTableDoseNotExists() {
+        TableFoodDto tableFoodDto = new TableFoodDto(47, 12, true, 1);
+        try {
+            tableFoodService.updateTable(tableFoodDto);
+            fail("Table dose not exists, NotFoundException should be thrown");
+        } catch (NotFoundException e){
+            assertEquals("Table not found", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRemoveTable() {
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        assertEquals(5, tableFoods.size());
+
+        tableFoodService.removeTable(tableFoods.get(0).getTableNr());
+
+        List<TableFood> newTableFoods = tableFoodRepository.findAll();
+        assertEquals(4, newTableFoods.size());
+    }
+
+    @Test
+    public void testRemoveTableWhenTableDoseNotExists() {
+        try {
+            tableFoodService.removeTable(47);
+            fail("Table dose not exists, NotFoundException should be thrown");
+        } catch (NotFoundException e){
+            assertEquals("Table not found", e.getMessage());
+        }
+    }
+
 }

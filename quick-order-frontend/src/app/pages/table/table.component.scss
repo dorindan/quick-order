@@ -1,10 +1,12 @@
 table {
   width: 90%;
+
 }
 
-.maxWidthLabel {
-  max-width: 90% !important;
-  word-break: break-all !important;
+.color {
+  opacity: 1;
+  color: #285028;
+
 }
 
 .btn-secondary {
@@ -15,11 +17,6 @@ table {
 .green {
   color: darkgreen !important;
   opacity: 0.4 !important;
-}
-
-.color {
-  opacity: 1;
-  color: #285028;
 }
 
 .red {

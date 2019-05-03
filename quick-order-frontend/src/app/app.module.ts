@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
 import {AppRoutingModule, routing} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -21,7 +20,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {MenuItemComponent} from './pages/menu-item/menu-item.component';
 import {TableViewComponent} from './pages/table-view/table-view.component';
+import {MenuItemComponent} from './pages/menu-item/menu-item.component';
+import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
+import { TableComponent } from './pages/table/table.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,7 +44,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableViewComponent,
     MenuComponent,
     MenuItemComponent,
-    WaiterPageComponent
+    WaiterPageComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

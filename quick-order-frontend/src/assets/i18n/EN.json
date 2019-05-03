@@ -3,7 +3,7 @@
   "Intro": "Hello I am Arthur, I am 42 years old.",
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
   "register": {
-    "singUp": "Sign up",
+    "signUp": "Sign up",
     "username": "Username",
     "email": "Email",
     "password": "Password",
@@ -38,8 +38,8 @@
   "startPage": {
     "quickOrder": "Quick Order",
     "motto": "Faster than you can imagine.",
-    "singIn": "Sign in",
-    "singUp": "Sign up"
+    "signIn": "Login",
+    "signUp": "Sign up"
   },
   "login": {
     "login": "Log In",
@@ -66,6 +66,7 @@
     "name": "Name",
     "description": "Description",
     "ingredients": "Ingredients",
+    "itemType": "Item type",
     "preparationDuration": "Preparation duration",
     "price": "Price",
     "add": "Add",
@@ -78,5 +79,34 @@
     "nameCondition": "*(Name must have at least 3 characters) ",
     "durationCondition": "*(The duration can not be negative) ",
     "priceCondition": "*(The price can not be negative) "
+  },
+  "reservation": {
+    "motto": "Find your table for any occasion",
+    "dataPicker": "Pick a date",
+    "next": "Next",
+    "chooseHour": "Choose an Hour",
+    "chooseDate": "Choose a date",
+    "pickNrPersons": "Pick the nr. of persons.",
+    "nrPersons": "Nr. persons",
+    "back": "Back",
+    "sendReservation": "Send Reservation",
+    "finish": "Finish"
+  },
+  "table": {
+    "addNew": "Add new Table",
+    "tableNumber": "Table number",
+    "seats": "Seats",
+    "windowView": "Has window view",
+    "floor": "Floor",
+    "add": "Add",
+    "editTable": "Edit Table",
+    "edit": "Edit",
+    "delete": "Delete",
+    "sure": "Are you sure you want to delete Table ",
+    "yes": "Yes",
+    "no": "No",
+    "tableNumberCondition": "*(Table number must be greater than 0) ",
+    "seatsCondition": "*(Seats number must be greater than 0) ",
+    "floorCondition": "*(Floor must be greater than 0) "
   }
 }
