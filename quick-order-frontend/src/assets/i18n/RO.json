@@ -2,9 +2,8 @@
   "Title": "Translation example",
   "Intro": "Hello I am Arthur, I am 42 years old.",
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
-
   "register": {
-    "singUp" : "Înregistrare",
+    "singUp": "Înregistrare",
     "username": "Numele de utilizator",
     "email": "Email",
     "password": "Parolă",
@@ -24,8 +23,7 @@
     "Re_PasswordConditions": " *(Parola si confirmare parola trebuie sa fie identice)",
     "invalidFields": "Anumite filduri nu sunt completate corespunzator",
     "termsAndConditionsAlert": "*  "
-},
-
+  },
   "header": {
     "home": "Acasă",
     "reserve": "Rezervă o Masă",
@@ -34,16 +32,15 @@
     "aboutUs": "Despre Noi",
     "contact": "Contact",
     "logout": "Iesire din cont",
-    "language": "Limba: "
+    "language": "Limba: ",
+    "confirmReservations": "Confirmare Rezervari"
   },
-
   "startPage": {
     "quickOrder": "Quick Order",
     "motto": "Mai rapid decât îți poți imagina.",
     "singIn": "Logare",
     "singUp": "Înregistrare"
   },
-
   "login": {
     "login": "Log In",
     "register": "Register",
@@ -52,7 +49,6 @@
     "remember": "Remember Me",
     "forgotPass": "Forgot Password?"
   },
-
   "tableView": {
     "table": "Tabel",
     "seats": "Locuri",
@@ -65,7 +61,6 @@
     "in": "De la",
     "out": "Până la"
   },
-
   "menuItem": {
     "addNew": "Adaugă un nou item",
     "name": "Nume",
@@ -84,5 +79,4 @@
     "durationCondition": "*(Durata nu poate fi negativă) ",
     "priceCondition": "*(Prețul nu poate fi negativ) "
   }
-
 }

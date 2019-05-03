@@ -24,4 +24,12 @@ export class TableService {
   getTables(checkInTime: string, checkOutTime: string): Observable<Table[]> {
     return this.apiService.getRequest('api/table/free/' + checkInTime + '/' + checkOutTime);
   }
+
+  getAllAssignedTablesOfAReservation(reservationName: String): Observable<Table[]> {
+    return this.apiService.getRequest('api/table/free/' + reservationName);
+  }
+
+  getAllTables(): Observable<Table[]> {
+    return this.apiService.getRequest('api/table/all');
+  }
 }

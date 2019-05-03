@@ -22,7 +22,6 @@ import {MaterialModule} from './material.module';
 import {MenuItemComponent} from './pages/menu-item/menu-item.component';
 import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
-import {MenuComponent} from './pages/menu/menu.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,11 +38,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     StartLoggedInComponent,
     ReservationComponent,
     RegisterComponent,
-    WaiterPageComponent,
     MenuComponent,
     TableViewComponent,
     MenuComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    WaiterPageComponent
   ],
   imports: [
     BrowserModule,

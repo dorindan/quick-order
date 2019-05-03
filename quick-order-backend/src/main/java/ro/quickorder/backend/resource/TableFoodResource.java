@@ -20,7 +20,13 @@ public class TableFoodResource {
 
     @RequestMapping(path = "/free/{checkInTime}/{checkOutTime}", method = RequestMethod.GET)
     public List<TableFoodDto> getAllFree(@PathVariable String checkInTime, @PathVariable String checkOutTime) {
-        return tableFoodService.getAllFree(CustomDateDeserializer.deserialize(checkInTime), CustomDateDeserializer.deserialize(checkOutTime));
+        return tableFoodService.getAllFree(CustomDateDeserializer.deserialize(checkInTime),
+                CustomDateDeserializer.deserialize(checkOutTime));
+    }
+
+    @RequestMapping(path = "/free/{reservationName}", method = RequestMethod.GET)
+    public List<TableFoodDto> getAllAssignedTablesOfAReservation(@PathVariable String reservationName) {
+        return tableFoodService.getAllAssignedTablesOfAReservation(reservationName);
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET)

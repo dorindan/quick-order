@@ -14,6 +14,7 @@ import ro.quickorder.backend.repository.TableFoodRepository;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TableFoodService {
@@ -24,6 +25,8 @@ public class TableFoodService {
     private TableFoodConverter tableFoodConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
+    @Autowired
+    private ReservationService reservationService;
 
     public List<TableFoodDto> getAllFree(Timestamp checkInTime, Timestamp checkOutTime) {
         if (checkInTime == null || checkOutTime == null) {
@@ -36,6 +39,13 @@ public class TableFoodService {
         tables.removeIf(occupiedTableFoods::contains);
         tables.stream().map(tableFoodConverter::toTableFoodDto).forEach(allFreeTables::add);
         return allFreeTables;
+    }
+
+    public List<TableFoodDto> getAllAssignedTablesOfAReservation(String reservationName) {
+        return reservationService.getReservationEntityByName(reservationName)
+                .getTables().stream()
+                .map(tableFoodConverter::toTableFoodDto)
+                .collect(Collectors.toList());
     }
 
     public List<TableFoodDto> getAll() {

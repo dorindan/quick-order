@@ -1,10 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
 import {Observable} from 'rxjs';
 import {ReservationService} from '../../services/reservation.service';
 import {Reservation} from '../../models/Reservation';
 import {ConfirmReservation} from '../../models/ConfirmReservation';
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -15,6 +16,8 @@ import {ConfirmReservation} from '../../models/ConfirmReservation';
 export class WaiterPageComponent implements OnInit {
   tablesGet: Observable<Table[]>;
   tables: Table[];
+  tablesAssignedGet: Observable<Table[]>;
+  tablesAssigned: Table[];
   reservationsGet: Observable<Reservation[]>;
   reservations: Reservation[];
   selectedOptions: Table[];
@@ -24,7 +27,7 @@ export class WaiterPageComponent implements OnInit {
   i: number;
   j: number;
 
-  constructor(private tableService: TableService, private reservationService: ReservationService) {
+  constructor(private tableService: TableService, private reservationService: ReservationService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -56,10 +59,22 @@ export class WaiterPageComponent implements OnInit {
     }
     console.log(reservation);
     this.reservationService.confirmReservation(new ConfirmReservation(reservation.checkInTime,
-  reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions));
-}
+      reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions))
+      .subscribe(data => {
+        this.showSnackbar('Reservation confirmed successfully.');
+      }, Error => {
+        this.showSnackbar('Confirmation failed. Please try again.');
+      });
+  }
 
-  hint(reservation: Reservation, index: number): String {
+  showSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: ['snackbar']
+    });
+  }
+
+  hint(reservation: Reservation): String {
     this.totalOfSelectedSeats = 0;
     this.i = 0;
     this.j = 0;
@@ -86,8 +101,11 @@ export class WaiterPageComponent implements OnInit {
     let checkOutTimeFormatted = ' ';
     checkOutTimeFormatted = reservation.checkOutTime.substr(0, 10).replace('/', '+').replace('/', '+') + '+' +
       reservation.checkOutTime.substr(11, 5);
+    this.tablesAssignedGet = this.tableService.getAllAssignedTablesOfAReservation(reservation.reservationName);
+    this.tablesAssigned = [];
+    this.tablesAssignedGet.forEach(table => table.forEach(t => this.tablesAssigned.push(t)));
     this.tablesGet = this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted);
-    this.tables = [];
+    this.tables = this.tablesAssigned;
     this.tablesGet.forEach(table => table.forEach(t => this.tables.push(t)));
   }
 

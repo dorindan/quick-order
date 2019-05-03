@@ -42,7 +42,7 @@ public class ReservationService {
             throw new ForbiddenException("CheckInTime must be greater than the current date");
         }
         LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
-        reservationDto.setStatus("not accepted");
+        reservationDto.setStatus("not acc");
         reservationDto.setConfirmed(false);
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
@@ -62,7 +62,7 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
         // find reservation
-        Reservation reservation = getReservationEntityByName(reservationDto);
+        Reservation reservation = getReservationEntityByName(reservationDto.getReservationName());
         // find tables
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
         // put tables in reservation
@@ -72,21 +72,21 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    private Reservation getReservationEntityByName(ReservationDto reservationDto) {
+    public Reservation getReservationEntityByName(String reservationName) {
         // find reservation
-        Reservation reservation = reservationRepository.findByReservationName(reservationDto.getReservationName());
+        Reservation reservation = reservationRepository.findByReservationName(reservationName);
         if (reservation == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
-        }
-        if (reservation.isConfirmed()) {
-            LOG.error("Reservation is already confirmed");
-            throw new NotFoundException("Reservation is already confirmed");
         }
         return reservation;
     }
 
     private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos) {
+        if (tableFoodDtos == null) {
+            LOG.error("TableList can not be null");
+            throw new ForbiddenException("TableList can not be null");
+        }
         if (tableFoodDtos.size() == 0) {
             LOG.error("TableList can not be null");
             throw new ForbiddenException("TableList can not be null");

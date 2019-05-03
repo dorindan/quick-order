@@ -8,6 +8,7 @@ import {MenuComponent} from './pages/menu/menu.component';
 import {ReservationComponent} from './pages/reservation/reservation.component';
 import {MenuItemComponent} from './pages/menu-item/menu-item.component';
 import {TableViewComponent} from './pages/table-view/table-view.component';
+import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 
 const routes: Routes = [];
 
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
   {path: 'reserve', component: ReservationComponent},
   {path: 'menuItem', component: MenuItemComponent},
   {path: 'tableView', component: TableViewComponent},
+  {path: 'confirmReservations', component: WaiterPageComponent},
   {path: '**', redirectTo: ''}
 ];
 

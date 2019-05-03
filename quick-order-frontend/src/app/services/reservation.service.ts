@@ -35,6 +35,6 @@ export class ReservationService {
   }
 
   confirmReservation(confirmReservation: ConfirmReservation): Observable<any> {
-    return this.apiService.postRequest('api/reservation/confirm', confirmReservation);
+    return this.apiService.putRequest('api/reservation/confirm', confirmReservation);
   }
 }

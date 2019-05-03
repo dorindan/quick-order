@@ -29,6 +29,10 @@ public class MenuItemResource {
         menuItemService.updateMenuItem(menuItemDto);
     }
 
+    @GetMapping("/demo")
+    public void setupForm(@RequestParam("petId") int petId) {
+    }
+
     @RequestMapping(path = "/remove/{menuItemName}", method = RequestMethod.DELETE)
     public void removeMenuItem(@PathVariable String menuItemName) {
         menuItemService.removeMenuItem(menuItemName);
