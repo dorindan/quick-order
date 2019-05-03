@@ -24,6 +24,10 @@ export class MenuService {
     return this.apiService.getRequest('api/menuItemType/all');
   }
 
+  addMenuItemType(menuItemType: MenuItemType): Observable<any> {
+    return this.apiService.postRequest('api/menuItemType/add', menuItemType);
+  }
+
   getMenuItems(): Observable<MenuItem[]> {
     return this.apiService.getRequest('api/menuItem/all');
   }

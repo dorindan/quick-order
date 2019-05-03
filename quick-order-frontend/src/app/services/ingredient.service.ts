@@ -19,4 +19,8 @@ export class IngredientService {
     return this.apiService.getRequest('api/ingredient/all');
   }
 
+  addIngredient(ingredient: Ingredient): Observable<any> {
+    return this.apiService.postRequest('api/ingredient/add', ingredient);
+  }
+
 }

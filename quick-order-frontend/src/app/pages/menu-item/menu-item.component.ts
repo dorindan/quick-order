@@ -33,8 +33,10 @@ export class MenuItemComponent implements OnInit {
   price = 0;
   activateIngredientAdd = false;
   activateTypeAdd = false;
+  ingredientToAdd = '';
+  menuItemTypeToAdd = '';
 
-  constructor(private tableService: MenuService, private ingredientService: IngredientService) {
+  constructor(private menuItemService: MenuService, private ingredientService: IngredientService) {
   }
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class MenuItemComponent implements OnInit {
   }
 
   updateMenu() {
-    this.menuItemsGet = this.tableService.getMenuItems();
+    this.menuItemsGet = this.menuItemService.getMenuItems();
     this.menuItems = [];
     this.menuItemsGet.forEach(menuItem => menuItem.forEach(m => {
       if (m.menuItemTypeDto == null) {
@@ -79,7 +81,7 @@ export class MenuItemComponent implements OnInit {
       const itemTypeToUse = new MenuItemType(this.itemType);
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, this.ingredients, this.price, itemTypeToUse);
-      this.tableService.addMenuItem(newMenuItem);
+      this.menuItemService.addMenuItem(newMenuItem);
       window.location.reload();
     } else {
       alert('Some date are not valid, try again!');
@@ -92,7 +94,7 @@ export class MenuItemComponent implements OnInit {
       const itemTypeToUse = new MenuItemType(this.itemType);
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, this.ingredients, this.price, itemTypeToUse);
-      this.tableService.editMenuItem(newMenuItem);
+      this.menuItemService.editMenuItem(newMenuItem);
       window.location.reload();
     } else {
       alert('Some Date are not valid, try again!');
@@ -100,7 +102,7 @@ export class MenuItemComponent implements OnInit {
   }
 
   updateMenuItemType(): void {
-    this.menuItemTypesGet = this.tableService.getMenuItemType();
+    this.menuItemTypesGet = this.menuItemService.getMenuItemType();
     this.menuItemTypes = [];
     this.menuItemTypesGet.forEach(menuItemType => menuItemType.forEach(m => {
       this.menuItemTypes.push(m);
@@ -108,7 +110,7 @@ export class MenuItemComponent implements OnInit {
   }
 
   delete(): void {
-    this.tableService.deleteMenuItem(this.name);
+    this.menuItemService.deleteMenuItem(this.name);
     window.location.reload();
   }
 
@@ -121,14 +123,20 @@ export class MenuItemComponent implements OnInit {
     this.itemType = '';
     this.activateIngredientAdd = false;
     this.activateTypeAdd = false;
+    this.ingredientToAdd = '';
+    this.menuItemTypeToAdd = '';
   }
 
   addIngredient(): void {
     if (this.activateIngredientAdd) {
-      // add ingredient
-      const ingredient = new Ingredient('test');
-      this.ingredientsList.push(ingredient);
+      const ingredient = new Ingredient(this.ingredientToAdd);
+      this.ingredientService.addIngredient(ingredient).subscribe(rez => {
+        this.ingredientsList.push(ingredient);
+      }, error1 => {
+        alert('The ingredient could not be added!, Please try again!');
+      });
       this.activateIngredientAdd = false;
+      this.ingredientToAdd = '';
     } else {
       this.activateIngredientAdd = true;
     }
@@ -136,13 +144,27 @@ export class MenuItemComponent implements OnInit {
 
   addItemType(): void {
     if (this.activateTypeAdd) {
-      // add ingredient
-      const itemType = new MenuItemType('test');
-      this.menuItemTypes.push(itemType);
+      const itemType = new MenuItemType(this.menuItemTypeToAdd);
+      this.menuItemService.addMenuItemType(itemType).subscribe(rez => {
+        this.menuItemTypes.push(itemType);
+      }, error1 => {
+        alert('The ingredient could not be added!, Please try again!');
+      });
       this.activateTypeAdd = false;
+      this.menuItemTypeToAdd = '';
     } else {
       this.activateTypeAdd = true;
     }
+  }
+
+  clearIngredient(): void {
+    this.activateIngredientAdd = false;
+    this.ingredientToAdd = '';
+  }
+
+  clearMenuItemType(): void {
+    this.activateTypeAdd = false;
+    this.menuItemTypeToAdd = '';
   }
 
   validation(): boolean {
