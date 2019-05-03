@@ -20,10 +20,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {MenuItemComponent} from './pages/menu-item/menu-item.component';
 import {TableViewComponent} from './pages/table-view/table-view.component';
-import {MenuItemComponent} from './pages/menu-item/menu-item.component';
-import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
-import { TableComponent } from './pages/table/table.component';
+import {TableComponent} from './pages/table/table.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,7 +38,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     StartLoggedInComponent,
     ReservationComponent,
     RegisterComponent,
-    MenuComponent,
     TableViewComponent,
     MenuComponent,
     MenuItemComponent,
