@@ -1,58 +1,57 @@
-.center{
+.center {
   padding-top: 2.5em;
 }
 
-
-body{
+body {
   padding-top: 2em;
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 19em;
 }
 
-.seats{
-  width:20%;
+.seats {
+  width: 20%;
 }
 
-.reservationUUID{
-  width:30%;
+.reservationUUID {
+  width: 30%;
 }
 
-.numberOfPersons{
-  width:30%;
+.numberOfPersons {
+  width: 30%;
 }
 
-.checkInAndOutTime{
-  width:30%;
+.checkInAndOutTime {
+  width: 30%;
 }
 
-p{
+p {
   font-size: larger;
   color: #7e967e;
 }
 
-pre{
+pre {
   font-family: Arial;
   color: #7e967e;
   display: inline-block;
 }
 
-.extraDetails{
+.extraDetails {
   display: inline-block;
   font-family: Arial;
   color: #7e967e;
   font-size: x-small;
 }
 
-.buttonDiv{
-  width:100%;
+.buttonDiv {
+  width: 100%;
   padding-right: 3em;
 }
 
-.acceptButton{
-  float:right;
+.acceptButton {
+  float: right;
 }
 
-.hint{
+.hint {
   float: right;
 }

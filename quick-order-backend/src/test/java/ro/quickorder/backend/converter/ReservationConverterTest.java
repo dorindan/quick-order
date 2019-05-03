@@ -6,7 +6,8 @@ import ro.quickorder.backend.model.dto.ReservationDto;
 
 import java.sql.Timestamp;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Unit test for {@link ReservationConverter}
@@ -19,10 +20,9 @@ public class ReservationConverterTest {
 
     @Test
     public void testConvertReservationToDto() {
-        Reservation reservation = new Reservation(new Timestamp(10), new Timestamp(20), null, null, 5, false, "status", null);
-
+        Reservation reservation = new Reservation(new Timestamp(10), new Timestamp(20), null, null,
+                5, false, "status", null);
         ReservationDto reservationDto = reservationConverter.toReservationDto(reservation);
-
         assertEquals(reservation.getCheckInTime(), reservationDto.getCheckInTime());
         assertEquals(reservation.getCheckOutTime(), reservationDto.getCheckOutTime());
         assertEquals(reservation.getNumberOfPersons(), reservationDto.getNumberOfPersons());
@@ -34,16 +34,14 @@ public class ReservationConverterTest {
     @Test
     public void testConvertReservationToDtoWhenReservationIsNull() {
         ReservationDto reservationDto = reservationConverter.toReservationDto(null);
-
         assertNull(reservationDto);
     }
 
     @Test
     public void testConvertDtoToReservation() {
-        ReservationDto reservationDto = new ReservationDto(new Timestamp(10), new Timestamp(20), "status", false, 3, "name");
-
+        ReservationDto reservationDto = new ReservationDto(new Timestamp(10), new Timestamp(20), "status",
+                false, 3, "name");
         Reservation reservation = reservationConverter.toReservation(reservationDto);
-
         assertEquals(reservationDto.getCheckInTime(), reservation.getCheckInTime());
         assertEquals(reservationDto.getCheckOutTime(), reservation.getCheckOutTime());
         assertEquals(reservationDto.getNumberOfPersons(), reservation.getNumberOfPersons());
@@ -58,7 +56,6 @@ public class ReservationConverterTest {
     @Test
     public void testConvertDtoToReservationWhenDtoIsNull() {
         Reservation reservation = reservationConverter.toReservation(null);
-
         assertNull(reservation);
     }
 

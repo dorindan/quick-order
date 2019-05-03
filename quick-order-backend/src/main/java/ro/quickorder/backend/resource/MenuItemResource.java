@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.service.MenuItemService;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
-
 
 @RestController
 @RequestMapping(value = "/menuItem")
 public class MenuItemResource {
-
     @Autowired
     private MenuItemService menuItemService;
 
@@ -21,7 +20,7 @@ public class MenuItemResource {
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public void addMenuItem(@NotNull @RequestBody  MenuItemDto menuItemDto) {
+    public void addMenuItem(@NotNull @RequestBody MenuItemDto menuItemDto) {
         menuItemService.addMenuItem(menuItemDto);
     }
 

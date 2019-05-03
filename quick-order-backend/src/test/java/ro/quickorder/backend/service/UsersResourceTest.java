@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,27 +20,20 @@ import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
 
-import javax.inject.Inject;
-
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 
 @ActiveProfiles("junit")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UsersResourceTest {
-
-    @Inject
+    @Autowired
     private UserService userService;
-    @Inject
+    @Autowired
     private UserAttributeService userAttributeService;
-
-    @Inject
+    @Autowired
     private UserRepository userRepository;
-    @Inject
+    @Autowired
     private UserAttributeRepository userAttributeRepository;
 
     @Before
@@ -52,13 +46,11 @@ public class UsersResourceTest {
         userAttributeRepository.save(userAttribute);
         userAttribute.setUser(us1);
         userAttributeRepository.save(userAttribute);
-
         UserAttribute userAttribute2 = new UserAttribute();
         User us2 = userRepository.save(user2);
         userAttributeRepository.save(userAttribute2);
         userAttribute2.setUser(us2);
         userAttributeRepository.save(userAttribute2);
-
         UserAttribute userAttribute3 = new UserAttribute();
         User us3 = userRepository.save(user3);
         userAttributeRepository.save(userAttribute3);
@@ -77,13 +69,10 @@ public class UsersResourceTest {
         UserAttributeDto attributeDto = new UserAttributeDto();
         attributeDto.setLanguage(Language.RO);
         String userId = userRepository.findAll().get(0).getId();
-
         UserDto userDto = new UserDto();
         userDto.setEmail("alex@yahoo.com");
         userDto.setUsername("Alex1");
-
         userDto.setUserAttributeDto(attributeDto);
-
         userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
         User user = userRepository.findById(userId);
         assertNotNull(user);
@@ -93,11 +82,10 @@ public class UsersResourceTest {
     }
 
     @Test
-    public void testSetPreferenceAttributeIsNull(){
+    public void testSetPreferenceAttributeIsNull() {
         UserDto userDto = new UserDto();
         userDto.setEmail("alex@yahoo.com");
         userDto.setUsername("Alex");
-
         try {
             userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
             fail();
@@ -110,14 +98,10 @@ public class UsersResourceTest {
     public void testSetPreferenceBadUser() {
         UserAttributeDto attributeDto = new UserAttributeDto();
         attributeDto.setLanguage(Language.RO);
-        String userId = userRepository.findAll().get(0).getId();
-
         UserDto userDto = new UserDto();
         userDto.setEmail("newUser@yahoo.com");
         userDto.setUsername("newUser");
-
         userDto.setUserAttributeDto(attributeDto);
-
         try {
             userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
             fail();
@@ -131,10 +115,8 @@ public class UsersResourceTest {
         UserDto userDto = new UserDto();
         userDto.setUsername("Alex1");
         userDto.setPassword("parola1");
-
         UserDto userDto1 = userService.login(userDto);
         String actual = userDto1.getUsername();
-
         assertEquals("Alex1", actual);
     }
 
@@ -143,9 +125,8 @@ public class UsersResourceTest {
         UserDto userDto = new UserDto();
         userDto.setUsername("Alexx");
         userDto.setPassword("parola1");
-
         try {
-            UserDto userDtoRes = userService.login(userDto);
+            userService.login(userDto);
             fail("The username should be wrong");
         } catch (NotFoundException ex) {
             assertEquals("User or password are incorrect!", ex.getMessage());
@@ -153,13 +134,12 @@ public class UsersResourceTest {
     }
 
     @Test
-    public void testLogInWrongPassword(){
+    public void testLogInWrongPassword() {
         UserDto userDto = new UserDto();
         userDto.setUsername("Alex");
         userDto.setPassword("parola1213");
-
         try {
-            UserDto userDtoRes = userService.login(userDto);
+            userService.login(userDto);
             fail("The password should be wrong");
         } catch (NotFoundException ex) {
             assertEquals("User or password are incorrect!", ex.getMessage());
@@ -167,70 +147,65 @@ public class UsersResourceTest {
     }
 
     @Test
-    public void testSignUp(){
+    public void testSignUp() {
         UserDto userDto = new UserDto();
         userDto.setUsername("Andrei");
         userDto.setPassword("password");
         userDto.setEmail("Andrei@yahoo.com");
-
-        UserDto userDtoRez = userService.signUp(userDto);
-        assertEquals(userDtoRez.getEmail(), userDto.getEmail());
-        assertEquals(userDtoRez.getUsername(), userDto.getUsername());
-        assertNull(userDtoRez.getPassword());
+        UserDto user = userService.signUp(userDto);
+        assertEquals(user.getEmail(), userDto.getEmail());
+        assertEquals(user.getUsername(), userDto.getUsername());
+        assertNull(user.getPassword());
     }
 
     @Test
-    public void testSingUpUserIsNull(){
-
+    public void testSingUpUserIsNull() {
         try {
-            UserDto userDtoRez = userService.signUp(null);
+            userService.signUp(null);
             fail("User is null, it should throw a BadRequestException");
-        } catch(BadRequestException e){
+        } catch (BadRequestException e) {
             assertEquals("User is null!", e.getMessage());
         }
     }
 
     @Test
-    public void testSignUpInvalidUsername(){
-        try{
+    public void testSignUpInvalidUsername() {
+        try {
             UserDto userDtoTest = new UserDto();
             userDtoTest.setUsername("Dinu)");
             userDtoTest.setPassword("password");
             userDtoTest.setEmail("Dinu@yahoo.com");
-
-            UserDto res = userService.signUp(userDtoTest);
+            userService.signUp(userDtoTest);
             fail("The username should be invalid, it contains characters that are not allowed!");
-        }catch (ForbiddenException e){
-            assertEquals("UserName has characters that are not allowed!",e.getMessage());
+        } catch (ForbiddenException e) {
+            assertEquals("UserName has characters that are not allowed!", e.getMessage());
         }
     }
 
     @Test
-    public void testSignUpUserAlreadyUsed(){
+    public void testSignUpUserAlreadyUsed() {
         UserDto userDto = new UserDto();
         userDto.setUsername("Alex1");
         userDto.setPassword("password");
         userDto.setEmail("Andrei@yahoo.com");
-
-        try{
-            UserDto userDto1 = userService.signUp(userDto);
+        try {
+            userService.signUp(userDto);
             fail("User should be already used!");
-        }catch (NotAcceptableException ex){
+        } catch (NotAcceptableException ex) {
             assertEquals("UserName is already taken!", ex.getMessage());
         }
     }
 
     @Test
-    public void testSignUpEmailAlreadyUsed(){
+    public void testSignUpEmailAlreadyUsed() {
         UserDto userDto = new UserDto();
         userDto.setUsername("Andrei");
         userDto.setPassword("password");
         userDto.setEmail("ana@yahoo.com");
-
-        try{
-            UserDto userDto2 = userService.signUp(userDto);
+        try {
+            userService.signUp(userDto);
             fail("Email should already be used!");
-        }catch (NotAcceptableException ex){
+        } catch (NotAcceptableException ex) {
             assertEquals("Email is already taken!", ex.getMessage());
         }
     }

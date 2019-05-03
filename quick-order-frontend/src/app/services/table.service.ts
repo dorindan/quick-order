@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {Table} from '../models/Table';
 
-
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -26,5 +25,3 @@ export class TableService {
     return this.apiService.getRequest('api/table/free/' + checkInTime + '/' + checkOutTime);
   }
 }
-
-

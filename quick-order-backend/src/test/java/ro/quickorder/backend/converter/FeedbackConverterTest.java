@@ -4,7 +4,8 @@ import org.junit.Test;
 import ro.quickorder.backend.model.Feedback;
 import ro.quickorder.backend.model.dto.FeedbackDto;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Unit test for {@link FeedbackConverter}
@@ -12,15 +13,12 @@ import static org.junit.Assert.*;
  * @author R. Lupoaie
  */
 public class FeedbackConverterTest {
-
     private FeedbackConverter feedbackConverter = new FeedbackConverter();
 
     @Test
     public void testConvertFeedbackToDto() {
         Feedback feedback = new Feedback(4, "Message", null);
-
         FeedbackDto feedbackDto = feedbackConverter.toFeedbackDto(feedback);
-
         assertEquals(feedback.getMessage(), feedbackDto.getMessage());
         assertEquals(feedback.getRating(), feedbackDto.getRating());
     }
@@ -28,16 +26,13 @@ public class FeedbackConverterTest {
     @Test
     public void testConvertFeedbackToDtoWhenFeedbackIsNull() {
         FeedbackDto feedbackDto = feedbackConverter.toFeedbackDto(null);
-
         assertNull(feedbackDto);
     }
 
     @Test
     public void testConvertDtoToFeedback() {
         FeedbackDto feedbackDto = new FeedbackDto(4, "Message");
-
         Feedback feedback = feedbackConverter.toFeedback(feedbackDto);
-
         assertEquals(feedbackDto.getMessage(), feedback.getMessage());
         assertEquals(feedbackDto.getRating(), feedback.getRating());
         assertNull(feedback.getMenuItem());
@@ -46,7 +41,6 @@ public class FeedbackConverterTest {
     @Test
     public void testConvertDtoToFeedbackWhenDtoIsNull() {
         Feedback feedback = feedbackConverter.toFeedback(null);
-
         assertNull(feedback);
     }
 }

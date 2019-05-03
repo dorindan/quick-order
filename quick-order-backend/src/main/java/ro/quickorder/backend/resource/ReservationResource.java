@@ -9,7 +9,6 @@ import ro.quickorder.backend.service.ReservationService;
 import java.text.ParseException;
 import java.util.List;
 
-
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/reservation")
@@ -36,5 +35,4 @@ public class ReservationResource {
     public List<ReservationDto> getReservationsForTableByTableNumber(@PathVariable Integer tableNr) {
         return reservationService.getReservationsForTableByTableNumber(tableNr);
     }
-
 }

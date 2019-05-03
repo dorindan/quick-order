@@ -2,7 +2,6 @@ package ro.quickorder.backend.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.service.CustomDateDeserializer;
 import ro.quickorder.backend.service.CustomDateSerializer;
 
@@ -20,19 +19,19 @@ public class ConfirmReservationDto {
     private boolean confirmed;
     private Integer numberOfPersons;
     private String reservationName;
-    private List<TableFoodDto> tableFoodListDto;
+    private List<TableFoodDto> tableFoodDtos;
 
     public ConfirmReservationDto() {
     }
 
-    public ConfirmReservationDto(Timestamp checkInTime, Timestamp checkOutTime, String status, boolean confirmed, Integer numberOfPersons, String reservationName, List<TableFoodDto> tableFoodListDto) {
+    public ConfirmReservationDto(Timestamp checkInTime, Timestamp checkOutTime, String status, boolean confirmed, Integer numberOfPersons, String reservationName, List<TableFoodDto> tableFoodDtos) {
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
         this.status = status;
         this.confirmed = confirmed;
         this.numberOfPersons = numberOfPersons;
         this.reservationName = reservationName;
-        this.tableFoodListDto = tableFoodListDto;
+        this.tableFoodDtos = tableFoodDtos;
     }
 
     public Timestamp getCheckInTime() {
@@ -83,11 +82,11 @@ public class ConfirmReservationDto {
         this.reservationName = reservationName;
     }
 
-    public List<TableFoodDto> getTableFoodListDto() {
-        return tableFoodListDto;
+    public List<TableFoodDto> getTableFoodDtos() {
+        return tableFoodDtos;
     }
 
-    public void setTableFoodListDto(List<TableFoodDto> tableFoodListDto) {
-        this.tableFoodListDto = tableFoodListDto;
+    public void setTableFoodDtos(List<TableFoodDto> tableFoodDtos) {
+        this.tableFoodDtos = tableFoodDtos;
     }
 }

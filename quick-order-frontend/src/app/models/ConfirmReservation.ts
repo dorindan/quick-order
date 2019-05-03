@@ -1,4 +1,3 @@
-import {Reservation} from './Reservation';
 import {Table} from './Table';
 
 export class ConfirmReservation {
@@ -7,7 +6,6 @@ export class ConfirmReservation {
   checkOutTime: string;
   reservationName: string;
   public tableFoodListDto: Table[];
-
 
   constructor(checkInTime: string, numberOfPersons: number, checkOutTime: string, reservationName: string, tablesFoodListDto: Table[]) {
     this.checkInTime = checkInTime;

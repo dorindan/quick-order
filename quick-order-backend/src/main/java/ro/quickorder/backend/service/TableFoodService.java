@@ -30,26 +30,17 @@ public class TableFoodService {
             LOG.error("Time parameters can not be null");
             throw new BadRequestException("Time parameters can not be null");
         }
-
-        List<TableFoodDto> rez = new ArrayList<>();
+        List<TableFoodDto> allFreeTables = new ArrayList<>();
         List<TableFood> tables = tableFoodRepository.findAll();
-
-        List<TableFood> busyTableFoods = reservationRepository.findTablesWithReservationsBetween(checkInTime, checkOutTime);
-
-        tables.removeIf(busyTableFoods::contains);
-
-        for (TableFood table : tables) {
-            rez.add(tableFoodConverter.toTableFoodDto(table));
-        }
-        return rez;
+        List<TableFood> occupiedTableFoods = reservationRepository.findTablesWithReservationsBetween(checkInTime, checkOutTime);
+        tables.removeIf(occupiedTableFoods::contains);
+        tables.stream().map(tableFoodConverter::toTableFoodDto).forEach(allFreeTables::add);
+        return allFreeTables;
     }
 
     public List<TableFoodDto> getAll() {
-        List<TableFoodDto> rez = new ArrayList<>();
-        List<TableFood> tables = tableFoodRepository.findAll();
-        for (TableFood table : tables)
-            rez.add(tableFoodConverter.toTableFoodDto(table));
-        return rez;
+        List<TableFoodDto> allTables = new ArrayList<>();
+        tableFoodRepository.findAll().stream().map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).forEach(allTables::add);
+        return allTables;
     }
-
 }

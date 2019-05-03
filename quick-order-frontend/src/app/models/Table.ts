@@ -10,5 +10,4 @@ export class Table {
     this.windowView = windowView;
     this.floor = floor;
   }
-
 }
