@@ -89,10 +89,11 @@ export class MenuItemComponent implements OnInit {
         .subscribe(rez => {
           window.location.reload();
         }, error => {
-          this.showSnackbar(error.message);
+          this.showSnackbar('Some went wrong, please try again!');
+
         });
     } else {
-      this.showSnackbar('Some date  are not valid, try again!');
+      this.showSnackbar('Some date are not valid, try again!');
     }
   }
 
