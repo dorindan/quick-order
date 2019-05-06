@@ -108,5 +108,14 @@
     "tableNumberCondition": "*(Table number must be greater than 0) ",
     "seatsCondition": "*(Seats number must be greater than 0) ",
     "floorCondition": "*(Floor must be greater than 0) "
+  },
+  "waiterPage": {
+    "nrOfPersons": "  Number of Persons: ",
+    "table": "  Table: ",
+    "seats": "  Seats: ",
+    "floor": "  Floor: ",
+    "windowView": "  Has window view: ",
+    "tableTitle": "TABLES",
+    "acceptReservation": "Accept Reservation"
   }
 }

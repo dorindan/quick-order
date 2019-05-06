@@ -29,7 +29,9 @@ public class TableFoodService {
     @Autowired
     private ReservationService reservationService;
 
-    public List<TableFoodDto> getAllFree(Timestamp checkInTime, Timestamp checkOutTime) {
+    public List<TableFoodDto> getAllFree(String checkInT, String checkOutT) {
+        Timestamp checkInTime = CustomDateDeserializer.deserialize(checkInT);
+        Timestamp checkOutTime = CustomDateDeserializer.deserialize(checkOutT);
         if (checkInTime == null || checkOutTime == null) {
             LOG.error("Time parameters can not be null");
             throw new BadRequestException("Time parameters can not be null");
@@ -55,9 +57,9 @@ public class TableFoodService {
         return allTables;
     }
 
-    public void addTable(TableFoodDto tableFoodDto){
+    public void addTable(TableFoodDto tableFoodDto) {
         TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
-        if(tableFood != null){
+        if (tableFood != null) {
             LOG.error("Table already exists");
             throw new BadRequestException("Table already exists");
         }
@@ -65,9 +67,9 @@ public class TableFoodService {
         tableFoodRepository.save(tableFood);
     }
 
-    public void updateTable(TableFoodDto tableFoodDto){
+    public void updateTable(TableFoodDto tableFoodDto) {
         TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
-        if(tableFood == null){
+        if (tableFood == null) {
             LOG.error("Table not found");
             throw new NotFoundException("Table not found");
         }
@@ -77,9 +79,9 @@ public class TableFoodService {
         tableFoodRepository.save(tableFood);
     }
 
-    public void removeTable( int tableNr){
+    public void removeTable(int tableNr) {
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
-        if(tableFood == null){
+        if (tableFood == null) {
             LOG.error("Table not found");
             throw new NotFoundException("Table not found");
         }

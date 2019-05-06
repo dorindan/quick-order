@@ -33,7 +33,7 @@
     "contact": "Contact",
     "logout": "Iesire din cont",
     "language": "Limba: ",
-    "confirmReservations": "Confirmare Rezervari"
+    "confirmReservations": "Confirmare Rezervări"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -108,5 +108,14 @@
     "back": "Înapoi",
     "sendReservation": "Trimite Rezervarea",
     "finish": "Trimite"
+  },
+  "waiterPage": {
+    "nrOfPersons": "Numărul de persoane:",
+    "table": "  Masă: ",
+    "seats": "  Locuri: ",
+    "floor": "  Etaj: ",
+    "windowView": "  La geam: ",
+    "tableTitle": "MESE",
+    "acceptReservation": "Accepta Rezervarea"
   }
 }

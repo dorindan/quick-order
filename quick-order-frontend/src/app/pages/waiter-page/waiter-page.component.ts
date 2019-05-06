@@ -24,10 +24,9 @@ export class WaiterPageComponent implements OnInit {
   indexExpanded: number;
   disabledElements: number[];
   totalOfSelectedSeats: number;
-  i: number;
-  j: number;
 
-  constructor(private tableService: TableService, private reservationService: ReservationService, private snackBar: MatSnackBar) {
+  constructor(private tableService: TableService, private reservationService: ReservationService
+    , private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -57,7 +56,6 @@ export class WaiterPageComponent implements OnInit {
       this.indexExpanded = -1;
       this.disabledElements.push(index);
     }
-    console.log(reservation);
     this.reservationService.confirmReservation(new ConfirmReservation(reservation.checkInTime,
       reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions))
       .subscribe(data => {
@@ -76,8 +74,6 @@ export class WaiterPageComponent implements OnInit {
 
   hint(reservation: Reservation): String {
     this.totalOfSelectedSeats = 0;
-    this.i = 0;
-    this.j = 0;
     for (const option of this.selectedOptions) {
       for (const table of this.tables) {
         if (table.tableNr === option.tableNr) {
@@ -92,7 +88,6 @@ export class WaiterPageComponent implements OnInit {
   }
 
   openGroup(any, index: number, reservation: Reservation) {
-    console.log(any);
     this.selectedOptions = [];
     this.indexExpanded = index;
     let checkInTimeFormatted = '';
@@ -110,11 +105,7 @@ export class WaiterPageComponent implements OnInit {
   }
 
   checkDisabled(i: number): boolean {
-    if (this.disabledElements.includes(i)) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.disabledElements.includes(i);
   }
 
   enableEdit(i: number) {

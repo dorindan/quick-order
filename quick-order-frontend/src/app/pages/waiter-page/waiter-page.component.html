@@ -8,7 +8,8 @@
       <mat-expansion-panel-header>
         <div class="numberOfPersons">
           <mat-panel-description>
-            Number of Persons: {{reservation.numberOfPersons}}
+            <p translate="">waiterPage.nrOfPersons</p>
+            <p> {{reservation.numberOfPersons}}</p>
           </mat-panel-description>
         </div>
         <div class="checkInAndOutTime">
@@ -22,16 +23,25 @@
       </mat-expansion-panel-header>
       <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="selection(tables)">
         <hr>
-        <p>TABLES</p>
+        <p translate="">waiterPage.tableTitle</p>
         <hr>
         <mat-list-option *ngFor="let table of tables" [value]="table">
-          <pre class="mainDetails">Table: {{table.tableNr }}     Seats: {{table.seats}} <p class="extraDetails">     Floor: {{table.floor}}     Has window view: {{table.windowView}}</p></pre>
+          <div>
+            <pre class="d-inline float-left" translate="">waiterPage.table</pre>
+            <pre> {{table.tableNr }}</pre>
+            <pre translate="">waiterPage.seats</pre>
+            <pre>{{table.seats}}</pre>
+            <pre translate="">waiterPage.floor</pre>
+            <pre> {{table.floor}} </pre>
+            <pre translate="">waiterPage.windowView</pre>
+            <pre>{{table.windowView}}</pre>
+          </div>
         </mat-list-option>
       </mat-selection-list>
       <hr>
       <div class="buttonDiv">
         <button mat-stroked-button class="acceptButton" (click)="acceptReservation(reservation, i)">
-          Accept reservation
+          <div translate="">waiterPage.acceptReservation</div>
         </button>
         <br><br>
         <mat-hint class="hint">{{hint(reservation,i)}}</mat-hint>

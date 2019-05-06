@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.dto.ConfirmReservationDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
-import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.service.ReservationService;
 
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -18,7 +16,7 @@ public class ReservationResource {
     ReservationService reservationService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void addReservation(@RequestBody ReservationDto reservation) throws ParseException {
+    public void addReservation(@RequestBody ReservationDto reservation) {
         reservationService.addReservation(reservation);
     }
 
@@ -29,10 +27,7 @@ public class ReservationResource {
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
     public void confirmReservation(@RequestBody ConfirmReservationDto confirmReservationDto) {
-        reservationService.confirmReservation(new ReservationDto(confirmReservationDto.getCheckInTime(),
-                confirmReservationDto.getCheckOutTime(), confirmReservationDto.getStatus(),
-                confirmReservationDto.isConfirmed(), confirmReservationDto.getNumberOfPersons(),
-                confirmReservationDto.getReservationName()), confirmReservationDto.getTableFoodDtos());
+        reservationService.confirmReservation(confirmReservationDto);
     }
 
     @RequestMapping(path = "/reservationsForTable/{tableNr}", method = RequestMethod.GET)
