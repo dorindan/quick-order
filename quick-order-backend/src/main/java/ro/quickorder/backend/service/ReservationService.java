@@ -57,10 +57,7 @@ public class ReservationService {
     }
 
     public void confirmReservation(ConfirmReservationDto confirmReservationDto) {
-        ReservationDto reservationDto = new ReservationDto(confirmReservationDto.getCheckInTime(),
-                confirmReservationDto.getCheckOutTime(), confirmReservationDto.getStatus(),
-                confirmReservationDto.isConfirmed(), confirmReservationDto.getNumberOfPersons(),
-                confirmReservationDto.getReservationName());
+        ReservationDto reservationDto = reservationConverter.toReservationDtoFromConfirmReservationDto(confirmReservationDto);
         List<TableFoodDto> tableFoodDtos = confirmReservationDto.getTableFoodDtos();
         if (reservationDto.getReservationName() == null) {
             LOG.error("Reservation not found");

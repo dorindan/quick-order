@@ -44,8 +44,4 @@ public class TableFoodResource {
     public void removeTable(@PathVariable int tableNr) {
         tableFoodService.removeTable(tableNr);
     }
-
-    ;
-
-
 }
