@@ -5,13 +5,13 @@ export class ConfirmReservation {
   numberOfPersons: number;
   checkOutTime: string;
   reservationName: string;
-  public tableFoodListDto: Table[];
+  public tableFoodDtos: Table[];
 
-  constructor(checkInTime: string, numberOfPersons: number, checkOutTime: string, reservationName: string, tablesFoodListDto: Table[]) {
+  constructor(checkInTime: string, numberOfPersons: number, checkOutTime: string, reservationName: string, tablesFoodDtos: Table[]) {
     this.checkInTime = checkInTime;
     this.numberOfPersons = numberOfPersons;
     this.checkOutTime = checkOutTime;
     this.reservationName = reservationName;
-    this.tableFoodListDto = tablesFoodListDto;
+    this.tableFoodDtos = tablesFoodDtos;
   }
 }

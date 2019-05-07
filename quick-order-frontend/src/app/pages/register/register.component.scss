@@ -36,6 +36,7 @@
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
+
 .signUP-panel input:hover,
 .signUP-panel input:focus {
   outline:none;
@@ -44,6 +45,7 @@
   box-shadow: none;
   border-color: #ccc;
 }
+
 .btn-signUP {
   background-color: darkgreen !important;
   opacity: 0.4;
@@ -53,10 +55,10 @@
   border-color: darkgreen;
   color: white;
   width: 50%;
-
   margin-left: auto;
   margin-right: auto;
 }
+
 .btn-login:hover,
 .btn-login:focus {
   color: #fff;
@@ -72,5 +74,3 @@
   content: "\2122";
   color: transparent !important;
 }
-
-

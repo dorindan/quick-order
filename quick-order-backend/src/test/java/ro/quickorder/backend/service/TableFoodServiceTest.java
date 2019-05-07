@@ -81,29 +81,17 @@ public class TableFoodServiceTest {
 
     @Test
     public void testGetAllFreeTables() {
-        Timestamp timestampIn1 = Timestamp.valueOf("2007-09-23 10:10:10.0");
-        Timestamp timestampOut1 = Timestamp.valueOf("2007-09-23 12:10:10.0");
-        List<TableFoodDto> rezFree1 = tableFoodService.getAllFree(timestampIn1, timestampOut1);
+        List<TableFoodDto> rezFree1 = tableFoodService.getAllFree("23+09+2007+10:10", "23+09+2007+12:10");
         assertEquals(1, rezFree1.size());
-        Timestamp timestampIn2 = Timestamp.valueOf("2007-09-23 7:10:10.0");
-        Timestamp timestampOut2 = Timestamp.valueOf("2007-09-23 9:10:10.0");
-        List<TableFoodDto> rezFree2 = tableFoodService.getAllFree(timestampIn2, timestampOut2);
+        List<TableFoodDto> rezFree2 = tableFoodService.getAllFree("23+09+2007+07:10", "23+09+2007+09:10");
         assertEquals(3, rezFree2.size());
-        Timestamp timestampIn3 = Timestamp.valueOf("2007-09-23 11:10:10.0");
-        Timestamp timestampOut3 = Timestamp.valueOf("2007-09-23 13:10:10.0");
-        List<TableFoodDto> rezFree3 = tableFoodService.getAllFree(timestampIn3, timestampOut3);
+        List<TableFoodDto> rezFree3 = tableFoodService.getAllFree("23+09+2007+11:10", "23+09+2007+13:10");
         assertEquals(3, rezFree3.size());
-        Timestamp timestampIn4 = Timestamp.valueOf("2007-09-23 6:10:10.0");
-        Timestamp timestampOut4 = Timestamp.valueOf("2007-09-23 15:10:10.0");
-        List<TableFoodDto> rezFree4 = tableFoodService.getAllFree(timestampIn4, timestampOut4);
+        List<TableFoodDto> rezFree4 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+15:10");
         assertEquals(1, rezFree4.size());
-        Timestamp timestampIn5 = Timestamp.valueOf("2007-09-23 6:10:10.0");
-        Timestamp timestampOut5 = Timestamp.valueOf("2007-09-23 7:10:10.0");
-        List<TableFoodDto> rezFree5 = tableFoodService.getAllFree(timestampIn5, timestampOut5);
+        List<TableFoodDto> rezFree5 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+07:10");
         assertEquals(5, rezFree5.size());
-        Timestamp timestampIn6 = Timestamp.valueOf("2007-09-23 14:10:10.0");
-        Timestamp timestampOut6 = Timestamp.valueOf("2007-09-23 15:10:10.0");
-        List<TableFoodDto> rezFree6 = tableFoodService.getAllFree(timestampIn6, timestampOut6);
+        List<TableFoodDto> rezFree6 = tableFoodService.getAllFree("23+09+2007+14:10", "23+09+2007+15:10");
         assertEquals(5, rezFree6.size());
     }
 
@@ -136,7 +124,7 @@ public class TableFoodServiceTest {
         try {
             tableFoodService.addTable(tableFoodDto);
             fail("Table already exists, BadRequestException should be thrown");
-        } catch (BadRequestException e){
+        } catch (BadRequestException e) {
             assertEquals("Table already exists", e.getMessage());
         }
     }
@@ -153,7 +141,7 @@ public class TableFoodServiceTest {
         TableFood newTableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
         assertEquals(1, newTableFood.getFloor());
         assertEquals(12, newTableFood.getSeats());
-        assertTrue( newTableFood.isWindowView());
+        assertTrue(newTableFood.isWindowView());
     }
 
     @Test
@@ -162,7 +150,7 @@ public class TableFoodServiceTest {
         try {
             tableFoodService.updateTable(tableFoodDto);
             fail("Table dose not exists, NotFoundException should be thrown");
-        } catch (NotFoundException e){
+        } catch (NotFoundException e) {
             assertEquals("Table not found", e.getMessage());
         }
     }
@@ -183,7 +171,7 @@ public class TableFoodServiceTest {
         try {
             tableFoodService.removeTable(47);
             fail("Table dose not exists, NotFoundException should be thrown");
-        } catch (NotFoundException e){
+        } catch (NotFoundException e) {
             assertEquals("Table not found", e.getMessage());
         }
     }
