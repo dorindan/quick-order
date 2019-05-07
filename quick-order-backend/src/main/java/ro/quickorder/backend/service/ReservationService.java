@@ -57,8 +57,8 @@ public class ReservationService {
     }
 
     public void confirmReservation(ConfirmReservationDto confirmReservationDto) {
-        ReservationDto reservationDto = reservationConverter.toReservationDtoFromConfirmReservationDto(confirmReservationDto);
         List<TableFoodDto> tableFoodDtos = confirmReservationDto.getTableFoodDtos();
+        ReservationDto reservationDto = reservationConverter.toReservationDtoFromConfirmReservationDto(confirmReservationDto);
         if (reservationDto.getReservationName() == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
@@ -85,7 +85,7 @@ public class ReservationService {
     }
 
     private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos) {
-        if (!CollectionUtils.isEmpty(tableFoodDtos)) {
+        if (CollectionUtils.isEmpty(tableFoodDtos)) {
             LOG.error("The list of tables can not be empty");
             throw new ForbiddenException("The list of tables can not be empty");
         }
