@@ -4,11 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import ro.quickorder.backend.converter.ReservationConverter;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
+import ro.quickorder.backend.model.dto.ConfirmReservationDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
@@ -40,7 +42,7 @@ public class ReservationService {
             throw new ForbiddenException("CheckInTime must be greater than the current date");
         }
         LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
-        reservationDto.setStatus("not accepted");
+        reservationDto.setStatus("not acccepted");
         reservationDto.setConfirmed(false);
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
@@ -54,13 +56,15 @@ public class ReservationService {
         return reservations.stream().filter(reservation -> !reservation.isConfirmed()).map(reservationConverter::toReservationDto).collect(Collectors.toList());
     }
 
-    public void confirmReservation(ReservationDto reservationDto, List<TableFoodDto> tableFoodDtos) {
+    public void confirmReservation(ConfirmReservationDto confirmReservationDto) {
+        List<TableFoodDto> tableFoodDtos = confirmReservationDto.getTableFoodDtos();
+        ReservationDto reservationDto = reservationConverter.toReservationDtoFromConfirmReservationDto(confirmReservationDto);
         if (reservationDto.getReservationName() == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
         }
         // find reservation
-        Reservation reservation = getReservationEntityByName(reservationDto);
+        Reservation reservation = getReservationEntityByName(reservationDto.getReservationName());
         // find tables
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
         // put tables in reservation
@@ -70,24 +74,20 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    private Reservation getReservationEntityByName(ReservationDto reservationDto) {
+    public Reservation getReservationEntityByName(String reservationName) {
         // find reservation
-        Reservation reservation = reservationRepository.findByReservationName(reservationDto.getReservationName());
+        Reservation reservation = reservationRepository.findByReservationName(reservationName);
         if (reservation == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
-        }
-        if (reservation.isConfirmed()) {
-            LOG.error("Reservation is already confirmed");
-            throw new NotFoundException("Reservation is already confirmed");
         }
         return reservation;
     }
 
     private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos) {
-        if (tableFoodDtos.size() == 0) {
-            LOG.error("TableList can not be null");
-            throw new ForbiddenException("TableList can not be null");
+        if (CollectionUtils.isEmpty(tableFoodDtos)) {
+            LOG.error("The list of tables can not be empty");
+            throw new ForbiddenException("The list of tables can not be empty");
         }
         List<TableFood> tableFoods = new ArrayList<>();
         tableFoodDtos.forEach(tableFoodDto -> {

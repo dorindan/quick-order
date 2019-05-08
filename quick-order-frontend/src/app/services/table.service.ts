@@ -21,20 +21,28 @@ export class TableService {
   ) {
   }
 
+  getTables(checkInTime: string, checkOutTime: string): Observable<Table[]> {
+    return this.apiService.getRequest('api/table/free/' + checkInTime + '/' + checkOutTime);
+  }
+
+  getAllAssignedTablesOfAReservation(reservationName: String): Observable<Table[]> {
+    return this.apiService.getRequest('api/table/free/' + reservationName);
+  }
+
   getAllTables(): Observable<Table[]> {
     return this.apiService.getRequest('api/table/all');
   }
 
-  addTable(table: Table): void {
-    this.apiService.postRequest('api/table/add', table);
+  addTable(table: Table): Observable<any> {
+    return this.apiService.postRequest('api/table/add', table);
   }
 
-  editTable(table: Table): void {
-    this.apiService.postRequest('api/table/update', table);
+  editTable(table: Table): Observable<any> {
+    return this.apiService.postRequest('api/table/update', table);
   }
 
-  deleteTable(tableNr: number): void {
-    this.apiService.deleteRequest('api/table/remove/' + tableNr);
+  deleteTable(tableNr: number): Observable<any> {
+    return this.apiService.deleteRequest('api/table/remove/' + tableNr);
   }
 
 }

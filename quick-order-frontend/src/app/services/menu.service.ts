@@ -32,15 +32,15 @@ export class MenuService {
     return this.apiService.getRequest('api/menuItem/all');
   }
 
-  addMenuItem(menuItem: MenuItem): void {
-    this.apiService.postRequest('api/menuItem/add', menuItem);
+  addMenuItem(menuItem: MenuItem): Observable<any> {
+    return this.apiService.postRequest('api/menuItem/add', menuItem);
   }
 
-  editMenuItem(menuItem: MenuItem): void {
-    this.apiService.putRequest('api/menuItem/update', menuItem);
+  editMenuItem(menuItem: MenuItem): Observable<any> {
+    return this.apiService.putRequest('api/menuItem/update', menuItem);
   }
 
-  deleteMenuItem(menuItemName: string): void {
-    this.apiService.deleteRequest('api/menuItem/remove/' + menuItemName);
+  deleteMenuItem(menuItemName: string): Observable<any> {
+    return this.apiService.deleteRequest('api/menuItem/remove/' + menuItemName);
   }
 }

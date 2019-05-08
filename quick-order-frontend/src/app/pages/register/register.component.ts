@@ -3,6 +3,7 @@ import {FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
 import {User} from '../../models/User';
 import {ApiService} from '../../services/api.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-register',
@@ -24,10 +25,18 @@ export class RegisterComponent implements OnInit {
   public rightTermsAndConditions = true;
   public isActive = false;
 
-  constructor(private apiService: ApiService, private router: Router) {
+  constructor(private apiService: ApiService, private router: Router, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
+  }
+
+  showSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: ['snackbar']
+    });
   }
 
   public changePasswordVisibility() {
@@ -64,13 +73,13 @@ export class RegisterComponent implements OnInit {
       const url = 'api/users/signUp';
       this.apiService.postRequest(url, user).subscribe(rez => {
         this.router.navigate(['']);
-        alert('Register successful.');
+        this.showSnackbar('Register successful.');
       }, error1 => {
-        alert('Register failed. ');
+        this.showSnackbar('Register failed. ');
         return;
       });
     } else {
-      alert('Complete all boxes with the appropriate data first!');
+      this.showSnackbar('Complete all boxes with the appropriate data first!');
     }
   }
 

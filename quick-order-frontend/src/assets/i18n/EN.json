@@ -2,6 +2,7 @@
   "Title": "Translation example",
   "Intro": "Hello I am Arthur, I am 42 years old.",
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
+
   "register": {
     "signUp": "Sign up",
     "username": "Username",
@@ -24,15 +25,20 @@
     "invalidFields": "Some of the fields above are not valid!",
     "termsAndConditionsAlert": "*  "
   },
+
   "header": {
     "home": "Home",
     "reserve": "Reserve a Table",
     "placeOrder": "Place an Order",
     "menu": "Menu",
+    "menuItem": "Menu item",
+    "table": "Tables",
+    "tableView": "Table view",
     "aboutUs": "About Us",
     "contact": "Contact Us",
     "logout": "Logout",
-    "language": "Language "
+    "language": "Language ",
+    "confirmReservations": "Confirm Reservations"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -107,5 +113,14 @@
     "tableNumberCondition": "*(Table number must be greater than 0) ",
     "seatsCondition": "*(Seats number must be greater than 0) ",
     "floorCondition": "*(Floor must be greater than 0) "
+  },
+  "waiterPage": {
+    "nrOfPersons": "  Number of Persons: ",
+    "table": "  Table: ",
+    "seats": "  Seats: ",
+    "floor": "  Floor: ",
+    "windowView": "  Has window view: ",
+    "tableTitle": "TABLES",
+    "acceptReservation": "Accept Reservation"
   }
 }

@@ -2,9 +2,8 @@
   "Title": "Translation example",
   "Intro": "Hello I am Arthur, I am 42 years old.",
   "Example": "Hello I am {{name}}, I am {{age}} years old.",
-
   "register": {
-    "signUp" : "Înregistrare",
+    "singUp": "Înregistrare",
     "username": "Numele de utilizator",
     "email": "Email",
     "password": "Parolă",
@@ -24,26 +23,27 @@
     "Re_PasswordConditions": " *(Parola si confirmare parola trebuie sa fie identice)",
     "invalidFields": "Anumite filduri nu sunt completate corespunzator",
     "termsAndConditionsAlert": "*  "
-},
-
+  },
   "header": {
     "home": "Acasă",
     "reserve": "Rezervă o Masă",
     "placeOrder": "Plasează o comandă",
     "menu": "Meniu",
+    "menuItem": "Produse",
+    "table": "Mese",
+    "tableView": "Vizualizare mese",
     "aboutUs": "Despre Noi",
     "contact": "Contact",
     "logout": "Iesire din cont",
-    "language": "Limba: "
+    "language": "Limba: ",
+    "confirmReservations": "Confirmare Rezervări"
   },
-
   "startPage": {
     "quickOrder": "Quick Order",
     "motto": "Mai rapid decât îți poți imagina.",
     "signIn": "Logare",
     "signUp": "Înregistrare"
   },
-
   "login": {
     "login": "Log In",
     "register": "Register",
@@ -52,7 +52,6 @@
     "remember": "Remember Me",
     "forgotPass": "Forgot Password?"
   },
-
   "tableView": {
     "table": "Tabel",
     "seats": "Locuri",
@@ -65,7 +64,6 @@
     "in": "De la",
     "out": "Până la"
   },
-
   "menuItem": {
     "addNew": "Adaugă un nou item",
     "name": "Nume",
@@ -85,7 +83,6 @@
     "durationCondition": "*(Durata nu poate fi negativă) ",
     "priceCondition": "*(Prețul nu poate fi negativ) "
   },
-
   "table": {
     "addNew": "Adaugă o nouă masă",
     "tableNumber": "Numar masă",
@@ -103,9 +100,8 @@
     "seatsCondition": "*(Numărul de locuri trebuie să fie mai mare decât 0) ",
     "floorCondition": "*(Etajul trebuie să fie mai mare decât -2) "
   },
-
   "reservation": {
-    "motto": "Găseșteți masa pentru orice ocazie",
+    "motto": "Găsește-ți masa pentru orice ocazie",
     "dataPicker": "Alege o dată",
     "next": "Pasul următor",
     "chooseHour": "Alege o oră",
@@ -115,5 +111,14 @@
     "back": "Înapoi",
     "sendReservation": "Trimite Rezervarea",
     "finish": "Trimite"
+  },
+  "waiterPage": {
+    "nrOfPersons": "Numărul de persoane:",
+    "table": "  Masă: ",
+    "seats": "  Locuri: ",
+    "floor": "  Etaj: ",
+    "windowView": "  La geam: ",
+    "tableTitle": "MESE",
+    "acceptReservation": "Accepta Rezervarea"
   }
 }
