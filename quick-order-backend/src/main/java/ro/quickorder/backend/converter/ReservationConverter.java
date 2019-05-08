@@ -2,7 +2,11 @@ package ro.quickorder.backend.converter;
 
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Reservation;
+import ro.quickorder.backend.model.dto.ConfirmReservationDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
+import ro.quickorder.backend.model.dto.TableFoodDto;
+
+import java.util.List;
 
 /**
  * Converts Reservations to their corresponding DTO and vice versa.
@@ -40,4 +44,35 @@ public class ReservationConverter {
         reservationDto.setReservationName(reservation.getReservationName());
         return reservationDto;
     }
+
+    public ReservationDto toReservationDtoFromConfirmReservationDto(ConfirmReservationDto confirmReservationDto) {
+        if (confirmReservationDto == null) {
+            return null;
+        }
+        ReservationDto reservationDto = new ReservationDto();
+        reservationDto.setCheckInTime(confirmReservationDto.getCheckInTime());
+        reservationDto.setCheckOutTime(confirmReservationDto.getCheckOutTime());
+        reservationDto.setStatus(confirmReservationDto.getStatus());
+        reservationDto.setConfirmed(confirmReservationDto.isConfirmed());
+        reservationDto.setNumberOfPersons(confirmReservationDto.getNumberOfPersons());
+        reservationDto.setReservationName(confirmReservationDto.getReservationName());
+        return reservationDto;
+    }
+
+
+    public ConfirmReservationDto toConfirmReservationDtoFromReservationDto(ReservationDto reservationDto, List<TableFoodDto> tableFoodDtos) {
+        if (reservationDto == null) {
+            return null;
+        }
+        ConfirmReservationDto confirmReservationDto = new ConfirmReservationDto();
+        confirmReservationDto.setCheckInTime(reservationDto.getCheckInTime());
+        confirmReservationDto.setCheckOutTime(reservationDto.getCheckOutTime());
+        confirmReservationDto.setStatus(reservationDto.getStatus());
+        confirmReservationDto.setConfirmed(reservationDto.isConfirmed());
+        confirmReservationDto.setNumberOfPersons(reservationDto.getNumberOfPersons());
+        confirmReservationDto.setReservationName(reservationDto.getReservationName());
+        confirmReservationDto.setTableFoodDtos(tableFoodDtos);
+        return confirmReservationDto;
+    }
+
 }

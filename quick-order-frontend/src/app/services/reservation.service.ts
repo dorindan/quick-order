@@ -3,6 +3,7 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {Reservation} from '../models/Reservation';
+import {ConfirmReservation} from '../models/ConfirmReservation';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -28,6 +29,12 @@ export class ReservationService {
   getReservation(tableNr: number): Observable<any> {
     return this.apiService.getRequest('api/reservation/reservationsForTable/' + tableNr);
   }
+
+  getUnacceptedReservation(): Observable<Reservation[]> {
+    return this.apiService.getRequest('api/reservation/unconfirmed');
+  }
+
+  confirmReservation(confirmReservation: ConfirmReservation): Observable<any> {
+    return this.apiService.putRequest('api/reservation/confirm', confirmReservation);
+  }
 }
-
-

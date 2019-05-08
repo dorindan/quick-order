@@ -2,11 +2,10 @@ package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ro.quickorder.backend.model.dto.ConfirmReservationDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
-import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.service.ReservationService;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -27,8 +26,8 @@ public class ReservationResource {
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
-    public void confirmReservation(@NotNull ReservationDto reservationDto,@NotNull List<TableFoodDto> tableFoodDtos) {
-        reservationService.confirmReservation(reservationDto, tableFoodDtos);
+    public void confirmReservation(@RequestBody ConfirmReservationDto confirmReservationDto) {
+        reservationService.confirmReservation(confirmReservationDto);
     }
 
     @RequestMapping(path = "/reservationsForTable/{tableNr}", method = RequestMethod.GET)

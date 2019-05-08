@@ -18,9 +18,11 @@ import {NgxPopper} from 'angular-popper';
 import {MenuComponent} from './pages/menu/menu.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
-import { MenuItemComponent } from './pages/menu-item/menu-item.component';
-import { TableViewComponent } from './pages/table-view/table-view.component';
-import { TableComponent } from './pages/table/table.component';
+import {MenuItemComponent} from './pages/menu-item/menu-item.component';
+import {TableViewComponent} from './pages/table-view/table-view.component';
+import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
+import {TableComponent} from './pages/table/table.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -36,10 +38,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     StartLoggedInComponent,
     ReservationComponent,
     RegisterComponent,
-    MenuComponent,
     TableViewComponent,
     MenuComponent,
     MenuItemComponent,
+    WaiterPageComponent,
     TableComponent
   ],
   imports: [
