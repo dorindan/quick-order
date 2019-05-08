@@ -109,7 +109,7 @@ export class MenuItemComponent implements OnInit {
       this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
         window.location.reload();
       }, error => {
-        this.showSnackbar(error.message);
+        this.showSnackbar('The introduced data is not valid!, please try again!');
       });
     } else {
       this.showSnackbar('The introduced data is not valid!, please try again!');

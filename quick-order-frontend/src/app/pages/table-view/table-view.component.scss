@@ -1,7 +1,3 @@
-.center {
-  padding-top: 2.5em;
-}
-
 body {
   padding-top: 2em;
   padding-left: 1em;
@@ -36,11 +32,26 @@ pre {
   display: inline-block;
 }
 
+.mainDetails {
+  display: inline-block;
+  font-family: Arial;
+  color: #7e967e;
+  font-size: larger;
+}
+
 .extraDetails {
   display: inline-block;
   font-family: Arial;
   color: #7e967e;
   font-size: x-small;
+}
+
+.mainText{
+  padding-top:8%;
+}
+
+.extraText{
+  padding-top:10%;
 }
 
 .buttonDiv {
