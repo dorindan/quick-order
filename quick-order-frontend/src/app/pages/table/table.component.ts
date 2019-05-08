@@ -66,10 +66,10 @@ export class TableComponent implements OnInit {
       this.tableService.addTable(newTable).subscribe(rez => {
         window.location.reload();
       }, error => {
-        this.showSnackbar(error.message);
+        this.showSnackbar('The introduced data is not valid!, please try again!');
       });
     } else {
-      alert('Some date are not valid, try again!');
+      this.showSnackbar('The introduced data is not valid!, please try again!');
     }
   }
 
@@ -80,10 +80,10 @@ export class TableComponent implements OnInit {
       this.tableService.editTable(newTable).subscribe(rez => {
         window.location.reload();
       }, error => {
-        this.showSnackbar(error.message);
+        this.showSnackbar('The introduced data is not valid!, please try again!');
       });
     } else {
-      alert('Some Date are not valid, try again!');
+      this.showSnackbar('The introduced data is not valid!, please try again!');
     }
   }
 
@@ -91,7 +91,7 @@ export class TableComponent implements OnInit {
     this.tableService.deleteTable(this.tableNr).subscribe(rez => {
       window.location.reload();
     }, error => {
-      this.showSnackbar(error.message);
+      this.showSnackbar('The item could not be deleted!, pleas try again!');
     });
   }
 

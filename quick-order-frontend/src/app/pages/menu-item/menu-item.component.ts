@@ -89,11 +89,10 @@ export class MenuItemComponent implements OnInit {
         .subscribe(rez => {
           window.location.reload();
         }, error => {
-          this.showSnackbar('Some went wrong, please try again!');
-
+          this.showSnackbar('The introduced data is not valid!, please try again!');
         });
     } else {
-      this.showSnackbar('Some date are not valid, try again!');
+      this.showSnackbar('The introduced data is not valid!, please try again!');
     }
   }
 
@@ -109,16 +108,16 @@ export class MenuItemComponent implements OnInit {
         this.showSnackbar(error.message);
       });
     } else {
-      this.showSnackbar('Some Date are not valid, try again!');
+      this.showSnackbar('The introduced data is not valid!, please try again!');
     }
   }
 
   delete(): void {
-      this.tableService.deleteMenuItem(this.name).subscribe(rez => {
-        window.location.reload();
-      } , error => {
-        this.showSnackbar(error.message);
-      });
+    this.tableService.deleteMenuItem(this.name).subscribe(rez => {
+      window.location.reload();
+    }, error => {
+      this.showSnackbar('The item could not be deleted!, please try again!');
+    });
   }
 
   clear(): void {
