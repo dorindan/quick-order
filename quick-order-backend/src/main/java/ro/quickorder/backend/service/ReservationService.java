@@ -19,6 +19,7 @@ import ro.quickorder.backend.repository.TableFoodRepository;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +45,8 @@ public class ReservationService {
         LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
         reservationDto.setStatus("not acccepted");
         reservationDto.setConfirmed(false);
+        UUID uuid = UUID.randomUUID();
+        reservationDto.setReservationName(uuid.toString().substring(0,9));
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
