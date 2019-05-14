@@ -26,11 +26,13 @@ import java.util.stream.Collectors;
 public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
-    ReservationRepository reservationRepository;
+    private ReservationRepository reservationRepository;
     @Autowired
     private ReservationConverter reservationConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
+    @Autowired
+    private TableFoodService tableFoodService;
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -46,7 +48,7 @@ public class ReservationService {
         reservationDto.setStatus("not acccepted");
         reservationDto.setConfirmed(false);
         UUID uuid = UUID.randomUUID();
-        reservationDto.setReservationName(uuid.toString().substring(0,9));
+        reservationDto.setReservationName(uuid.toString().substring(0, 9));
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
@@ -69,7 +71,12 @@ public class ReservationService {
         // find reservation
         Reservation reservation = getReservationEntityByName(reservationDto.getReservationName());
         // find tables
-        List<TableFood> reservationTables = getTablesByName(tableFoodDtos);
+        String checkIn = reservationDto.getCheckInTime().toString();
+        checkIn= checkIn.substring(8, 10) + "+" + checkIn.substring(5, 7) + "+" + checkIn.substring(0, 4) + "+" + checkIn.substring(checkIn.indexOf(' ')+1, checkIn.indexOf(':') + 3);
+
+        String checkOut = reservationDto.getCheckInTime().toString();
+        checkOut= checkOut.substring(8, 10) + "+" + checkOut.substring(5, 7) + "+" + checkOut.substring(0, 4) + "+" + checkOut.substring(checkOut.indexOf(' ')+1, checkOut.indexOf(':') + 3);
+        List<TableFood> reservationTables = getTablesByName(tableFoodDtos, checkIn, checkOut);
         // put tables in reservation
         reservation.setTables(reservationTables);
         reservation.setConfirmed(true);
@@ -84,20 +91,31 @@ public class ReservationService {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
         }
+        if (reservation.isConfirmed()) {
+            LOG.error("Reservation is already confirmed");
+            throw new NotFoundException("Reservation is already confirmed");
+        }
+
         return reservation;
     }
 
-    private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos) {
+    private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos, String checkIn, String checkOut) {
         if (CollectionUtils.isEmpty(tableFoodDtos)) {
             LOG.error("The list of tables can not be empty");
             throw new ForbiddenException("The list of tables can not be empty");
         }
+        List<TableFoodDto> freeTables = tableFoodService.getAllFree(checkIn, checkOut);
+
         List<TableFood> tableFoods = new ArrayList<>();
         tableFoodDtos.forEach(tableFoodDto -> {
             TableFood tableFood = tableFoodRepository.findByTableNr(tableFoodDto.getTableNr());
             if (tableFood == null) {
                 LOG.error("Table not found");
                 throw new NotFoundException("Table not found");
+            }
+            if (freeTables.stream().filter( table -> table.getTableNr()==(tableFoodDto.getTableNr())).findAny().orElse(null) == null) {
+                LOG.error("Table not free");
+                throw new NotFoundException("Table not free");
             }
             tableFoods.add(tableFood);
         });

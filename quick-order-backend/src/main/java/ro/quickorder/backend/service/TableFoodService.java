@@ -30,11 +30,16 @@ public class TableFoodService {
     private ReservationService reservationService;
 
     public List<TableFoodDto> getAllFree(String checkInT, String checkOutT) {
-        Timestamp checkInTime = CustomDateDeserializer.deserialize(checkInT);
-        Timestamp checkOutTime = CustomDateDeserializer.deserialize(checkOutT);
-        if (checkInTime == null || checkOutTime == null) {
-            LOG.error("Time parameters can not be null");
-            throw new BadRequestException("Time parameters can not be null");
+        Timestamp checkInTime = null;
+        Timestamp checkOutTime = null;
+        try{
+            checkInTime = CustomDateDeserializer.deserialize(checkInT);
+            checkOutTime = CustomDateDeserializer.deserialize(checkOutT);
+        } catch (Exception e){
+            if (checkInTime == null || checkOutTime == null) {
+                LOG.error("Time parameters can not be null");
+                throw new BadRequestException("Time parameters can not be null");
+            }
         }
         List<TableFoodDto> allFreeTables = new ArrayList<>();
         List<TableFood> tables = tableFoodRepository.findAll();
