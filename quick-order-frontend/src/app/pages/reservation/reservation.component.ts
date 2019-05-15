@@ -5,6 +5,7 @@ import {MatDatepickerInputEvent} from '@angular/material';
 import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {PropertyService} from '../../services/property.service';
+import {Table} from '../../models/Table';
 
 @Component({
   selector: 'app-reservation',
@@ -26,6 +27,9 @@ export class ReservationComponent implements OnInit {
   currentDate = new Date();
   hours: string[] = [];
   hourControl = new FormControl('', [Validators.required]);
+
+  public tableList: Table[] = [];
+  public tables: number[] = [];
 
   constructor(private _formBuilder: FormBuilder,
               private reservationService: ReservationService,
@@ -49,6 +53,10 @@ export class ReservationComponent implements OnInit {
       endHour.setHours(+endHours[0], +endHours[1], +endHours[2]);
       this.fillHours(startHour, endHour);
     });
+  }
+
+  updateTables() {
+    alert('Am intrat');
   }
 
   addDate(type: string, event: MatDatepickerInputEvent<Date>) {

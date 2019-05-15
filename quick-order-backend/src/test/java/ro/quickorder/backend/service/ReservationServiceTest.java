@@ -25,6 +25,7 @@ import ro.quickorder.backend.repository.TableFoodRepository;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -225,5 +226,24 @@ public class ReservationServiceTest {
             assertEquals("Table not found!", e.getMessage());
         }
     }
+
+    @Test
+    public void testAddReservationConfirmed() {
+        long twoHoursInMilliseconds = 7200000;
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis() + twoHoursInMilliseconds);
+        ReservationDto reservationDto = new ReservationDto.Builder().withnumberOfPersons(12).withCheckInTime(currentTimestamp).build();
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        reservationDto.setTableFoodDtos(tableFoods.stream()
+                .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList()));
+        List<Reservation> reservationsBefor = reservationRepository.findAll();
+        assertEquals(reservationsBefor.size(), 3);
+        Long confirmed = reservationsBefor.stream().filter(reservation -> reservation.isConfirmed()).count();
+        reservationService.addReservation(reservationDto);
+        List<Reservation> reservationsAfter = reservationRepository.findAll();
+        Long confirmedAfter = reservationsAfter.stream().filter(reservation -> reservation.isConfirmed()).count();
+        assertEquals(reservationsAfter.size(), 4);
+        assertEquals((Long)(confirmed + 1), confirmedAfter);
+    }
+
 
 }

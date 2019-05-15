@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import ro.quickorder.backend.converter.ReservationConverter;
+import ro.quickorder.backend.converter.TableFoodConverter;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
@@ -31,6 +32,8 @@ public class ReservationService {
     private ReservationConverter reservationConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
+    @Autowired
+    private TableFoodConverter tableFoodConverter;
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -44,13 +47,32 @@ public class ReservationService {
         }
         LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
         reservationDto.setStatus("not acccepted");
-        reservationDto.setConfirmed(false);
-        UUID uuid = UUID.randomUUID();
-        reservationDto.setReservationName(uuid.toString().substring(0, 9));
+        // set checkOut and checkIn
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
+        // set confirmed
+        reservationDto.setConfirmed(false);
+        // set reservation name
+        UUID uuid = UUID.randomUUID();
+        reservationDto.setReservationName(uuid.toString().substring(0, 9));
         Reservation reservation = reservationConverter.toReservation(reservationDto);
+        List<TableFood> reservations = reservation.getTables();
+        reservation.setTables(null);
+        // save reservation in database
+        reservation = reservationRepository.save(reservation);
+
+        // treat the reservation as confirmed or unconfirmed
+        if(reservations != null && reservations.size()>0){
+            List<TableFoodDto> tableFoodDtos = reservations.stream()
+                    .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList());
+            // find tables and make sure that they are free
+            reservation.setTables(getTablesByName(tableFoodDtos));
+            reservation.setStatus("acccepted");
+            reservation.setConfirmed(true);
+        }
+
+        // save reservation in database
         reservationRepository.save(reservation);
     }
 
