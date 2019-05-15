@@ -74,7 +74,7 @@ public class ReservationService {
         String checkIn = reservationDto.getCheckInTime().toString();
         checkIn= checkIn.substring(8, 10) + "+" + checkIn.substring(5, 7) + "+" + checkIn.substring(0, 4) + "+" + checkIn.substring(checkIn.indexOf(' ')+1, checkIn.indexOf(':') + 3);
 
-        String checkOut = reservationDto.getCheckInTime().toString();
+        String checkOut = reservationDto.getCheckOutTime().toString();
         checkOut= checkOut.substring(8, 10) + "+" + checkOut.substring(5, 7) + "+" + checkOut.substring(0, 4) + "+" + checkOut.substring(checkOut.indexOf(' ')+1, checkOut.indexOf(':') + 3);
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos, checkIn, checkOut);
         // put tables in reservation

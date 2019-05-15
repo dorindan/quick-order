@@ -159,7 +159,7 @@ public class ReservationServiceTest {
         ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
         try {
             reservationService.confirmReservation(confirmReservationDto);
-            fail("Table should not be fount");
+            fail("Table should not have been found");
         } catch (NotFoundException e) {
             assertEquals(e.getMessage(), "Table not found");
         }
