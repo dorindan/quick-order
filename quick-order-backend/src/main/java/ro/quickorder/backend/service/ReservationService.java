@@ -33,7 +33,6 @@ public class ReservationService {
     private TableFoodRepository tableFoodRepository;
 
     public void addReservation(ReservationDto reservationDto) {
-
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
         if ((reservationDto.getNumberOfPersons() >= 100 || reservationDto.getNumberOfPersons() < 1)) {
             LOG.error("Number of persons for a reservation must be between 1 and 99");
@@ -47,7 +46,7 @@ public class ReservationService {
         reservationDto.setStatus("not acccepted");
         reservationDto.setConfirmed(false);
         UUID uuid = UUID.randomUUID();
-        reservationDto.setReservationName(uuid.toString().substring(0,9));
+        reservationDto.setReservationName(uuid.toString().substring(0, 9));
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
