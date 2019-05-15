@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationService} from '../../services/reservation.service';
-import {MatDatepickerInputEvent} from '@angular/material';
+import {MatDatepickerInputEvent, MatTableDataSource} from '@angular/material';
 import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {PropertyService} from '../../services/property.service';
 import {Table} from '../../models/Table';
+import {MenuItem} from '../../models/MenuItem';
+import {TableService} from '../../services/table.service';
 
 @Component({
   selector: 'app-reservation',
@@ -29,12 +31,12 @@ export class ReservationComponent implements OnInit {
   hourControl = new FormControl('', [Validators.required]);
 
   public tableList: Table[] = [];
-  public tables: number[] = [];
+  public selectedTables = [];
 
   constructor(private _formBuilder: FormBuilder,
               private reservationService: ReservationService,
               private snackBar: MatSnackBar,
-              private propertyService: PropertyService) {
+              private propertyService: PropertyService, private tableService: TableService) {
   }
 
   ngOnInit() {
@@ -56,7 +58,18 @@ export class ReservationComponent implements OnInit {
   }
 
   updateTables() {
-    alert('Am intrat');
+    this.dateTime = this.date.concat(' ').concat(this.time);
+    alert(this.dateTime + 'Am intrat');
+    const checkInTimeFormatted = this.dateTime.substr(0, this.dateTime.indexOf(' ')).replace('/', '+').replace('/', '+')
+      + '+' + this.dateTime.substr(this.dateTime.indexOf(' ') + 1, 5);
+    const outHouer = Number(this.time.charAt(1)) + 2;
+    this.dateTime = this.date.concat(' ').concat(this.time.replace(this.time.charAt(1), outHouer + ''));
+    const checkOutTimeFormatted = this.dateTime.substr(0, this.dateTime.indexOf(' ')).replace('/', '+').replace('/', '+') + '+' +
+      this.dateTime.substr(this.dateTime.indexOf(' ') + 1, 5);
+    alert(checkInTimeFormatted + 'Am intrat' + checkOutTimeFormatted);
+    this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted).subscribe(rez => {
+      this.tableList = rez;
+    });
   }
 
   addDate(type: string, event: MatDatepickerInputEvent<Date>) {
