@@ -36,7 +36,8 @@ export class ReservationComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
               private reservationService: ReservationService,
               private snackBar: MatSnackBar,
-              private propertyService: PropertyService, private tableService: TableService) {
+              private propertyService: PropertyService,
+              private tableService: TableService) {
   }
 
   ngOnInit() {
@@ -66,7 +67,6 @@ export class ReservationComponent implements OnInit {
     this.dateTime = this.date.concat(' ').concat(this.time.replace(this.time.charAt(1), outHouer + ''));
     const checkOutTimeFormatted = this.dateTime.substr(0, this.dateTime.indexOf(' ')).replace('/', '+').replace('/', '+') + '+' +
       this.dateTime.substr(this.dateTime.indexOf(' ') + 1, 5);
-    alert(checkInTimeFormatted + 'Am intrat' + checkOutTimeFormatted);
     this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted).subscribe(rez => {
       this.tableList = rez;
     });
@@ -89,12 +89,43 @@ export class ReservationComponent implements OnInit {
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
     this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false);
-    this.reservationService.reserve(this.reservation)
-      .subscribe(data => {
-        this.showSnackbar('Reservation sent successfully.');
-      }, Error => {
-        this.showSnackbar('Reservation failed. Please try again.');
-      });
+    let i = -1;
+    const tablesSelected: Table[] = [];
+    for (i = 0; i < this.tableList.length; i++) {
+      if (this.contains(this.tableList[i].tableNr)) {
+        tablesSelected.push(this.tableList[i]);
+      }
+    }
+    this.reservation.tableFoodDtos = tablesSelected;
+    if (this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
+      this.reservationService.reserve(this.reservation)
+        .subscribe(data => {
+          this.showSnackbar('Reservation sent successfully.');
+        }, Error => {
+          this.showSnackbar('Reservation failed. Please try again.');
+        });
+    } else {
+      this.showSnackbar('The number of persons are to great to fit in thous tables!');
+    }
+  }
+
+  calculateSeats(tables: Table[]): number {
+    let nr = 0;
+    let i = 0;
+    for (i = 0; i < tables.length; i++) {
+      nr = nr + tables[i].seats;
+    }
+    return nr;
+  }
+
+  contains(comparer: number): boolean {
+    let i = 0;
+    for (i = 0; i < this.selectedTables.length; i++) {
+      if (Number(this.selectedTables[i]) === comparer) {
+        return true;
+      }
+    }
+    return false;
   }
 
   showSnackbar(message: string) {
