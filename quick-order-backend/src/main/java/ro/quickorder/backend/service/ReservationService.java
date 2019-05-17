@@ -63,7 +63,7 @@ public class ReservationService {
         reservation = reservationRepository.save(reservation);
 
         // treat the reservation as confirmed or unconfirmed
-        if(reservations != null && reservations.size()>0){
+        if (reservations != null && reservations.size() > 0) {
             List<TableFoodDto> tableFoodDtos = reservations.stream()
                     .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList());
             // find tables and make sure that they are free
