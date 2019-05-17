@@ -1,5 +1,6 @@
 package ro.quickorder.backend.converter;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.dto.ConfirmReservationDto;
@@ -49,7 +50,7 @@ public class ReservationConverter {
         reservationDto.setConfirmed(reservation.isConfirmed());
         reservationDto.setNumberOfPersons(reservation.getNumberOfPersons());
         reservationDto.setReservationName(reservation.getReservationName());
-        if (reservation.getTables() != null) {
+        if (reservation.getTables() != null && Hibernate.isInitialized(reservation.getTables())) {
             reservationDto.setTableFoodDtos(reservation.getTables().stream()
                     .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList()));
         }
