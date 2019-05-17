@@ -13,8 +13,8 @@ public class PropertyResource {
     @Autowired
     private PropertyService propertyService;
 
-    @RequestMapping(value = "bistro", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public PropertyDto getBistroProperty() {
-        return propertyService.findByRestaurant("Bistro");
+        return propertyService.findByRestaurant();
     }
 }

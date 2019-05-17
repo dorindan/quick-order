@@ -1,18 +1,7 @@
 export class Property {
-  constructor(numeRestaurant: string, startProgramTime: string, endProgramTime: string) {
-    this._numeRestaurant = numeRestaurant;
+  constructor(startProgramTime: string, endProgramTime: string) {
     this._startProgramTime = startProgramTime;
     this._endProgramTime = endProgramTime;
-  }
-
-  private _numeRestaurant: string;
-
-  get numeRestaurant(): string {
-    return this._numeRestaurant;
-  }
-
-  set numeRestaurant(value: string) {
-    this._numeRestaurant = value;
   }
 
   private _startProgramTime: string;

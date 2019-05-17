@@ -4,17 +4,7 @@ import java.time.LocalTime;
 
 public class PropertyDto {
 
-    private String numeRestaurant;
-
     private LocalTime startProgramTime;
-
-    public String getNumeRestaurant() {
-        return numeRestaurant;
-    }
-
-    public void setNumeRestaurant(String numeRestaurant) {
-        this.numeRestaurant = numeRestaurant;
-    }
 
     public LocalTime getStartProgramTime() {
         return startProgramTime;

@@ -1,0 +1,1 @@
+ALTER TABLE property DROP COLUMN nume_restaurant;

@@ -16,6 +16,6 @@ export class PropertyService {
   }
 
   getBistroProperty(): Observable<Property> {
-    return this.apiService.getRequest('api/property/bistro');
+    return this.apiService.getRequest('api/property');
   }
 }

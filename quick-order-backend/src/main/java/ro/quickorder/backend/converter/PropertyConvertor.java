@@ -12,7 +12,6 @@ public class PropertyConvertor {
             return null;
         }
         Property property = new Property();
-        property.setNumeRestaurant(propertyDto.getNumeRestaurant());
         property.setEndProgramTime(propertyDto.getEndProgramTime());
         property.setStartProgramTime(propertyDto.getStartProgramTime());
         return property;
@@ -24,7 +23,6 @@ public class PropertyConvertor {
         }
         PropertyDto propertyDto = new PropertyDto();
         propertyDto.setEndProgramTime(property.getEndProgramTime());
-        propertyDto.setNumeRestaurant(property.getNumeRestaurant());
         propertyDto.setStartProgramTime(property.getStartProgramTime());
         return propertyDto;
     }

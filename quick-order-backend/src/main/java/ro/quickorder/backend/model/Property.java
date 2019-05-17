@@ -18,11 +18,17 @@ public class Property {
     @Column(updatable = false, nullable = false)
     private String id;
 
-    private String numeRestaurant;
-
     private LocalTime startProgramTime;
 
     private LocalTime endProgramTime;
+
+    public Property() {
+    }
+
+    public Property(LocalTime startProgramTime, LocalTime endProgramTime) {
+        this.startProgramTime = startProgramTime;
+        this.endProgramTime = endProgramTime;
+    }
 
     public String getId() {
         return id;
@@ -30,14 +36,6 @@ public class Property {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getNumeRestaurant() {
-        return numeRestaurant;
-    }
-
-    public void setNumeRestaurant(String numeRestaurant) {
-        this.numeRestaurant = numeRestaurant;
     }
 
     public LocalTime getStartProgramTime() {
@@ -61,7 +59,6 @@ public class Property {
     public String toString() {
         return "Property{" +
                 "id='" + id + '\'' +
-                ", numeRestaurant='" + numeRestaurant + '\'' +
                 ", startProgramTime=" + startProgramTime +
                 ", endProgramTime=" + endProgramTime +
                 '}';
