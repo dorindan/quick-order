@@ -129,7 +129,7 @@
                 <div>
                   <mat-form-field>
                     <mat-label translate="">menuItem.ingredients</mat-label>
-                    <mat-select multiple [(ngModel)]="ingredients">
+                    <mat-select  [(ngModel)]="this.ingredients" multiple>
                       <mat-option class="form-control validate" tabindex="-1" aria-labelledby="modalAdd"
                                   [value]="ingredient.name"
                                   *ngFor="let ingredient of ingredientsList"
