@@ -60,7 +60,6 @@ export class ReservationComponent implements OnInit {
 
   updateTables() {
     this.dateTime = this.date.concat(' ').concat(this.time);
-    alert(this.dateTime + 'Am intrat');
     const checkInTimeFormatted = this.dateTime.substr(0, this.dateTime.indexOf(' ')).replace('/', '+').replace('/', '+')
       + '+' + this.dateTime.substr(this.dateTime.indexOf(' ') + 1, 5);
     const outHouer = Number(this.time.charAt(1)) + 2;
