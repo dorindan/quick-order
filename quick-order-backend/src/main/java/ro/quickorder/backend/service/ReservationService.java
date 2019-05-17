@@ -72,10 +72,10 @@ public class ReservationService {
         Reservation reservation = getReservationEntityByName(reservationDto.getReservationName());
         // find tables
         String checkIn = reservationDto.getCheckInTime().toString();
-        checkIn= checkIn.substring(8, 10) + "+" + checkIn.substring(5, 7) + "+" + checkIn.substring(0, 4) + "+" + checkIn.substring(checkIn.indexOf(' ')+1, checkIn.indexOf(':') + 3);
+        checkIn = checkIn.substring(8, 10) + "+" + checkIn.substring(5, 7) + "+" + checkIn.substring(0, 4) + "+" + checkIn.substring(checkIn.indexOf(' ') + 1, checkIn.indexOf(':') + 3);
 
         String checkOut = reservationDto.getCheckOutTime().toString();
-        checkOut= checkOut.substring(8, 10) + "+" + checkOut.substring(5, 7) + "+" + checkOut.substring(0, 4) + "+" + checkOut.substring(checkOut.indexOf(' ')+1, checkOut.indexOf(':') + 3);
+        checkOut = checkOut.substring(8, 10) + "+" + checkOut.substring(5, 7) + "+" + checkOut.substring(0, 4) + "+" + checkOut.substring(checkOut.indexOf(' ') + 1, checkOut.indexOf(':') + 3);
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos, checkIn, checkOut);
         // put tables in reservation
         reservation.setTables(reservationTables);
@@ -113,7 +113,7 @@ public class ReservationService {
                 LOG.error("Table not found");
                 throw new NotFoundException("Table not found");
             }
-            if (freeTables.stream().filter( table -> table.getTableNr()==(tableFoodDto.getTableNr())).findAny().orElse(null) == null) {
+            if (freeTables.stream().filter(table -> table.getTableNr() == (tableFoodDto.getTableNr())).findAny().orElse(null) == null) {
                 LOG.error("Table not free");
                 throw new NotFoundException("Table not free");
             }
