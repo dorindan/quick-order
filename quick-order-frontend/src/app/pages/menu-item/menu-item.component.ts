@@ -89,7 +89,13 @@ export class MenuItemComponent implements OnInit {
         .subscribe(rez => {
           window.location.reload();
         }, error => {
-          this.showSnackbar('The introduced data is not valid!, please try again!');
+          if (error.status === 400) { // bad request exception
+            this.showSnackbar('The introduced data is not valid!, please try again!');
+          } else if (error.status === 404) { // not found exception
+            this.showSnackbar('The introduced data is not valid!, please try again');
+          } else {
+            this.showSnackbar('The introduced data is not valid!, please try again');
+          }
         });
     } else {
       this.showSnackbar('The introduced data is not valid!, please try again!');
@@ -105,7 +111,11 @@ export class MenuItemComponent implements OnInit {
       this.tableService.editMenuItem(newMenuItem).subscribe(rez => {
         window.location.reload();
       }, error => {
-        this.showSnackbar('The introduced data is not valid!, please try again!');
+        if (error.status === 404) { // not found exception
+          this.showSnackbar('The introduced data is not valid!, please try again');
+        } else {
+          this.showSnackbar('The introduced data is not valid!, please try again');
+        }
       });
     } else {
       this.showSnackbar('The introduced data is not valid!, please try again!');
@@ -116,7 +126,11 @@ export class MenuItemComponent implements OnInit {
     this.tableService.deleteMenuItem(this.name).subscribe(rez => {
       window.location.reload();
     }, error => {
-      this.showSnackbar('The item could not be deleted!, please try again!');
+      if (error.status === 404) { // not found exception
+        this.showSnackbar('The item could not be deleted!, please try again!');
+      } else {
+        this.showSnackbar('The item could not be deleted!, please try again!');
+      }
     });
   }
 

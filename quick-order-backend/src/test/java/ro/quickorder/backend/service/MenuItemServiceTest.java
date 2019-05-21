@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.converter.IngredientConverter;
 import ro.quickorder.backend.converter.MenuItemConverter;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
@@ -117,7 +118,7 @@ public class MenuItemServiceTest {
         try {
             menuItemService.addMenuItem(menuItemDto);
             fail("MenuItem has name equals with null, error should pop-up");
-        } catch (NotFoundException e){
+        } catch (BadRequestException e){
             assertEquals("Name can not be null",  e.getMessage());
         }
     }
@@ -141,7 +142,7 @@ public class MenuItemServiceTest {
         try {
             menuItemService.addMenuItem(menuItemDto);
             fail("MenuItem already exists, error should pop-up");
-        } catch (NotFoundException e){
+        } catch (BadRequestException e){
             assertEquals("MenuItem already exists!",  e.getMessage());
         }
     }

@@ -71,8 +71,12 @@ export class ReservationComponent implements OnInit {
     this.reservationService.reserve(this.reservation)
       .subscribe(data => {
         this.showSnackbar('Reservation sent successfully.');
-      }, Error => {
-        this.showSnackbar('Reservation failed. Please try again.');
+      }, error => {
+        if (error.status === 403) { // forbidden exception
+          this.showSnackbar('Reservation failed. Please try again.');
+        } else {
+          this.showSnackbar('Reservation failed. Please try again.');
+        }
       });
   }
 

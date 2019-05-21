@@ -49,8 +49,12 @@ export class LoginComponent implements OnInit {
       this.translateService.setDefaultLang(language);
       this.switchLanguage(language);
       this.router.navigate(['loggedStart']);
-    }, error1 => {
-      this.showSnackbar('Username or password is incorrect. Please try again.');
+    }, error => {
+      if (error.status === 404) { // not found exception
+        this.showSnackbar('Username or password is incorrect. Please try again.');
+      } else {
+        this.showSnackbar('Username or password is incorrect. Please try again.');
+      }
     });
   }
 
