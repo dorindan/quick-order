@@ -20,7 +20,7 @@ public class PropertyService {
     @Autowired
     PropertyRepository propertyRepository;
 
-    public PropertyDto findByRestaurant() {
+    public PropertyDto findRestaurantProperty() {
         List<Property> property = propertyRepository.findAll();
         if(property.size()>1){
             LOG.error("There are to many properties!");

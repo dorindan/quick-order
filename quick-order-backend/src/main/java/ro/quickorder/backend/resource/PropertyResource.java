@@ -14,7 +14,7 @@ public class PropertyResource {
     private PropertyService propertyService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public PropertyDto getBistroProperty() {
-        return propertyService.findByRestaurant();
+    public PropertyDto getProperty() {
+        return propertyService.findRestaurantProperty();
     }
 }
