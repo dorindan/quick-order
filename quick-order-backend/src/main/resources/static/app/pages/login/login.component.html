@@ -1,0 +1,54 @@
+<div class="card signUP-panel">
+  <div class="card-header panel-heading">
+    <h1 translate="">Login</h1>
+  </div>
+  <div class="card-body panel-body">
+    <form id="Login" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+        <label><b translate="">Username</b></label>
+        <input type="text"
+               class="form-control"
+               id="userName"
+               placeholder="Username"
+               name="username"
+               [(ngModel)]="model.username"
+               #username="ngModel" required/>
+        <div *ngIf="f.submitted
+                && !username.valid"><label class="red small">Username is required</label>
+        </div>
+      </div>
+
+      <div class="form-group example-container" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+        <label><b translate="">Password</b></label>
+        <input [type]="hide ? 'password' : 'text'"
+               class="form-control eye"
+               id="inputPassword"
+               placeholder="Password"
+               name="password"
+               [(ngModel)]="model.password"
+               #password="ngModel" required/>
+        <div *ngIf="f.submitted
+                && !password.valid"><label class="red small">Password is required</label>
+        </div>
+
+        <mat-icon (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </div>
+
+      <br>
+
+
+      <button type="submit" class="form-control btn-signUP">Login</button>
+      <br>
+
+    </form>
+  </div>
+  <div class="card-footer">
+    <div class="forgot">
+      <a href="reset.html">Forgot password?</a>
+    </div>
+    <div class="forgot">
+      <a href="signUp">Don't you have an account? Sign up now!</a>
+    </div>
+  </div>
+</div>

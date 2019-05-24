@@ -1,0 +1,29 @@
+@media only screen and (max-width: 1500px) {
+  .xxl {
+    display: none;
+  }
+}
+
+.jumbotron {
+  background-image: url('../../../assets/img/table3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: normal;
+  opacity: 0.55;
+  color: #285028;
+}
+
+h1 {
+  text-align: center;
+}
+
+.title {
+  background-color: rgba(248, 249, 250, .7);
+}
+
+::ng-deep .snackbar {
+  text-align: center !important;
+  background: #285028 !important;
+  opacity: 0.8 !important;
+}

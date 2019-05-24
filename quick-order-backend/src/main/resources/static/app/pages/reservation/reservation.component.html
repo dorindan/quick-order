@@ -1,0 +1,133 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <br class="xxl">
+    <h1 class="display-3 font-weight-light d-none d-lg-block title" translate="">reservation.motto</h1>
+    <br class="xxl">
+    <h1 class="display-5 font-weight-light d-lg-none title" translate="">reservation.motto</h1>
+    <br>
+    <br>
+    <br class="xxl">
+    <br class="xxl">
+    <br class="xxl">
+    <div class="d-none d-lg-block">
+      <br>
+      <br>
+      <br>
+    </div>
+    <div class="d-none d-lg-block">
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel><label translate="">reservation.dataPicker</label></ng-template>
+            <mat-form-field>
+              <input matInput [min]="currentDate" [matDatepicker]="picker" placeholder="{{ 'reservation.chooseDate' | translate }}"
+                     formControlName="firstCtrl" (dateInput)="addDate('input', $event)">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-select placeholder="{{ 'reservation.chooseHour' | translate }}" [formControl]="hourControl" (selectionChange)="onChange($event)"
+                          required>
+                <mat-option>--</mat-option>
+                <div *ngFor="let hour of hours">
+                  <mat-option *ngIf="validateHour(hour)" [value]="hour">
+                    {{hour}}
+                  </mat-option>
+                </div>
+              </mat-select>
+              <mat-error *ngIf="hourControl.hasError('required')"></mat-error>
+              <mat-hint>{{hourControl.value?.sound}}</mat-hint>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext translate=""><label translate="">reservation.next</label></button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel><label translate="">reservation.pickNrPersons</label></ng-template>
+            <mat-form-field>
+              <input matInput type="number" pattern="^([1-9][0-9]{0,1})$" (keypress)="numberOnly($event)"
+                     placeholder="{{ 'reservation.nrPersons' | translate }}" formControlName="secondCtrl"
+                     (change)="addNrOfPersons($event.target.value)" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious><label translate="">reservation.back</label></button>
+              <button mat-button matStepperNext><label translate="">reservation.next</label></button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel><label translate="">reservation.finish</label></ng-template>
+          <div>
+            <button mat-button matStepperPrevious><label translate="">reservation.back</label></button>
+            <button mat-button (click)="concatenate()"><label translate="">reservation.sendReservation</label></button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+    <div class="d-lg-none">
+      <mat-vertical-stepper linear #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel><label translate="">reservation.dataPicker</label></ng-template>
+            <mat-form-field>
+              <input matInput [min]="currentDate" [matDatepicker]="pickerVertical" placeholder="{{ 'reservation.chooseDate' | translate }}"
+                     formControlName="firstCtrl" (dateInput)="addDate('input', $event)">
+              <mat-datepicker-toggle matSuffix [for]="pickerVertical"></mat-datepicker-toggle>
+              <mat-datepicker #pickerVertical></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="{{ 'reservation.chooseHour' | translate }}" [formControl]="hourControl" (selectionChange)="onChange($event)"
+                          required>
+                <mat-option>--</mat-option>
+                <div *ngFor="let hour of hours">
+                  <mat-option *ngIf="validateHour(hour)" [value]="hour">
+                    {{hour}}
+                  </mat-option>
+                </div>
+              </mat-select>
+              <mat-error *ngIf="hourControl.hasError('required')"></mat-error>
+              <mat-hint>{{hourControl.value?.sound}}</mat-hint>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext><label translate="">reservation.next</label> </button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel><label translate="">reservation.pickNrPersons</label></ng-template>
+            <mat-form-field>
+              <input matInput type="tel" pattern="^([1-9][0-9]{0,1})$" placeholder="{{ 'reservation.nrPersons' | translate }}"
+                     formControlName="secondCtrl" (change)="addNrOfPersons($event.target.value)" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious><label translate="">reservation.back</label></button>
+              <button mat-button matStepperNext><label translate="">reservation.next</label></button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel><label translate="">reservation.finish</label></ng-template>
+          <div>
+            <button mat-button matStepperPrevious><label translate="">reservation.back</label></button>
+            <button mat-button (click)="concatenate()"><label translate="">reservation.sendReservation</label></button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br class="xxl">
+    <br class="xxl">
+    <br class="xxl">
+  </div>
+</div>

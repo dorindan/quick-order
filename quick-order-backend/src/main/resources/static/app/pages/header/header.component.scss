@@ -1,0 +1,28 @@
+.right {
+  float: right !important;;
+}
+
+nav .navbar-nav li a {
+  color: darkgreen !important;
+  opacity: 0.6;
+  font-size: larger;
+}
+
+nav .navbar-nav li a:hover {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.navbar-nav {
+  color: darkgreen !important;
+  opacity: 0.6;
+}
+
+.btn-secondary {
+  background-color: darkgreen !important;
+  opacity: 0.4 !important;
+}
+
+.btn {
+  color: #ffffff !important;
+}

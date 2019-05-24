@@ -1,0 +1,84 @@
+a {
+  color: #7e967e;
+}
+
+.forgot {
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: darkgreen !important;
+  opacity: 0.6;
+}
+
+.small {
+  font-size: 80%;
+}
+
+@media (min-width: 768px) {
+  .signUP-panel {
+    border-style: groove;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    min-height: 450px;
+  }
+}
+
+.signUP-panel > .panel-heading {
+  color: darkgreen;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.signUP-panel input[type="text"], .signUP-panel input[type="email"], .signUP-panel input[type="password"] {
+  height: 45px;
+  border: 1px solid #029f5b;
+  font-size: 100%;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+.signUP-panel input:hover,
+.signUP-panel input:focus {
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-color: #ccc;
+}
+
+.btn-signUP {
+  background-color: darkgreen !important;
+  opacity: 0.4;
+  font-weight: normal;
+  height: 50px;
+  text-transform: uppercase;
+  border-color: darkgreen;
+  color: white;
+  width: 50%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-login:hover,
+.btn-login:focus {
+  color: #fff;
+  background-color: #285028;
+  border-color: #285028;
+}
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
