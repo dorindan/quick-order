@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ApiService} from '../../services/api.service';
-import {AuthService} from "../../auth/auth.service";
-import {SignUpInfo} from "../../auth/signup-info";
+import {MatSnackBar} from '@angular/material';
+import {AuthService} from '../../auth/auth.service';
+import {SignUpInfo} from '../../auth/signup-info';
 
 @Component({
   selector: 'app-register',
@@ -30,10 +31,18 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private apiService: ApiService, private router: Router, private authService: AuthService) {
+  constructor(private apiService: ApiService, private router: Router, private authService: AuthService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
+  }
+
+  showSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: ['snackbar']
+    });
   }
 
   public changePasswordVisibility() {
@@ -72,18 +81,18 @@ export class RegisterComponent implements OnInit {
       this.authService.signUp(this.signupInfo).subscribe(
         data => {
           this.router.navigate(['']);
-          alert('Register successful.');
+          this.showSnackbar('Register successful.');
           this.isSignedUp = true;
           this.isSignUpFailed = false;
         },
         error => {
           this.errorMessage = error.error.message;
           this.isSignUpFailed = true;
-          alert('Register failed. ');
+          this.showSnackbar('Register failed. ');
         }
       );
     } else {
-      alert('Complete all boxes with the appropriate data first!');
+      this.showSnackbar('Complete all boxes with the appropriate data first!');
     }
   }
 

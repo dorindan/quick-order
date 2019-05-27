@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MenuItem} from '../../models/MenuItem';
 import {Observable} from 'rxjs';
 import {Ingredient} from '../../models/Ingredient';
-import {MatTableDataSource} from '@angular/material';
+import {MatSnackBar, MatTableDataSource} from '@angular/material';
 import {MenuService} from '../../services/menu.service';
 import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
@@ -15,7 +15,6 @@ import {TableService} from '../../services/table.service';
 export class TableComponent implements OnInit {
 
   tables: Table[];
-  tablesGet: Observable<Table[]>;
   displayedColumns: string[] = ['tableNr', 'seats', 'windowView', 'floor', 'edit'];
   dataSource = new MatTableDataSource<Table>(this.tables);
 
@@ -28,20 +27,25 @@ export class TableComponent implements OnInit {
   windowView = false;
   floor = 0;
 
-  constructor(private tableService: TableService) {
+  constructor(private tableService: TableService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
     this.updateTable();
   }
+  showSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: ['snackbar']
+    });
+  }
 
   updateTable() {
-    this.tablesGet = this.tableService.getAllTables();
-    this.tables = [];
-    this.tablesGet.forEach(menuItem => menuItem.forEach(m => {
-      this.tables.push(m);
+    this.tableService.getAllTables().subscribe(rez => {
+      this.tables = rez;
       this.dataSource = new MatTableDataSource<Table>(this.tables);
-    }));
+    });
   }
 
   setUpdate(table: Table): void {
@@ -59,10 +63,13 @@ export class TableComponent implements OnInit {
     if (this.validation()) {
       let newTable: Table;
       newTable = new Table(this.tableNr, this.seats, this.windowView, this.floor);
-      this.tableService.addTable(newTable);
-      window.location.reload();
+      this.tableService.addTable(newTable).subscribe(rez => {
+        window.location.reload();
+      }, error => {
+        this.showSnackbar('The introduced data is not valid!, please try again!');
+      });
     } else {
-      alert('Some date are not valid, try again!');
+      this.showSnackbar('The introduced data is not valid!, please try again!');
     }
   }
 
@@ -70,16 +77,22 @@ export class TableComponent implements OnInit {
     if (this.validation()) {
       let newTable: Table;
       newTable = new Table(this.tableNr, this.seats, this.windowView, this.floor);
-      this.tableService.editTable(newTable);
-      window.location.reload();
+      this.tableService.editTable(newTable).subscribe(rez => {
+        window.location.reload();
+      }, error => {
+        this.showSnackbar('The introduced data is not valid!, please try again!');
+      });
     } else {
-      alert('Some Date are not valid, try again!');
+      this.showSnackbar('The introduced data is not valid!, please try again!');
     }
   }
 
   delete(): void {
-    this.tableService.deleteTable(this.tableNr);
-    window.location.reload();
+    this.tableService.deleteTable(this.tableNr).subscribe(rez => {
+      window.location.reload();
+    }, error => {
+      this.showSnackbar('The item could not be deleted!, pleas try again!');
+    });
   }
 
   clear(): void {

@@ -5,15 +5,15 @@
       <mat-expansion-panel-header>
         <div>
           <mat-panel-title>
-            <pre class="center">
-              <label translate="">tableView.table</label>: {{table.tableNr }}
-              <label translate="">tableView.seats</label>: {{table.seats}}
-              <p class="extraDetails">
-                <label translate="">tableView.floor</label>: {{table.floor}}
-                <label translate=""> tableView.view</label>:
-                <input type="checkbox" [(ngModel)]="table.windowView" disabled>
-              </p>
-            </pre>
+            <p class="mainDetails mainText">
+              <label translate="">tableView.table</label>: {{table.tableNr }}&nbsp;
+              <label translate="">tableView.seats</label>: {{table.seats}}&nbsp;
+            </p>
+            <p class="extraDetails extraText">
+              <label translate="">tableView.floor</label>: {{table.floor}}&nbsp;
+              <label translate=""> tableView.view</label>:
+              <input type="checkbox" [(ngModel)]="table.windowView" disabled>
+            </p>
           </mat-panel-title>
         </div>
       </mat-expansion-panel-header>

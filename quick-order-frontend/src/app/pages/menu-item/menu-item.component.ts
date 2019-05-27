@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
+import {MatSnackBar, MatTableDataSource} from '@angular/material';
 import {Ingredient} from '../../models/Ingredient';
 import {MenuItem} from '../../models/MenuItem';
-import {Observable} from 'rxjs';
 import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
@@ -15,14 +14,10 @@ import {MenuItemType} from '../../models/MenuItemType';
 export class MenuItemComponent implements OnInit {
 
   menuItems: MenuItem[];
-  menuItemsGet: Observable<MenuItem[]>;
   ingredientsList: Ingredient[];
-  ingredientGet: Observable<Ingredient[]>;
   menuItemTypes: MenuItemType[];
-  menuItemTypesGet: Observable<MenuItemType[]>;
   displayedColumns: string[] = ['name', 'description', 'type', 'ingredients', 'preparationTime', 'price', 'edit'];
   dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
-  typeSource = new MatTableDataSource<MenuItemType>(this.menuItemTypes);
   nameRight = true;
   priceRight = true;
   durationRight = true;
@@ -33,29 +28,41 @@ export class MenuItemComponent implements OnInit {
   ingredients = [];
   price = 0;
 
-  constructor(private tableService: MenuService, private ingredientService: IngredientService) {
+  constructor(private tableService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.ingredientsList = [];
-    this.ingredientGet = this.ingredientService.getIngredient();
-    this.ingredientGet.forEach(menuItem => menuItem.forEach(m => {
-      this.ingredientsList.push(m);
-    }));
+    this.updateIngredients();
     this.updateMenu();
     this.updateMenuItemType();
   }
 
-  updateMenu() {
-    this.menuItemsGet = this.tableService.getMenuItems();
-    this.menuItems = [];
-    this.menuItemsGet.forEach(menuItem => menuItem.forEach(m => {
-      if (m.menuItemTypeDto == null) {
-        m.menuItemTypeDto = new MenuItemType('');
-      }
-      this.menuItems.push(m);
+  showSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: ['snackbar']
+    });
+  }
+
+  updateIngredients() {
+    this.ingredientService.getIngredient().subscribe(rez => {
+      this.ingredientsList = rez;
       this.dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
-    }));
+    });
+  }
+
+  updateMenu() {
+    this.tableService.getMenuItems().subscribe(rez => {
+      this.menuItems = rez;
+      this.dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
+    });
+  }
+
+  updateMenuItemType(): void {
+    this.tableService.getMenuItemType().subscribe(rez => {
+      this.menuItemTypes = rez;
+    });
   }
 
   setUpdate(menuItem: MenuItem): void {
@@ -78,10 +85,14 @@ export class MenuItemComponent implements OnInit {
       const itemTypeToUse = new MenuItemType(this.itemType);
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, this.ingredients, this.price, itemTypeToUse);
-      this.tableService.addMenuItem(newMenuItem);
-      window.location.reload();
+      this.tableService.addMenuItem(newMenuItem)
+        .subscribe(rez => {
+          window.location.reload();
+        }, error => {
+          this.showSnackbar('The introduced data is not valid!, please try again!');
+        });
     } else {
-      alert('Some date are not valid, try again!');
+      this.showSnackbar('The introduced data is not valid!, please try again!');
     }
   }
 
@@ -91,25 +102,22 @@ export class MenuItemComponent implements OnInit {
       const itemTypeToUse = new MenuItemType(this.itemType);
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, this.ingredients, this.price, itemTypeToUse);
-      this.tableService.editMenuItem(newMenuItem);
-      window.location.reload();
+      this.tableService.editMenuItem(newMenuItem).subscribe(rez => {
+        window.location.reload();
+      }, error => {
+        this.showSnackbar('The introduced data is not valid!, please try again!');
+      });
     } else {
-      alert('Some Date are not valid, try again!');
+      this.showSnackbar('The introduced data is not valid!, please try again!');
     }
   }
 
-  updateMenuItemType(): void {
-    this.menuItemTypesGet = this.tableService.getMenuItemType();
-    this.menuItemTypes = [];
-    this.menuItemTypesGet.forEach(menuItemType => menuItemType.forEach(m => {
-      this.menuItemTypes.push(m);
-      this.typeSource = new MatTableDataSource<MenuItemType>(this.menuItemTypes);
-    }));
-  }
-
   delete(): void {
-    this.tableService.deleteMenuItem(this.name);
-    window.location.reload();
+    this.tableService.deleteMenuItem(this.name).subscribe(rez => {
+      window.location.reload();
+    }, error => {
+      this.showSnackbar('The item could not be deleted!, please try again!');
+    });
   }
 
   clear(): void {
