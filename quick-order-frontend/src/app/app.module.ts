@@ -22,8 +22,6 @@ import {MenuItemComponent} from './pages/menu-item/menu-item.component';
 import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
-import {LoginJwtComponent} from './login-jwt/login-jwt.component';
-import {RegisterJwtComponent} from './register-jwt/register-jwt.component';
 import {httpInterceptorProviders} from './auth/auth-interceptor';
 
 
@@ -46,8 +44,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuItemComponent,
     WaiterPageComponent,
     TableComponent,
-    LoginJwtComponent,
-    RegisterJwtComponent
   ],
   imports: [
     BrowserModule,
