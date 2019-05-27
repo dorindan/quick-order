@@ -22,6 +22,9 @@ import {MenuItemComponent} from './pages/menu-item/menu-item.component';
 import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
+import {LoginJwtComponent} from './login-jwt/login-jwt.component';
+import {RegisterJwtComponent} from './register-jwt/register-jwt.component';
+import {httpInterceptorProviders} from './auth/auth-interceptor';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,7 +45,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuComponent,
     MenuItemComponent,
     WaiterPageComponent,
-    TableComponent
+    TableComponent,
+    LoginJwtComponent,
+    RegisterJwtComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgxPopper
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {

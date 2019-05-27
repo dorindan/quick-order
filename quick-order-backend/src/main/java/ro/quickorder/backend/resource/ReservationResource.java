@@ -8,9 +8,9 @@ import ro.quickorder.backend.service.ReservationService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/reservation")
+@RequestMapping(value = "api/reservation")
 public class ReservationResource {
     @Autowired
     ReservationService reservationService;

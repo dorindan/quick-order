@@ -4,25 +4,47 @@ package ro.quickorder.backend.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.UserAttributeConverter;
 import ro.quickorder.backend.converter.UserConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
-import ro.quickorder.backend.exception.NotAcceptableException;
-import ro.quickorder.backend.exception.NotFoundException;
+import ro.quickorder.backend.model.Role;
+import ro.quickorder.backend.model.RoleName;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserDto;
+import ro.quickorder.backend.repository.RoleRepository;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
+import ro.quickorder.backend.resource.response.JwtResponse;
+import ro.quickorder.backend.resource.response.ResponseMessage;
+import ro.quickorder.backend.security.jwt.JwtProvider;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
 public class UserService {
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+    @Autowired
+    JwtProvider jwtProvider;
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
+    PasswordEncoder encoder;
+    @Autowired
+    RoleRepository roleRepository;
     @Autowired
     private UserConverter userConverter;
     @Autowired
@@ -32,21 +54,19 @@ public class UserService {
     @Autowired
     private UserAttributeRepository userAttributeRepository;
 
-    public UserDto login(UserDto userDto) {
-        User convertedUser = userConverter.toUser(userDto);
-        User user = userRepository.findAll().stream()
-                .filter(filteredUser -> convertedUser.getPassword().equals(filteredUser.getPassword()) &&
-                        convertedUser.getUsername().equals(filteredUser.getUsername()))
-                .findFirst().orElse(null);
-        if (user != null) {
-            return new UserDto(user.getUsername(), user.getEmail(), userAttributeConverter.toUserAttributeDto(user.getAttribute()));
-        } else {
-            LOG.error("User or password are incorrect!");
-            throw new NotFoundException("User or password are incorrect!");
-        }
+    public ResponseEntity<?> login(UserDto userDto) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = jwtProvider.generateJwtToken(authentication);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
-    public UserDto signUp(UserDto userDto) {
+    public ResponseEntity<?> signUp(UserDto userDto) {
         if (userDto == null) {
             LOG.error("User is null!");
             throw new BadRequestException("User is null!");
@@ -62,24 +82,44 @@ public class UserService {
             LOG.error("UserName has characters that are not allowed!");
             throw new ForbiddenException("UserName has characters that are not allowed!");
         }
-        // test if username is ok
-        if (userRepository.findByUsername(userDto.getUsername()) != null) {
-            LOG.error("UserName is already taken!");
-            throw new NotAcceptableException("UserName is already taken!");
+        if (userRepository.existsByUsername(userDto.getUsername())) {
+            return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
+                    HttpStatus.BAD_REQUEST);
         }
-        // test if email is ok
-        if (userRepository.findByEmail(userDto.getEmail()) != null) {
-            LOG.error("Email is already taken!");
-            throw new NotAcceptableException("Email is already taken!");
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
+                    HttpStatus.BAD_REQUEST);
         }
-        User user = userConverter.toUser(userDto);
-        User newUser = userRepository.save(user);
+        // Creating user's account
+        User user = new User(userDto.getUsername(),
+                encoder.encode(userDto.getPassword()), userDto.getEmail());
+        Set<String> strRoles = userDto.getRole();
+        if (userDto.getRole().isEmpty()) {
+            return new ResponseEntity<>(new ResponseMessage("Fail -> No Roles set!"),
+                    HttpStatus.BAD_REQUEST);
+        }
+        Set<Role> roles = new HashSet<>();
+        strRoles.forEach(role -> {
+            switch (role) {
+                case "waiter":
+                    Role adminRole = roleRepository.findByName(RoleName.ROLE_WAITER)
+                            .orElseThrow(() -> new RuntimeException("Fail! -> Waiter Role not found."));
+                    roles.add(adminRole);
+                    break;
+                default:
+                    Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException("Fail! -> User Role not found."));
+                    roles.add(userRole);
+            }
+        });
+        userRepository.save(user);
         UserAttribute userAttribute = new UserAttribute();
         userAttributeRepository.save(userAttribute);
-        userAttribute.setUser(newUser);
+        userAttribute.setUser(user);
         UserAttribute newAttribute = userAttributeRepository.save(userAttribute);
-        newUser.setAttribute(newAttribute);
-        return new UserDto(newUser.getUsername(), newUser.getEmail(),
-                userAttributeConverter.toUserAttributeDto(newUser.getAttribute()));
+        user.setAttribute(newAttribute);
+        user.setRoles(roles);
+        userRepository.save(user);
+        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
 }

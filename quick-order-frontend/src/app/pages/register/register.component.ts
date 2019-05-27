@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
-import {User} from '../../models/User';
 import {ApiService} from '../../services/api.service';
+import {AuthService} from "../../auth/auth.service";
+import {SignUpInfo} from "../../auth/signup-info";
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,12 @@ export class RegisterComponent implements OnInit {
   public rightTermsAndConditions = true;
   public isActive = false;
 
-  constructor(private apiService: ApiService, private router: Router) {
+  signupInfo: SignUpInfo;
+  isSignedUp = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+
+  constructor(private apiService: ApiService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -59,16 +65,23 @@ export class RegisterComponent implements OnInit {
 
   public register() {
     if (this.checkIfAllIsValid()) {
-      const user = new User(this.userName, this.password);
-      user.email = this.email;
-      const url = 'api/users/signUp';
-      this.apiService.postRequest(url, user).subscribe(rez => {
-        this.router.navigate(['']);
-        alert('Register successful.');
-      }, error1 => {
-        alert('Register failed. ');
-        return;
-      });
+      this.signupInfo = new SignUpInfo(
+        this.userName,
+        this.email,
+        this.password);
+      this.authService.signUp(this.signupInfo).subscribe(
+        data => {
+          this.router.navigate(['']);
+          alert('Register successful.');
+          this.isSignedUp = true;
+          this.isSignUpFailed = false;
+        },
+        error => {
+          this.errorMessage = error.error.message;
+          this.isSignUpFailed = true;
+          alert('Register failed. ');
+        }
+      );
     } else {
       alert('Complete all boxes with the appropriate data first!');
     }
