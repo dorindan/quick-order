@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(value = "api/ingredient")
+@RequestMapping(value = "/api/ingredient")
 public class IngredientResource {
     @Autowired
     IngredientService ingredientService;

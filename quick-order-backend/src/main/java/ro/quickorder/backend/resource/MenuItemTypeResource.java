@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(value = "api/menuItemType")
+@RequestMapping(value = "/api/menuItemType")
 public class MenuItemTypeResource {
     @Autowired
     MenuItemTypeService menuItemTypeService;

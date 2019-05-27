@@ -5,7 +5,6 @@ import {Injectable} from '@angular/core';
 import {Reservation} from '../models/Reservation';
 import {ConfirmReservation} from '../models/ConfirmReservation';
 
-;
 
 @Injectable({
   providedIn: 'root'
