@@ -2,7 +2,10 @@ package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.service.UserAttributeService;
 import ro.quickorder.backend.service.UserService;
@@ -10,7 +13,6 @@ import ro.quickorder.backend.service.UserService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class UsersResource {

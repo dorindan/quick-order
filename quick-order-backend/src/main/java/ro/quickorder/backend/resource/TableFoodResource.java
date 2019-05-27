@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(value = "/api/table")
 public class TableFoodResource {
