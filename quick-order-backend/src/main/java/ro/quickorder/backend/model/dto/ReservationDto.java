@@ -7,6 +7,7 @@ import ro.quickorder.backend.service.CustomDateDeserializer;
 import ro.quickorder.backend.service.CustomDateSerializer;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  *  Data transfer object for {@link Reservation}
@@ -24,6 +25,7 @@ public class ReservationDto {
     private boolean confirmed;
     private Integer numberOfPersons;
     private String reservationName;
+    private List<TableFoodDto> tableFoodDtos;
 
     public ReservationDto() {
     }
@@ -83,6 +85,14 @@ public class ReservationDto {
 
     public void setReservationName(String reservationName) {
         this.reservationName = reservationName;
+    }
+
+    public List<TableFoodDto> getTableFoodDtos() {
+        return tableFoodDtos;
+    }
+
+    public void setTableFoodDtos(List<TableFoodDto> tableFoodDtos) {
+        this.tableFoodDtos = tableFoodDtos;
     }
 
     public static final class Builder {

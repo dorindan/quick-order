@@ -1,9 +1,12 @@
+import {Table} from './Table';
+
 export class Reservation {
   public checkInTime: string;
   public checkOutTime: string;
   public numberOfPersons: number;
   public confirmed: boolean;
   public reservationName: string;
+  public tableFoodDtos: Table[];
 
   constructor(dateTimeIn: string, dateTimeOut: string, numberOfPersons: number, reservationName: string, confirmed: boolean) {
     this.checkInTime = dateTimeIn;
