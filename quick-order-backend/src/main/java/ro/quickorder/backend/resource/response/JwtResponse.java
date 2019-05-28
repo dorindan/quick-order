@@ -6,7 +6,6 @@ import java.util.Collection;
 
 public class JwtResponse {
     private String token;
-    private String type = "Bearer";
     private String username;
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -22,14 +21,6 @@ public class JwtResponse {
 
     public void setAccessToken(String accessToken) {
         this.token = accessToken;
-    }
-
-    public String getTokenType() {
-        return type;
-    }
-
-    public void setTokenType(String tokenType) {
-        this.type = tokenType;
     }
 
     public String getUsername() {

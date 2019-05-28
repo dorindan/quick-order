@@ -13,7 +13,7 @@ public class UserDto {
     private String password;
     private String email;
     private UserAttributeDto userAttributeDto;
-    private Set<String> role;
+    private Set<String> roles;
 
 
     public UserDto() {
@@ -70,11 +70,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public Set<String> getRole() {
-        return role;
+    public Set<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(Set<String> role) {
-        this.role = role;
+    public void setRole(Set<String> roles) {
+        this.roles = roles;
     }
 }

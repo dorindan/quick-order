@@ -2,6 +2,7 @@ package ro.quickorder.backend.model;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
+import ro.quickorder.backend.model.enumeration.RoleName;
 
 import javax.persistence.*;
 

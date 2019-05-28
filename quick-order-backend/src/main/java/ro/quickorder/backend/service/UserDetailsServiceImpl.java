@@ -11,17 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.repository.UserRepository;
+import ro.quickorder.backend.security.jwt.UserPrinciple;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
     @Autowired
     UserRepository userRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user = userRepository.findByUsername(username);
         if (user == null) {
             LOG.error("User is null!");

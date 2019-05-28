@@ -18,10 +18,10 @@ import ro.quickorder.backend.converter.UserConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.model.Role;
-import ro.quickorder.backend.model.RoleName;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserDto;
+import ro.quickorder.backend.model.enumeration.RoleName;
 import ro.quickorder.backend.repository.RoleRepository;
 import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
@@ -93,25 +93,17 @@ public class UserService {
         // Creating user's account
         User user = new User(userDto.getUsername(),
                 encoder.encode(userDto.getPassword()), userDto.getEmail());
-        Set<String> strRoles = userDto.getRole();
-        if (userDto.getRole().isEmpty()) {
+        Set<String> rolesAsString = userDto.getRoles();
+        if (userDto.getRoles().isEmpty()) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> No Roles set!"),
                     HttpStatus.BAD_REQUEST);
         }
         Set<Role> roles = new HashSet<>();
-        strRoles.forEach(role -> {
-            switch (role) {
-                case "waiter":
-                    Role adminRole = roleRepository.findByName(RoleName.ROLE_WAITER)
-                            .orElseThrow(() -> new RuntimeException("Fail! -> Waiter Role not found."));
-                    roles.add(adminRole);
-                    break;
-                default:
-                    Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                            .orElseThrow(() -> new RuntimeException("Fail! -> User Role not found."));
-                    roles.add(userRole);
-            }
-        });
+        rolesAsString.stream().map(RoleName::from)
+                .map(role -> roleRepository.findByName(role)
+                        .orElseThrow(() -> new RuntimeException("Could not find Role " + role.name())))
+                .forEach(roles::add);
+
         userRepository.save(user);
         UserAttribute userAttribute = new UserAttribute();
         userAttributeRepository.save(userAttribute);

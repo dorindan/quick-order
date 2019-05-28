@@ -1,4 +1,4 @@
-package ro.quickorder.backend.service;
+package ro.quickorder.backend.security.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
