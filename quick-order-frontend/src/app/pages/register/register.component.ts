@@ -75,16 +75,18 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['']);
         this.showSnackbar('Register successful.');
       }, error => {
-        if (error.status === 406) { // not acceptable
-          this.showSnackbar('Register failed. ');
-        } else if (error.status === 403) { // forbidden exception
-          this.showSnackbar('Register failed. ');
-        } else if (error.status === 400) { // bad request
-          this.showSnackbar('Register failed. ');
-        } else if (error.status === 404) { // not found exception
-          this.showSnackbar('Register failed. ');
-        } else {
-          this.showSnackbar('Register failed. ');
+        switch (error.status) {
+          case 406: // not acceptable
+            this.showSnackbar('UserName or Email are already taken. Please try again!');
+            break;
+          case 403: // forbidden exception
+            this.showSnackbar('UserName has forbidden characters. Please try again!');
+            break;
+          case 400: // bad request exception
+            this.showSnackbar('Something went bad. Please try again!');
+            break;
+          default:
+            this.showSnackbar('Register failed. ');
         }
         return;
       });

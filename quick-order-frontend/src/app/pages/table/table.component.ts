@@ -66,10 +66,12 @@ export class TableComponent implements OnInit {
       this.tableService.addTable(newTable).subscribe(rez => {
         window.location.reload();
       }, error => {
-        if (error.status === 400) { // bad request
-          this.showSnackbar('The introduced data is not valid!, please try again!');
-        } else {
-          this.showSnackbar('The introduced data is not valid!, please try again!');
+        switch (error.status) {
+          case 400: // bad request exception
+            this.showSnackbar('Time parameter can not be null. Please try again!');
+            break;
+          default:
+            this.showSnackbar('The introduced data is not valid!, please try again!');
         }
       });
     } else {

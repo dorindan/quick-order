@@ -89,12 +89,15 @@ export class MenuItemComponent implements OnInit {
         .subscribe(rez => {
           window.location.reload();
         }, error => {
-          if (error.status === 400) { // bad request exception
-            this.showSnackbar('The introduced data is not valid!, please try again!');
-          } else if (error.status === 404) { // not found exception
-            this.showSnackbar('The introduced data is not valid!, please try again');
-          } else {
-            this.showSnackbar('The introduced data is not valid!, please try again');
+          switch (error.status) {
+            case 400: // bad request exception
+              this.showSnackbar('Something went bad. Please try again!');
+              break;
+            case 404: // not found exception
+              this.showSnackbar('The data could not been found. Please try again.');
+              break;
+            default:
+              this.showSnackbar('The introduced data is not valid!, please try again!');
           }
         });
     } else {

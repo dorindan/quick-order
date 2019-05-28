@@ -72,10 +72,12 @@ export class ReservationComponent implements OnInit {
       .subscribe(data => {
         this.showSnackbar('Reservation sent successfully.');
       }, error => {
-        if (error.status === 403) { // forbidden exception
-          this.showSnackbar('Reservation failed. Please try again.');
-        } else {
-          this.showSnackbar('Reservation failed. Please try again.');
+        switch (error.status) {
+          case 403: // forbidden exception
+            this.showSnackbar('Data ore persons number are wrong . Please try again!');
+            break;
+          default:
+            this.showSnackbar('Reservation failed. Please try again.');
         }
       });
   }
