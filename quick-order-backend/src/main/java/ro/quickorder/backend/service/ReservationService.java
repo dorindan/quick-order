@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import ro.quickorder.backend.converter.ReservationConverter;
+import ro.quickorder.backend.converter.TableFoodConverter;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
@@ -33,6 +35,8 @@ public class ReservationService {
     private TableFoodRepository tableFoodRepository;
     @Autowired
     private TableFoodService tableFoodService;
+    @Autowired
+    private TableFoodConverter tableFoodConverter;
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -46,13 +50,38 @@ public class ReservationService {
         }
         LOG.info(currentTimestamp + " givenTimeStamp: " + reservationDto.getCheckInTime());
         reservationDto.setStatus("not acccepted");
-        reservationDto.setConfirmed(false);
-        UUID uuid = UUID.randomUUID();
-        reservationDto.setReservationName(uuid.toString().substring(0, 9));
+        // set checkOut and checkIn
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
+        // set confirmed
+        reservationDto.setConfirmed(false);
+        // set reservation name
+        UUID uuid = UUID.randomUUID();
+        reservationDto.setReservationName(uuid.toString().substring(0, 9));
         Reservation reservation = reservationConverter.toReservation(reservationDto);
+        List<TableFood> reservations = reservation.getTables();
+        reservation.setTables(null);
+        // save reservation in database
+        reservation = reservationRepository.save(reservation);
+
+        // treat the reservation as confirmed or unconfirmed
+        if (reservations != null && reservations.size() > 0) {
+            List<TableFoodDto> tableFoodDtos = reservations.stream()
+                    .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList());
+            // find tables and make sure that they are free
+            String checkIn = reservationDto.getCheckInTime().toString();
+            checkIn = checkIn.substring(8, 10) + "+" + checkIn.substring(5, 7) + "+" + checkIn.substring(0, 4) + "+" + checkIn.substring(checkIn.indexOf(' ') + 1, checkIn.indexOf(':') + 3);
+            String checkOut = reservationDto.getCheckOutTime().toString();
+            checkOut = checkOut.substring(8, 10) + "+" + checkOut.substring(5, 7) + "+" + checkOut.substring(0, 4) + "+" + checkOut.substring(checkOut.indexOf(' ') + 1, checkOut.indexOf(':') + 3);
+            reservation.setTables(getTablesByName(tableFoodDtos, checkIn, checkOut));
+            // see if the seats are enough for the number of persons
+            personsFitInSeats(reservation);
+            reservation.setStatus("acccepted");
+            reservation.setConfirmed(true);
+        }
+
+        // save reservation in database
         reservationRepository.save(reservation);
     }
 
@@ -79,6 +108,8 @@ public class ReservationService {
         List<TableFood> reservationTables = getTablesByName(tableFoodDtos, checkIn, checkOut);
         // put tables in reservation
         reservation.setTables(reservationTables);
+        // see if the seats are enough for the number of persons
+        personsFitInSeats(reservation);
         reservation.setConfirmed(true);
         // save reservation in database
         reservationRepository.save(reservation);
@@ -113,7 +144,7 @@ public class ReservationService {
                 LOG.error("Table not found");
                 throw new NotFoundException("Table not found");
             }
-            if (freeTables.stream().filter(table -> table.getTableNr() == (tableFoodDto.getTableNr())).findAny().orElse(null) == null) {
+            if (freeTables.stream().anyMatch(table -> table.getTableNr() == (tableFoodDto.getTableNr()))) {
                 LOG.error("Table not free");
                 throw new NotFoundException("Table not free");
             }
@@ -122,9 +153,20 @@ public class ReservationService {
         return tableFoods;
     }
 
+    private void personsFitInSeats(Reservation reservation) {
+        int nrSeats = reservation.getTables().stream().map(tableFood -> tableFood.getSeats()).reduce(0, (a, b) -> a + b);
+        System.out.println(nrSeats);
+        boolean fits = nrSeats < reservation.getNumberOfPersons();
+        if (fits) {
+            LOG.error("Not enough seats for all persons!");
+            throw new BadRequestException("Not enough seats for all persons!");
+        }
+    }
+
     public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {
         TableFood tableFood = tableFoodRepository.findByTableNr(tableNr);
         if (tableFood == null) {
+            LOG.error("Table not found!");
             throw new NotFoundException("Table not found!");
         }
         List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);

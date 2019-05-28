@@ -95,7 +95,10 @@
     "nrPersons": "Nr. persons",
     "back": "Back",
     "sendReservation": "Send Reservation",
-    "finish": "Finish"
+    "finish": "Finish",
+    "chooseTable": "Choose the tables*",
+    "table": "Table: ",
+    "seats": " Seats: "
   },
   "table": {
     "addNew": "Add new Table",
