@@ -1,10 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationService} from '../../services/reservation.service';
-import {MatDatepickerInputEvent} from '@angular/material';
+import {MatDatepickerInputEvent, MatTableDataSource} from '@angular/material';
 import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {PropertyService} from '../../services/property.service';
+import {Table} from '../../models/Table';
+import {MenuItem} from '../../models/MenuItem';
+import {TableService} from '../../services/table.service';
 
 @Component({
   selector: 'app-reservation',
@@ -27,10 +30,14 @@ export class ReservationComponent implements OnInit {
   hours: string[] = [];
   hourControl = new FormControl('', [Validators.required]);
 
+  public tableList: Table[] = [];
+  public selectedTables = [];
+
   constructor(private _formBuilder: FormBuilder,
               private reservationService: ReservationService,
               private snackBar: MatSnackBar,
-              private propertyService: PropertyService) {
+              private propertyService: PropertyService,
+              private tableService: TableService) {
   }
 
   ngOnInit() {
@@ -51,6 +58,19 @@ export class ReservationComponent implements OnInit {
     });
   }
 
+  updateTables() {
+    this.dateTime = this.date.concat(' ').concat(this.time);
+    const checkInTimeFormatted = this.dateTime.substr(0, this.dateTime.indexOf(' ')).replace('/', '+').replace('/', '+')
+      + '+' + this.dateTime.substr(this.dateTime.indexOf(' ') + 1, 5);
+    const outHouer = Number(this.time.charAt(1)) + 2;
+    this.dateTime = this.date.concat(' ').concat(this.time.replace(this.time.charAt(1), outHouer + ''));
+    const checkOutTimeFormatted = this.dateTime.substr(0, this.dateTime.indexOf(' ')).replace('/', '+').replace('/', '+') + '+' +
+      this.dateTime.substr(this.dateTime.indexOf(' ') + 1, 5);
+    this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted).subscribe(rez => {
+      this.tableList = rez;
+    });
+  }
+
   addDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
     this.month = event.value.getMonth() + 1;
@@ -68,12 +88,43 @@ export class ReservationComponent implements OnInit {
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
     this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false);
-    this.reservationService.reserve(this.reservation)
-      .subscribe(data => {
-        this.showSnackbar('Reservation sent successfully.');
-      }, Error => {
-        this.showSnackbar('Reservation failed. Please try again.');
-      });
+    let i = -1;
+    const tablesSelected: Table[] = [];
+    for (i = 0; i < this.tableList.length; i++) {
+      if (this.contains(this.tableList[i].tableNr)) {
+        tablesSelected.push(this.tableList[i]);
+      }
+    }
+    this.reservation.tableFoodDtos = tablesSelected;
+    if (this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
+      this.reservationService.reserve(this.reservation)
+        .subscribe(data => {
+          this.showSnackbar('Reservation sent successfully.');
+        }, Error => {
+          this.showSnackbar('Reservation failed. Please try again.');
+        });
+    } else {
+      this.showSnackbar('The number of persons are to great to fit in thous tables!');
+    }
+  }
+
+  calculateSeats(tables: Table[]): number {
+    let nr = 0;
+    let i = 0;
+    for (i = 0; i < tables.length; i++) {
+      nr = nr + tables[i].seats;
+    }
+    return nr;
+  }
+
+  contains(comparer: number): boolean {
+    let i = 0;
+    for (i = 0; i < this.selectedTables.length; i++) {
+      if (Number(this.selectedTables[i]) === comparer) {
+        return true;
+      }
+    }
+    return false;
   }
 
   showSnackbar(message: string) {
