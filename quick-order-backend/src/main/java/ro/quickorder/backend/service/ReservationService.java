@@ -17,6 +17,7 @@ import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
+import ro.quickorder.backend.sendEmail.JavaMailUtil;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -83,6 +84,16 @@ public class ReservationService {
 
         // save reservation in database
         reservationRepository.save(reservation);
+
+        String mailTitle = "Reservation made";
+        String mailText = "The reservation" + reservation.getReservationName() + " for " + reservation.getReservationName()
+                + " persons, starting on " + reservation.getCheckInTime() + " to " + reservation.getCheckOutTime() + " has been made.";
+        String mailReceiver = "";
+
+        if(reservation.getUser() != null && reservation.getUser().getEmail() != null){
+            mailReceiver = reservation.getUser().getEmail();
+        }
+        JavaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
     }
 
     public List<ReservationDto> getAllUnconfirmed() {
@@ -113,6 +124,16 @@ public class ReservationService {
         reservation.setConfirmed(true);
         // save reservation in database
         reservationRepository.save(reservation);
+
+        String mailTitle = "Reservation made";
+        String mailText = "The reservation" + reservation.getReservationName() + " for " + reservation.getReservationName()
+                + " persons, starting on " + reservation.getCheckInTime() + " to " + reservation.getCheckOutTime() + " has been confirmed.";
+        String mailReceiver = "";
+
+        if(reservation.getUser() != null && reservation.getUser().getEmail() != null){
+            mailReceiver = reservation.getUser().getEmail();
+        }
+        JavaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
     }
 
     public Reservation getReservationEntityByName(String reservationName) {
