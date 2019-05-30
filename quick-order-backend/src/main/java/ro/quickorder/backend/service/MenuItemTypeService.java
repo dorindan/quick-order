@@ -36,8 +36,8 @@ public class MenuItemTypeService {
             LOG.error("Item type is to short!");
             throw new BadRequestException("Item type is to short!");
         }
-        MenuItemType menuItemTypeSearch = menuItemTypeRepository.findByType(menuItemTypeDto.getType());
-        if (menuItemTypeSearch != null) {
+
+        if (menuItemTypeRepository.existsMenuItemTypeByType(menuItemTypeDto.getType())) {
             LOG.error("Item type already exists!");
             throw new NotFoundException("Item type already exists!");
         }

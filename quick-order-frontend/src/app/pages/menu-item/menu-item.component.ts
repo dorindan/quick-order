@@ -199,4 +199,21 @@ export class MenuItemComponent implements OnInit {
       return true;
     }
   }
+
+  showIngredients(): string {
+    let rez = '';
+    if (this.ingredients.length > 0) {
+      rez += this.ingredients[0];
+    }
+    if (this.ingredients.length > 1) {
+      rez += ' (+' + (this.ingredients.length - 1);
+      if (this.ingredients.length === 2) {
+        rez += ' other)';
+      } else {
+        rez += ' others)';
+      }
+    }
+    return rez;
+  }
+
 }

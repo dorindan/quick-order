@@ -32,10 +32,10 @@ public class IngredientService {
     public void addIngredient(IngredientDto ingredientDto) {
         if (ingredientDto.getName().length() < 2) {
             LOG.error("Ingredient name is to short!");
-            throw new BadRequestException("Ingredient name is to short!");
+            throw new BadRequestException("Ingredient name is too short!");
         }
-        Ingredient ingredientSearch = ingredientRepository.findFirstByName(ingredientDto.getName());
-        if (ingredientSearch != null) {
+
+        if (ingredientRepository.existsIngredientByName(ingredientDto.getName())) {
             LOG.error("Ingredient already exists!");
             throw new NotFoundException("Ingredient already exists!");
         }

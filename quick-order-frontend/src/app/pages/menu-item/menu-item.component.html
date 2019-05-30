@@ -58,9 +58,8 @@
                     <mat-label translate="">menuItem.ingredients</mat-label>
                     <mat-select multiple [(ngModel)]="ingredients">
                       <mat-select-trigger>
-                        {{ingredients.length > 0 ? ingredients[0] : ''}}
-                        <span *ngIf="ingredients.length > 1" class="example-additional-selection">
-                          (+{{ingredients.length - 1}} {{ingredients.length === 2 ? 'other' : 'others'}})
+                        <span class="example-additional-selection">
+                          {{showIngredients()}}
                         </span>
                       </mat-select-trigger>
                       <mat-option class="form-control validate" [value]="ingredient.name"
@@ -155,9 +154,8 @@
                     <mat-label translate="">menuItem.ingredients</mat-label>
                     <mat-select multiple [(ngModel)]="ingredients">
                       <mat-select-trigger>
-                        {{ingredients.length > 0 ? ingredients[0] : ''}}
-                        <span *ngIf="ingredients.length > 1" class="example-additional-selection">
-                          (+{{ingredients.length - 1}} {{ingredients.length === 2 ? 'other' : 'others'}})
+                        <span class="example-additional-selection">
+                          {{showIngredients()}}
                         </span>
                       </mat-select-trigger>
                       <mat-option class="form-control validate" tabindex="-1" aria-labelledby="modalAdd"
