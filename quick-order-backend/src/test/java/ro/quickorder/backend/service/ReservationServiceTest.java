@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.converter.ReservationConverter;
 import ro.quickorder.backend.converter.TableFoodConverter;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
@@ -25,6 +26,7 @@ import ro.quickorder.backend.repository.TableFoodRepository;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -136,7 +138,7 @@ public class ReservationServiceTest {
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+09:00", "23+09+2007+11:59");
         ReservationDto reservationDto = reservationDtos.get(0);
         ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
-        reservationDtos.get(0).setReservationName(null);
+        confirmReservationDto.setReservationName(null);
         try {
             reservationService.confirmReservation(confirmReservationDto);
             fail("Reservation should not have been found");
@@ -182,7 +184,7 @@ public class ReservationServiceTest {
             reservationService.confirmReservation(confirmReservationDto2);
             fail("The list of tables should be invalid!");
         } catch (ForbiddenException e) {
-            assertEquals(e.getMessage(), "TableList can not be null");
+            assertEquals(e.getMessage(), "The list of tables can not be empty");
         }
     }
 
@@ -225,5 +227,41 @@ public class ReservationServiceTest {
             assertEquals("Table not found!", e.getMessage());
         }
     }
+
+    @Test
+    public void testAddReservationConfirmed() {
+        long twoHoursInMilliseconds = 7200000;
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis() + twoHoursInMilliseconds);
+        ReservationDto reservationDto = new ReservationDto.Builder().withnumberOfPersons(12).withCheckInTime(currentTimestamp).build();
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        reservationDto.setTableFoodDtos(tableFoods.stream()
+                .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList()));
+        List<Reservation> reservationsBefor = reservationRepository.findAll();
+        assertEquals(reservationsBefor.size(), 3);
+        Long confirmed = reservationsBefor.stream().filter(reservation -> reservation.isConfirmed()).count();
+        reservationService.addReservation(reservationDto);
+        List<Reservation> reservationsAfter = reservationRepository.findAll();
+        Long confirmedAfter = reservationsAfter.stream().filter(reservation -> reservation.isConfirmed()).count();
+        assertEquals(reservationsAfter.size(), 4);
+        assertEquals((Long) (confirmed + 1), confirmedAfter);
+    }
+
+    @Test
+    public void testAddReservationConfirmedNotEnoughSeats() {
+        long twoHoursInMilliseconds = 7200000;
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis() + twoHoursInMilliseconds);
+        ReservationDto reservationDto = new ReservationDto.Builder().withnumberOfPersons(98).withCheckInTime(currentTimestamp).build();
+        List<TableFood> tableFoods = tableFoodRepository.findAll();
+        List<TableFoodDto> tableFoodDtoList = new ArrayList<>();
+        tableFoodDtoList.add(tableFoodConverter.toTableFoodDto(tableFoods.get(0)));
+        reservationDto.setTableFoodDtos(tableFoodDtoList);
+        try {
+            reservationService.addReservation(reservationDto);
+            fail("Table should not have enough seats for all persons!");
+        } catch (BadRequestException e) {
+            assertEquals("Not enough seats for all persons!", e.getMessage());
+        }
+    }
+
 
 }

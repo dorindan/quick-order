@@ -25,7 +25,7 @@ export class MenuItemComponent implements OnInit {
   description = '';
   itemType = '';
   preparationDurationInMinutes = 0;
-  ingredients = [];
+  ingredients: string[] = [];
   price = 0;
   activateIngredientAdd = false;
   activateTypeAdd = false;
@@ -70,12 +70,14 @@ export class MenuItemComponent implements OnInit {
   }
 
   setUpdate(menuItem: MenuItem): void {
+    this.ingredients = [];
     this.name = menuItem.name;
     this.description = menuItem.description;
     this.preparationDurationInMinutes = menuItem.preparationDurationInMinutes;
     menuItem.ingredients.forEach(i => {
-      this.ingredients.push(i);
+      this.ingredients.push(i.name);
     });
+    this.itemType = menuItem.menuItemTypeDto.type;
     this.price = menuItem.price;
   }
 
@@ -87,13 +89,24 @@ export class MenuItemComponent implements OnInit {
     if (this.validation()) {
       let newMenuItem: MenuItem;
       const itemTypeToUse = new MenuItemType(this.itemType);
+      const selectedIngredients = this.ingredientsList
+        .filter(value => this.ingredients.filter(value1 => value.name === value1).length > 0);
       newMenuItem = new MenuItem(this.name, this.description,
-        this.preparationDurationInMinutes, this.ingredients, this.price, itemTypeToUse);
+        this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.addMenuItem(newMenuItem)
         .subscribe(rez => {
           window.location.reload();
         }, error => {
-          this.showSnackbar('The introduced data is not valid!, please try again!');
+          switch (error.status) {
+            case 400: // bad request exception
+              this.showSnackbar('Something went bad. Please try again!');
+              break;
+            case 404: // not found exception
+              this.showSnackbar('The data could not been found. Please try again.');
+              break;
+            default:
+              this.showSnackbar('The introduced data is not valid!, please try again!');
+          }
         });
     } else {
       this.showSnackbar('The introduced data is not valid!, please try again!');
@@ -104,12 +117,18 @@ export class MenuItemComponent implements OnInit {
     if (this.validation()) {
       let newMenuItem: MenuItem;
       const itemTypeToUse = new MenuItemType(this.itemType);
+      const selectedIngredients = this.ingredientsList
+        .filter(value => this.ingredients.filter(value1 => value.name === value1).length > 0);
       newMenuItem = new MenuItem(this.name, this.description,
-        this.preparationDurationInMinutes, this.ingredients, this.price, itemTypeToUse);
+        this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
         window.location.reload();
       }, error => {
-        this.showSnackbar('The introduced data is not valid!, please try again!');
+        if (error.status === 404) { // not found exception
+          this.showSnackbar('The introduced data is not valid!, please try again');
+        } else {
+          this.showSnackbar('The introduced data is not valid!, please try again');
+        }
       });
     } else {
       this.showSnackbar('The introduced data is not valid!, please try again!');
@@ -120,7 +139,11 @@ export class MenuItemComponent implements OnInit {
     this.menuItemService.deleteMenuItem(this.name).subscribe(rez => {
       window.location.reload();
     }, error => {
-      this.showSnackbar('The item could not be deleted!, please try again!');
+      if (error.status === 404) { // not found exception
+        this.showSnackbar('The item could not be deleted!, please try again!');
+      } else {
+        this.showSnackbar('The item could not be deleted!, please try again!');
+      }
     });
   }
 

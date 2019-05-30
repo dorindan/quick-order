@@ -1,5 +1,6 @@
 package ro.quickorder.backend.converter;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.dto.ConfirmReservationDto;
@@ -7,6 +8,7 @@ import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Converts Reservations to their corresponding DTO and vice versa.
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Component
 public class ReservationConverter {
+
+    private TableFoodConverter tableFoodConverter = new TableFoodConverter();
 
     public Reservation toReservation(ReservationDto reservationDto) {
         if (reservationDto == null) {
@@ -28,6 +32,10 @@ public class ReservationConverter {
         reservation.setConfirmed(reservationDto.isConfirmed());
         reservation.setNumberOfPersons(reservationDto.getNumberOfPersons());
         reservation.setReservationName(reservationDto.getReservationName());
+        if (reservationDto.getTableFoodDtos() != null) {
+            reservation.setTables(reservationDto.getTableFoodDtos().stream()
+                    .map(tableFoodDto -> tableFoodConverter.toTableFood(tableFoodDto)).collect(Collectors.toList()));
+        }
         return reservation;
     }
 
@@ -42,6 +50,10 @@ public class ReservationConverter {
         reservationDto.setConfirmed(reservation.isConfirmed());
         reservationDto.setNumberOfPersons(reservation.getNumberOfPersons());
         reservationDto.setReservationName(reservation.getReservationName());
+        if (reservation.getTables() != null && Hibernate.isInitialized(reservation.getTables())) {
+            reservationDto.setTableFoodDtos(reservation.getTables().stream()
+                    .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList()));
+        }
         return reservationDto;
     }
 

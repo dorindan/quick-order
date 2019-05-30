@@ -60,8 +60,14 @@ export class WaiterPageComponent implements OnInit {
       reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions))
       .subscribe(data => {
         this.showSnackbar('Reservation confirmed successfully.');
-      }, Error => {
-        this.showSnackbar('Confirmation failed. Please try again.');
+      }, error => {
+        switch (error.status) {
+          case 404: // not found exception
+            this.showSnackbar('Reservation not found. Please try again.');
+            break;
+          default:
+            this.showSnackbar('Confirmation failed. Please try again.');
+        }
       });
   }
 
