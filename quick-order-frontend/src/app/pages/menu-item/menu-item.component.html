@@ -231,37 +231,37 @@
   <table mat-table align="center" [dataSource]="dataSource" class="table-hover mat-elevation-z8">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th width="20%" mat-header-cell *matHeaderCellDef>
+      <th lass="medium" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.name</h5>
       </th>
-      <td width="20%" mat-cell *matCellDef="let element">
+      <td lass="medium" mat-cell *matCellDef="let element">
         {{element.name}}
       </td>
     </ng-container>
     <!-- Description Column -->
     <ng-container matColumnDef="description">
-      <th width="30%" mat-header-cell *matHeaderCellDef>
+      <th class="large" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.description</h5>
       </th>
-      <td width="30%" mat-cell *matCellDef="let element">
+      <td lass="large" mat-cell *matCellDef="let element">
         {{element.description}}
       </td>
     </ng-container>
 
     <!-- Item Type Column -->
     <ng-container matColumnDef="type">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.itemType</h5>
       </th>
-      <td width="10%" mat-cell *matCellDef="let element">{{element.menuItemTypeDto.type}}</td>
+      <td lass="small" mat-cell *matCellDef="let element">{{element.menuItemTypeDto.type}}</td>
     </ng-container>
 
     <!-- Ingredients Column -->
     <ng-container matColumnDef="ingredients">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.ingredients</h5>
       </th>
-      <td width="10%" mat-cell *matCellDef="let element">
+      <td lass="small" mat-cell *matCellDef="let element">
         <div ngbDropdown class="d-inline-block">
           <button class="btn " id="dropdownBasic1" ngbDropdownToggle translate="">
             menuItem.ingredients
@@ -276,25 +276,25 @@
     </ng-container>
     <!-- Preparation time Column -->
     <ng-container matColumnDef="preparationTime">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.preparationDuration</h5>
       </th>
-      <td width="10%" mat-cell *matCellDef="let element">
+      <td lass="small" mat-cell *matCellDef="let element">
         {{element.preparationDurationInMinutes}}
       </td>
     </ng-container>
     <!-- Price Column -->
     <ng-container matColumnDef="price">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.price</h5>
       </th>
-      <td width="10%" mat-cell *matCellDef="let element">
+      <td lass="small" mat-cell *matCellDef="let element">
         {{element.price}}
       </td>
     </ng-container>
     <!-- Edit and Delete Column -->
     <ng-container matColumnDef="edit">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <div class="text-center ">
           <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
              data-target="#modalAdd" (click)="clearMenuItemType(); clearIngredient()" translate="">
