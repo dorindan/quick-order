@@ -79,6 +79,9 @@ export class MenuItemComponent implements OnInit {
     });
     this.itemType = menuItem.menuItemTypeDto.type;
     this.price = menuItem.price;
+
+    this.clearMenuItemType();
+    this.clearIngredient();
   }
 
   setDelete(menuItem: MenuItem): void {

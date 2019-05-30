@@ -17,27 +17,27 @@ export class MenuService {
   }
 
   getMenu(): Observable<Menu[]> {
-    return this.apiService.getRequest('api/menuItemType/all');
+    return this.apiService.getRequest('/api/menuItemType/all');
   }
 
   getMenuItemType(): Observable<MenuItemType[]> {
-    return this.apiService.getRequest('api/menuItemType/all');
+    return this.apiService.getRequest('/api/menuItemType/all');
   }
 
   addMenuItemType(menuItemType: MenuItemType): Observable<any> {
-    return this.apiService.postRequest('api/menuItemType/add', menuItemType);
+    return this.apiService.postRequest('/api/menuItemType/add', menuItemType);
   }
 
   getMenuItems(): Observable<MenuItem[]> {
-    return this.apiService.getRequest('api/menuItem/all');
+    return this.apiService.getRequest('/api/menuItem/all');
   }
 
   addMenuItem(menuItem: MenuItem): Observable<any> {
-    return this.apiService.postRequest('api/menuItem/add', menuItem);
+    return this.apiService.postRequest('/api/menuItem/add', menuItem);
   }
 
   editMenuItem(menuItem: MenuItem): Observable<any> {
-    return this.apiService.putRequest('api/menuItem/update', menuItem);
+    return this.apiService.putRequest('/api/menuItem/update', menuItem);
   }
 
   deleteMenuItem(menuItemName: string): Observable<any> {

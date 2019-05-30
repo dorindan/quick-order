@@ -45,7 +45,7 @@
                   <input type="text" *ngIf="activateTypeAdd" [(ngModel)]="menuItemTypeToAdd">
                   &nbsp;
                   <button class="btn btn-secondary btn-info btn-rounded btn-sm" (click)="addItemType()">
-                    {{ this.activateTypeAdd == false ? '+' : 'Add' }}
+                    {{'+'}}
                   </button>
                 </div>
               </div>
@@ -72,7 +72,7 @@
                   <input type="text" width="10%" *ngIf="activateIngredientAdd" [(ngModel)]="ingredientToAdd">
                   &nbsp;
                   <button class="btn btn-secondary btn-info btn-rounded btn-sm" (click)="addIngredient()">
-                    {{ this.activateIngredientAdd == false ? '+' : 'Add' }}
+                    {{'+'}}
                   </button>
                 </div>
               </div>
@@ -141,7 +141,7 @@
                   <input type="text" *ngIf="activateTypeAdd" [(ngModel)]="menuItemTypeToAdd">
                   &nbsp;
                   <button class="btn btn-secondary btn-info btn-rounded btn-sm" (click)="addItemType()">
-                    {{ this.activateTypeAdd == false ? '+' : 'Add' }}
+                    {{'+'}}
                   </button>
                 </div>
               </div>
@@ -169,7 +169,7 @@
                   <input type="text" width="10%" *ngIf="activateIngredientAdd" [(ngModel)]="ingredientToAdd">
                   &nbsp;
                   <button class="btn btn-secondary btn-info btn-rounded btn-sm" (click)="addIngredient()">
-                    {{ this.activateIngredientAdd == false ? '+' : 'Add' }}
+                    {{'+'}}
                   </button>
                 </div>
               </div>
@@ -305,7 +305,7 @@
       <td mat-cell width="10%" *matCellDef="let element">
         <div class="d-md-inline">
           <div style="display:inline" class="text-center buttonEditWrapper">
-            <a class="dropdown-item" data-toggle="modal" data-target="#modalEdit" (click)="setUpdate(element); clearMenuItemType(); clearIngredient()">
+            <a class="dropdown-item" data-toggle="modal" data-target="#modalEdit" (click)="setUpdate(element)">
               <img src="assets/edit-delete/edit.svg">
             </a>
             <a class="dropdown-item" data-toggle="modal" data-target="#modalDelete" (click)="setDelete(element)">

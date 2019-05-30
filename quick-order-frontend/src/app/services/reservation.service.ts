@@ -23,18 +23,18 @@ export class ReservationService {
   }
 
   reserve(reservation: Reservation): Observable<any> {
-    return this.apiService.postRequest('api/reservation', reservation);
+    return this.apiService.postRequest('/api/reservation', reservation);
   }
 
   getReservation(tableNr: number): Observable<any> {
-    return this.apiService.getRequest('api/reservation/reservationsForTable/' + tableNr);
+    return this.apiService.getRequest('/api/reservation/reservationsForTable/' + tableNr);
   }
 
   getUnacceptedReservation(): Observable<Reservation[]> {
-    return this.apiService.getRequest('api/reservation/unconfirmed');
+    return this.apiService.getRequest('/api/reservation/unconfirmed');
   }
 
   confirmReservation(confirmReservation: ConfirmReservation): Observable<any> {
-    return this.apiService.putRequest('api/reservation/confirm', confirmReservation);
+    return this.apiService.putRequest('/api/reservation/confirm', confirmReservation);
   }
 }

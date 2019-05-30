@@ -16,11 +16,11 @@ export class IngredientService {
   }
 
   getIngredient(): Observable<Ingredient[]> {
-    return this.apiService.getRequest('api/ingredient/all');
+    return this.apiService.getRequest('/api/ingredient/all');
   }
 
   addIngredient(ingredient: Ingredient): Observable<any> {
-    return this.apiService.postRequest('api/ingredient/add', ingredient);
+    return this.apiService.postRequest('/api/ingredient/add', ingredient);
   }
 
 }
