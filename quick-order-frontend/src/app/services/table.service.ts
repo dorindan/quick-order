@@ -30,19 +30,19 @@ export class TableService {
   }
 
   getAllTables(): Observable<Table[]> {
-    return this.apiService.getRequest('api/table/all');
+    return this.apiService.getRequest('/api/table/all');
   }
 
   addTable(table: Table): Observable<any> {
-    return this.apiService.postRequest('api/table/add', table);
+    return this.apiService.postRequest('/api/table/add', table);
   }
 
   editTable(table: Table): Observable<any> {
-    return this.apiService.postRequest('api/table/update', table);
+    return this.apiService.postRequest('/api/table/update', table);
   }
 
   deleteTable(tableNr: number): Observable<any> {
-    return this.apiService.deleteRequest('api/table/remove/' + tableNr);
+    return this.apiService.deleteRequest('/api/table/remove/' + tableNr);
   }
 
 }
