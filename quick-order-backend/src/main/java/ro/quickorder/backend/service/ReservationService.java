@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
+    private JavaMailUtil javaMailUtil;
+    @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
     private ReservationConverter reservationConverter;
@@ -86,14 +88,14 @@ public class ReservationService {
         reservationRepository.save(reservation);
 
         String mailTitle = "Reservation made";
-        String mailText = "The reservation" + reservation.getReservationName() + " for " + reservation.getReservationName()
+        String mailText = "The reservation you made " + " for " + reservation.getNumberOfPersons()
                 + " persons, starting on " + reservation.getCheckInTime() + " to " + reservation.getCheckOutTime() + " has been made.";
         String mailReceiver = "";
 
         if(reservation.getUser() != null && reservation.getUser().getEmail() != null){
             mailReceiver = reservation.getUser().getEmail();
         }
-        JavaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
+        javaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
     }
 
     public List<ReservationDto> getAllUnconfirmed() {
@@ -126,14 +128,14 @@ public class ReservationService {
         reservationRepository.save(reservation);
 
         String mailTitle = "Reservation made";
-        String mailText = "The reservation" + reservation.getReservationName() + " for " + reservation.getReservationName()
+        String mailText = "The reservation you made " + " for " + reservation.getNumberOfPersons()
                 + " persons, starting on " + reservation.getCheckInTime() + " to " + reservation.getCheckOutTime() + " has been confirmed.";
         String mailReceiver = "";
 
         if(reservation.getUser() != null && reservation.getUser().getEmail() != null){
             mailReceiver = reservation.getUser().getEmail();
         }
-        JavaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
+        javaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
     }
 
     public Reservation getReservationEntityByName(String reservationName) {

@@ -18,8 +18,8 @@ import static org.junit.Assert.assertEquals;
 public class JavaMailUtilTest {
 
     @Test
-    public void sendMailTest(){
-            JavaMailUtil.sendMail("robert_tu_1@yahoo.com","Test", "This is a test email.");
-            assertTrue(true);
+    public void sendMailTest() {
+        new JavaMailUtil().sendMail("robert_tu_1@yahoo.com", "Test", "This is a test email.");
+        assertTrue(true);
     }
 }

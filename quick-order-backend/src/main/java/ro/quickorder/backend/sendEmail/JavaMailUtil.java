@@ -1,8 +1,14 @@
 package ro.quickorder.backend.sendEmail;
 
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import ro.quickorder.backend.exception.BadRequestException;
+import ro.quickorder.backend.service.ReservationService;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -12,13 +18,14 @@ import java.util.logging.Logger;
 /**
  * @author R. Lupoaie
  */
+@Service
 public class JavaMailUtil {
-
+    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     private static String myAccountEmail = "";
     private static String password = "";
     private static String reciever = "";
 
-    public static void sendMail(String recepient, String mailText, String mailTitle) {
+    public void sendMail(String recepient, String mailText, String mailTitle) {
         Properties properties = new Properties();
         System.out.println("Preapering to send email");
         properties.put("mail.smtp.auth", true);
@@ -41,14 +48,14 @@ public class JavaMailUtil {
         Message message = prepareMessage(session, myAccountEmail, recepient, mailText, mailTitle);
         try {
             Transport.send(message);
-            System.out.println("Message sent succesfully");
+            System.out.println("Message sent successfully");
         } catch (MessagingException ex) {
-            System.out.println("Eroare la trimiterea mesajului");
-            Logger.getLogger(JavaMailUtil.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error("Error at sending the mail!");
+            throw new BadRequestException("Error at sending the mail!");
         }
     }
 
-    private static Message prepareMessage(Session session, String myAccountEmail,
+    private  Message prepareMessage(Session session, String myAccountEmail,
                                           String recepient, String mailText, String mailTitle) {
         Message message = new MimeMessage(session);
         try {
@@ -63,22 +70,29 @@ public class JavaMailUtil {
             multipart.addBodyPart(mimeBodyPart);
             message.setContent(multipart);
         } catch (MessagingException ex) {
-            System.out.println("Eroare la setarea mesajului");
-            Logger.getLogger(JavaMailUtil.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error("Error at setting the message for the mail!");
+            throw new BadRequestException("Error at setting the message for the mail!");
         }
         return message;
     }
 
-    private static void readEmailFromFile() {
-        String file = "src/main/java/ro/quickorder/backend/sendEmail/mail.txt";
+    private void readEmailFromFile() {
+        File file = new File(
+                getClass().getClassLoader().getResource("mail.txt").getFile()
+        );
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             myAccountEmail = reader.readLine();
             password = reader.readLine();
             reciever = reader.readLine();
+            System.out.println(myAccountEmail);
+            System.out.println(password);
+            System.out.println(reciever);
+
             reader.close();
         } catch (IOException ex) {
-            System.out.println("Eroare la citirea datelor din fisier." + ex.getMessage());
+            LOG.error("Error at reading the data from mail folder!");
+            throw new BadRequestException("Error at reading the data from mail folder!");
         }
     }
 

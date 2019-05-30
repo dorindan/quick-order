@@ -96,7 +96,7 @@ export class ReservationComponent implements OnInit {
       }
     }
     this.reservation.tableFoodDtos = tablesSelected;
-    if (this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
+    if (this.reservation.tableFoodDtos.length === 0 || this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
       this.reservationService.reserve(this.reservation)
         .subscribe(data => {
           this.showSnackbar('Reservation sent successfully.');
