@@ -86,7 +86,7 @@ public class TableFoodServiceTest {
         List<TableFoodDto> rezFree2 = tableFoodService.getAllFree("23+09+2007+07:10", "23+09+2007+09:10");
         assertEquals(3, rezFree2.size());
         List<TableFoodDto> rezFree3 = tableFoodService.getAllFree("23+09+2007+11:10", "23+09+2007+13:10");
-        assertEquals(3, rezFree3.size());
+        assertEquals(1, rezFree3.size());
         List<TableFoodDto> rezFree4 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+15:10");
         assertEquals(1, rezFree4.size());
         List<TableFoodDto> rezFree5 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+07:10");

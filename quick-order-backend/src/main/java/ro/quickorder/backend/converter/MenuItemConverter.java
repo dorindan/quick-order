@@ -15,10 +15,10 @@ import java.util.Set;
  */
 @Component
 public class MenuItemConverter {
-    @Autowired
-    private IngredientConverter ingredientConverter;
-    @Autowired
-    private MenuItemTypeConverter menuItemTypeConverter;
+
+    private IngredientConverter ingredientConverter= new IngredientConverter();
+
+    private MenuItemTypeConverter menuItemTypeConverter = new MenuItemTypeConverter();
 
     public MenuItem toMenuItem(MenuItemDto menuItemDto) {
         if (menuItemDto == null) {

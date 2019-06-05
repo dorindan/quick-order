@@ -18,11 +18,12 @@ public class MenuItemDto {
     public MenuItemDto() {
     }
 
-    public MenuItemDto(String name, String description, Integer preparationDurationInMinutes, Integer price) {
+    public MenuItemDto(String name, String description, Integer preparationDurationInMinutes, Integer price, MenuItemTypeDto menuItemTypeDto) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
         this.price = price;
+        this.menuItemTypeDto = menuItemTypeDto;
     }
 
     public MenuItemDto(String name, String description, MenuItemTypeDto menuItemType, Set<IngredientDto> ingredientDtos, Integer preparationDurationInMinutes, Integer price) {

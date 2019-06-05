@@ -2,7 +2,9 @@ package ro.quickorder.backend.converter;
 
 import org.junit.Test;
 import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.MenuItemDto;
+import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -17,12 +19,15 @@ public class MenuItemConverterTest {
 
     @Test
     public void testConvertMenuItemToDto() {
-        MenuItem menuItem = new MenuItem("name1", "description", 20, 45);
+        MenuItem menuItem = new MenuItem("name1", "description", 20, 45, new MenuItemType("desert"));
         MenuItemDto menuItemDto = menuItemConverter.toMenuItemDto(menuItem);
         assertEquals(menuItem.getName(), menuItemDto.getName());
         assertEquals(menuItem.getDescription(), menuItemDto.getDescription());
         assertEquals(menuItem.getPreparationDurationInMinutes(), menuItemDto.getPreparationDurationInMinutes());
         assertEquals(menuItem.getPrice(), menuItemDto.getPrice());
+        if(menuItem.getMenuItemType() != null) {
+            assertEquals(menuItem.getMenuItemType().getType(), menuItemDto.getMenuItemTypeDto().getType());
+        }
     }
 
     @Test
@@ -33,16 +38,18 @@ public class MenuItemConverterTest {
 
     @Test
     public void testConvertDtoToMenuItem() {
-        MenuItemDto menuItemDto = new MenuItemDto("name1", "description", 20, 12);
+        MenuItemDto menuItemDto = new MenuItemDto("name1", "description", 20, 12, new MenuItemTypeDto("desert"));
         MenuItem menuItem = menuItemConverter.toMenuItem(menuItemDto);
         assertEquals(menuItemDto.getName(), menuItem.getName());
         assertEquals(menuItemDto.getDescription(), menuItem.getDescription());
         assertEquals(menuItemDto.getPreparationDurationInMinutes(), menuItem.getPreparationDurationInMinutes());
         assertEquals(menuItemDto.getPrice(), menuItem.getPrice());
+        if(menuItemDto.getMenuItemTypeDto() != null) {
+            assertEquals(menuItemDto.getMenuItemTypeDto().getType(), menuItem.getMenuItemType().getType());
+        }
         assertNull(menuItem.getCommands());
         assertNull(menuItem.getFeedbacks());
         assertNull(menuItem.getIngredients());
-        assertNull(menuItem.getMenuItemType());
     }
 
     @Test
