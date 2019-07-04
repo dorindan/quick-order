@@ -1,6 +1,7 @@
 package ro.quickorder.backend.sendEmail;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.service.ReservationService;
@@ -20,6 +21,19 @@ import java.util.logging.Logger;
  */
 @Service
 public class JavaMailUtil {
+
+    @Value("${javaMail.auth}")
+    private boolean auth;
+    @Value("${javaMail.startles.enabled}")
+    private String startles;
+    @Value("${javaMail.host}")
+    private String host;
+    @Value("${javaMail.port}")
+    private String port;
+
+
+
+
     private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     private static String myAccountEmail = "";
     private static String password = "";
@@ -28,10 +42,10 @@ public class JavaMailUtil {
     public void sendMail(String recepient, String mailText, String mailTitle) {
         Properties properties = new Properties();
         System.out.println("Preapering to send email");
-        properties.put("mail.smtp.auth", true);
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", auth);
+        properties.put("mail.smtp.starttls.enable",startles);
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", port);
         if (myAccountEmail.equals("")) {
             readEmailFromFile();
         }
