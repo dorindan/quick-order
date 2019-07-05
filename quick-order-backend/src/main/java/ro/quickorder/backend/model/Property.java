@@ -61,8 +61,8 @@ public class Property {
     public String toString() {
         return "Property{" +
                 "id='" + id + '\'' +
-                ", numeRestaurant='" + name + '\'' +
-                ", startProgramTime=" + value +
+                ", propertyName='" + name + '\'' +
+                ", propertyValue=" + value +
                 '}';
     }
 
