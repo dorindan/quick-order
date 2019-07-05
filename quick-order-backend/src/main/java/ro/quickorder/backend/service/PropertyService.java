@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.quickorder.backend.converter.PropertyConvertor;
+import ro.quickorder.backend.converter.PropertyConverter;
 import ro.quickorder.backend.model.Property;
 import ro.quickorder.backend.model.PropertyName;
 import ro.quickorder.backend.model.dto.ProgramDto;
@@ -16,7 +16,7 @@ import java.time.LocalTime;
 public class PropertyService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
-    PropertyConvertor propertyConvertor;
+    PropertyConverter propertyConvertor;
     @Autowired
     PropertyRepository propertyRepository;
 
