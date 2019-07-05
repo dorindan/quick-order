@@ -1,13 +1,11 @@
 package ro.quickorder.backend.converter;
 
 import org.springframework.stereotype.Component;
-import ro.quickorder.backend.model.Property;
-import ro.quickorder.backend.model.dto.PropertyDto;
 
 @Component
 public class PropertyConvertor {
 
-//    public Property toProperty(PropertyDto propertyDto) {
+//    public Property toProperty(ProgramDto propertyDto) {
 //        if (propertyDto == null) {
 //            return null;
 //        }
@@ -17,11 +15,11 @@ public class PropertyConvertor {
 //        return property;
 //    }
 //
-//    public PropertyDto toPropertyDto(Property property) {
+//    public ProgramDto toPropertyDto(Property property) {
 //        if (property == null) {
 //            return null;
 //        }
-//        PropertyDto propertyDto = new PropertyDto();
+//        ProgramDto propertyDto = new ProgramDto();
 //        propertyDto.setPropertyName(property.getPropertyName());
 //        propertyDto.setPropertyValue(property.getPropertyValue());
 //        return propertyDto;

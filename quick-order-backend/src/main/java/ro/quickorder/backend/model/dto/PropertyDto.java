@@ -1,44 +1,38 @@
 package ro.quickorder.backend.model.dto;
 
+import javax.ws.rs.Produces;
 import java.time.LocalTime;
 
+/**
+ * @author R. Lupoaie
+ */
 public class PropertyDto {
 
-    private String numeRestaurant;
+    private String name;
+    private String value;
 
-    private LocalTime startProgramTime;
+    public PropertyDto(){
 
-    public String getNumeRestaurant() {
-        return numeRestaurant;
     }
 
-    public void setNumeRestaurant(String numeRestaurant) {
-        this.numeRestaurant = numeRestaurant;
+    public PropertyDto(String name, String value){
+        this.name = name;
+        this.value = value;
     }
 
-    public LocalTime getStartProgramTime() {
-        return startProgramTime;
+    public String getValue() {
+        return value;
     }
 
-    public PropertyDto() {
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public PropertyDto(LocalTime startProgramTime, LocalTime endProgramTime) {
-        this.startProgramTime = startProgramTime;
-        this.endProgramTime = endProgramTime;
+    public String getName() {
+        return name;
     }
 
-    public void setStartProgramTime(LocalTime startProgramTime) {
-        this.startProgramTime = startProgramTime;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public LocalTime getEndProgramTime() {
-        return endProgramTime;
-    }
-
-    public void setEndProgramTime(LocalTime endProgramTime) {
-        this.endProgramTime = endProgramTime;
-    }
-
-    private LocalTime endProgramTime;
 }

@@ -25,9 +25,8 @@ public class MenuItemConverterTest {
         assertEquals(menuItem.getDescription(), menuItemDto.getDescription());
         assertEquals(menuItem.getPreparationDurationInMinutes(), menuItemDto.getPreparationDurationInMinutes());
         assertEquals(menuItem.getPrice(), menuItemDto.getPrice());
-        if(menuItem.getMenuItemType() != null) {
-            assertEquals(menuItem.getMenuItemType().getType(), menuItemDto.getMenuItemTypeDto().getType());
-        }
+        assertEquals(menuItem.getMenuItemType().getType(), menuItemDto.getMenuItemTypeDto().getType());
+
     }
 
     @Test
@@ -44,9 +43,7 @@ public class MenuItemConverterTest {
         assertEquals(menuItemDto.getDescription(), menuItem.getDescription());
         assertEquals(menuItemDto.getPreparationDurationInMinutes(), menuItem.getPreparationDurationInMinutes());
         assertEquals(menuItemDto.getPrice(), menuItem.getPrice());
-        if(menuItemDto.getMenuItemTypeDto() != null) {
-            assertEquals(menuItemDto.getMenuItemTypeDto().getType(), menuItem.getMenuItemType().getType());
-        }
+        assertEquals(menuItemDto.getMenuItemTypeDto().getType(), menuItem.getMenuItemType().getType());
         assertNull(menuItem.getCommands());
         assertNull(menuItem.getFeedbacks());
         assertNull(menuItem.getIngredients());

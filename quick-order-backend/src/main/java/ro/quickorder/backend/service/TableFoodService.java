@@ -36,7 +36,7 @@ public class TableFoodService {
         try{
             checkInTime = CustomDateDeserializer.deserialize(checkInT);
             checkOutTime = CustomDateDeserializer.deserialize(checkOutT);
-        } catch(Exception ex){
+        } catch(DeserializationException ex){
             LOG.error("Time parameters can not be null");
             throw new BadRequestException("Time parameters can not be null");
         }

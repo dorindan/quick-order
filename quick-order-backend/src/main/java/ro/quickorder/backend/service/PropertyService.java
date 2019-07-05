@@ -7,12 +7,10 @@ import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.PropertyConvertor;
 import ro.quickorder.backend.model.Property;
 import ro.quickorder.backend.model.PropertyName;
-import ro.quickorder.backend.model.dto.PropertyDto;
+import ro.quickorder.backend.model.dto.ProgramDto;
 import ro.quickorder.backend.repository.PropertyRepository;
 
-import java.text.ParseException;
 import java.time.LocalTime;
-import java.util.zip.DataFormatException;
 
 @Service
 public class PropertyService {
@@ -22,7 +20,7 @@ public class PropertyService {
     @Autowired
     PropertyRepository propertyRepository;
 
-    public PropertyDto findSchedule() {
+    public ProgramDto findSchedule() {
 
         Property startProperty = propertyRepository.findByName(PropertyName.START_TIME);
         if(startProperty == null){
@@ -47,6 +45,6 @@ public class PropertyService {
 
         LocalTime startProgramTime = LocalTime.of(startHour,0,0,0);
         LocalTime endProgramTime = LocalTime.of(endHour,0,0,0);
-        return new PropertyDto(startProgramTime,endProgramTime);
+        return new ProgramDto(startProgramTime,endProgramTime);
     }
 }
