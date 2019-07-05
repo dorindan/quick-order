@@ -29,8 +29,6 @@ import java.util.stream.Collectors;
 public class ReservationService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
-    private JavaMailUtil javaMailUtil;
-    @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
     private ReservationConverter reservationConverter;
@@ -40,6 +38,8 @@ public class ReservationService {
     private TableFoodService tableFoodService;
     @Autowired
     private TableFoodConverter tableFoodConverter;
+    @Autowired
+    private EmailService  emailService;
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -87,15 +87,8 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-        String mailTitle = "Reservation made";
-        String mailText = "The reservation you made " + " for " + reservation.getNumberOfPersons()
-                + " persons, starting on " + reservation.getCheckInTime() + " to " + reservation.getCheckOutTime() + " has been made.";
-        String mailReceiver = "";
-
-        if(reservation.getUser() != null && reservation.getUser().getEmail() != null){
-            mailReceiver = reservation.getUser().getEmail();
-        }
-        javaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
+        emailService.sendEmailWithReservation(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
+                reservation.getCheckOutTime(),reservation.getUser(), false);
     }
 
     public List<ReservationDto> getAllUnconfirmed() {
@@ -127,15 +120,8 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-        String mailTitle = "Reservation made";
-        String mailText = "The reservation you made " + " for " + reservation.getNumberOfPersons()
-                + " persons, starting on " + reservation.getCheckInTime() + " to " + reservation.getCheckOutTime() + " has been confirmed.";
-        String mailReceiver = "";
-
-        if(reservation.getUser() != null && reservation.getUser().getEmail() != null){
-            mailReceiver = reservation.getUser().getEmail();
-        }
-        javaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
+        emailService.sendEmailWithReservation(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
+                reservation.getCheckOutTime(),reservation.getUser(), true);
     }
 
     public Reservation getReservationEntityByName(String reservationName) {

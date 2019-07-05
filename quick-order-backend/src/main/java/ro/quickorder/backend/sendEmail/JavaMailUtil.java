@@ -31,17 +31,13 @@ public class JavaMailUtil {
     @Value("${javaMail.port}")
     private String port;
 
-
-
-
     private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     private static String myAccountEmail = "";
     private static String password = "";
     private static String reciever = "";
 
-    public void sendMail(String recepient, String mailText, String mailTitle) {
+    public void sendMail(String recipient, String mailText, String mailTitle) {
         Properties properties = new Properties();
-        System.out.println("Preapering to send email");
         properties.put("mail.smtp.auth", auth);
         properties.put("mail.smtp.starttls.enable",startles);
         properties.put("mail.smtp.host", host);
@@ -49,8 +45,8 @@ public class JavaMailUtil {
         if (myAccountEmail.equals("")) {
             readEmailFromFile();
         }
-        if(recepient.equals("")){
-            recepient = reciever;
+        if(recipient.equals("")){
+            recipient = reciever;
         }
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -59,10 +55,9 @@ public class JavaMailUtil {
             }
         });
 
-        Message message = prepareMessage(session, myAccountEmail, recepient, mailText, mailTitle);
+        Message message = prepareMessage(session, myAccountEmail, recipient, mailText, mailTitle);
         try {
             Transport.send(message);
-            System.out.println("Message sent successfully");
         } catch (MessagingException ex) {
             LOG.error("Error at sending the mail!");
             throw new BadRequestException("Error at sending the mail!");
@@ -99,10 +94,6 @@ public class JavaMailUtil {
             myAccountEmail = reader.readLine();
             password = reader.readLine();
             reciever = reader.readLine();
-            System.out.println(myAccountEmail);
-            System.out.println(password);
-            System.out.println(reciever);
-
             reader.close();
         } catch (IOException ex) {
             LOG.error("Error at reading the data from mail folder!");
