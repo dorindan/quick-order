@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNull;
  * @author R. Lupoaie
  */
 public class UserConverterTest {
-    private UserConverter userConverter = new UserConverter();
+    private UserConverter userConverter = new UserConverter(new UserAttributeConverter());
 
     @Test
     public void testConverterUserToDto() {

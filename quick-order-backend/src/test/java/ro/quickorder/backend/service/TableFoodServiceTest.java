@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.exception.BadRequestException;
+import ro.quickorder.backend.exception.NotAcceptableException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
@@ -100,8 +101,8 @@ public class TableFoodServiceTest {
         try {
             tableFoodService.getAllFree(null, null);
             fail("Time parameter is null, it should throw an error");
-        } catch (BadRequestException e) {
-            assertEquals("Time parameters can not be null", e.getMessage());
+        } catch (NotAcceptableException e) {
+            assertEquals("Could not deserialize string as timestamp", e.getMessage());
         }
     }
 

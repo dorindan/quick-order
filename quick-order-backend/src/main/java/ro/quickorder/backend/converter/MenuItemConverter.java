@@ -16,9 +16,19 @@ import java.util.Set;
 @Component
 public class MenuItemConverter {
 
-    private IngredientConverter ingredientConverter= new IngredientConverter();
+    @Autowired
+    private IngredientConverter ingredientConverter;
+    @Autowired
+    private MenuItemTypeConverter menuItemTypeConverter;
 
-    private MenuItemTypeConverter menuItemTypeConverter = new MenuItemTypeConverter();
+    public MenuItemConverter(){
+
+    }
+
+    public MenuItemConverter(IngredientConverter ingredientConverter, MenuItemTypeConverter menuItemTypeConverter){
+        this.ingredientConverter = ingredientConverter;
+        this.menuItemTypeConverter = menuItemTypeConverter;
+    }
 
     public MenuItem toMenuItem(MenuItemDto menuItemDto) {
         if (menuItemDto == null) {

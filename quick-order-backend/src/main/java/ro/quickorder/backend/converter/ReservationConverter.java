@@ -1,6 +1,7 @@
 package ro.quickorder.backend.converter;
 
 import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.dto.ConfirmReservationDto;
@@ -19,7 +20,16 @@ import java.util.stream.Collectors;
 @Component
 public class ReservationConverter {
 
-    private TableFoodConverter tableFoodConverter = new TableFoodConverter();
+    @Autowired
+    private TableFoodConverter tableFoodConverter;
+
+    public ReservationConverter(){
+
+    }
+
+    public ReservationConverter(TableFoodConverter tableFoodConverter){
+        this.tableFoodConverter = tableFoodConverter;
+    }
 
     public Reservation toReservation(ReservationDto reservationDto) {
         if (reservationDto == null) {
