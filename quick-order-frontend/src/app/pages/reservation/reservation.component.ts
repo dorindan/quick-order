@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationService} from '../../services/reservation.service';
-import {MatDatepickerInputEvent, MatTableDataSource} from '@angular/material';
+import {MatDatepickerInputEvent} from '@angular/material';
 import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {PropertyService} from '../../services/property.service';
 import {Table} from '../../models/Table';
-import {MenuItem} from '../../models/MenuItem';
 import {TableService} from '../../services/table.service';
 
 @Component({

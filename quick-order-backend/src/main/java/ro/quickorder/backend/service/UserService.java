@@ -13,8 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ro.quickorder.backend.converter.UserAttributeConverter;
-import ro.quickorder.backend.converter.UserConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
 import ro.quickorder.backend.model.Role;
@@ -45,10 +43,6 @@ public class UserService {
     PasswordEncoder encoder;
     @Autowired
     RoleRepository roleRepository;
-    @Autowired
-    private UserConverter userConverter;
-    @Autowired
-    private UserAttributeConverter userAttributeConverter;
     @Autowired
     private UserRepository userRepository;
     @Autowired
