@@ -21,7 +21,7 @@ public class EmailService {
     @Autowired
     private JavaMailUtil javaMailUtil;
 
-    public void sendEmailWithReservation(int numberOfPersons, Timestamp checkInTime, Timestamp checkOutTime, User user, boolean confirmed){
+    public void sendReservationMail(int numberOfPersons, Timestamp checkInTime, Timestamp checkOutTime, User user, boolean confirmed){
         String mailTitle = EmailTemplate.createTitleReservation();
         String mailText = EmailTemplate.createTextReservation(numberOfPersons,checkInTime,checkOutTime, confirmed);
 

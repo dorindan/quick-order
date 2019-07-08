@@ -10,14 +10,15 @@ import java.sql.Timestamp;
 public class EmailTemplate {
 
     public static String createTextReservation(int numberOfPersons, Timestamp checkInTime, Timestamp checkOutTime, boolean confirmed){
-        String mailText = "The reservation you made " + " for " + numberOfPersons
-                + " persons, starting on " + checkInTime + " to " + checkOutTime ;
+        StringBuilder mailText = new StringBuilder("The reservation you made for ");
+        mailText.append(numberOfPersons + "");
+        mailText.append(" persons, starting on ").append(checkInTime+"").append(" to ").append(checkOutTime+"");
         if(confirmed){
-            mailText += " has been confirmed.";
+            mailText.append(" has been confirmed.");
         } else {
-            mailText += " has been made.";
+            mailText.append(" has been made.");
         }
-        return mailText;
+        return mailText.toString();
     }
 
     public  static String createTitleReservation(){

@@ -17,7 +17,6 @@ import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
-import ro.quickorder.backend.sendEmail.JavaMailUtil;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -87,7 +86,7 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-        emailService.sendEmailWithReservation(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
+        emailService.sendReservationMail(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
                 reservation.getCheckOutTime(),reservation.getUser(), false);
     }
 
@@ -120,7 +119,7 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-        emailService.sendEmailWithReservation(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
+        emailService.sendReservationMail(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
                 reservation.getCheckOutTime(),reservation.getUser(), true);
     }
 
