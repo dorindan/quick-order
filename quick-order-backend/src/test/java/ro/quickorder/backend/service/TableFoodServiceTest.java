@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.exception.BadRequestException;
+import ro.quickorder.backend.exception.NotAcceptableException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
@@ -86,7 +87,7 @@ public class TableFoodServiceTest {
         List<TableFoodDto> rezFree2 = tableFoodService.getAllFree("23+09+2007+07:10", "23+09+2007+09:10");
         assertEquals(3, rezFree2.size());
         List<TableFoodDto> rezFree3 = tableFoodService.getAllFree("23+09+2007+11:10", "23+09+2007+13:10");
-        assertEquals(3, rezFree3.size());
+        assertEquals(1, rezFree3.size());
         List<TableFoodDto> rezFree4 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+15:10");
         assertEquals(1, rezFree4.size());
         List<TableFoodDto> rezFree5 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+07:10");
@@ -100,8 +101,8 @@ public class TableFoodServiceTest {
         try {
             tableFoodService.getAllFree(null, null);
             fail("Time parameter is null, it should throw an error");
-        } catch (BadRequestException e) {
-            assertEquals("Time parameters can not be null", e.getMessage());
+        } catch (NotAcceptableException e) {
+            assertEquals("Could not deserialize string as timestamp", e.getMessage());
         }
     }
 

@@ -152,7 +152,7 @@ public class ReservationService {
                 LOG.error("Table not found");
                 throw new NotFoundException("Table not found");
             }
-            if (freeTables.stream().anyMatch(table -> table.getTableNr() == (tableFoodDto.getTableNr()))) {
+            if (!freeTables.stream().anyMatch(table -> table.getTableNr() == (tableFoodDto.getTableNr()))) {
                 LOG.error("Table not free");
                 throw new NotFoundException("Table not free");
             }

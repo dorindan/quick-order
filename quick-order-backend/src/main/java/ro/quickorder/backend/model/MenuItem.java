@@ -39,11 +39,12 @@ public class MenuItem {
             inverseJoinColumns = {@JoinColumn(name = "command_id")})
     private List<Command> commands;
 
-    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price) {
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price,  MenuItemType menuItemType) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
         this.price = price;
+        this.menuItemType = menuItemType;
     }
 
     public MenuItem(String name, String description, MenuItemType menuItemType, Integer preparationDurationInMinutes, Integer price, Set<Ingredient> ingredients) {
