@@ -7,6 +7,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {PropertyService} from '../../services/property.service';
 import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 @Component({
   selector: 'app-reservation',
@@ -36,7 +37,8 @@ export class ReservationComponent implements OnInit {
               private reservationService: ReservationService,
               private snackBar: MatSnackBar,
               private propertyService: PropertyService,
-              private tableService: TableService) {
+              private tableService: TableService,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -94,22 +96,31 @@ export class ReservationComponent implements OnInit {
         tablesSelected.push(this.tableList[i]);
       }
     }
-    this.reservation.tableFoodDtos = tablesSelected;
-    if (this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
+    if (this.isAuthenticatedWaiter()) {
+      this.reservation.tableFoodDtos = tablesSelected;
+      if (this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
+        this.reservationService.reserve(this.reservation)
+          .subscribe(data => {
+            this.showSnackbar('Reservation sent successfully.');
+          }, error => {
+            switch (error.status) {
+              case 403: // forbidden exception
+                this.showSnackbar('Data ore persons number are wrong . Please try again!');
+                break;
+              default:
+                this.showSnackbar('Reservation failed. Please try again.');
+            }
+          });
+      } else {
+        this.showSnackbar('The number of persons are to great to fit in thous tables!');
+      }
+    } else {
       this.reservationService.reserve(this.reservation)
         .subscribe(data => {
           this.showSnackbar('Reservation sent successfully.');
         }, error => {
-          switch (error.status) {
-            case 403: // forbidden exception
-              this.showSnackbar('Data ore persons number are wrong . Please try again!');
-              break;
-            default:
-              this.showSnackbar('Reservation failed. Please try again.');
-          }
+          this.showSnackbar('Reservation failed. Please try again.');
         });
-    } else {
-      this.showSnackbar('The number of persons are to great to fit in thous tables!');
     }
   }
 
@@ -137,6 +148,19 @@ export class ReservationComponent implements OnInit {
       duration: 3000,
       panelClass: ['snackbar']
     });
+  }
+
+  isAuthenticatedWaiter() {
+    if (this.tokenStorageService.getAuthorities().length === 0) {
+      return false;
+    }
+    for (const role of this.tokenStorageService.getAuthorities()) {
+      if (role === 'ROLE_WAITER') {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   validateHour(time: string) {
