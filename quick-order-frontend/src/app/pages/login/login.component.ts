@@ -4,9 +4,9 @@ import {HttpClient} from '@angular/common/http';
 import {LoginService} from '../../services/login.service';
 import {TranslateService} from '@ngx-translate/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AuthService} from "../../auth/auth.service";
-import {TokenStorageService} from "../../auth/token-storage.service";
-import {AuthLoginInfo} from "../../auth/login-info";
+import {AuthService} from '../../auth/auth.service';
+import {TokenStorageService} from '../../auth/token-storage.service';
+import {AuthLoginInfo} from '../../auth/login-info';
 
 
 @Component({
@@ -67,10 +67,15 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['loggedStart']);
       },
       error => {
-        console.log(error);
         this.errorMessage = error.error.message;
         this.isLoginFailed = true;
-        this.showSnackbar('Username or password is incorrect. Please try again.');
+        switch (error.status) {
+          case 404: // not found exception
+            this.showSnackbar('User dose not exist. Please try again.');
+            break;
+          default:
+            this.showSnackbar('Username or password is incorrect. Please try again.');
+        }
       }
     );
   }

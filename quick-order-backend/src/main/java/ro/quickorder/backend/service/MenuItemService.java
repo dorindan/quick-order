@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.converter.MenuItemTypeConverter;
+import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
@@ -44,12 +45,12 @@ public class MenuItemService {
     public void addMenuItem(MenuItemDto menuItemDto) {
         if (menuItemDto.getName() == null) {
             LOG.error("Name can not be null");
-            throw new NotFoundException("Name can not be null");
+            throw new BadRequestException("Name can not be null");
         }
         MenuItem menuItem = menuItemRepository.findByName(menuItemDto.getName());
         if (menuItem != null) {
             LOG.error("MenuItem already exists!");
-            throw new NotFoundException("MenuItem already exists!");
+            throw new BadRequestException("MenuItem already exists!");
         }
         MenuItemType menuItemType = menuItemTypeRepository.findByType(menuItemDto.getMenuItemTypeDto().getType());
         if (menuItemType == null) {
