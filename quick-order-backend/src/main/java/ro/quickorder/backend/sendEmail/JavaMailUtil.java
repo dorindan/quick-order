@@ -34,7 +34,7 @@ public class JavaMailUtil {
     private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     private static String myAccountEmail = "";
     private static String password = "";
-    private static String reciever = "";
+    private static String receiver = "";
 
     public void sendMail(String recipient, String mailText, String mailTitle) {
         Properties properties = new Properties();
@@ -46,7 +46,7 @@ public class JavaMailUtil {
             readEmailFromFile();
         }
         if(recipient.equals("")){
-            recipient = reciever;
+            recipient = receiver;
         }
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -93,7 +93,7 @@ public class JavaMailUtil {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             myAccountEmail = reader.readLine();
             password = reader.readLine();
-            reciever = reader.readLine();
+            receiver = reader.readLine();
             reader.close();
         } catch (IOException ex) {
             LOG.error("Error at reading the data from mail folder!");
