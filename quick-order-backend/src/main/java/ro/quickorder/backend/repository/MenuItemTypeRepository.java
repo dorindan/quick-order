@@ -8,4 +8,6 @@ import ro.quickorder.backend.model.MenuItemType;
 public interface MenuItemTypeRepository extends JpaRepository<MenuItemType, Long> {
 
     MenuItemType findByType(String type);
+
+    boolean existsMenuItemTypeByType(String type);
 }

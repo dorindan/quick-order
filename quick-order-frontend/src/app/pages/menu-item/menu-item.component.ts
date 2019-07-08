@@ -27,8 +27,12 @@ export class MenuItemComponent implements OnInit {
   preparationDurationInMinutes = 0;
   ingredients: string[] = [];
   price = 0;
+  activateIngredientAdd = false;
+  activateTypeAdd = false;
+  ingredientToAdd = '';
+  menuItemTypeToAdd = '';
 
-  constructor(private tableService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar) {
+  constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -53,14 +57,14 @@ export class MenuItemComponent implements OnInit {
   }
 
   updateMenu() {
-    this.tableService.getMenuItems().subscribe(rez => {
+    this.menuItemService.getMenuItems().subscribe(rez => {
       this.menuItems = rez;
       this.dataSource = new MatTableDataSource<MenuItem>(this.menuItems);
     });
   }
 
   updateMenuItemType(): void {
-    this.tableService.getMenuItemType().subscribe(rez => {
+    this.menuItemService.getMenuItemType().subscribe(rez => {
       this.menuItemTypes = rez;
     });
   }
@@ -75,6 +79,9 @@ export class MenuItemComponent implements OnInit {
     });
     this.itemType = menuItem.menuItemTypeDto.type;
     this.price = menuItem.price;
+
+    this.clearMenuItemType();
+    this.clearIngredient();
   }
 
   setDelete(menuItem: MenuItem): void {
@@ -89,7 +96,7 @@ export class MenuItemComponent implements OnInit {
         .filter(value => this.ingredients.filter(value1 => value.name === value1).length > 0);
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
-      this.tableService.addMenuItem(newMenuItem)
+      this.menuItemService.addMenuItem(newMenuItem)
         .subscribe(rez => {
           window.location.reload();
         }, error => {
@@ -117,7 +124,7 @@ export class MenuItemComponent implements OnInit {
         .filter(value => this.ingredients.filter(value1 => value.name === value1).length > 0);
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
-      this.tableService.editMenuItem(newMenuItem).subscribe(rez => {
+      this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
         window.location.reload();
       }, error => {
         if (error.status === 404) { // not found exception
@@ -132,7 +139,7 @@ export class MenuItemComponent implements OnInit {
   }
 
   delete(): void {
-    this.tableService.deleteMenuItem(this.name).subscribe(rez => {
+    this.menuItemService.deleteMenuItem(this.name).subscribe(rez => {
       window.location.reload();
     }, error => {
       if (error.status === 404) { // not found exception
@@ -150,6 +157,50 @@ export class MenuItemComponent implements OnInit {
     this.ingredients = [];
     this.price = 0;
     this.itemType = '';
+    this.activateIngredientAdd = false;
+    this.activateTypeAdd = false;
+    this.ingredientToAdd = '';
+    this.menuItemTypeToAdd = '';
+  }
+
+  addIngredient(): void {
+    if (this.activateIngredientAdd) {
+      const ingredient = new Ingredient(this.ingredientToAdd);
+      this.ingredientService.addIngredient(ingredient).subscribe(rez => {
+        this.ingredientsList.push(ingredient);
+      }, error1 => {
+        alert('The ingredient could not be added!, Please try again!');
+      });
+      this.activateIngredientAdd = false;
+      this.ingredientToAdd = '';
+    } else {
+      this.activateIngredientAdd = true;
+    }
+  }
+
+  addItemType(): void {
+    if (this.activateTypeAdd) {
+      const itemType = new MenuItemType(this.menuItemTypeToAdd);
+      this.menuItemService.addMenuItemType(itemType).subscribe(rez => {
+        this.menuItemTypes.push(itemType);
+      }, error1 => {
+        alert('The ingredient could not be added!, Please try again!');
+      });
+      this.activateTypeAdd = false;
+      this.menuItemTypeToAdd = '';
+    } else {
+      this.activateTypeAdd = true;
+    }
+  }
+
+  clearIngredient(): void {
+    this.activateIngredientAdd = false;
+    this.ingredientToAdd = '';
+  }
+
+  clearMenuItemType(): void {
+    this.activateTypeAdd = false;
+    this.menuItemTypeToAdd = '';
   }
 
   validation(): boolean {
@@ -174,4 +225,21 @@ export class MenuItemComponent implements OnInit {
       return true;
     }
   }
+
+  showIngredients(): string {
+    let rez = '';
+    if (this.ingredients.length > 0) {
+      rez += this.ingredients[0];
+    }
+    if (this.ingredients.length > 1) {
+      rez += ' (+' + (this.ingredients.length - 1);
+      if (this.ingredients.length === 2) {
+        rez += ' other)';
+      } else {
+        rez += ' others)';
+      }
+    }
+    return rez;
+  }
+
 }
