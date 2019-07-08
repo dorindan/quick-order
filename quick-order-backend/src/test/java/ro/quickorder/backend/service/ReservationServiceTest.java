@@ -53,7 +53,6 @@ public class ReservationServiceTest {
     @Before
     public void setUp() {
 
-
         TableFood table1 = new TableFood(1, 5, false, 1);
         TableFood table2 = new TableFood(2, 4, true, 1);
         TableFood table3 = new TableFood(3, 4, false, 1);
@@ -117,10 +116,10 @@ public class ReservationServiceTest {
     @Test
     public void testConfirmReservationReservationIsTaken() {
         List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+        ReservationDto reservationDto = reservationDtos.get(0);
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+08:00", "23+09+2007+10:59");
         assertEquals(reservationDtos.size(), 2);
         assertEquals(tableFoodDtos.size(), 2);
-        ReservationDto reservationDto = reservationDtos.get(0);
         ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
         reservationService.confirmReservation(confirmReservationDto);
         List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree("23+09+2007+08:00", "23+09+2007+10:59");
@@ -190,7 +189,7 @@ public class ReservationServiceTest {
 
     @Test
     public void testAddReservation() {
-        try {
+        try{
             ReservationDto reservationDto = new ReservationDto.Builder().withnumberOfPersons(12).withCheckInTime(new Timestamp(12)).build();
             reservationService.addReservation(reservationDto);
         } catch (ForbiddenException e) {
@@ -207,7 +206,7 @@ public class ReservationServiceTest {
     @Test
     public void testReservationsForTable() {
         List<TableFood> tableFoods = tableFoodRepository.findAll();
-        TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(2));
+        TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(0));
         List<ReservationDto> reservations1 = reservationService.getReservationsForTableByTableNumber(tableFoodDto1.getTableNr());
         assertEquals(1, reservations1.size());
         TableFoodDto tableFoodDto2 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));

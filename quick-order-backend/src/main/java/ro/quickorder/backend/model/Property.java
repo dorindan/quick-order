@@ -3,7 +3,7 @@ package ro.quickorder.backend.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "property")
@@ -18,11 +18,20 @@ public class Property {
     @Column(updatable = false, nullable = false)
     private String id;
 
-    private String numeRestaurant;
+    @Enumerated(EnumType.STRING)
+    private PropertyName name;
 
-    private LocalTime startProgramTime;
+    private String value;
 
-    private LocalTime endProgramTime;
+    public Property(){
+
+    }
+
+    public Property(PropertyName name, String value){
+        this.name = name;
+        this.value = value;
+    }
+
 
     public String getId() {
         return id;
@@ -32,28 +41,19 @@ public class Property {
         this.id = id;
     }
 
-    public String getNumeRestaurant() {
-        return numeRestaurant;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Property that = (Property) o;
+        return Objects.equals(id, that.id) &&
+                name == that.name &&
+                value.equals(that.value) ;
     }
 
-    public void setNumeRestaurant(String numeRestaurant) {
-        this.numeRestaurant = numeRestaurant;
-    }
-
-    public LocalTime getStartProgramTime() {
-        return startProgramTime;
-    }
-
-    public void setStartProgramTime(LocalTime startProgramTime) {
-        this.startProgramTime = startProgramTime;
-    }
-
-    public LocalTime getEndProgramTime() {
-        return endProgramTime;
-    }
-
-    public void setEndProgramTime(LocalTime endProgramTime) {
-        this.endProgramTime = endProgramTime;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, value);
     }
 
 
@@ -61,10 +61,24 @@ public class Property {
     public String toString() {
         return "Property{" +
                 "id='" + id + '\'' +
-                ", numeRestaurant='" + numeRestaurant + '\'' +
-                ", startProgramTime=" + startProgramTime +
-                ", endProgramTime=" + endProgramTime +
+                ", propertyName='" + name + '\'' +
+                ", propertyValue=" + value +
                 '}';
     }
 
+    public PropertyName getName() {
+        return name;
+    }
+
+    public void setName(PropertyName name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

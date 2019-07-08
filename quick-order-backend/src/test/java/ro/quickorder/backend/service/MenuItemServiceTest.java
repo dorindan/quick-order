@@ -19,6 +19,7 @@ import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
+import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
 import javax.inject.Inject;
 
@@ -50,17 +51,26 @@ public class MenuItemServiceTest {
     private MenuItemConverter menuItemConverter;
     @Inject
     private IngredientConverter ingredientConverter;
+    @Inject
+    private MenuItemTypeRepository menuItemTypeRepository;
+
 
 
     @Before
     public void setUp(){
 
-        MenuItem menuItem1 = new MenuItem("Name1", "Original description!", 12, 20);
-        MenuItem menuItem2 = new MenuItem("Name2", "Original description!", 20, 30);
-        MenuItem menuItem3 = new MenuItem("Name3", "Original description!", 25, 40);
+
+        MenuItemType menuItemType = new MenuItemType("desert");
+
+        MenuItem menuItem1 = new MenuItem("Name1", "Original description!", 12, 20, menuItemType);
+        MenuItem menuItem2 = new MenuItem("Name2", "Original description!", 20, 30, menuItemType);
+        MenuItem menuItem3 = new MenuItem("Name3", "Original description!", 25, 40, menuItemType);
         Ingredient ingredient1 = new Ingredient("marar");
         Ingredient ingredient2 = new Ingredient("sare");
         Ingredient ingredient3 = new Ingredient("piper");
+
+
+        menuItemTypeRepository.save(menuItemType);
 
         menuItemRepository.save(menuItem1);
         menuItemRepository.save(menuItem2);
@@ -73,7 +83,10 @@ public class MenuItemServiceTest {
 
     @After
     public void tearDown(){
+
         menuItemRepository.deleteAll();
+        ingredientRepository.deleteAll();
+        menuItemTypeRepository.deleteAll();
     }
 
 
@@ -88,7 +101,7 @@ public class MenuItemServiceTest {
 
     @Test
     public void testAddMenuItem() {
-        MenuItemDto menuItemDto= new MenuItemDto("Salad", "the most original description!", 5, 18);
+        MenuItemDto menuItemDto= new MenuItemDto("Salad", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
 
         List<IngredientDto> ingredientDtos = ingredientService.getAll();
 
@@ -137,7 +150,7 @@ public class MenuItemServiceTest {
 
     @Test
     public void testAddMenuItemWhenItemNameAlreadyExists() {
-        MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", 5, 18);
+        MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
 
         try {
             menuItemService.addMenuItem(menuItemDto);
@@ -149,7 +162,7 @@ public class MenuItemServiceTest {
 
     @Test
     public void testUpdateMenuItem() {
-        MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", 5, 18);
+        MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
 
         menuItemService.updateMenuItem(menuItemDto);
 
@@ -163,7 +176,7 @@ public class MenuItemServiceTest {
 
     @Test
     public void testUpdateMenuItemWhenUserDoseNotExist() {
-        MenuItemDto menuItemDto= new MenuItemDto("Name", "the most original description!", 5, 18);
+        MenuItemDto menuItemDto= new MenuItemDto("Name", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
 
         try {
             menuItemService.updateMenuItem(menuItemDto);
@@ -201,7 +214,7 @@ public class MenuItemServiceTest {
 
     @Test
     public void testRemoveMenuItemWhenMenuItemDoseNotExist() {
-        MenuItemDto menuItemDto= new MenuItemDto("Name", "the most original description!", 5, 18);
+        MenuItemDto menuItemDto= new MenuItemDto("Name", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
 
         try {
             menuItemService.removeMenuItem(menuItemDto.getName());

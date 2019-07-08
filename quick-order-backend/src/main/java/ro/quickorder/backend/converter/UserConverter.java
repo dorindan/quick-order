@@ -1,5 +1,6 @@
 package ro.quickorder.backend.converter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.UserDto;
@@ -12,7 +13,17 @@ import ro.quickorder.backend.model.dto.UserDto;
 
 @Component
 public class UserConverter {
-    private UserAttributeConverter userAttributeConverter = new UserAttributeConverter();
+
+    @Autowired
+    private UserAttributeConverter userAttributeConverter;
+
+    public UserConverter(){
+
+    }
+
+    public UserConverter(UserAttributeConverter userAttributeConverter){
+        this.userAttributeConverter = userAttributeConverter;
+    }
 
     public User toUser(UserDto userDto) {
         if (userDto == null) {

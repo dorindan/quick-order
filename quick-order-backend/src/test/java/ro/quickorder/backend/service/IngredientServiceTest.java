@@ -76,7 +76,7 @@ public class IngredientServiceTest {
             IngredientDto ingredientDto = new IngredientDto("e");
             ingredientService.addIngredient(ingredientDto);
         }catch (BadRequestException e){
-            assertEquals(e.getMessage(), "Ingredient name is to short!");
+            assertEquals(e.getMessage(), "Ingredient name is too short!");
         }
     }
 
