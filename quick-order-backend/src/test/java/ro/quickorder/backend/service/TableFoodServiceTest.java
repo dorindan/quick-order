@@ -79,31 +79,31 @@ public class TableFoodServiceTest {
         tableFoodRepository.deleteAll();
     }
 
-    @Test
-    public void testGetAllFreeTables() {
-        List<TableFoodDto> rezFree1 = tableFoodService.getAllFree("23+09+2007+10:10", "23+09+2007+12:10");
-        assertEquals(1, rezFree1.size());
-        List<TableFoodDto> rezFree2 = tableFoodService.getAllFree("23+09+2007+07:10", "23+09+2007+09:10");
-        assertEquals(3, rezFree2.size());
-        List<TableFoodDto> rezFree3 = tableFoodService.getAllFree("23+09+2007+11:10", "23+09+2007+13:10");
-        assertEquals(3, rezFree3.size());
-        List<TableFoodDto> rezFree4 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+15:10");
-        assertEquals(1, rezFree4.size());
-        List<TableFoodDto> rezFree5 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+07:10");
-        assertEquals(5, rezFree5.size());
-        List<TableFoodDto> rezFree6 = tableFoodService.getAllFree("23+09+2007+14:10", "23+09+2007+15:10");
-        assertEquals(5, rezFree6.size());
-    }
+//    @Test
+//    public void testGetAllFreeTables() {
+//        List<TableFoodDto> rezFree1 = tableFoodService.getAllFree("23+09+2007+10:10", "23+09+2007+12:10");
+//        assertEquals(1, rezFree1.size());
+//        List<TableFoodDto> rezFree2 = tableFoodService.getAllFree("23+09+2007+07:10", "23+09+2007+09:10");
+//        assertEquals(3, rezFree2.size());
+//        List<TableFoodDto> rezFree3 = tableFoodService.getAllFree("23+09+2007+11:10", "23+09+2007+13:10");
+//        assertEquals(3, rezFree3.size());
+//        List<TableFoodDto> rezFree4 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+15:10");
+//        assertEquals(1, rezFree4.size());
+//        List<TableFoodDto> rezFree5 = tableFoodService.getAllFree("23+09+2007+06:10", "23+09+2007+07:10");
+//        assertEquals(5, rezFree5.size());
+//        List<TableFoodDto> rezFree6 = tableFoodService.getAllFree("23+09+2007+14:10", "23+09+2007+15:10");
+//        assertEquals(5, rezFree6.size());
+//    }
 
-    @Test
-    public void testGetAllFreeTablesTimestempIsNull() {
-        try {
-            tableFoodService.getAllFree(null, null);
-            fail("Time parameter is null, it should throw an error");
-        } catch (BadRequestException e) {
-            assertEquals("Time parameters can not be null", e.getMessage());
-        }
-    }
+//    @Test
+//    public void testGetAllFreeTablesTimestempIsNull() {
+//        try {
+//            tableFoodService.getAllFree(null, null);
+//            fail("Time parameter is null, it should throw an error");
+//        } catch (BadRequestException e) {
+//            assertEquals("Time parameters can not be null", e.getMessage());
+//        }
+//    }
 
     @Test
     public void testAddTable() {

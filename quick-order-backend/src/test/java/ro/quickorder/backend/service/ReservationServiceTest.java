@@ -112,38 +112,38 @@ public class ReservationServiceTest {
         assertEquals(tableFoodDtosAfter.size(), 0);
     }
 
-    @Test
-    public void testConfirmReservationReservationIsTaken() {
-        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
-        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+08:00", "23+09+2007+10:59");
-        assertEquals(reservationDtos.size(), 2);
-        assertEquals(tableFoodDtos.size(), 2);
-        ReservationDto reservationDto = reservationDtos.get(0);
-        ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
-        reservationService.confirmReservation(confirmReservationDto);
-        List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree("23+09+2007+08:00", "23+09+2007+10:59");
-        try {
-            reservationService.confirmReservation(confirmReservationDto);
-            fail("Reservation should be taken");
-        } catch (NotFoundException e) {
-            assertEquals(e.getMessage(), "Reservation is already confirmed");
-        }
-    }
+//    @Test
+//    public void testConfirmReservationReservationIsTaken() {
+//        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+//        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+08:00", "23+09+2007+10:59");
+//        assertEquals(reservationDtos.size(), 2);
+//        assertEquals(tableFoodDtos.size(), 2);
+//        ReservationDto reservationDto = reservationDtos.get(0);
+//        ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
+//        reservationService.confirmReservation(confirmReservationDto);
+//        List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree("23+09+2007+08:00", "23+09+2007+10:59");
+//        try {
+//            reservationService.confirmReservation(confirmReservationDto);
+//            fail("Reservation should be taken");
+//        } catch (NotFoundException e) {
+//            assertEquals(e.getMessage(), "Reservation is already confirmed");
+//        }
+//    }
 
-    @Test
-    public void testConfirmReservationReservationIsInvalid() {
-        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
-        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+09:00", "23+09+2007+11:59");
-        ReservationDto reservationDto = reservationDtos.get(0);
-        ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
-        reservationDtos.get(0).setReservationName(null);
-        try {
-            reservationService.confirmReservation(confirmReservationDto);
-            fail("Reservation should not have been found");
-        } catch (NotFoundException e) {
-            assertEquals(e.getMessage(), "Reservation not found");
-        }
-    }
+//    @Test
+//    public void testConfirmReservationReservationIsInvalid() {
+//        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+//        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+09:00", "23+09+2007+11:59");
+//        ReservationDto reservationDto = reservationDtos.get(0);
+//        ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
+//        reservationDtos.get(0).setReservationName(null);
+//        try {
+//            reservationService.confirmReservation(confirmReservationDto);
+//            fail("Reservation should not have been found");
+//        } catch (NotFoundException e) {
+//            assertEquals(e.getMessage(), "Reservation not found");
+//        }
+//    }
 
     @Test
     public void testConfirmReservationTableIsTaken() {
@@ -164,27 +164,27 @@ public class ReservationServiceTest {
         }
     }
 
-    @Test
-    public void testConfirmReservationTableIsInvalid() {
-        Timestamp timestampIn = Timestamp.valueOf("2007-09-23 5:0:0.0");
-        Timestamp timestampOut = Timestamp.valueOf("2007-09-23 15:59:0.0");
-        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
-        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+05:00", "23+09+2007+15:59");
-        assertEquals(reservationDtos.size(), 2);
-        assertEquals(tableFoodDtos.size(), 2);
-        ReservationDto reservationDto = reservationDtos.get(0);
-        ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
-        reservationService.confirmReservation(confirmReservationDto);
-        List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree("23+09+2007+05:00", "23+09+2007+15:59");
-        try {
-            ReservationDto reservationDto2 = reservationDtos.get(1);
-            ConfirmReservationDto confirmReservationDto2 = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto2, tableFoodDtosAfter);
-            reservationService.confirmReservation(confirmReservationDto2);
-            fail("The list of tables should be invalid!");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getMessage(), "TableList can not be null");
-        }
-    }
+//    @Test
+//    public void testConfirmReservationTableIsInvalid() {
+//        Timestamp timestampIn = Timestamp.valueOf("2007-09-23 5:0:0.0");
+//        Timestamp timestampOut = Timestamp.valueOf("2007-09-23 15:59:0.0");
+//        List<ReservationDto> reservationDtos = reservationService.getAllUnconfirmed();
+//        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+05:00", "23+09+2007+15:59");
+//        assertEquals(reservationDtos.size(), 2);
+//        assertEquals(tableFoodDtos.size(), 2);
+//        ReservationDto reservationDto = reservationDtos.get(0);
+//        ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
+//        reservationService.confirmReservation(confirmReservationDto);
+//        List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree("23+09+2007+05:00", "23+09+2007+15:59");
+//        try {
+//            ReservationDto reservationDto2 = reservationDtos.get(1);
+//            ConfirmReservationDto confirmReservationDto2 = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto2, tableFoodDtosAfter);
+//            reservationService.confirmReservation(confirmReservationDto2);
+//            fail("The list of tables should be invalid!");
+//        } catch (ForbiddenException e) {
+//            assertEquals(e.getMessage(), "TableList can not be null");
+//        }
+//    }
 
     @Test
     public void testAddReservation() {
@@ -202,16 +202,16 @@ public class ReservationServiceTest {
         }
     }
 
-    @Test
-    public void testReservationsForTable() {
-        List<TableFood> tableFoods = tableFoodRepository.findAll();
-        TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(2));
-        List<ReservationDto> reservations1 = reservationService.getReservationsForTableByTableNumber(tableFoodDto1.getTableNr());
-        assertEquals(1, reservations1.size());
-        TableFoodDto tableFoodDto2 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));
-        List<ReservationDto> reservations2 = reservationService.getReservationsForTableByTableNumber(tableFoodDto2.getTableNr());
-        assertEquals(0, reservations2.size());
-    }
+//    @Test
+//    public void testReservationsForTable() {
+//        List<TableFood> tableFoods = tableFoodRepository.findAll();
+//        TableFoodDto tableFoodDto1 = tableFoodConverter.toTableFoodDto(tableFoods.get(2));
+//        List<ReservationDto> reservations1 = reservationService.getReservationsForTableByTableNumber(tableFoodDto1.getTableNr());
+//        assertEquals(1, reservations1.size());
+//        TableFoodDto tableFoodDto2 = tableFoodConverter.toTableFoodDto(tableFoods.get(1));
+//        List<ReservationDto> reservations2 = reservationService.getReservationsForTableByTableNumber(tableFoodDto2.getTableNr());
+//        assertEquals(0, reservations2.size());
+//    }
 
     @Test
     public void testReservationsForTableTableNotFound() {

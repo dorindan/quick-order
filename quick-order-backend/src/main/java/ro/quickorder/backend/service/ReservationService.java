@@ -46,7 +46,7 @@ public class ReservationService {
         reservationDto.setStatus("not acccepted");
         reservationDto.setConfirmed(false);
         UUID uuid = UUID.randomUUID();
-        reservationDto.setReservationName(uuid.toString().substring(0,9));
+        reservationDto.setReservationName(uuid.toString().substring(0, 9));
         long twoHoursInMilliseconds = 7200000;
         Timestamp checkOutTime = new Timestamp(reservationDto.getCheckInTime().getTime() + twoHoursInMilliseconds);
         reservationDto.setCheckOutTime(checkOutTime);
