@@ -19,7 +19,7 @@ public class MenuItemTypeResource {
     MenuItemTypeService menuItemTypeService;
 
     @RequestMapping(path = "/all", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('WAITER')")
+    @PreAuthorize("hasRole('WAITER') or hasRole('USER')")
     public List<MenuItemTypeDto> getAllMenuItemTypes() {
         return menuItemTypeService.getAllMenuItemTypes();
     }

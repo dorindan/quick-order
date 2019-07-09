@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatSnackBar, MatTableDataSource} from '@angular/material';
 import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 @Component({
   selector: 'app-table',
@@ -23,7 +24,8 @@ export class TableComponent implements OnInit {
   windowView = false;
   floor = 0;
 
-  constructor(private tableService: TableService, private snackBar: MatSnackBar) {
+  constructor(private tableService: TableService, private snackBar: MatSnackBar,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -136,4 +138,16 @@ export class TableComponent implements OnInit {
     }
   }
 
+  isAuthenticatedWaiter() {
+    if (this.tokenStorageService.getAuthorities().length === 0) {
+      return false;
+    }
+    for (const role  of this.tokenStorageService.getAuthorities()) {
+      if (role === 'ROLE_WAITER') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 }
