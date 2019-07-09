@@ -110,7 +110,10 @@
     "nrPersons": "Număr persoane",
     "back": "Înapoi",
     "sendReservation": "Trimite Rezervarea",
-    "finish": "Trimite"
+    "finish": "Trimite",
+    "choseTable": "Alege mesele*",
+    "table": "Masa: ",
+    "seats": " Locuri: "
   },
   "waiterPage": {
     "nrOfPersons": "Numărul de persoane:",

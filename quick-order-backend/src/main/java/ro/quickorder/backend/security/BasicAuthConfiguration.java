@@ -18,10 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 import ro.quickorder.backend.security.jwt.JwtAuthEntryPoint;
 import ro.quickorder.backend.security.jwt.JwtAuthTokenFilter;
 import ro.quickorder.backend.service.UserDetailsServiceImpl;
-import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import java.io.IOException;
 
