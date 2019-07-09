@@ -15,6 +15,6 @@ export class LoginService {
   }
 
   login(authData: User): Observable<any> {
-    return this.apiService.postRequest('api/users/login', authData);
+    return this.apiService.postRequest('/api/users/login', authData);
   }
 }

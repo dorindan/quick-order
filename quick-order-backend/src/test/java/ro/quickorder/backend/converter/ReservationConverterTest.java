@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNull;
  */
 public class ReservationConverterTest {
 
-    private ReservationConverter reservationConverter = new ReservationConverter();
+    private ReservationConverter reservationConverter = new ReservationConverter(new TableFoodConverter());
 
     @Test
     public void testConvertReservationToDto() {

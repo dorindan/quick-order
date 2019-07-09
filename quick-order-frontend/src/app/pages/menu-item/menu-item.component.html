@@ -41,6 +41,12 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
+                  &nbsp;
+                  <input type="text" *ngIf="activateTypeAdd" [(ngModel)]="menuItemTypeToAdd">
+                  &nbsp;
+                  <button class="btn btn-secondary btn-info btn-rounded btn-sm" (click)="addItemType()">
+                    {{'+'}}
+                  </button>
                 </div>
               </div>
 
@@ -51,12 +57,23 @@
                   <mat-form-field>
                     <mat-label translate="">menuItem.ingredients</mat-label>
                     <mat-select multiple [(ngModel)]="ingredients">
+                      <mat-select-trigger>
+                        <span class="example-additional-selection">
+                          {{showIngredients()}}
+                        </span>
+                      </mat-select-trigger>
                       <mat-option class="form-control validate" [value]="ingredient.name"
                                   *ngFor="let ingredient of ingredientsList"
                       >{{ingredient.name}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
+                  &nbsp;
+                  <input type="text" width="10%" *ngIf="activateIngredientAdd" [(ngModel)]="ingredientToAdd">
+                  &nbsp;
+                  <button class="btn btn-secondary btn-info btn-rounded btn-sm" (click)="addIngredient()">
+                    {{'+'}}
+                  </button>
                 </div>
               </div>
 
@@ -120,6 +137,12 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
+                  &nbsp;
+                  <input type="text" *ngIf="activateTypeAdd" [(ngModel)]="menuItemTypeToAdd">
+                  &nbsp;
+                  <button class="btn btn-secondary btn-info btn-rounded btn-sm" (click)="addItemType()">
+                    {{'+'}}
+                  </button>
                 </div>
               </div>
 
@@ -129,7 +152,12 @@
                 <div>
                   <mat-form-field>
                     <mat-label translate="">menuItem.ingredients</mat-label>
-                    <mat-select multiple [(ngModel)]="ingredients">
+                    <mat-select multiple [(ngModel)]="this.ingredients">
+                      <mat-select-trigger>
+                        <span class="example-additional-selection">
+                          {{showIngredients()}}
+                        </span>
+                      </mat-select-trigger>
                       <mat-option class="form-control validate" tabindex="-1" aria-labelledby="modalAdd"
                                   [value]="ingredient.name"
                                   *ngFor="let ingredient of ingredientsList"
@@ -137,6 +165,12 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
+                  &nbsp;
+                  <input type="text" width="10%" *ngIf="activateIngredientAdd" [(ngModel)]="ingredientToAdd">
+                  &nbsp;
+                  <button class="btn btn-secondary btn-info btn-rounded btn-sm" (click)="addIngredient()">
+                    {{'+'}}
+                  </button>
                 </div>
               </div>
               <div class="md-form mb-5">
@@ -197,37 +231,37 @@
   <table mat-table align="center" [dataSource]="dataSource" class="table-hover mat-elevation-z8">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th width="20%" mat-header-cell *matHeaderCellDef>
+      <th lass="medium" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.name</h5>
       </th>
-      <td width="20%" mat-cell *matCellDef="let element">
+      <td lass="medium" mat-cell *matCellDef="let element">
         {{element.name}}
       </td>
     </ng-container>
     <!-- Description Column -->
     <ng-container matColumnDef="description">
-      <th width="30%" mat-header-cell *matHeaderCellDef>
+      <th class="large" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.description</h5>
       </th>
-      <td width="30%" mat-cell *matCellDef="let element">
+      <td lass="large" mat-cell *matCellDef="let element">
         {{element.description}}
       </td>
     </ng-container>
 
     <!-- Item Type Column -->
     <ng-container matColumnDef="type">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.itemType</h5>
       </th>
-      <td width="10%" mat-cell *matCellDef="let element">{{element.menuItemTypeDto.type}}</td>
+      <td lass="small" mat-cell *matCellDef="let element">{{element.menuItemTypeDto.type}}</td>
     </ng-container>
 
     <!-- Ingredients Column -->
     <ng-container matColumnDef="ingredients">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.ingredients</h5>
       </th>
-      <td width="10%" mat-cell *matCellDef="let element">
+      <td lass="small" mat-cell *matCellDef="let element">
         <div ngbDropdown class="d-inline-block">
           <button class="btn " id="dropdownBasic1" ngbDropdownToggle translate="">
             menuItem.ingredients
@@ -242,28 +276,28 @@
     </ng-container>
     <!-- Preparation time Column -->
     <ng-container matColumnDef="preparationTime">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.preparationDuration</h5>
       </th>
-      <td width="10%" mat-cell *matCellDef="let element">
+      <td lass="small" mat-cell *matCellDef="let element">
         {{element.preparationDurationInMinutes}}
       </td>
     </ng-container>
     <!-- Price Column -->
     <ng-container matColumnDef="price">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <h5 class="color" translate="">menuItem.price</h5>
       </th>
-      <td width="10%" mat-cell *matCellDef="let element">
+      <td lass="small" mat-cell *matCellDef="let element">
         {{element.price}}
       </td>
     </ng-container>
     <!-- Edit and Delete Column -->
     <ng-container matColumnDef="edit">
-      <th width="10%" mat-header-cell *matHeaderCellDef>
+      <th lass="small" mat-header-cell *matHeaderCellDef>
         <div class="text-center ">
           <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
-             data-target="#modalAdd" translate="">
+             data-target="#modalAdd" (click)="clearMenuItemType(); clearIngredient()" translate="">
             menuItem.add
           </a>
         </div>

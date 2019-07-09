@@ -26,28 +26,28 @@ export class ApiService {
   }
 
   getRequest(path: string, params?, options?): Observable<any> {
-    const $response = this.http.get(`${this.apiEndpoint}/${path}`, params)
+    const $response = this.http.get(`${this.apiEndpoint}${path}`, params)
       .pipe(share());
     this.checkResponse($response);
     return $response;
   }
 
   postRequest(path: string, params, options?): Observable<any> {
-    const $response = this.http.post(`${this.apiEndpoint}/${path}`, params)
+    const $response = this.http.post(`${this.apiEndpoint}${path}`, params)
       .pipe(share());
     this.checkResponse($response);
     return $response;
   }
 
   putRequest(path: string, params, options?): Observable<any> {
-    const $response = this.http.put(`${this.apiEndpoint}/${path}`, params)
+    const $response = this.http.put(`${this.apiEndpoint}${path}`, params)
       .pipe(share());
     this.checkResponse($response);
     return $response;
   }
 
   deleteRequest(path: string, params?, options?): Observable<any> {
-    const $response = this.http.delete(`${this.apiEndpoint}/${path}`, params)
+    const $response = this.http.delete(`${this.apiEndpoint}${path}`, params)
       .pipe(share());
     this.checkResponse($response);
     return $response;

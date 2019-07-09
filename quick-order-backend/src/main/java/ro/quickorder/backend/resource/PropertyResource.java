@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ro.quickorder.backend.model.dto.PropertyDto;
+import ro.quickorder.backend.model.dto.ProgramDto;
 import ro.quickorder.backend.service.PropertyService;
 
 @RestController
-@RequestMapping(value = "/property")
+@RequestMapping(value = "/api/property")
 public class PropertyResource {
     @Autowired
     private PropertyService propertyService;
 
     @RequestMapping(value = "bistro", method = RequestMethod.GET)
-    public PropertyDto getBistroProperty() {
-        return propertyService.findByRestaurant("Bistro");
+    public ProgramDto getProperty() {
+        return propertyService.findSchedule();
     }
 }

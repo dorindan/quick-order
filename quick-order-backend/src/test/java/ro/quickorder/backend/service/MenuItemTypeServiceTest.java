@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.converter.MenuItemTypeConverter;
+import ro.quickorder.backend.exception.BadRequestException;
+import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
@@ -16,6 +18,7 @@ import ro.quickorder.backend.repository.MenuItemTypeRepository;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author R. Lupoaie
@@ -50,5 +53,39 @@ public class MenuItemTypeServiceTest {
     public void testGetAllMenuItemTypes() {
         List<MenuItemTypeDto> menuItemTypes = menuItemTypeService.getAllMenuItemTypes();
         assertEquals(3, menuItemTypes.size());
+    }
+
+    @Test
+    public void testAddMenuItemType() {
+        List<MenuItemTypeDto> menuItemTypes = menuItemTypeService.getAllMenuItemTypes();
+        assertEquals(3, menuItemTypes.size());
+
+        MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("fructe");
+        menuItemTypeService.addMenuItemType(menuItemTypeDto);
+
+        List<MenuItemTypeDto> menuItemTypesAfter = menuItemTypeService.getAllMenuItemTypes();
+        assertEquals(4, menuItemTypesAfter.size());
+    }
+
+    @Test
+    public void testAddMenuItemTypeWithTypeToShort() {
+        try {
+            MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("f");
+            menuItemTypeService.addMenuItemType(menuItemTypeDto);
+            fail("Type name is to short, it should fail!");
+        }catch (BadRequestException e){
+            assertEquals(e.getMessage(), "Item type is to short!");
+        }
+    }
+
+    @Test
+    public void testAddMenuItemTypeWithTypeThatAlreadyExists() {
+        try {
+            MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("legume");
+            menuItemTypeService.addMenuItemType(menuItemTypeDto);
+            fail("Type name already exists, it should fail!");
+        }catch (NotFoundException e){
+            assertEquals(e.getMessage(), "Item type already exists!");
+        }
     }
 }

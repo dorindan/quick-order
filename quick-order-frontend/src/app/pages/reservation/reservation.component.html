@@ -22,14 +22,16 @@
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel><label translate="">reservation.dataPicker</label></ng-template>
             <mat-form-field>
-              <input matInput [min]="currentDate" [matDatepicker]="picker" placeholder="{{ 'reservation.chooseDate' | translate }}"
+              <input matInput [min]="currentDate" [matDatepicker]="picker"
+                     placeholder="{{ 'reservation.chooseDate' | translate }}"
                      formControlName="firstCtrl" (dateInput)="addDate('input', $event)">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             &nbsp;
             <mat-form-field>
-              <mat-select placeholder="{{ 'reservation.chooseHour' | translate }}" [formControl]="hourControl" (selectionChange)="onChange($event)"
+              <mat-select placeholder="{{ 'reservation.chooseHour' | translate }}" [formControl]="hourControl"
+                          (selectionChange)="onChange($event)"
                           required>
                 <mat-option>--</mat-option>
                 <div *ngFor="let hour of hours">
@@ -42,13 +44,15 @@
               <mat-hint>{{hourControl.value?.sound}}</mat-hint>
             </mat-form-field>
             <div>
-              <button mat-button matStepperNext translate=""><label translate="">reservation.next</label></button>
+              <button mat-button matStepperNext (click)="updateTables()" translate=""><label translate="">reservation.next</label>
+              </button>
             </div>
           </form>
         </mat-step>
         <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel><label translate="">reservation.pickNrPersons</label></ng-template>
+
             <mat-form-field>
               <input matInput type="number" pattern="^([1-9][0-9]{0,1})$" (keypress)="numberOnly($event)"
                      placeholder="{{ 'reservation.nrPersons' | translate }}" formControlName="secondCtrl"
@@ -62,6 +66,16 @@
         </mat-step>
         <mat-step>
           <ng-template matStepLabel><label translate="">reservation.finish</label></ng-template>
+          <mat-form-field *ngIf="isAuthenticatedWaiter()">
+            <mat-label translate="">reservation.chooseTable</mat-label>
+            <mat-select [(ngModel)]="selectedTables" [ngModelOptions]="{standalone: true}" multiple>
+              <mat-option class="form-control validate" [value]="table.tableNr"
+                          *ngFor="let table of tableList">
+                <label translate="">reservation.table</label>{{table.tableNr}}
+                <label translate="">reservation.seats</label>{{table.seats}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <div>
             <button mat-button matStepperPrevious><label translate="">reservation.back</label></button>
             <button mat-button (click)="concatenate()"><label translate="">reservation.sendReservation</label></button>
@@ -75,13 +89,15 @@
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel><label translate="">reservation.dataPicker</label></ng-template>
             <mat-form-field>
-              <input matInput [min]="currentDate" [matDatepicker]="pickerVertical" placeholder="{{ 'reservation.chooseDate' | translate }}"
+              <input matInput [min]="currentDate" [matDatepicker]="pickerVertical"
+                     placeholder="{{ 'reservation.chooseDate' | translate }}"
                      formControlName="firstCtrl" (dateInput)="addDate('input', $event)">
               <mat-datepicker-toggle matSuffix [for]="pickerVertical"></mat-datepicker-toggle>
               <mat-datepicker #pickerVertical></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
-              <mat-select placeholder="{{ 'reservation.chooseHour' | translate }}" [formControl]="hourControl" (selectionChange)="onChange($event)"
+              <mat-select placeholder="{{ 'reservation.chooseHour' | translate }}" [formControl]="hourControl"
+                          (selectionChange)="onChange($event)"
                           required>
                 <mat-option>--</mat-option>
                 <div *ngFor="let hour of hours">
@@ -94,7 +110,7 @@
               <mat-hint>{{hourControl.value?.sound}}</mat-hint>
             </mat-form-field>
             <div>
-              <button mat-button matStepperNext><label translate="">reservation.next</label> </button>
+              <button mat-button matStepperNext><label translate="">reservation.next</label></button>
             </div>
           </form>
         </mat-step>
@@ -102,7 +118,8 @@
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel><label translate="">reservation.pickNrPersons</label></ng-template>
             <mat-form-field>
-              <input matInput type="tel" pattern="^([1-9][0-9]{0,1})$" placeholder="{{ 'reservation.nrPersons' | translate }}"
+              <input matInput type="tel" pattern="^([1-9][0-9]{0,1})$"
+                     placeholder="{{ 'reservation.nrPersons' | translate }}"
                      formControlName="secondCtrl" (change)="addNrOfPersons($event.target.value)" required>
             </mat-form-field>
             <div>
@@ -114,6 +131,16 @@
         <mat-step>
           <ng-template matStepLabel><label translate="">reservation.finish</label></ng-template>
           <div>
+            <mat-form-field *ngIf="isAuthenticatedWaiter()">
+              <mat-label translate="">reservation.chooseTable</mat-label>
+              <mat-select [(ngModel)]="selectedTables" [ngModelOptions]="{standalone: true}" multiple>
+                <mat-option class="form-control validate" [value]="table.tableNr"
+                            *ngFor="let table of tableList">
+                  <label translate="">reservation.table</label>{{table.tableNr}}
+                  <label translate="">reservation.seats</label>{{table.seats}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <button mat-button matStepperPrevious><label translate="">reservation.back</label></button>
             <button mat-button (click)="concatenate()"><label translate="">reservation.sendReservation</label></button>
           </div>

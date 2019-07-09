@@ -6,6 +6,7 @@ import {ReservationService} from '../../services/reservation.service';
 import {Reservation} from '../../models/Reservation';
 import {ConfirmReservation} from '../../models/ConfirmReservation';
 import {MatSnackBar} from '@angular/material';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 
 @Component({
@@ -24,12 +25,18 @@ export class WaiterPageComponent implements OnInit {
   indexExpanded: number;
   disabledElements: number[];
   totalOfSelectedSeats: number;
+  private info: any;
 
   constructor(private tableService: TableService, private reservationService: ReservationService
-    , private snackBar: MatSnackBar) {
+    , private snackBar: MatSnackBar, private token: TokenStorageService) {
   }
 
   ngOnInit() {
+    this.info = {
+      token: this.token.getToken(),
+      username: this.token.getUsername(),
+      authorities: this.token.getAuthorities()
+    };
     this.reservationsGet = this.reservationService.getUnacceptedReservation();
     this.reservations = [];
     this.reservationsGet.forEach(reservation => reservation.forEach(r => this.reservations.push(r)));
@@ -60,8 +67,14 @@ export class WaiterPageComponent implements OnInit {
       reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions))
       .subscribe(data => {
         this.showSnackbar('Reservation confirmed successfully.');
-      }, Error => {
-        this.showSnackbar('Confirmation failed. Please try again.');
+      }, error => {
+        switch (error.status) {
+          case 404: // not found exception
+            this.showSnackbar('Reservation not found. Please try again.');
+            break;
+          default:
+            this.showSnackbar('Confirmation failed. Please try again.');
+        }
       });
   }
 
