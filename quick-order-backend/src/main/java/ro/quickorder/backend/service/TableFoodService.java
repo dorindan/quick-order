@@ -1,6 +1,5 @@
 package ro.quickorder.backend.service;
 
-import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
