@@ -20,6 +20,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findAll();
 
+    @Query(value = "Select distinct r From Reservation r left join fetch r.tables")
+    List<Reservation> findAllWithTables();
+
     @Query(value = "Select r.tables From Reservation r where r.checkInTime < :maxCheckOutTime and  r.checkOutTime > :minCheckInTime")
     List<TableFood> findTablesWithReservationsBetween(@Param("minCheckInTime") Timestamp minCheckInTime, @Param("maxCheckOutTime") Timestamp maxCheckOutTime);
 }
