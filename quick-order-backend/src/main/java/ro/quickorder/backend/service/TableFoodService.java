@@ -85,7 +85,11 @@ public class TableFoodService {
             LOG.error("Table not found");
             throw new NotFoundException("Table not found");
         }
-        tableFood.setActive(false);
+
+
+
+
+
         tableFoodRepository.save(tableFood);
     }
 

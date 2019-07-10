@@ -12,6 +12,6 @@ import java.util.List;
 public interface TableFoodRepository extends JpaRepository<TableFood, Long> {
     TableFood findByTableNr(int tableNr);
 
-    @Query(value = "Select t From TableFood t where t.active=true ORDER BY t.tableNr ASC")
+    @Query(value = "Select t From TableFood t ORDER BY t.tableNr ASC")
     List<TableFood> findAll();
 }
