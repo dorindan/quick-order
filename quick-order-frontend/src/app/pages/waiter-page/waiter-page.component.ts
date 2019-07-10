@@ -104,7 +104,7 @@ export class WaiterPageComponent implements OnInit {
       reservation.checkOutTime.substr(11, 5);
     this.tablesAssignedGet = this.tableService.getAllAssignedTablesOfAReservation(reservation.reservationName);
     this.tablesAssigned = [];
-    this.tablesAssignedGet.forEach(table => table.forEach(t => this.tablesAssigned.push(t)));
+    this.tablesAssignedGet.forEach(table => table.forEach(t => {this.tablesAssigned.push(t); this.selectedOptions.push(t);}));
     this.tablesGet = this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted);
     this.tables = this.tablesAssigned;
     this.tablesGet.forEach(table => table.forEach(t => this.tables.push(t)));

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.TableFoodConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.NotFoundException;
+import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
@@ -45,10 +46,15 @@ public class TableFoodService {
     }
 
     public List<TableFoodDto> getAllAssignedTablesOfAReservation(String reservationName) {
-        return reservationService.getReservationEntityByName(reservationName)
-                .getTables().stream()
+
+        Reservation reservation = reservationService.getReservationEntityByName(reservationName, true);
+        List<TableFoodDto> res =reservation.getTables().stream()
                 .map(tableFoodConverter::toTableFoodDto)
                 .collect(Collectors.toList());
+            reservation.setConfirmed(false);
+            reservation.setTables(null);
+            reservationRepository.save(reservation);
+        return res;
     }
 
     public List<TableFoodDto> getAll() {

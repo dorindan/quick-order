@@ -38,7 +38,7 @@ public class ReservationService {
     @Autowired
     private TableFoodConverter tableFoodConverter;
     @Autowired
-    private EmailService  emailService;
+    private EmailService emailService;
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -86,8 +86,8 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-        emailService.sendReservationMail(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
-                reservation.getCheckOutTime(),reservation.getUser(), false);
+        emailService.sendReservationMail(reservation.getNumberOfPersons(), reservation.getCheckInTime(),
+                reservation.getCheckOutTime(), reservation.getUser(), false);
     }
 
     public List<ReservationDto> getAllUnconfirmed() {
@@ -103,7 +103,7 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
         // find reservation
-        Reservation reservation = getReservationEntityByName(reservationDto.getReservationName());
+        Reservation reservation = getReservationEntityByName(reservationDto.getReservationName(), false);
         // find tables
         String checkIn = reservationDto.getCheckInTime().toString();
         checkIn = checkIn.substring(8, 10) + "+" + checkIn.substring(5, 7) + "+" + checkIn.substring(0, 4) + "+" + checkIn.substring(checkIn.indexOf(' ') + 1, checkIn.indexOf(':') + 3);
@@ -119,22 +119,21 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-        emailService.sendReservationMail(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
-                reservation.getCheckOutTime(),reservation.getUser(), true);
+        emailService.sendReservationMail(reservation.getNumberOfPersons(), reservation.getCheckInTime(),
+                reservation.getCheckOutTime(), reservation.getUser(), true);
     }
 
-    public Reservation getReservationEntityByName(String reservationName) {
+    public Reservation getReservationEntityByName(String reservationName, boolean confirmed) {
         // find reservation
         Reservation reservation = reservationRepository.findByReservationName(reservationName);
         if (reservation == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
         }
-        if (reservation.isConfirmed()) {
+        if (reservation.isConfirmed() && !confirmed) {
             LOG.error("Reservation is already confirmed");
             throw new NotFoundException("Reservation is already confirmed");
         }
-
         return reservation;
     }
 
@@ -163,7 +162,6 @@ public class ReservationService {
 
     private void personsFitInSeats(Reservation reservation) {
         int nrSeats = reservation.getTables().stream().map(tableFood -> tableFood.getSeats()).reduce(0, (a, b) -> a + b);
-        System.out.println(nrSeats);
         boolean fits = nrSeats < reservation.getNumberOfPersons();
         if (fits) {
             LOG.error("Not enough seats for all persons!");
