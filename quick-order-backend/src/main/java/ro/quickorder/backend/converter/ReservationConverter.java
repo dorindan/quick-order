@@ -22,6 +22,8 @@ public class ReservationConverter {
 
     @Autowired
     private TableFoodConverter tableFoodConverter;
+    @Autowired
+    private UserConverter userConverter;
 
     public ReservationConverter(){
 
@@ -42,6 +44,7 @@ public class ReservationConverter {
         reservation.setConfirmed(reservationDto.isConfirmed());
         reservation.setNumberOfPersons(reservationDto.getNumberOfPersons());
         reservation.setReservationName(reservationDto.getReservationName());
+        reservation.setUser(userConverter.toUser(reservationDto.getUser()));
         if (reservationDto.getTableFoodDtos() != null) {
             reservation.setTables(reservationDto.getTableFoodDtos().stream()
                     .map(tableFoodDto -> tableFoodConverter.toTableFood(tableFoodDto)).collect(Collectors.toList()));
@@ -60,6 +63,7 @@ public class ReservationConverter {
         reservationDto.setConfirmed(reservation.isConfirmed());
         reservationDto.setNumberOfPersons(reservation.getNumberOfPersons());
         reservationDto.setReservationName(reservation.getReservationName());
+        reservationDto.setUser(userConverter.toUserDto(reservation.getUser()));
         if (reservation.getTables() != null && Hibernate.isInitialized(reservation.getTables())) {
             reservationDto.setTableFoodDtos(reservation.getTables().stream()
                     .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList()));
@@ -78,6 +82,7 @@ public class ReservationConverter {
         reservationDto.setConfirmed(confirmReservationDto.isConfirmed());
         reservationDto.setNumberOfPersons(confirmReservationDto.getNumberOfPersons());
         reservationDto.setReservationName(confirmReservationDto.getReservationName());
+        reservationDto.setUser(confirmReservationDto.getUser());
         return reservationDto;
     }
 
@@ -93,6 +98,7 @@ public class ReservationConverter {
         confirmReservationDto.setConfirmed(reservationDto.isConfirmed());
         confirmReservationDto.setNumberOfPersons(reservationDto.getNumberOfPersons());
         confirmReservationDto.setReservationName(reservationDto.getReservationName());
+        reservationDto.setUser(reservationDto.getUser());
         confirmReservationDto.setTableFoodDtos(tableFoodDtos);
         return confirmReservationDto;
     }

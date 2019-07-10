@@ -17,6 +17,7 @@ import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
+import ro.quickorder.backend.repository.UserRepository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class ReservationService {
     private ReservationConverter reservationConverter;
     @Autowired
     private TableFoodRepository tableFoodRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private TableFoodService tableFoodService;
     @Autowired
@@ -64,6 +67,8 @@ public class ReservationService {
         Reservation reservation = reservationConverter.toReservation(reservationDto);
         List<TableFood> reservations = reservation.getTables();
         reservation.setTables(null);
+
+        reservation.setUser(userRepository.findByUsername(reservationDto.getUser().getUsername()));
         // save reservation in database
         reservation = reservationRepository.save(reservation);
 

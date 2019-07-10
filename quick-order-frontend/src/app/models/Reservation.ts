@@ -1,4 +1,5 @@
 import {Table} from './Table';
+import {User} from './User';
 
 export class Reservation {
   public checkInTime: string;
@@ -7,12 +8,14 @@ export class Reservation {
   public confirmed: boolean;
   public reservationName: string;
   public tableFoodDtos: Table[];
+  public user: User;
 
-  constructor(dateTimeIn: string, dateTimeOut: string, numberOfPersons: number, reservationName: string, confirmed: boolean) {
+  constructor(dateTimeIn: string, dateTimeOut: string, numberOfPersons: number, reservationName: string, confirmed: boolean, user: User) {
     this.checkInTime = dateTimeIn;
     this.checkOutTime = dateTimeOut;
     this.numberOfPersons = numberOfPersons;
     this.reservationName = reservationName;
     this.confirmed = confirmed;
+    this.user = user;
   }
 }
