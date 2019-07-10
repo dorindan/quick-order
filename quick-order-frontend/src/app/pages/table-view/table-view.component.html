@@ -1,5 +1,5 @@
 <body>
-<div class="container-fluid ">
+<div class="container-fluid " *ngIf="isAuthenticatedWaiter()">
   <mat-accordion>
     <mat-expansion-panel *ngFor="let table of tables ; let i = index" (opened)="openGroup(i)">
       <mat-expansion-panel-header>
