@@ -8,7 +8,7 @@ import ro.quickorder.backend.model.dto.ProgramDto;
 import ro.quickorder.backend.service.PropertyService;
 
 @RestController
-@RequestMapping(value = "/property")
+@RequestMapping(value = "/api/property")
 public class PropertyResource {
     @Autowired
     private PropertyService propertyService;

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/table")
+@RequestMapping(value = "/api/table")
 public class TableFoodResource {
     @Autowired
     TableFoodService tableFoodService;

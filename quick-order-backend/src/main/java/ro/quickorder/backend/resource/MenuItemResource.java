@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/menuItem")
+@RequestMapping(value = "/api/menuItem")
 public class MenuItemResource {
     @Autowired
     private MenuItemService menuItemService;

@@ -20,19 +20,19 @@
       <li class="nav-item" *ngIf="isAuthenticated()">
         <a class="nav-link" href="reserve" translate="">header.reserve</a>
       </li>
-      <li class="nav-item" *ngIf="isAuthenticated()">
+      <li class="nav-item" *ngIf="isAuthenticatedUser()">
         <a class="nav-link" href="#" translate="">header.placeOrder</a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="menu" translate="">header.menu</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="menuItem" translate="">header.menuItem</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="table" translate="">header.table</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="tableView" translate="">header.tableView</a>
       </li>
       <li class="nav-item">
@@ -41,11 +41,11 @@
       <li class="nav-item">
         <a class="nav-link " href="#" translate="">header.contact</a>
       </li>
-      <li class="nav-item" *ngIf="isAuthenticated()">
+      <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="confirmReservations" translate="">header.confirmReservations</a>
       </li>
       <li class="nav-item" *ngIf="isAuthenticated()">
-        <a class="nav-link " href="login" translate="">header.logout</a>
+        <a class="nav-link " (click)="logout()" href="login" translate="">header.logout</a>
       </li>
     </ul>
     <div class="dropdown">
