@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/ingredient")
+@RequestMapping(value = "/api/ingredient")
 public class IngredientResource {
     @Autowired
     IngredientService ingredientService;

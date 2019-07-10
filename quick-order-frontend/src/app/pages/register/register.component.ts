@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
-import {User} from '../../models/User';
 import {ApiService} from '../../services/api.service';
 import {MatSnackBar} from '@angular/material';
+import {AuthService} from '../../auth/auth.service';
+import {SignUpInfo} from '../../auth/signup-info';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,12 @@ export class RegisterComponent implements OnInit {
   public rightTermsAndConditions = true;
   public isActive = false;
 
-  constructor(private apiService: ApiService, private router: Router, private snackBar: MatSnackBar) {
+  signupInfo: SignUpInfo;
+  isSignedUp = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+
+  constructor(private apiService: ApiService, private router: Router, private authService: AuthService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -68,28 +74,36 @@ export class RegisterComponent implements OnInit {
 
   public register() {
     if (this.checkIfAllIsValid()) {
-      const user = new User(this.userName, this.password);
-      user.email = this.email;
-      const url = 'api/users/signUp';
-      this.apiService.postRequest(url, user).subscribe(rez => {
-        this.router.navigate(['']);
-        this.showSnackbar('Register successful.');
-      }, error => {
-        switch (error.status) {
-          case 406: // not acceptable
-            this.showSnackbar('UserName or Email are already taken. Please try again!');
-            break;
-          case 403: // forbidden exception
-            this.showSnackbar('UserName has forbidden characters. Please try again!');
-            break;
-          case 400: // bad request exception
-            this.showSnackbar('Something went bad. Please try again!');
-            break;
-          default:
-            this.showSnackbar('Register failed. ');
+      this.signupInfo = new SignUpInfo(
+        this.userName,
+        this.email,
+        this.password);
+      this.authService.signUp(this.signupInfo).subscribe(
+        data => {
+          this.router.navigate(['']);
+          this.showSnackbar('Register successful.');
+          this.isSignedUp = true;
+          this.isSignUpFailed = false;
+        },
+        error => {
+          this.errorMessage = error.error.message;
+          this.isSignUpFailed = true;
+          switch (error.status) {
+            case 406: // not acceptable
+              this.showSnackbar('UserName or Email are already taken. Please try again!');
+              break;
+            case 403: // forbidden exception
+              this.showSnackbar('UserName has forbidden characters. Please try again!');
+              break;
+            case 400: // bad request exception
+              this.showSnackbar('Something went bad. Please try again!');
+              break;
+            default:
+              this.showSnackbar('Register failed. ');
+          }
+          return;
         }
-        return;
-      });
+      );
     } else {
       this.showSnackbar('Complete all boxes with the appropriate data first!');
     }

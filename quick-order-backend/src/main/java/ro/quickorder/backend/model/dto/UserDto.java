@@ -1,5 +1,7 @@
 package ro.quickorder.backend.model.dto;
 
+import java.util.Set;
+
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.User}
  * <p>
@@ -11,6 +13,8 @@ public class UserDto {
     private String password;
     private String email;
     private UserAttributeDto userAttributeDto;
+    private Set<String> roles;
+
 
     public UserDto() {
     }
@@ -64,5 +68,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRole(Set<String> roles) {
+        this.roles = roles;
     }
 }

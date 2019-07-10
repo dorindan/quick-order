@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationService} from '../../services/reservation.service';
-import {MatDatepickerInputEvent, MatTableDataSource} from '@angular/material';
+import {MatDatepickerInputEvent} from '@angular/material';
 import {Reservation} from '../../models/Reservation';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {PropertyService} from '../../services/property.service';
 import {Table} from '../../models/Table';
-import {MenuItem} from '../../models/MenuItem';
 import {TableService} from '../../services/table.service';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 @Component({
   selector: 'app-reservation',
@@ -37,7 +37,8 @@ export class ReservationComponent implements OnInit {
               private reservationService: ReservationService,
               private snackBar: MatSnackBar,
               private propertyService: PropertyService,
-              private tableService: TableService) {
+              private tableService: TableService,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -95,6 +96,7 @@ export class ReservationComponent implements OnInit {
         tablesSelected.push(this.tableList[i]);
       }
     }
+    if (this.isAuthenticatedWaiter()) {
     this.reservation.tableFoodDtos = tablesSelected;
     if (this.reservation.tableFoodDtos.length === 0 || this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
       this.reservationService.reserve(this.reservation)
@@ -111,6 +113,13 @@ export class ReservationComponent implements OnInit {
         });
     } else {
       this.showSnackbar('The number of persons are to great to fit in thous tables!');
+    } } else {
+      this.reservationService.reserve(this.reservation)
+        .subscribe(data => {
+          this.showSnackbar('Reservation sent successfully.');
+        }, error => {
+          this.showSnackbar('Reservation failed. Please try again.');
+        });
     }
   }
 
@@ -138,6 +147,19 @@ export class ReservationComponent implements OnInit {
       duration: 3000,
       panelClass: ['snackbar']
     });
+  }
+
+  isAuthenticatedWaiter() {
+    if (this.tokenStorageService.getAuthorities().length === 0) {
+      return false;
+    }
+    for (const role of this.tokenStorageService.getAuthorities()) {
+      if (role === 'ROLE_WAITER') {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   validateHour(time: string) {

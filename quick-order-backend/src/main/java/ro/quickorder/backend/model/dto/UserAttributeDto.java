@@ -1,7 +1,7 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.Language;
 import ro.quickorder.backend.model.UserAttribute;
+import ro.quickorder.backend.model.enumeration.Language;
 
 /**
  *  Data transfer object for {@link UserAttribute}

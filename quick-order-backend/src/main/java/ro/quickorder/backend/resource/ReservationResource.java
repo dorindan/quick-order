@@ -9,8 +9,7 @@ import ro.quickorder.backend.service.ReservationService;
 import java.util.List;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/reservation")
+@RequestMapping(value = "/api/reservation")
 public class ReservationResource {
     @Autowired
     ReservationService reservationService;

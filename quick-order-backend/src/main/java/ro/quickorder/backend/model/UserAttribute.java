@@ -1,6 +1,7 @@
 package ro.quickorder.backend.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import ro.quickorder.backend.model.enumeration.Language;
 
 import javax.persistence.*;
 import java.util.Objects;

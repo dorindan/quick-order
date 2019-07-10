@@ -1,11 +1,11 @@
 package ro.quickorder.backend.converter;
 
 import org.junit.Test;
-import ro.quickorder.backend.model.Language;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
 import ro.quickorder.backend.model.dto.UserAttributeDto;
 import ro.quickorder.backend.model.dto.UserDto;
+import ro.quickorder.backend.model.enumeration.Language;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
