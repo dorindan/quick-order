@@ -139,15 +139,6 @@ export class TableComponent implements OnInit {
   }
 
   isAuthenticatedWaiter() {
-    if (this.tokenStorageService.getAuthorities().length === 0) {
-      return false;
-    }
-    for (const role  of this.tokenStorageService.getAuthorities()) {
-      if (role === 'ROLE_WAITER') {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    return this.tokenStorageService.isAuthenticatedWithRole('ROLE_WAITER');
   }
 }
