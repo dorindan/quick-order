@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MenuItem} from '../../models/MenuItem';
-import {Observable} from 'rxjs';
-import {Ingredient} from '../../models/Ingredient';
+import {Component, OnInit} from '@angular/core';
 import {MatSnackBar, MatTableDataSource} from '@angular/material';
-import {MenuService} from '../../services/menu.service';
 import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
 
@@ -33,6 +29,7 @@ export class TableComponent implements OnInit {
   ngOnInit() {
     this.updateTable();
   }
+
   showSnackbar(message: string) {
     this.snackBar.open(message, '', {
       duration: 3000,

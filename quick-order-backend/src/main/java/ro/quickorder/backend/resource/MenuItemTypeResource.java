@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/menuItemType")
+@RequestMapping(value = "/api/menuItemType")
 public class MenuItemTypeResource {
     @Autowired
     MenuItemTypeService menuItemTypeService;

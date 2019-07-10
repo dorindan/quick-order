@@ -1,33 +1,39 @@
 package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.service.UserAttributeService;
 import ro.quickorder.backend.service.UserService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping("/api")
 public class UsersResource {
     @Autowired
     private UserAttributeService userAttributeService;
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public UserDto login(@NotNull @RequestBody UserDto userDto) {
-        return userService.login(userDto);
-    }
-
-    @RequestMapping(path = "/signUp", method = RequestMethod.POST)
-    public UserDto signUp(@NotNull @RequestBody UserDto userDto) {
-        return userService.signUp(userDto);
-    }
-
-    @PostMapping(path = "/attributes")
+    @PostMapping(path = "/users/attributes")
     public void setPreference(@NotNull @RequestBody UserDto userDto) {
         userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
     }
+
+    @PostMapping("/auth/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody UserDto userDto) {
+        return userService.login(userDto);
+    }
+
+    @PostMapping("/auth/signup")
+    public ResponseEntity<?> signUp(@Valid @RequestBody UserDto userDto) {
+        return userService.signUp(userDto);
+    }
+
 }

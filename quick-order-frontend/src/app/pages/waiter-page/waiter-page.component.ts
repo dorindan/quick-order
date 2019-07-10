@@ -6,6 +6,7 @@ import {ReservationService} from '../../services/reservation.service';
 import {Reservation} from '../../models/Reservation';
 import {ConfirmReservation} from '../../models/ConfirmReservation';
 import {MatSnackBar} from '@angular/material';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 
 @Component({
@@ -24,12 +25,18 @@ export class WaiterPageComponent implements OnInit {
   indexExpanded: number;
   disabledElements: number[];
   totalOfSelectedSeats: number;
+  private info: any;
 
   constructor(private tableService: TableService, private reservationService: ReservationService
-    , private snackBar: MatSnackBar) {
+    , private snackBar: MatSnackBar, private token: TokenStorageService) {
   }
 
   ngOnInit() {
+    this.info = {
+      token: this.token.getToken(),
+      username: this.token.getUsername(),
+      authorities: this.token.getAuthorities()
+    };
     this.reservationsGet = this.reservationService.getUnacceptedReservation();
     this.reservations = [];
     this.reservationsGet.forEach(reservation => reservation.forEach(r => this.reservations.push(r)));

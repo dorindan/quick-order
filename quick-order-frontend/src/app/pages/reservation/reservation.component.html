@@ -44,7 +44,8 @@
               <mat-hint>{{hourControl.value?.sound}}</mat-hint>
             </mat-form-field>
             <div>
-              <button mat-button matStepperNext (click)="updateTables()" translate=""><label translate="">reservation.next</label></button>
+              <button mat-button matStepperNext (click)="updateTables()" translate=""><label translate="">reservation.next</label>
+              </button>
             </div>
           </form>
         </mat-step>
@@ -65,7 +66,7 @@
         </mat-step>
         <mat-step>
           <ng-template matStepLabel><label translate="">reservation.finish</label></ng-template>
-          <mat-form-field>
+          <mat-form-field *ngIf="isAuthenticatedWaiter()">
             <mat-label translate="">reservation.chooseTable</mat-label>
             <mat-select [(ngModel)]="selectedTables" [ngModelOptions]="{standalone: true}" multiple>
               <mat-option class="form-control validate" [value]="table.tableNr"
@@ -130,6 +131,16 @@
         <mat-step>
           <ng-template matStepLabel><label translate="">reservation.finish</label></ng-template>
           <div>
+            <mat-form-field *ngIf="isAuthenticatedWaiter()">
+              <mat-label translate="">reservation.chooseTable</mat-label>
+              <mat-select [(ngModel)]="selectedTables" [ngModelOptions]="{standalone: true}" multiple>
+                <mat-option class="form-control validate" [value]="table.tableNr"
+                            *ngFor="let table of tableList">
+                  <label translate="">reservation.table</label>{{table.tableNr}}
+                  <label translate="">reservation.seats</label>{{table.seats}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <button mat-button matStepperPrevious><label translate="">reservation.back</label></button>
             <button mat-button (click)="concatenate()"><label translate="">reservation.sendReservation</label></button>
           </div>
