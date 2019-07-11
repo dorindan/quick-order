@@ -47,11 +47,11 @@ public class TableFoodService {
 
     public List<TableFoodDto> getAllAssignedTablesOfAReservation(String reservationName) {
 
-        Reservation reservation = reservationService.getReservationEntityByName(reservationName, true);
+        Reservation reservation = reservationService.getReservationEntityByName(reservationName);
+
         List<TableFoodDto> res =reservation.getTables().stream()
                 .map(tableFoodConverter::toTableFoodDto)
                 .collect(Collectors.toList());
-        unconfirmReservation(reservation);
         return res;
     }
 

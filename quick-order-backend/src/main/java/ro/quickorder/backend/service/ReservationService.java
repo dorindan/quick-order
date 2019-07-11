@@ -103,7 +103,13 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
         // find reservation
-        Reservation reservation = getReservationEntityByName(reservationDto.getReservationName(), false);
+        Reservation reservation = getReservationEntityByName(reservationDto.getReservationName());
+
+        if (reservation.isConfirmed()) {
+            LOG.error("Reservation is already confirmed");
+            throw new NotFoundException("Reservation is already confirmed");
+        }
+
         // find tables
         String checkIn = reservationDto.getCheckInTime().toString();
         checkIn = checkIn.substring(8, 10) + "+" + checkIn.substring(5, 7) + "+" + checkIn.substring(0, 4) + "+" + checkIn.substring(checkIn.indexOf(' ') + 1, checkIn.indexOf(':') + 3);
@@ -123,16 +129,12 @@ public class ReservationService {
                 reservation.getCheckOutTime(), reservation.getUser(), true);
     }
 
-    public Reservation getReservationEntityByName(String reservationName, boolean confirmed) {
+    public Reservation getReservationEntityByName(String reservationName) {
         // find reservation
         Reservation reservation = reservationRepository.findByReservationName(reservationName);
         if (reservation == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
-        }
-        if (reservation.isConfirmed() && !confirmed) {
-            LOG.error("Reservation is already confirmed");
-            throw new NotFoundException("Reservation is already confirmed");
         }
         return reservation;
     }
