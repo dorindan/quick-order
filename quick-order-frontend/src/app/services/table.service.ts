@@ -26,7 +26,7 @@ export class TableService {
   }
 
   getAllAssignedTablesOfAReservation(reservationName: String): Observable<Table[]> {
-    return this.apiService.getRequest('/api/table/free/' + reservationName);
+    return this.apiService.getRequest('/api/table/reserved/' + reservationName);
   }
 
   getAllTables(): Observable<Table[]> {

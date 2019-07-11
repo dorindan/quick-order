@@ -10,6 +10,7 @@ import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
+import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
@@ -46,19 +47,11 @@ public class TableFoodService {
     }
 
     public List<TableFoodDto> getAllAssignedTablesOfAReservation(String reservationName) {
-
-        Reservation reservation = reservationService.getReservationEntityByName(reservationName);
-
-        List<TableFoodDto> res =reservation.getTables().stream()
-                .map(tableFoodConverter::toTableFoodDto)
-                .collect(Collectors.toList());
-        return res;
-    }
-
-    private void unconfirmReservation(Reservation reservation){
-        reservation.setConfirmed(false);
-        reservation.setTables(null);
-        reservationRepository.save(reservation);
+        ReservationDto reservationDto = reservationService.getReservationDtoByName(reservationName);
+        if(reservationDto.getTableFoodDtos() == null){
+            return new ArrayList<>();
+        }
+        return reservationDto.getTableFoodDtos();
     }
 
     public List<TableFoodDto> getAll() {

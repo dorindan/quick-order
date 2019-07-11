@@ -106,8 +106,9 @@ public class ReservationService {
         Reservation reservation = getReservationEntityByName(reservationDto.getReservationName());
 
         if (reservation.isConfirmed()) {
-            LOG.error("Reservation is already confirmed");
-            throw new NotFoundException("Reservation is already confirmed");
+            reservation.setConfirmed(false);
+            reservation.setTables(null);
+            reservationRepository.save(reservation);
         }
 
         // find tables
@@ -129,7 +130,7 @@ public class ReservationService {
                 reservation.getCheckOutTime(), reservation.getUser(), true);
     }
 
-    public Reservation getReservationEntityByName(String reservationName) {
+    private Reservation getReservationEntityByName(String reservationName) {
         // find reservation
         Reservation reservation = reservationRepository.findByReservationName(reservationName);
         if (reservation == null) {
@@ -137,6 +138,16 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
         return reservation;
+    }
+
+    public ReservationDto getReservationDtoByName(String reservationName){
+
+        Reservation reservation = reservationRepository.findByReservationNameWithTables(reservationName);
+        if (reservation == null) {
+            LOG.error("Reservation not found");
+            throw new NotFoundException("Reservation not found");
+        }
+        return reservationConverter.toReservationDto(reservation);
     }
 
     private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos, String checkIn, String checkOut) {
@@ -169,6 +180,10 @@ public class ReservationService {
             LOG.error("Not enough seats for all persons!");
             throw new BadRequestException("Not enough seats for all persons!");
         }
+    }
+
+    public boolean reservationConfirmed(String reservationName){
+        return reservationRepository.findByReservationName(reservationName).isConfirmed();
     }
 
     public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {

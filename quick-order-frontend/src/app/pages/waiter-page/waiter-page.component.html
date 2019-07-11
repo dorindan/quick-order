@@ -4,6 +4,7 @@
   <mat-accordion>
     <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let reservation of reservations ; let i = index"
                          (opened)="openGroup(reservation.reservationName, i, reservation)"
+                         (closed)="closeGroup()"
                          [disabled]="checkDisabled(i)">
       <mat-expansion-panel-header>
         <div class="numberOfPersons">

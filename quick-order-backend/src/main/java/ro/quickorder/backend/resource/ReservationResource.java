@@ -33,4 +33,9 @@ public class ReservationResource {
     public List<ReservationDto> getReservationsForTableByTableNumber(@PathVariable Integer tableNr) {
         return reservationService.getReservationsForTableByTableNumber(tableNr);
     }
+
+    @RequestMapping(path = "/confirmed/{reservationName}", method = RequestMethod.GET)
+    public boolean reservationConfirmed(@PathVariable String reservationName) {
+        return reservationService.reservationConfirmed(reservationName);
+    }
 }
