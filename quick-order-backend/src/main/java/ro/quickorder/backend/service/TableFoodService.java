@@ -51,10 +51,14 @@ public class TableFoodService {
         List<TableFoodDto> res =reservation.getTables().stream()
                 .map(tableFoodConverter::toTableFoodDto)
                 .collect(Collectors.toList());
-            reservation.setConfirmed(false);
-            reservation.setTables(null);
-            reservationRepository.save(reservation);
+        unconfirmReservation(reservation);
         return res;
+    }
+
+    private void unconfirmReservation(Reservation reservation){
+        reservation.setConfirmed(false);
+        reservation.setTables(null);
+        reservationRepository.save(reservation);
     }
 
     public List<TableFoodDto> getAll() {

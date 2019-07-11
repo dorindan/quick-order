@@ -90,7 +90,7 @@ public class ReservationService {
                 reservation.getCheckOutTime(), reservation.getUser(), false);
     }
 
-    public List<ReservationDto> getAllUnconfirmed() {
+    public List<ReservationDto> getAllReservationUnconfirmed() {
         List<Reservation> reservations = reservationRepository.findAll();
         return reservations.stream().filter(reservation -> !reservation.isConfirmed()).map(reservationConverter::toReservationDto).collect(Collectors.toList());
     }

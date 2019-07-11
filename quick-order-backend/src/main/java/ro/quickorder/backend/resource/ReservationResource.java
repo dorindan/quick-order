@@ -21,7 +21,7 @@ public class ReservationResource {
 
     @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
     public List<ReservationDto> getAllUnconfirmed() {
-        return reservationService.getAllUnconfirmed();
+        return reservationService.getAllReservationUnconfirmed();
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
