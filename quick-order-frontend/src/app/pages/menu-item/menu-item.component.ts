@@ -5,6 +5,7 @@ import {MenuItem} from '../../models/MenuItem';
 import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
+import {TokenStorageService} from "../../auth/token-storage.service";
 
 @Component({
   selector: 'app-menu-item',
@@ -32,7 +33,8 @@ export class MenuItemComponent implements OnInit {
   ingredientToAdd = '';
   menuItemTypeToAdd = '';
 
-  constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar) {
+  constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -242,4 +244,7 @@ export class MenuItemComponent implements OnInit {
     return rez;
   }
 
+  isAuthenticatedWaiter() {
+    return this.tokenStorageService.isAuthenticatedWithRole('ROLE_WAITER');
+  }
 }
