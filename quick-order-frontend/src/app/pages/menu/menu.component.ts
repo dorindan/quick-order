@@ -11,8 +11,8 @@ import {MenuItem} from '../../models/MenuItem';
 })
 export class MenuComponent implements OnInit {
 
-  menuItemType: MenuItemType[];
-  menuItems: MenuItem[];
+  public menuItemType: MenuItemType[];
+  public menuItems: MenuItem[];
 
   constructor(private menuService: MenuService) {
   }
