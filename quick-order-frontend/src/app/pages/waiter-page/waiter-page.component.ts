@@ -18,7 +18,6 @@ export class WaiterPageComponent implements OnInit {
   tablesGet: Observable<Table[]>;
   tables: Table[];
   tablesAssignedGet: Observable<Table[]>;
-  tablesAssigned: Table[];
   reservationsGet: Observable<Reservation[]>;
   reservations: Reservation[];
   selectedOptions: Table[];
@@ -26,6 +25,8 @@ export class WaiterPageComponent implements OnInit {
   disabledElements: number[];
   totalOfSelectedSeats: number;
   private info: any;
+  // contains the index if the obj is confirmed
+  private actualConfirmed = -1;
 
   constructor(private tableService: TableService, private reservationService: ReservationService
     , private snackBar: MatSnackBar, private token: TokenStorageService) {
@@ -103,18 +104,28 @@ export class WaiterPageComponent implements OnInit {
   openGroup(any, index: number, reservation: Reservation) {
     this.selectedOptions = [];
     this.indexExpanded = index;
-    let checkInTimeFormatted = '';
+    let checkInTimeFormatted;
     checkInTimeFormatted = reservation.checkInTime.substr(0, 10).replace('/', '+').replace('/', '+')
       + '+' + reservation.checkInTime.substr(11, 5);
-    let checkOutTimeFormatted = ' ';
+    let checkOutTimeFormatted;
     checkOutTimeFormatted = reservation.checkOutTime.substr(0, 10).replace('/', '+').replace('/', '+') + '+' +
       reservation.checkOutTime.substr(11, 5);
+
+    // get all tables that are reserved by this reservation, if it is actualConfirmed
+    this.tables = [];
+    this.actualConfirmed = -1;
     this.tablesAssignedGet = this.tableService.getAllAssignedTablesOfAReservation(reservation.reservationName);
-    this.tablesAssigned = [];
-    this.tablesAssignedGet.forEach(table => table.forEach(t => this.tablesAssigned.push(t)));
+    this.tablesAssignedGet.forEach(table => table.forEach(t => {
+      this.tables.push(t);
+      if (this.actualConfirmed === -1) {
+        this.actualConfirmed = index;
+      }
+    }));
+
+    // get all free tables
     this.tablesGet = this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted);
-    this.tables = this.tablesAssigned;
     this.tablesGet.forEach(table => table.forEach(t => this.tables.push(t)));
+
   }
 
   checkDisabled(i: number): boolean {
@@ -124,5 +135,12 @@ export class WaiterPageComponent implements OnInit {
   enableEdit(i: number) {
     this.disabledElements = this.disabledElements.filter(item => item !== i);
   }
+
+  closeGroup(): void {
+    if (this.actualConfirmed !== -1) {
+      this.disabledElements.push(this.actualConfirmed);
+    }
+  }
+
 }
 

@@ -97,24 +97,23 @@ export class ReservationComponent implements OnInit {
       }
     }
     if (this.isAuthenticatedWaiter()) {
-      this.reservation.tableFoodDtos = tablesSelected;
-      if (this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
-        this.reservationService.reserve(this.reservation)
-          .subscribe(data => {
-            this.showSnackbar('Reservation sent successfully.');
-          }, error => {
-            switch (error.status) {
-              case 403: // forbidden exception
-                this.showSnackbar('Data ore persons number are wrong . Please try again!');
-                break;
-              default:
-                this.showSnackbar('Reservation failed. Please try again.');
-            }
-          });
-      } else {
-        this.showSnackbar('The number of persons are to great to fit in thous tables!');
-      }
+    this.reservation.tableFoodDtos = tablesSelected;
+    if (this.reservation.tableFoodDtos.length === 0 || this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
+      this.reservationService.reserve(this.reservation)
+        .subscribe(data => {
+          this.showSnackbar('Reservation sent successfully.');
+        }, error => {
+          switch (error.status) {
+            case 403: // forbidden exception
+              this.showSnackbar('Data ore persons number are wrong . Please try again!');
+              break;
+            default:
+              this.showSnackbar('Reservation failed. Please try again.');
+          }
+        });
     } else {
+      this.showSnackbar('The number of persons are to great to fit in thous tables!');
+    } } else {
       this.reservationService.reserve(this.reservation)
         .subscribe(data => {
           this.showSnackbar('Reservation sent successfully.');
@@ -151,16 +150,7 @@ export class ReservationComponent implements OnInit {
   }
 
   isAuthenticatedWaiter() {
-    if (this.tokenStorageService.getAuthorities().length === 0) {
-      return false;
-    }
-    for (const role of this.tokenStorageService.getAuthorities()) {
-      if (role === 'ROLE_WAITER') {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    return this.tokenStorageService.isAuthenticatedWithRole('ROLE_WAITER');
   }
 
   validateHour(time: string) {
