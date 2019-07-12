@@ -15,7 +15,6 @@ public class PropertyResource {
     private PropertyService propertyService;
 
     @RequestMapping(value = "bistro", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('USER') or hasRole('WAITER')")
     public PropertyDto getProperty() {
         return propertyService.findProperties();
     }
