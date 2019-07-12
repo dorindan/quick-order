@@ -37,6 +37,6 @@ export class MenuService {
   }
 
   deleteMenuItem(menuItemName: string): Observable<any> {
-    return this.apiService.deleteRequest('api/menuItem/remove/' + menuItemName);
+    return this.apiService.deleteRequest('/api/menuItem/remove/' + menuItemName);
   }
 }

@@ -14,4 +14,5 @@ public interface TableFoodRepository extends JpaRepository<TableFood, Long> {
 
     @Query(value = "Select t From TableFood t where t.active=true ORDER BY t.tableNr ASC")
     List<TableFood> findAll();
+
 }
