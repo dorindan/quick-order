@@ -67,7 +67,7 @@ export class TableComponent implements OnInit {
       }, error => {
         switch (error.status) {
           case 400: // bad request exception
-            this.showSnackbar('Time parameter can not be null. Please try again!');
+            this.showSnackbar('Table number must be unique. Please try again!');
             break;
           default:
             this.showSnackbar('The introduced data is not valid!, please try again!');
