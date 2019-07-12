@@ -114,24 +114,6 @@ public class ReservationServiceTest {
     }
 
     @Test
-    public void testConfirmReservationReservationIsTaken() {
-        List<ReservationDto> reservationDtos = reservationService.getAllReservationUnconfirmed();
-        ReservationDto reservationDto = reservationDtos.get(0);
-        List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+08:00", "23+09+2007+10:59");
-        assertEquals(reservationDtos.size(), 2);
-        assertEquals(tableFoodDtos.size(), 2);
-        ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
-        reservationService.confirmReservation(confirmReservationDto);
-        List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree("23+09+2007+08:00", "23+09+2007+10:59");
-        try {
-            reservationService.confirmReservation(confirmReservationDto);
-            fail("Reservation should be taken");
-        } catch (NotFoundException e) {
-            assertEquals(e.getMessage(), "Reservation is already confirmed");
-        }
-    }
-
-    @Test
     public void testConfirmReservationReservationIsInvalid() {
         List<ReservationDto> reservationDtos = reservationService.getAllReservationUnconfirmed();
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+09:00", "23+09+2007+11:59");
