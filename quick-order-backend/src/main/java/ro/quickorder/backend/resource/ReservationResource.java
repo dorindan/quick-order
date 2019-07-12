@@ -1,6 +1,7 @@
 package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.dto.ConfirmReservationDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
@@ -20,16 +21,19 @@ public class ReservationResource {
     }
 
     @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('WAITER')")
     public List<ReservationDto> getAllUnconfirmed() {
         return reservationService.getAllReservationUnconfirmed();
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('USER') or hasRole('WAITER')")
     public void confirmReservation(@RequestBody ConfirmReservationDto confirmReservationDto) {
         reservationService.confirmReservation(confirmReservationDto);
     }
 
     @RequestMapping(path = "/reservationsForTable/{tableNr}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('WAITER')")
     public List<ReservationDto> getReservationsForTableByTableNumber(@PathVariable Integer tableNr) {
         return reservationService.getReservationsForTableByTableNumber(tableNr);
     }
