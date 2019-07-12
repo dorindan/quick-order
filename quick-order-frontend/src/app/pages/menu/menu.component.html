@@ -1,22 +1,25 @@
-<div class="menu-body" *ngFor="let menu of this.menus">
-    <hr>{{menu.type}}<hr>
-    <mat-list #list >
-      <mat-list-item *ngFor="let menuItems of menu.menuItems">
-        <pre mat-line class="mainDetails">
-          <div class="col-sm-6 col-md-3">
-            <a href="#" class="thumbnail-container">
-              <img src="/assets/img/restaurant.jpg" alt="Generic placeholder thumbnail">
-            </a>
-          </div>
-          <label translate="">tableView.reservation</label>:
-          {{menuItems.name }}&nbsp;  &nbsp;
-          <label translate="">tableView.nrPersons</label>: {{menuItems.ingredients}}
-          <label translate="">tableView.nrPersons</label>: {{menuItems.price}}
-          <p class="extraDetails">
-            <label translate="">tableView.confirmed</label>:
-            <input type="checkbox" [(ngModel)]="reservation.confirmed" disabled>
-          </p>
-        </pre>
-      </mat-list-item>
-    </mat-list>
+<div class="menu-body" *ngFor="let itemType of menuItemType">
+  <div class="menu-section">
+    <h2 class="menu-section-title">{{itemType.type}}</h2>
+    <div class="menu-item" *ngFor="let menuItem of this.menuItems">
+      <div *ngIf="itemType.type === menuItem.menuItemTypeDto.type">
+        <div class = "col-sm-6 col-md-3" style="display: inline;" >
+          <a   class = "thumbnail">
+            <img src = "/assets/img/restaurant.jpg" >
+          </a>
+        </div>
+        <div class="menu-item-name">
+          {{menuItem.name}}
+        </div>
+        <div class="menu-item-price">
+          {{menuItem.price}} lei
+        </div>
+        <span class="menu-item-description" *ngFor="let ingredient of menuItem.ingredients;let i = index">
+          <span *ngIf="i > 0">,</span>
+          <span>{{ingredient.name}}</span>
+        </span>
+
+      </div>
+    </div>
+  </div>
 </div>
