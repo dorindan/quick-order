@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.model.Property;
 import ro.quickorder.backend.model.PropertyName;
-import ro.quickorder.backend.model.dto.ProgramDto;
+import ro.quickorder.backend.model.dto.PropertyDto;
 import ro.quickorder.backend.repository.PropertyRepository;
 
 import static org.junit.Assert.fail;
@@ -45,7 +45,7 @@ public class PropertyServiceTest {
 
     @Test
     public void findScheduleTest(){
-        ProgramDto programDto = propertyService.findSchedule();
+        PropertyDto programDto = propertyService.findProperties();
 
         Assert.assertEquals(10, programDto.getStartProgramTime().getHour());
         Assert.assertEquals(18, programDto.getEndProgramTime().getHour());
@@ -59,7 +59,7 @@ public class PropertyServiceTest {
         propertyRepository.save(endTimeProperty);
 
         try {
-            ProgramDto programDto = propertyService.findSchedule();
+            PropertyDto programDto = propertyService.findProperties();
             fail("There should be no start property!");
         } catch(NullPointerException e){
             Assert.assertEquals("Start date was not found!", e.getMessage());
@@ -74,7 +74,7 @@ public class PropertyServiceTest {
         propertyRepository.save(startTimeProperty);
 
         try {
-            ProgramDto programDto = propertyService.findSchedule();
+            PropertyDto programDto = propertyService.findProperties();
             fail("There should be no end property!");
         } catch(NullPointerException e){
             Assert.assertEquals("End date was not found!", e.getMessage());
@@ -92,7 +92,7 @@ public class PropertyServiceTest {
         propertyRepository.save(endTimeProperty);
 
         try {
-            ProgramDto programDto = propertyService.findSchedule();
+            PropertyDto programDto = propertyService.findProperties();
             fail("Error should appear, one of the values is not a number!");
         } catch(NullPointerException e){
             Assert.assertEquals("Value is not a number!", e.getMessage());
