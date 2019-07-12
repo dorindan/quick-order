@@ -123,5 +123,9 @@
     "windowView": "  Has window view: ",
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation"
+  },
+  "about": {
+    "reserve": "Reservations online 24/7",
+    "open": "Open Monday-Sunday:"
   }
 }

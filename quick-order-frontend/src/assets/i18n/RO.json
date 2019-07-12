@@ -123,5 +123,9 @@
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
     "acceptReservation": "Accepta Rezervarea"
+  },
+  "about": {
+    "reserve": "Rezervări online 24/7",
+    "open": "Deschis Luni-Duminică:"
   }
 }
