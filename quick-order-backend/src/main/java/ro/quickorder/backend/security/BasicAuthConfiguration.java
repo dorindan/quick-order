@@ -43,19 +43,6 @@ public class BasicAuthConfiguration
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("PUT", "DELETE", "GET", "POST", "OPTIONS", "PATCH", "HEAD")
-                        .allowCredentials(true).maxAge(3600);
-            }
-        };
-    }
-
-    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -80,30 +67,12 @@ public class BasicAuthConfiguration
             throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**", "/api/auth/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-    }
-
-    @Configuration
-    public class MyAppWebMvcConfigurer implements WebMvcConfigurer {
-
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/**/*")
-                    .addResourceLocations("classpath:/static/*")
-                    .resourceChain(true)
-                    .addResolver(new PathResourceResolver() {
-                        @Override
-                        protected Resource getResource(String resourcePath, Resource location) throws IOException {
-                            Resource requestedResource = location.createRelative(resourcePath);
-                            return requestedResource.exists() && requestedResource.isReadable() ? requestedResource : new ClassPathResource("/static/index.html");
-                        }
-                    });
-        }
     }
 }
