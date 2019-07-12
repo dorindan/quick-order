@@ -9,14 +9,17 @@ import {Menu} from '../../models/Menu';
 })
 export class MenuComponent implements OnInit {
 
-  menu: Menu[];
+  public menus: Menu[];
 
   constructor(private menuService: MenuService) {
   }
 
   ngOnInit() {
     this.menuService.getMenu().subscribe(response => {
-      this.menu = response;
+      this.menus = response;
+
+      alert(this.menus.length);
+      alert(this.menus[0].menuItems.length);
     });
   }
 }
