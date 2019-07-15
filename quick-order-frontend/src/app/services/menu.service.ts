@@ -16,10 +16,6 @@ export class MenuService {
   ) {
   }
 
-  getMenu(): Observable<Menu[]> {
-    return this.apiService.getRequest('/api/menuItemType/all');
-  }
-
   getMenuItemType(): Observable<MenuItemType[]> {
     return this.apiService.getRequest('/api/menuItemType/all');
   }
@@ -41,6 +37,6 @@ export class MenuService {
   }
 
   deleteMenuItem(menuItemName: string): Observable<any> {
-    return this.apiService.deleteRequest('api/menuItem/remove/' + menuItemName);
+    return this.apiService.deleteRequest('/api/menuItem/remove/' + menuItemName);
   }
 }

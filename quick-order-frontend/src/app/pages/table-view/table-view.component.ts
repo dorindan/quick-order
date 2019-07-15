@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {TableService} from '../../services/table.service';
 import {Reservation} from '../../models/Reservation';
 import {ReservationService} from '../../services/reservation.service';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 @Component({
   selector: 'app-table-view',
@@ -16,7 +17,8 @@ export class TableViewComponent implements OnInit {
   reservations: Reservation[];
   reservationsGet: Observable<Reservation[]>;
 
-  constructor(private tableService: TableService, private reservationService: ReservationService) {
+  constructor(private tableService: TableService, private reservationService: ReservationService,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -39,5 +41,9 @@ export class TableViewComponent implements OnInit {
   getFormattedTimeOut(reservation: Reservation): string {
     return reservation.checkOutTime.substr(0, 10) + ' ' +
       reservation.checkOutTime.substr(11, 5);
+  }
+
+  isAuthenticatedWaiter() {
+    return this.tokenStorageService.isAuthenticatedWithRole('ROLE_WAITER');
   }
 }

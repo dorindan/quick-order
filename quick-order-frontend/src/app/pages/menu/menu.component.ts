@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuService} from '../../services/menu.service';
-import {Menu} from '../../models/Menu';
+import {MenuItemType} from '../../models/MenuItemType';
+import {MatTableDataSource} from '@angular/material';
+import {MenuItem} from '../../models/MenuItem';
 
 @Component({
   selector: 'app-menu',
@@ -9,14 +11,20 @@ import {Menu} from '../../models/Menu';
 })
 export class MenuComponent implements OnInit {
 
-  menu: Menu[];
+  public menuItemType: MenuItemType[];
+  public menuItems: MenuItem[];
 
   constructor(private menuService: MenuService) {
   }
 
   ngOnInit() {
-    this.menuService.getMenu().subscribe(response => {
-      this.menu = response;
+    this.menuService.getMenuItemType().subscribe(response => {
+      this.menuItemType = response;
     });
+
+    this.menuService.getMenuItems().subscribe(response => {
+      this.menuItems = response;
+    });
+
   }
 }
