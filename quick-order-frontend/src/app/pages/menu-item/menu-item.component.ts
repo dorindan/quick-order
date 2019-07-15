@@ -171,7 +171,11 @@ export class MenuItemComponent implements OnInit {
       this.ingredientService.addIngredient(ingredient).subscribe(rez => {
         this.ingredientsList.push(ingredient);
       }, error1 => {
-        alert('The ingredient could not be added!, Please try again!');
+        if (error1.valueOf().error.message === 'Ingredient already exists!') {
+          this.showSnackbar('The ingredient already exists!');
+        } else {
+          this.showSnackbar('The ingredient could not be added, please try again!');
+        }
       });
       this.activateIngredientAdd = false;
       this.ingredientToAdd = '';
@@ -186,7 +190,11 @@ export class MenuItemComponent implements OnInit {
       this.menuItemService.addMenuItemType(itemType).subscribe(rez => {
         this.menuItemTypes.push(itemType);
       }, error1 => {
-        alert('The ingredient could not be added!, Please try again!');
+        if (error1.valueOf().error.message === 'Item type already exists!') {
+          this.showSnackbar('The item type already exists!');
+        } else {
+          this.showSnackbar('The item type could not be added, please try again!');
+        }
       });
       this.activateTypeAdd = false;
       this.menuItemTypeToAdd = '';

@@ -15,7 +15,7 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     @Query(value = "Select r FROM Reservation r left join fetch r.tables WHERE r.reservationName = :name ")
-    Reservation findByReservationNameWithTables(String name);
+    Reservation findByReservationNameWithTables(@Param("name") String name);
 
     Reservation findByReservationName(String name);
 
