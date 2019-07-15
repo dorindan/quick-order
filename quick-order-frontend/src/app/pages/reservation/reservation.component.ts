@@ -8,6 +8,7 @@ import {PropertyService} from '../../services/property.service';
 import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {User} from '../../models/User';
 
 @Component({
   selector: 'app-reservation',
@@ -88,7 +89,8 @@ export class ReservationComponent implements OnInit {
 
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
-    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false);
+    const username = this.tokenStorageService.getUsername();
+    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false, new User(username.toString(), ''));
     let i = -1;
     const tablesSelected: Table[] = [];
     for (i = 0; i < this.tableList.length; i++) {
@@ -97,23 +99,24 @@ export class ReservationComponent implements OnInit {
       }
     }
     if (this.isAuthenticatedWaiter()) {
-    this.reservation.tableFoodDtos = tablesSelected;
-    if (this.reservation.tableFoodDtos.length === 0 || this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
-      this.reservationService.reserve(this.reservation)
-        .subscribe(data => {
-          this.showSnackbar('Reservation sent successfully.');
-        }, error => {
-          switch (error.status) {
-            case 403: // forbidden exception
-              this.showSnackbar('Data ore persons number are wrong . Please try again!');
-              break;
-            default:
-              this.showSnackbar('Reservation failed. Please try again.');
-          }
-        });
+      this.reservation.tableFoodDtos = tablesSelected;
+      if (this.reservation.tableFoodDtos.length === 0 || this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
+        this.reservationService.reserve(this.reservation)
+          .subscribe(data => {
+            this.showSnackbar('Reservation sent successfully.');
+          }, error => {
+            switch (error.status) {
+              case 403: // forbidden exception
+                this.showSnackbar('Data or persons number are wrong . Please try again!');
+                break;
+              default:
+                this.showSnackbar('Reservation failed. Please try again.');
+            }
+          });
+      } else {
+        this.showSnackbar('The number of persons is too big to fit in these tables!');
+      }
     } else {
-      this.showSnackbar('The number of persons are to great to fit in thous tables!');
-    } } else {
       this.reservationService.reserve(this.reservation)
         .subscribe(data => {
           this.showSnackbar('Reservation sent successfully.');

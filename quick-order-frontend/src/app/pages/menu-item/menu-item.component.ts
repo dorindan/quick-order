@@ -5,7 +5,7 @@ import {MenuItem} from '../../models/MenuItem';
 import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
-import {TokenStorageService} from "../../auth/token-storage.service";
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 @Component({
   selector: 'app-menu-item',

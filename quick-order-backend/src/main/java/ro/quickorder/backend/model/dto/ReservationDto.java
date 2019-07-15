@@ -25,6 +25,7 @@ public class ReservationDto {
     private boolean confirmed;
     private Integer numberOfPersons;
     private String reservationName;
+    private UserDto user;
     private List<TableFoodDto> tableFoodDtos;
 
     public ReservationDto() {
@@ -95,6 +96,14 @@ public class ReservationDto {
         this.tableFoodDtos = tableFoodDtos;
     }
 
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
+    }
+
     public static final class Builder {
         private Timestamp checkInTime;
         private Timestamp checkOutTime;
@@ -117,4 +126,5 @@ public class ReservationDto {
             return new ReservationDto(checkInTime, checkOutTime, status, confirmed, numberOfPersons, reservationName);
         }
     }
+
 }

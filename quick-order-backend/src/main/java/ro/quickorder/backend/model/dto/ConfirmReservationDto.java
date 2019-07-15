@@ -20,6 +20,7 @@ public class ConfirmReservationDto {
     private Integer numberOfPersons;
     private String reservationName;
     private List<TableFoodDto> tableFoodDtos;
+    private UserDto user;
 
     public ConfirmReservationDto() {
     }
@@ -88,5 +89,13 @@ public class ConfirmReservationDto {
 
     public void setTableFoodDtos(List<TableFoodDto> tableFoodDtos) {
         this.tableFoodDtos = tableFoodDtos;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 }

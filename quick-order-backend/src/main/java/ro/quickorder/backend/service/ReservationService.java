@@ -17,6 +17,7 @@ import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
+import ro.quickorder.backend.repository.UserRepository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -34,11 +35,13 @@ public class ReservationService {
     @Autowired
     private TableFoodRepository tableFoodRepository;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private TableFoodService tableFoodService;
     @Autowired
     private TableFoodConverter tableFoodConverter;
     @Autowired
-    private EmailService  emailService;
+    private EmailService emailService;
 
     public void addReservation(ReservationDto reservationDto) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -64,6 +67,9 @@ public class ReservationService {
         Reservation reservation = reservationConverter.toReservation(reservationDto);
         List<TableFood> reservations = reservation.getTables();
         reservation.setTables(null);
+        if(reservationDto.getUser() != null) {
+            reservation.setUser(userRepository.findByUsername(reservationDto.getUser().getUsername()));
+        }
         // save reservation in database
         reservation = reservationRepository.save(reservation);
 
@@ -86,11 +92,11 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-        emailService.sendReservationMail(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
-                reservation.getCheckOutTime(),reservation.getUser(), false);
+        emailService.sendReservationMail(reservation.getNumberOfPersons(), reservation.getCheckInTime(),
+                reservation.getCheckOutTime(), reservation.getUser(), false);
     }
 
-    public List<ReservationDto> getAllUnconfirmed() {
+    public List<ReservationDto> getAllReservationUnconfirmed() {
         List<Reservation> reservations = reservationRepository.findAll();
         return reservations.stream().filter(reservation -> !reservation.isConfirmed()).map(reservationConverter::toReservationDto).collect(Collectors.toList());
     }
@@ -104,6 +110,13 @@ public class ReservationService {
         }
         // find reservation
         Reservation reservation = getReservationEntityByName(reservationDto.getReservationName());
+
+        if (reservation.isConfirmed()) {
+            reservation.setConfirmed(false);
+            reservation.setTables(null);
+            reservationRepository.save(reservation);
+        }
+
         // find tables
         String checkIn = reservationDto.getCheckInTime().toString();
         checkIn = checkIn.substring(8, 10) + "+" + checkIn.substring(5, 7) + "+" + checkIn.substring(0, 4) + "+" + checkIn.substring(checkIn.indexOf(' ') + 1, checkIn.indexOf(':') + 3);
@@ -119,23 +132,28 @@ public class ReservationService {
         // save reservation in database
         reservationRepository.save(reservation);
 
-        emailService.sendReservationMail(reservation.getNumberOfPersons(),reservation.getCheckInTime(),
-                reservation.getCheckOutTime(),reservation.getUser(), true);
+        emailService.sendReservationMail(reservation.getNumberOfPersons(), reservation.getCheckInTime(),
+                reservation.getCheckOutTime(), reservation.getUser(), true);
     }
 
-    public Reservation getReservationEntityByName(String reservationName) {
+    private Reservation getReservationEntityByName(String reservationName) {
         // find reservation
         Reservation reservation = reservationRepository.findByReservationName(reservationName);
         if (reservation == null) {
             LOG.error("Reservation not found");
             throw new NotFoundException("Reservation not found");
         }
-        if (reservation.isConfirmed()) {
-            LOG.error("Reservation is already confirmed");
-            throw new NotFoundException("Reservation is already confirmed");
-        }
-
         return reservation;
+    }
+
+    public ReservationDto getReservationDtoByName(String reservationName){
+
+        Reservation reservation = reservationRepository.findByReservationNameWithTables(reservationName);
+        if (reservation == null) {
+            LOG.error("Reservation not found");
+            throw new NotFoundException("Reservation not found");
+        }
+        return reservationConverter.toReservationDto(reservation);
     }
 
     private List<TableFood> getTablesByName(List<TableFoodDto> tableFoodDtos, String checkIn, String checkOut) {
@@ -163,12 +181,15 @@ public class ReservationService {
 
     private void personsFitInSeats(Reservation reservation) {
         int nrSeats = reservation.getTables().stream().map(tableFood -> tableFood.getSeats()).reduce(0, (a, b) -> a + b);
-        System.out.println(nrSeats);
         boolean fits = nrSeats < reservation.getNumberOfPersons();
         if (fits) {
             LOG.error("Not enough seats for all persons!");
             throw new BadRequestException("Not enough seats for all persons!");
         }
+    }
+
+    public boolean reservationConfirmed(String reservationName){
+        return reservationRepository.findByReservationName(reservationName).isConfirmed();
     }
 
     public List<ReservationDto> getReservationsForTableByTableNumber(Integer tableNr) {

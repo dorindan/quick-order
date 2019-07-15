@@ -22,10 +22,11 @@ public class TableFoodResource {
         return tableFoodService.getAllFree(checkInTime, checkOutTime);
     }
 
-    @RequestMapping(path = "/free/{reservationName}", method = RequestMethod.GET)
+    @RequestMapping(path = "/reserved/{reservationName}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('WAITER')")
     public List<TableFoodDto> getAllAssignedTablesOfAReservation(@PathVariable String reservationName) {
-        return tableFoodService.getAllAssignedTablesOfAReservation(reservationName);
+        List<TableFoodDto> res = tableFoodService.getAllAssignedTablesOfAReservation(reservationName);
+        return res;
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET)

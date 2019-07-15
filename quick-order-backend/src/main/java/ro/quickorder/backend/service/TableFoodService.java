@@ -1,6 +1,5 @@
 package ro.quickorder.backend.service;
 
-import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,9 @@ import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.TableFoodConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.NotFoundException;
+import ro.quickorder.backend.model.Reservation;
 import ro.quickorder.backend.model.TableFood;
+import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
@@ -45,10 +46,11 @@ public class TableFoodService {
     }
 
     public List<TableFoodDto> getAllAssignedTablesOfAReservation(String reservationName) {
-        return reservationService.getReservationEntityByName(reservationName)
-                .getTables().stream()
-                .map(tableFoodConverter::toTableFoodDto)
-                .collect(Collectors.toList());
+        ReservationDto reservationDto = reservationService.getReservationDtoByName(reservationName);
+        if(reservationDto.getTableFoodDtos() == null){
+            return new ArrayList<>();
+        }
+        return reservationDto.getTableFoodDtos();
     }
 
     public List<TableFoodDto> getAll() {
@@ -85,8 +87,20 @@ public class TableFoodService {
             LOG.error("Table not found");
             throw new NotFoundException("Table not found");
         }
-        tableFood.setActive(false);
-        tableFoodRepository.save(tableFood);
+
+        List<Reservation> reservations = reservationRepository.findAllWithTables();
+        reservations.forEach(reservation -> {
+            if(reservation.getTables().contains(tableFood)){
+                reservation.getTables().remove(tableFood);
+                if(reservation.getCheckInTime().after(new Timestamp(System.currentTimeMillis()))){
+                    reservation.setConfirmed(false);
+                    reservation.setTables(null);
+                }
+                reservationRepository.save(reservation);
+            }
+        });
+
+        tableFoodRepository.delete(tableFood);
     }
 
 }
