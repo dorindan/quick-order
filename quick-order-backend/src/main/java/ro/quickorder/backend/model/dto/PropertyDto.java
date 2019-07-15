@@ -1,13 +1,6 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.Command;
-import ro.quickorder.backend.model.Reservation;
-import ro.quickorder.backend.model.TableFood;
-import ro.quickorder.backend.model.User;
-
-import java.sql.Timestamp;
 import java.time.LocalTime;
-import java.util.List;
 
 public class PropertyDto {
 
@@ -158,7 +151,7 @@ public class PropertyDto {
         }
 
         public PropertyDto build() {
-            return new PropertyDto(restaurantName,startProgramTime,endProgramTime,streetName,latitude,longitude,email);
+            return new PropertyDto(restaurantName, startProgramTime, endProgramTime, streetName, latitude, longitude, email);
         }
     }
 }
