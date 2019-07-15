@@ -121,7 +121,7 @@ export class TableComponent implements OnInit {
     } else {
       this.tableNrRight = false;
     }
-    if (this.seats < 0) {
+    if (this.seats < 1) {
       this.seatsRight = false;
     } else {
       this.seatsRight = true;
