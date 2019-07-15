@@ -58,25 +58,29 @@ export class WaiterPageComponent implements OnInit {
   }
 
   acceptReservation(reservation: Reservation, index: number) {
-    if (this.selectedOptions.length === 0) {
-      this.indexExpanded = -1;
-    } else {
-      this.indexExpanded = -1;
-      this.disabledElements.push(index);
+    if (this.hint(reservation) === '') {
+
+      if (this.selectedOptions.length === 0) {
+        this.indexExpanded = -1;
+      } else {
+        this.indexExpanded = -1;
+        this.disabledElements.push(index);
+      }
+      this.reservationService.confirmReservation(new ConfirmReservation(reservation.checkInTime,
+        reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions))
+        .subscribe(data => {
+          this.showSnackbar('Reservation confirmed successfully.');
+        }, error => {
+          switch (error.status) {
+            case 404: // not found exception
+              this.showSnackbar('Reservation not found. Please try again.');
+              break;
+            default:
+              this.showSnackbar('Confirmation failed. Please try again.');
+          }
+        });
+
     }
-    this.reservationService.confirmReservation(new ConfirmReservation(reservation.checkInTime,
-      reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions))
-      .subscribe(data => {
-        this.showSnackbar('Reservation confirmed successfully.');
-      }, error => {
-        switch (error.status) {
-          case 404: // not found exception
-            this.showSnackbar('Reservation not found. Please try again.');
-            break;
-          default:
-            this.showSnackbar('Confirmation failed. Please try again.');
-        }
-      });
   }
 
   showSnackbar(message: string) {
