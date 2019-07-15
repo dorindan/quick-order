@@ -1,6 +1,13 @@
 package ro.quickorder.backend.model.dto;
 
+import ro.quickorder.backend.model.Command;
+import ro.quickorder.backend.model.Reservation;
+import ro.quickorder.backend.model.TableFood;
+import ro.quickorder.backend.model.User;
+
+import java.sql.Timestamp;
 import java.time.LocalTime;
+import java.util.List;
 
 public class PropertyDto {
 
@@ -98,5 +105,60 @@ public class PropertyDto {
                 ", longitude=" + longitude +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public static final class Builder {
+        private String restaurantName;
+
+        private LocalTime startProgramTime;
+
+        private LocalTime endProgramTime;
+
+        private String streetName;
+
+        private Double latitude;
+
+        private Double longitude;
+
+        private String email;
+
+        public PropertyDto.Builder withRestaurantName(String restaurantName) {
+            this.restaurantName = restaurantName;
+            return this;
+        }
+
+        public PropertyDto.Builder withStartProgramTime(LocalTime startProgramTime) {
+            this.startProgramTime = startProgramTime;
+            return this;
+        }
+
+        public PropertyDto.Builder withEndProgramTime(LocalTime endProgramTime) {
+            this.endProgramTime = endProgramTime;
+            return this;
+        }
+
+        public PropertyDto.Builder withStreetName(String streetName) {
+            this.streetName = streetName;
+            return this;
+        }
+
+        public PropertyDto.Builder withLatitude(Double latitude) {
+            this.latitude = latitude;
+            return this;
+        }
+
+        public PropertyDto.Builder withLongitude(Double longitude) {
+            this.longitude = longitude;
+            return this;
+        }
+
+        public PropertyDto.Builder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public PropertyDto build() {
+            return new PropertyDto(restaurantName,startProgramTime,endProgramTime,streetName,latitude,longitude,email);
+        }
     }
 }

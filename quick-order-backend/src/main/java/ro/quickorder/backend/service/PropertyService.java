@@ -20,98 +20,82 @@ public class PropertyService {
     @Autowired
     PropertyRepository propertyRepository;
 
-    public String getRestaurantName(){
-        Property restaurantNameProperty = propertyRepository.findByName(PropertyName.RESTAURANT_NAME);
-        if(restaurantNameProperty == null){
-            LOG.error("Restaurant name property was not found!");
-            throw new NullPointerException("Restaurant name property was not found!");
+    public String getPropertyByName(PropertyName propertyName) {
+        if (propertyName == null) {
+            return null;
         }
-        return restaurantNameProperty.getValue();
+        final Property property = propertyRepository.findByName(propertyName);
+        if (property == null) {
+            LOG.error("property {} was not found!", propertyName);
+            return null;
+        }
+        return property.getValue();
     }
 
-    public LocalTime getStartProperty(){
-        Property startProperty = propertyRepository.findByName(PropertyName.START_TIME);
-        if(startProperty == null){
-            LOG.error("Start time property was not found!");
-            throw new NullPointerException("Start time property was not found!");
-        }
+    public String getRestaurantName() {
+        return getPropertyByName(PropertyName.RESTAURANT_NAME);
+    }
+
+    public LocalTime getStartProperty() {
+        String startPropertyValue = getPropertyByName(PropertyName.START_TIME);
         int startHour;
         try {
-            startHour = Integer.parseInt(startProperty.getValue());
-        } catch (NumberFormatException  e){
+            startHour = Integer.parseInt(startPropertyValue);
+        } catch (NumberFormatException e) {
             LOG.error("Start time is not an integer number!");
             throw new NullPointerException("Start time is not an integer number!");
         }
-        return LocalTime.of(startHour,0);
+        return LocalTime.of(startHour, 0);
     }
 
-    public LocalTime getEndProperty(){
-        Property startProperty = propertyRepository.findByName(PropertyName.END_TIME);
-        if(startProperty == null){
-            LOG.error("End time property was not found!");
-            throw new NullPointerException("Start date property was not found!");
-        }
+    public LocalTime getEndProperty() {
+        String startPropertyValue = getPropertyByName(PropertyName.END_TIME);
         int endHour;
         try {
-            endHour = Integer.parseInt(startProperty.getValue());
-        } catch (NumberFormatException  e){
+            endHour = Integer.parseInt(startPropertyValue);
+        } catch (NumberFormatException e) {
             LOG.error("End time is not an integer number!");
             throw new NullPointerException("End time is not an integer number!");
         }
-        return LocalTime.of(endHour,0);
+        return LocalTime.of(endHour, 0);
     }
 
-    public String getStreetName(){
-        Property streetNameProperty = propertyRepository.findByName(PropertyName.STREET_NAME);
-        if(streetNameProperty == null){
-            LOG.error("Street name property was not found!");
-            throw new NullPointerException("Street name property was not found!");
-        }
-        return streetNameProperty.getValue();
+    public String getStreetName() {
+        return getPropertyByName(PropertyName.STREET_NAME);
     }
 
-    public double getLocationLatitude(){
-        Property locationLatitude = propertyRepository.findByName(PropertyName.LOCATION_LATITUDE);
-        if(locationLatitude == null){
-            LOG.error("Latitude property was not found!");
-            throw new NullPointerException("Latitude property was not found!");
-        }
+    public double getLocationLatitude() {
+        String locationLatitudeValue = getPropertyByName(PropertyName.LOCATION_LATITUDE);
         double latitude;
         try {
-            latitude = Double.parseDouble(locationLatitude.getValue());
-        } catch (NumberFormatException  e){
+            latitude = Double.parseDouble(locationLatitudeValue);
+        } catch (NumberFormatException e) {
             LOG.error("Latitude is not a double number!");
             throw new NullPointerException("Latitude is not a double number!");
         }
         return latitude;
     }
 
-    public double getLocationLongitude(){
-        Property locationLongitude = propertyRepository.findByName(PropertyName.LOCATION_LONGITUDE);
-        if(locationLongitude == null){
-            LOG.error("Longitude property was not found!");
-            throw new NullPointerException("Longitude property was not found!");
-        }
+    public double getLocationLongitude() {
+        String locationLongitudeValue = getPropertyByName(PropertyName.LOCATION_LONGITUDE);
         double longitude;
         try {
-            longitude = Double.parseDouble(locationLongitude.getValue());
-        } catch (NumberFormatException  e){
+            longitude = Double.parseDouble(locationLongitudeValue);
+        } catch (NumberFormatException e) {
             LOG.error("Longitude is not a double number!");
             throw new NullPointerException("Longitude is not a double number!");
         }
         return longitude;
     }
 
-    public String getEmail(){
-        Property emailProperty = propertyRepository.findByName(PropertyName.EMAIL);
-        if(emailProperty == null){
-            LOG.error("Email property was not found!");
-            throw new NullPointerException("Email property was not found!");
-        }
-        return emailProperty.getValue();
+    public String getEmail() {
+        return getPropertyByName(PropertyName.EMAIL);
     }
 
     public PropertyDto findProperties() {
-        return new PropertyDto(getRestaurantName(),getStartProperty(),getEndProperty(),getStreetName(),getLocationLatitude(),getLocationLongitude(),getEmail());
+        return new PropertyDto.Builder().withRestaurantName(getRestaurantName()).withStartProgramTime(getStartProperty()).
+                withEndProgramTime(getEndProperty()).withStreetName(getStreetName()).
+                withLatitude(getLocationLatitude()).withLongitude(getLocationLongitude()).
+                withEmail(getEmail()).build();
     }
 }
