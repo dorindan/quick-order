@@ -13,12 +13,19 @@ import java.util.List;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+
+    @Query(value = "Select r FROM Reservation r left join fetch r.tables WHERE r.reservationName = :name ")
+    Reservation findByReservationNameWithTables(@Param("name") String name);
+
     Reservation findByReservationName(String name);
 
     @Query(value = "FROM Reservation r WHERE :tableFood member of r.tables ORDER BY r.checkInTime ASC ")
     List<Reservation> findReservationByTable(@Param("tableFood") TableFood tableFood);
 
     List<Reservation> findAll();
+
+    @Query(value = "Select distinct r From Reservation r left join fetch r.tables")
+    List<Reservation> findAllWithTables();
 
     @Query(value = "Select r.tables From Reservation r where r.checkInTime < :maxCheckOutTime and  r.checkOutTime > :minCheckInTime")
     List<TableFood> findTablesWithReservationsBetween(@Param("minCheckInTime") Timestamp minCheckInTime, @Param("maxCheckOutTime") Timestamp maxCheckOutTime);

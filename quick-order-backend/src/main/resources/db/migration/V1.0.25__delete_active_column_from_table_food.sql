@@ -1,0 +1,1 @@
+ALTER TABLE table_food DROP COLUMN active;

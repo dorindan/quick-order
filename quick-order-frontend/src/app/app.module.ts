@@ -23,6 +23,8 @@ import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {httpInterceptorProviders} from './auth/auth-interceptor';
+import { ContactComponent } from './pages/contact/contact.component';
+import { AgmCoreModule } from '@agm/core';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
 
 
@@ -45,7 +47,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuItemComponent,
     WaiterPageComponent,
     TableComponent,
-    AboutUsComponent,
+    ContactComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBMimoGCQC7mafNE7Ec9-iPWrVZxO0qx6Q'
     }),
     NgxPopper
   ],

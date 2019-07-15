@@ -23,7 +23,7 @@ public class ReservationResource {
     @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
     @PreAuthorize("hasRole('WAITER')")
     public List<ReservationDto> getAllUnconfirmed() {
-        return reservationService.getAllUnconfirmed();
+        return reservationService.getAllReservationUnconfirmed();
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
@@ -36,5 +36,10 @@ public class ReservationResource {
     @PreAuthorize("hasRole('WAITER')")
     public List<ReservationDto> getReservationsForTableByTableNumber(@PathVariable Integer tableNr) {
         return reservationService.getReservationsForTableByTableNumber(tableNr);
+    }
+
+    @RequestMapping(path = "/confirmed/{reservationName}", method = RequestMethod.GET)
+    public boolean reservationConfirmed(@PathVariable String reservationName) {
+        return reservationService.reservationConfirmed(reservationName);
     }
 }

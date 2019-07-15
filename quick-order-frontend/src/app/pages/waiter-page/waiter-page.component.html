@@ -4,6 +4,7 @@
   <mat-accordion>
     <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let reservation of reservations ; let i = index"
                          (opened)="openGroup(reservation.reservationName, i, reservation)"
+                         (closed)="closeGroup()"
                          [disabled]="checkDisabled(i)">
       <mat-expansion-panel-header>
         <div class="numberOfPersons">
@@ -21,7 +22,7 @@
           <mat-icon class="editButton" (click)="enableEdit(i)">create</mat-icon>
         </div>
       </mat-expansion-panel-header>
-      <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="selection(tables)">
+      <mat-selection-list #list [(ngModel)]="this.selectedOptions" (ngModelChange)="selection(tables)">
         <hr>
         <p translate="">waiterPage.tableTitle</p>
         <hr>

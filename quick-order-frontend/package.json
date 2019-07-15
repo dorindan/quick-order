@@ -4,13 +4,17 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
+    "postbuild": "npm run deploy",
+    "predeploy": "rimraf ../quick-order-backend/src/main/resources/static && mkdirp ../quick-order-backend/src/main/resources/static",
+    "deploy": "cp -r dist/** ../quick-order-backend/src/main/resources/static",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.6",
     "@angular/animations": "^7.2.4",
     "@angular/cdk": "^7.1.1",
     "@angular/common": "~7.0.0",
