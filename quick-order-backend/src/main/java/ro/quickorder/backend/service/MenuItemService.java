@@ -59,7 +59,7 @@ public class MenuItemService {
         }
 
         Set<Ingredient> ingredients = setIngredients(menuItemDto);
-        menuItem = new MenuItem(menuItemDto.getName(), menuItemDto.getDescription(), menuItemType, menuItemDto.getPrice(), menuItemDto.getPreparationDurationInMinutes(), ingredients);
+        menuItem = new MenuItem(menuItemDto.getName(), menuItemDto.getDescription(), menuItemType, menuItemDto.getPreparationDurationInMinutes(), menuItemDto.getPrice(), ingredients);
         menuItemRepository.save(menuItem);
     }
 

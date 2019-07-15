@@ -1,6 +1,5 @@
 package ro.quickorder.backend.service;
 
-import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +87,20 @@ public class TableFoodService {
             LOG.error("Table not found");
             throw new NotFoundException("Table not found");
         }
-        tableFood.setActive(false);
-        tableFoodRepository.save(tableFood);
+
+        List<Reservation> reservations = reservationRepository.findAllWithTables();
+        reservations.forEach(reservation -> {
+            if(reservation.getTables().contains(tableFood)){
+                reservation.getTables().remove(tableFood);
+                if(reservation.getCheckInTime().after(new Timestamp(System.currentTimeMillis()))){
+                    reservation.setConfirmed(false);
+                    reservation.setTables(null);
+                }
+                reservationRepository.save(reservation);
+            }
+        });
+
+        tableFoodRepository.delete(tableFood);
     }
 
 }
