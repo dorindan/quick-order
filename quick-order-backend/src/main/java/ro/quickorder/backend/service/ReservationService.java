@@ -67,8 +67,9 @@ public class ReservationService {
         Reservation reservation = reservationConverter.toReservation(reservationDto);
         List<TableFood> reservations = reservation.getTables();
         reservation.setTables(null);
-
-        reservation.setUser(userRepository.findByUsername(reservationDto.getUser().getUsername()));
+        if(reservationDto.getUser() != null) {
+            reservation.setUser(userRepository.findByUsername(reservationDto.getUser().getUsername()));
+        }
         // save reservation in database
         reservation = reservationRepository.save(reservation);
 

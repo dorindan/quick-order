@@ -44,7 +44,9 @@ public class ReservationConverter {
         reservation.setConfirmed(reservationDto.isConfirmed());
         reservation.setNumberOfPersons(reservationDto.getNumberOfPersons());
         reservation.setReservationName(reservationDto.getReservationName());
-        reservation.setUser(userConverter.toUser(reservationDto.getUser()));
+        if (reservationDto.getUser() != null) {
+            reservation.setUser(userConverter.toUser(reservationDto.getUser()));
+        }
         if (reservationDto.getTableFoodDtos() != null) {
             reservation.setTables(reservationDto.getTableFoodDtos().stream()
                     .map(tableFoodDto -> tableFoodConverter.toTableFood(tableFoodDto)).collect(Collectors.toList()));
@@ -63,7 +65,9 @@ public class ReservationConverter {
         reservationDto.setConfirmed(reservation.isConfirmed());
         reservationDto.setNumberOfPersons(reservation.getNumberOfPersons());
         reservationDto.setReservationName(reservation.getReservationName());
-        reservationDto.setUser(userConverter.toUserDto(reservation.getUser()));
+        if (reservation.getUser() != null) {
+            reservationDto.setUser(userConverter.toUserDto(reservation.getUser()));
+        }
         if (reservation.getTables() != null && Hibernate.isInitialized(reservation.getTables())) {
             reservationDto.setTableFoodDtos(reservation.getTables().stream()
                     .map(tableFood -> tableFoodConverter.toTableFoodDto(tableFood)).collect(Collectors.toList()));
