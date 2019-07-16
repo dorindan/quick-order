@@ -28,7 +28,7 @@ import {AboutUsComponent} from './pages/about-us/about-us.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
