@@ -187,6 +187,11 @@
                 <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validation()">
               </div>
             </div>
+            <div>
+              <label>File Upload</label>
+              &nbsp;
+              <input type="file" (change)="onFileSelected($event)">
+            </div>
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
               <button class="btn btn-outline-secondary btn-block editInside" (click)="update()"
                       translate="">

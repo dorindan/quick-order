@@ -1,5 +1,9 @@
 package ro.quickorder.backend.model.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import javax.mail.Folder;
 import java.util.Set;
 
 /**
@@ -14,6 +18,7 @@ public class MenuItemDto {
     private Integer price;
     private MenuItemTypeDto menuItemTypeDto;
     private Set<IngredientDto> ingredients;
+    private MultipartFile img ;
 
     public MenuItemDto() {
     }
@@ -83,5 +88,11 @@ public class MenuItemDto {
         this.ingredients = ingredients;
     }
 
+    public MultipartFile getImg() {
+        return img;
+    }
 
+    public void setImg(MultipartFile img) {
+        this.img = img;
+    }
 }

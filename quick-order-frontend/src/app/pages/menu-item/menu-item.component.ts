@@ -6,6 +6,7 @@ import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-menu-item',
@@ -33,6 +34,8 @@ export class MenuItemComponent implements OnInit {
   ingredientToAdd = '';
   menuItemTypeToAdd = '';
 
+  selectedFile: FormData = null;
+
   constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
               private tokenStorageService: TokenStorageService) {
   }
@@ -41,6 +44,14 @@ export class MenuItemComponent implements OnInit {
     this.updateIngredients();
     this.updateMenu();
     this.updateMenuItemType();
+  }
+
+
+  onFileSelected(event) {
+    const formdata: FormData = new FormData();
+    formdata.append('file', <File>event.target.files.item(0));
+
+    this.selectedFile = formdata;
   }
 
   showSnackbar(message: string) {
@@ -126,8 +137,8 @@ export class MenuItemComponent implements OnInit {
         .filter(value => this.ingredients.filter(value1 => value.name === value1).length > 0);
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
+      newMenuItem.img = this.selectedFile;
       this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
-        window.location.reload();
       }, error => {
         if (error.status === 404) { // not found exception
           this.showSnackbar('The introduced data is not valid!, please try again');
@@ -163,6 +174,7 @@ export class MenuItemComponent implements OnInit {
     this.activateTypeAdd = false;
     this.ingredientToAdd = '';
     this.menuItemTypeToAdd = '';
+    this.selectedFile = null;
   }
 
   addIngredient(): void {
