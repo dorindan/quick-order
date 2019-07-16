@@ -122,10 +122,20 @@
     "floor": "  Etaj: ",
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
-    "acceptReservation": "Accepta Rezervarea"
+    "acceptReservation": "Acceptă Rezervarea"
   },
-  "about": {
+  "a": {
     "reserve": "Rezervări online 24/7",
     "open": "Deschis Luni-Duminică:"
+  },
+  "description": {
+    "healthy": "Rapid și sănătos.",
+    "healthy2": "Susținem mâncatul sănătos. Suntem ce mâncăm!",
+    "tasty": "Rapid și gustos.",
+    "tasty2": "Toată lumea apreciaza mâncarea bună.",
+    "comfy": "Plin de viață și confortabil.",
+    "comfy2": "Restaurantul nostru găzduiește evenimentele, întâlnirile sau ieșirile tale.",
+    "fresh": "Produse proaspete.",
+    "fresh2": "Susținem producătorii locali. Proaspăt în fiecare zi."
   }
 }

@@ -10,8 +10,8 @@ import {MenuItemComponent} from './pages/menu-item/menu-item.component';
 import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
-import {ContactComponent} from "./pages/contact/contact.component";
-import {AboutUsComponent} from "./pages/about-us/about-us.component";
+import {ContactComponent} from './pages/contact/contact.component';
+import {AboutUsComponent} from './pages/about-us/about-us.component';
 
 const routes: Routes = [];
 
