@@ -123,5 +123,9 @@
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
     "acceptReservation": "Accepta Rezervarea"
-  }
+  },
+  "contact":{
+    "open" : "Deschide la:",
+    "close" : "Inchide la:"
+}
 }
