@@ -33,7 +33,7 @@
     "table": "Table administration",
     "tableView": "Table view",
     "aboutUs": "About Us",
-    "contact": "Contact Us",
+    "contact": "Contact",
     "logout": "Logout",
     "language": "Language ",
     "confirmReservations": "Confirm Reservations"
@@ -123,6 +123,10 @@
     "windowView": "  Has window view: ",
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation"
+  },
+  "contact":{
+    "open" : "Opens at:",
+    "close" : "Closes at:"
   },
   "a": {
     "reserve": "Reservations online 24/7",

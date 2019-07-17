@@ -137,5 +137,9 @@
     "comfy2": "Restaurantul nostru găzduiește evenimentele, întâlnirile sau ieșirile tale.",
     "fresh": "Produse proaspete.",
     "fresh2": "Susținem producătorii locali. Proaspăt în fiecare zi."
-  }
+  },
+  "contact":{
+    "open" : "Deschide la:",
+    "close" : "Inchide la:"
+}
 }
