@@ -16,6 +16,7 @@ import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -107,5 +108,18 @@ public class MenuItemService {
             throw new NotFoundException("MenuItem not found!");
         }
         menuItemRepository.delete(menuItem);
+    }
+
+    public List<MenuItem> getMenuItems(List<MenuItemDto> menuItemDtos) {
+        List<MenuItem> menuItems = new ArrayList<>();
+        for (int i = 0; i < menuItemDtos.size(); i++) {
+            MenuItem tableFood = menuItemRepository.findByName(menuItemDtos.get(i).getName());
+            if (tableFood == null) {
+                LOG.error("Table not found");
+                throw new NotFoundException("Table not found");
+            }
+            menuItems.add(tableFood);
+        }
+        return menuItems;
     }
 }

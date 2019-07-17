@@ -25,6 +25,7 @@ import {TableComponent} from './pages/table/table.component';
 import {httpInterceptorProviders} from './auth/auth-interceptor';
 import { ContactComponent } from './pages/contact/contact.component';
 import { AgmCoreModule } from '@agm/core';
+import { FinishCommandComponent } from './pages/finish-command/finish-command.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -45,7 +46,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuItemComponent,
     WaiterPageComponent,
     TableComponent,
-    ContactComponent
+    ContactComponent,
+    FinishCommandComponent
   ],
   imports: [
     BrowserModule,

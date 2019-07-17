@@ -20,8 +20,11 @@ public class Command {
     private String specification;
     private boolean isPacked;
     private String status;
-    @ManyToMany(mappedBy = "commands")
-    private List<MenuItem> menuItems;
+    @ManyToMany
+    @JoinTable(name = "menu_item_command",
+            joinColumns = {@JoinColumn(name = "command_id")},
+            inverseJoinColumns = {@JoinColumn(name = "menu_item_id")})
+    private List<CommandMenuItem> commandMenuItems;
     @OneToOne
     @JoinColumn(name = "bill_id")
     private Bill bill;
@@ -84,12 +87,12 @@ public class Command {
         this.status = status;
     }
 
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
+    public List<CommandMenuItem> getMenuItems() {
+        return commandMenuItems;
     }
 
-    public void setMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
+    public void setMenuItems(List<CommandMenuItem> commandMenuItems) {
+        this.commandMenuItems = commandMenuItems;
     }
 
     public Bill getBill() {
@@ -134,7 +137,7 @@ public class Command {
                 Objects.equals(commandName, command.commandName) &&
                 Objects.equals(specification, command.specification) &&
                 Objects.equals(status, command.status) &&
-                Objects.equals(menuItems, command.menuItems) &&
+                Objects.equals(commandMenuItems, command.commandMenuItems) &&
                 Objects.equals(bill, command.bill) &&
                 Objects.equals(table, command.table) &&
                 Objects.equals(reservations, command.reservations) &&
@@ -143,7 +146,7 @@ public class Command {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, commandName, specification, isPacked, status, menuItems, bill, table, reservations, users);
+        return Objects.hash(id, commandName, specification, isPacked, status, commandMenuItems, bill, table, reservations, users);
     }
 
     @Override
@@ -157,5 +160,13 @@ public class Command {
                 ", bill=" + bill.getId() +
                 ", table=" + table +
                 '}';
+    }
+
+    public List<CommandMenuItem> getCommandMenuItems() {
+        return commandMenuItems;
+    }
+
+    public void setCommandMenuItems(List<CommandMenuItem> commandMenuItems) {
+        this.commandMenuItems = commandMenuItems;
     }
 }

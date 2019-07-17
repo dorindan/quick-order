@@ -11,6 +11,7 @@ import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {ContactComponent} from "./pages/contact/contact.component";
+import {FinishCommandComponent} from './pages/finish-command/finish-command.component';
 
 const routes: Routes = [];
 
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
   {path: 'confirmReservations', component: WaiterPageComponent},
   {path: 'table', component: TableComponent},
   {path: 'contact', component: ContactComponent},
+  {path: 'finishCommand', component: FinishCommandComponent},
   {path: '**', redirectTo: ''}
 ];
 

@@ -1,5 +1,8 @@
 package ro.quickorder.backend.model.dto;
 
+
+import java.util.List;
+
 /**
  *  Data transfer object for {@link ro.quickorder.backend.model.Command}
  * <p>
@@ -11,6 +14,7 @@ public class CommandDto {
     private String specification;
     private boolean isPacked;
     private String status;
+    private List<CommandMenuItemDto> commandMenuItemDtos;
 
     public CommandDto() {
     }
@@ -52,5 +56,13 @@ public class CommandDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<CommandMenuItemDto> getCommandMenuItemDtos() {
+        return commandMenuItemDtos;
+    }
+
+    public void setCommandMenuItemDtos(List<CommandMenuItemDto> commandMenuItemDtos) {
+        this.commandMenuItemDtos = commandMenuItemDtos;
     }
 }

@@ -46,6 +46,37 @@
   display: inline;
 }
 
+.cursorPointer {
+  cursor: pointer;
+}
+
+.end {
+  text-align: end;
+}
+
+.smallInput {
+  width: 8%;
+}
+
+.iSize {
+  width: 5%;
+}
+
+.iconSize {
+  width: 6%;
+}
+
+
+.green {
+  color: darkgreen !important;
+  opacity: 0.4 !important;
+}
+
+.btn-secondary {
+  background-color: darkgreen !important;
+  opacity: 0.4 !important;
+}
+
 img {
   width: 30%;
   height: 20%;
