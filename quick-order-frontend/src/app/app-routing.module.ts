@@ -10,7 +10,8 @@ import {MenuItemComponent} from './pages/menu-item/menu-item.component';
 import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
-import {ContactComponent} from "./pages/contact/contact.component";
+import {ContactComponent} from './pages/contact/contact.component';
+import {ReservationLogComponent} from './reservation-log/reservation-log.component';
 
 const routes: Routes = [];
 
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
   {path: 'confirmReservations', component: WaiterPageComponent},
   {path: 'table', component: TableComponent},
   {path: 'contact', component: ContactComponent},
+  {path: 'reservation-log', component: ReservationLogComponent},
   {path: '**', redirectTo: ''}
 ];
 

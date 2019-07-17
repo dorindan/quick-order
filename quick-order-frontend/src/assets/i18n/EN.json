@@ -36,7 +36,8 @@
     "contact": "Contact Us",
     "logout": "Logout",
     "language": "Language ",
-    "confirmReservations": "Confirm Reservations"
+    "confirmReservations": "Confirm Reservations",
+    "log": "My Reservations"
   },
   "startPage": {
     "quickOrder": "Quick Order",
