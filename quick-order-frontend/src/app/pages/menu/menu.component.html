@@ -3,21 +3,32 @@
     <h2 class="menu-section-title">{{itemType.type}}</h2>
     <div class="menu-item" *ngFor="let menuItem of this.menuItems">
       <div *ngIf="itemType.type === menuItem.menuItemTypeDto.type">
-        <div class = "col-sm-6 col-md-3" style="display: inline;" >
-          <a   class = "thumbnail">
-            <img src = "/assets/img/restaurant.jpg" >
-          </a>
+        <div class="media">
+          <img src="/assets/img/QuickOrder.png" class="mr-3" alt="...">
+          <div class="media-body">
+            <h5 class="mt-0">
+              <div class="menu-item-name">
+                {{menuItem.name}}
+              </div>
+              <div class="menu-item-price">
+                {{menuItem.price}} lei
+              </div>
+            </h5>
+
+            <span *ngIf="menuItem.description !== ''" class="menu-item-description">
+              <span *ngIf="i > 0">,</span>
+              <span>{{menuItem.description}}</span>
+              <br>
+            </span>
+            <span class="menu-item-description">
+              <label *ngIf="menuItem.ingredients.length>0">Ingredients:</label>
+            </span>
+            <span class="menu-item-description" *ngFor="let ingredient of menuItem.ingredients;let i = index">
+              <span *ngIf="i > 0">,</span>
+              <span>{{' ' +ingredient.name}}</span>
+            </span>
+          </div>
         </div>
-        <div class="menu-item-name">
-          {{menuItem.name}}
-        </div>
-        <div class="menu-item-price">
-          {{menuItem.price}} lei
-        </div>
-        <span class="menu-item-description" *ngFor="let ingredient of menuItem.ingredients;let i = index">
-          <span *ngIf="i > 0">,</span>
-          <span>{{ingredient.name}}</span>
-        </span>
 
       </div>
     </div>
