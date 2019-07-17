@@ -1,4 +1,3 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -23,8 +22,10 @@ import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {httpInterceptorProviders} from './auth/auth-interceptor';
-import { ContactComponent } from './pages/contact/contact.component';
-import { AgmCoreModule } from '@agm/core';
+import {ContactComponent} from './pages/contact/contact.component';
+import {AgmCoreModule} from '@agm/core';
+import {AboutUsComponent} from './pages/about-us/about-us.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -45,10 +46,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuItemComponent,
     WaiterPageComponent,
     TableComponent,
-    ContactComponent
+    ContactComponent,
+    AboutUsComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
