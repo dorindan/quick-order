@@ -16,8 +16,6 @@ import java.time.LocalTime;
 public class PropertyService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
     @Autowired
-    PropertyConverter propertyConvertor;
-    @Autowired
     PropertyRepository propertyRepository;
 
     public String getPropertyByName(PropertyName propertyName) {

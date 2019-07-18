@@ -36,8 +36,6 @@ public class MenuItemService {
     private IngredientRepository ingredientRepository;
     @Autowired
     private MenuItemConverter menuItemConverter;
-    @Autowired
-    private MenuItemTypeConverter menuItemTypeConverter;
 
     public List<MenuItemDto> getMenuItems() {
         return menuItemRepository.findAll().stream().map(menuItemConverter::toMenuItemDto).collect(Collectors.toList());

@@ -5,7 +5,7 @@ import ro.quickorder.backend.model.MenuItem;
 /**
  * @author R. Lupoaie
  */
-public class CommandMenuItemDto {
+public class MenuItemCommandDto {
 
     private Integer amount;
     private MenuItemDto menuItemDto;

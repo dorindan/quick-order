@@ -8,7 +8,7 @@ import ro.quickorder.backend.model.MenuItemCommand;
  * @author R. Lupoaie
  */
 @Repository
-public interface CommandMenuItemRepository  extends JpaRepository<MenuItemCommand, Long> {
+public interface MenuItemCommandRepository extends JpaRepository<MenuItemCommand, Long> {
 
 
 

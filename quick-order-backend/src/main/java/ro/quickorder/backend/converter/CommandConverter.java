@@ -16,7 +16,14 @@ import java.util.List;
 public class CommandConverter {
 
     @Autowired
-    CommandMenuItemConverter commandMenuItemConverter;
+    MenuItemCommandConverter menuItemCommandConverter;
+
+    public CommandConverter(){
+
+    }
+    public CommandConverter(MenuItemCommandConverter menuItemCommandConverter){
+        this.menuItemCommandConverter = menuItemCommandConverter;
+    }
 
     public Command toCommand(CommandDto commandDto) {
         if (commandDto == null) {
@@ -27,7 +34,7 @@ public class CommandConverter {
         command.setSpecification(commandDto.getSpecification());
         command.setPacked(commandDto.isPacked());
         command.setStatus(commandDto.getStatus());
-        command.setMenuItemCommands(commandMenuItemConverter.toCommandMenuItems(commandDto.getCommandMenuItemDtos()));
+        command.setMenuItemCommands(menuItemCommandConverter.toCommandMenuItems(commandDto.getMenuItemCommandDtos()));
         return command;
     }
 
@@ -40,45 +47,7 @@ public class CommandConverter {
         commandDto.setSpecification(command.getSpecification());
         commandDto.setPacked(command.isPacked());
         commandDto.setStatus(command.getStatus());
-        commandDto.setCommandMenuItemDtos(commandMenuItemConverter.toCommandMenuItemDtos(command.getMenuItemCommands()));
+        commandDto.setMenuItemCommandDtos(menuItemCommandConverter.toCommandMenuItemDtos(command.getMenuItemCommands()));
         return commandDto;
-    }
-
-    public List<Command> toCommands(List<CommandDto> commandDto) {
-        List<Command> commands = new ArrayList<>();
-        if (commandDto == null) {
-            return null;
-        }
-        for(int i=0;i< commandDto.size(); i++) {
-            if (commandDto.get(i) == null) {
-                return null;
-            }
-            Command command = new Command();
-            command.setCommandName(commandDto.get(i).getCommandName());
-            command.setSpecification(commandDto.get(i).getSpecification());
-            command.setPacked(commandDto.get(i).isPacked());
-            command.setStatus(commandDto.get(i).getStatus());
-            commands.add(command);
-        }
-        return commands;
-    }
-
-    public List<CommandDto> toCommandDtos(List<Command> command) {
-        List<CommandDto> commandDtos = new ArrayList<>();
-        if (command == null) {
-            return null;
-        }
-        for(int i=0;i< command.size(); i++) {
-            if (command.get(i) == null) {
-                return null;
-            }
-            CommandDto commandDto = new CommandDto();
-            commandDto.setCommandName(command.get(i).getCommandName());
-            commandDto.setSpecification(command.get(i).getSpecification());
-            commandDto.setPacked(command.get(i).isPacked());
-            commandDto.setStatus(command.get(i).getStatus());
-            commandDtos.add(commandDto);
-        }
-        return commandDtos;
     }
 }

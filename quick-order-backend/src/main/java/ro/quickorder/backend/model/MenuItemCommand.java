@@ -32,7 +32,7 @@ public class MenuItemCommand {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Command command;
 
-    public MenuItemCommand(){
+    public MenuItemCommand() {
 
     }
 

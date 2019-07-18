@@ -24,7 +24,7 @@ public class Command {
     private boolean isPacked;
     @Enumerated(EnumType.STRING)
     private CommandStatus status;
-    @OneToMany(mappedBy="command")
+    @OneToMany(mappedBy = "command")
     private List<MenuItemCommand> menuItemCommands;
     @OneToOne
     @JoinColumn(name = "bill_id")

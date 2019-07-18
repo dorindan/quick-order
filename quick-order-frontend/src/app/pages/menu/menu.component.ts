@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import {Command} from '../../models/Command';
 import {CommandService} from '../../services/command.service';
 import {MatSnackBar} from '@angular/material';
-import {CommandMenuItem} from '../../models/CommandMenuItem';
+import {MenuItemCommand} from '../../models/MenuItemCommand';
 
 @Component({
   selector: 'app-menu',
@@ -50,11 +50,11 @@ export class MenuComponent implements OnInit {
   commandOpen() {
     this.commandService.hasActiveCommand('admin').subscribe(res => {
       this.command = res;
-      if (this.command.commandMenuItemDtos == null) {
-        this.command.commandMenuItemDtos = [];
+      if (this.command.menuItemCommandDtos == null) {
+        this.command.menuItemCommandDtos = [];
       }
       this.newCommand = this.command;
-      this.newCommand.commandMenuItemDtos = [];
+      this.newCommand.menuItemCommandDtos = [];
       if (res !== null && res.status === 'ACTIVE') {
         this.commandActive = true;
       }
@@ -63,17 +63,17 @@ export class MenuComponent implements OnInit {
 
   addToCommand(menuItem: MenuItem, amountIndex: number) {
     let exist = false;
-    for (const item of this.newCommand.commandMenuItemDtos) {
+    for (const item of this.newCommand.menuItemCommandDtos) {
       if (item.menuItemDto.name === menuItem.name) {
         item.amount += this.amounts[amountIndex];
         exist = true;
       }
     }
     if (!exist) {
-      const commandMenuItem = new CommandMenuItem();
+      const commandMenuItem = new MenuItemCommand();
       commandMenuItem.amount = this.amounts[amountIndex];
       commandMenuItem.menuItemDto = menuItem;
-      this.newCommand.commandMenuItemDtos.push(commandMenuItem);
+      this.newCommand.menuItemCommandDtos.push(commandMenuItem);
     }
     this.showSnackbar(this.amounts[amountIndex] + ' ' + menuItem.name + ' successfully added');
     this.amounts[amountIndex] = 1;

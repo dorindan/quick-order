@@ -16,7 +16,7 @@ public class CommandDto {
     private String specification;
     private boolean isPacked;
     private CommandStatus status;
-    private List<CommandMenuItemDto> commandMenuItemDtos;
+    private List<MenuItemCommandDto> MenuItemCommandDtos;
 
     public CommandDto() {
     }
@@ -60,11 +60,11 @@ public class CommandDto {
         this.status = status;
     }
 
-    public List<CommandMenuItemDto> getCommandMenuItemDtos() {
-        return commandMenuItemDtos;
+    public List<MenuItemCommandDto> getMenuItemCommandDtos() {
+        return MenuItemCommandDtos;
     }
 
-    public void setCommandMenuItemDtos(List<CommandMenuItemDto> commandMenuItemDtos) {
-        this.commandMenuItemDtos = commandMenuItemDtos;
+    public void setMenuItemCommandDtos(List<MenuItemCommandDto> menuItemCommandDtos) {
+        this.MenuItemCommandDtos = menuItemCommandDtos;
     }
 }
