@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit {
   public menuItemType: MenuItemType[];
   public menuItems: MenuItem[];
   public command: Command;
+  public newCommand: Command = new Command();
 
   constructor(private menuService: MenuService, private router: Router,
               private snackBar: MatSnackBar, private commandService: CommandService) {
@@ -47,32 +48,39 @@ export class MenuComponent implements OnInit {
   }
 
   commandOpen() {
-    this.commandService.hasActiveCommand('sad').subscribe(res => {
+    this.commandService.hasActiveCommand('admin').subscribe(res => {
       this.command = res;
-      if (res !== null && res.status === 'Active') {
-        this.commandActive = true;
-      } else {
-        alert(res.status);
+      if (this.command.commandMenuItemDtos == null) {
+        this.command.commandMenuItemDtos = [];
       }
-      this.commandActive = true;
+      this.newCommand = this.command;
+      this.newCommand.commandMenuItemDtos = [];
+      if (res !== null && res.status === 'ACTIVE') {
+        this.commandActive = true;
+      }
     });
   }
 
   addToCommand(menuItem: MenuItem, amountIndex: number) {
-    const commandMenuItem = new CommandMenuItem();
-    commandMenuItem.amount = this.amounts[amountIndex];
-    commandMenuItem.menuItem = menuItem;
-    this.command.menuItems.push(commandMenuItem);
-    if (this.amounts[amountIndex] > 1) {
-      this.showSnackbar(this.amounts[amountIndex] + ' items successfully added');
-    } else {
-      this.showSnackbar(this.amounts[amountIndex] + ' item successfully added');
+    let exist = false;
+    for (const item of this.newCommand.commandMenuItemDtos) {
+      if (item.menuItemDto.name === menuItem.name) {
+        item.amount += this.amounts[amountIndex];
+        exist = true;
+      }
     }
+    if (!exist) {
+      const commandMenuItem = new CommandMenuItem();
+      commandMenuItem.amount = this.amounts[amountIndex];
+      commandMenuItem.menuItemDto = menuItem;
+      this.newCommand.commandMenuItemDtos.push(commandMenuItem);
+    }
+    this.showSnackbar(this.amounts[amountIndex] + ' ' + menuItem.name + ' successfully added');
     this.amounts[amountIndex] = 1;
   }
 
   public saveCommand() {
-    this.commandService.updateCommand(this.command);
+    this.commandService.updateCommand(this.newCommand);
   }
 
   finishCommand() {

@@ -1,9 +1,11 @@
-
+<i>
+  <img class="cursorPointer iconSize " (click)="saveCommand()" src="assets/edit-delete/buy.svg">
+</i>
 
 <div class="menu-body" *ngFor="let itemType of menuItemType">
   <div class="menu-section">
     <h2 class="menu-section-title">{{itemType.type}}</h2>
-    <div class="menu-item" *ngFor="let menuItem of this.menuItems">
+    <div class="menu-item" *ngFor="let menuItem of this.menuItems; let i = index">
       <div *ngIf="itemType.type === menuItem.menuItemTypeDto.type">
         <div class="media">
           <img src="/assets/img/QuickOrder.png" class="mr-3" alt="...">
@@ -29,13 +31,13 @@
               <span *ngIf="i > 0">,</span>
               <span>{{' ' +ingredient.name}}</span>
             </span>
-            <form class="end">
-              <mat-form-field>
-                <input matInput class="smallInput" type="number" pattern="^([1-9][0-9]{0,1})$" >
-                &nbsp;
+            <form class="end" *ngIf="commandActive">
+              <mat-form-field class="smallInput">
+                <input matInput type="number" pattern="^([1-9][0-9]{0,1})$" name="amount" [(ngModel)]="this.amounts[i]" >
               </mat-form-field>
-              <i class="iSize inline" data-toggle="modal" data-target="#modalDelete" (click)="setDelete(element)">
-                <img class="cursorPointer iconSize " src="assets/edit-delete/delete.svg">
+              &nbsp;
+              <i class="iSize inline" data-toggle="modal" >
+                <img class="cursorPointer iconSize " src="assets/edit-delete/buy.svg" (click)="addToCommand(menuItem, i)">
               </i>
             </form>
           </div>

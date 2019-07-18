@@ -1,10 +1,11 @@
 package ro.quickorder.backend.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * @author R. Lupoaie
@@ -22,13 +23,18 @@ public class MenuItemCommand {
     private String id;
 
     private Integer amount;
-    @ManyToOne
-    @Lazy(false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "menu_item_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private MenuItem menuItem;
-    @ManyToOne
-    @Lazy(false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "command_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Command command;
 
+    public MenuItemCommand(){
+
+    }
 
     public String getId() {
         return id;

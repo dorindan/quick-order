@@ -5,7 +5,7 @@ export class Command {
   public specification: string;
   public isPacked: boolean;
   public status: string;
-  public menuItems: CommandMenuItem[] = [];
+  public commandMenuItemDtos: CommandMenuItem[] = [];
 
   constructor() {
   }

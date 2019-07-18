@@ -27,7 +27,7 @@ public class CommandConverter {
         command.setSpecification(commandDto.getSpecification());
         command.setPacked(commandDto.isPacked());
         command.setStatus(commandDto.getStatus());
-        command.setCommandMenuItems(commandMenuItemConverter.toCommandMenuItems(commandDto.getCommandMenuItemDtos()));
+        command.setMenuItemCommands(commandMenuItemConverter.toCommandMenuItems(commandDto.getCommandMenuItemDtos()));
         return command;
     }
 
@@ -40,7 +40,7 @@ public class CommandConverter {
         commandDto.setSpecification(command.getSpecification());
         commandDto.setPacked(command.isPacked());
         commandDto.setStatus(command.getStatus());
-        commandDto.setCommandMenuItemDtos(commandMenuItemConverter.toCommandMenuItemDtos(command.getCommandMenuItems()));
+        commandDto.setCommandMenuItemDtos(commandMenuItemConverter.toCommandMenuItemDtos(command.getMenuItemCommands()));
         return commandDto;
     }
 

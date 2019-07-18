@@ -1,6 +1,8 @@
 package ro.quickorder.backend.model.dto;
 
 
+import ro.quickorder.backend.model.enumeration.CommandStatus;
+
 import java.util.List;
 
 /**
@@ -13,13 +15,13 @@ public class CommandDto {
     private String commandName;
     private String specification;
     private boolean isPacked;
-    private String status;
+    private CommandStatus status;
     private List<CommandMenuItemDto> commandMenuItemDtos;
 
     public CommandDto() {
     }
 
-    public CommandDto(String commandName, String specification, boolean isPacked, String status) {
+    public CommandDto(String commandName, String specification, boolean isPacked, CommandStatus status) {
         this.commandName = commandName;
         this.specification = specification;
         this.isPacked = isPacked;
@@ -50,11 +52,11 @@ public class CommandDto {
         isPacked = packed;
     }
 
-    public String getStatus() {
+    public CommandStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CommandStatus status) {
         this.status = status;
     }
 
