@@ -123,5 +123,11 @@
     "windowView": "  Has window view: ",
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation"
+  },
+  "menu": {
+    "quantity": "Quantity: ",
+    "selected": "products selected",
+    "finishCommand": "Finish command",
+    "save": "Save"
   }
 }

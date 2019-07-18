@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit {
   public menuItems: MenuItem[];
   public command: Command;
   public newCommand: Command = new Command();
+  public totalAmount = 0;
 
   constructor(private menuService: MenuService, private router: Router,
               private snackBar: MatSnackBar, private commandService: CommandService) {
@@ -47,12 +48,20 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  calculateAmount() {
+    this.totalAmount = 0;
+    for (const item of this.command.menuItemCommandDtos) {
+      this.totalAmount += item.amount;
+    }
+  }
+
   commandOpen() {
     this.commandService.hasActiveCommand('admin').subscribe(res => {
       this.command = res;
       if (this.command.menuItemCommandDtos == null) {
         this.command.menuItemCommandDtos = [];
       }
+      this.calculateAmount();
       this.newCommand = this.command;
       this.newCommand.menuItemCommandDtos = [];
       if (res !== null && res.status === 'ACTIVE') {
@@ -62,6 +71,10 @@ export class MenuComponent implements OnInit {
   }
 
   addToCommand(menuItem: MenuItem, amountIndex: number) {
+    if (this.amounts[amountIndex] < 1) {
+      this.showSnackbar('Amount need to be greater than 0!');
+      return;
+    }
     let exist = false;
     for (const item of this.newCommand.menuItemCommandDtos) {
       if (item.menuItemDto.name === menuItem.name) {
@@ -75,6 +88,7 @@ export class MenuComponent implements OnInit {
       commandMenuItem.menuItemDto = menuItem;
       this.newCommand.menuItemCommandDtos.push(commandMenuItem);
     }
+    this.totalAmount += this.amounts[amountIndex];
     this.showSnackbar(this.amounts[amountIndex] + ' ' + menuItem.name + ' successfully added');
     this.amounts[amountIndex] = 1;
   }

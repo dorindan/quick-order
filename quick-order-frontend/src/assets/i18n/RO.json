@@ -123,5 +123,11 @@
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
     "acceptReservation": "Accepta Rezervarea"
+  },
+  "menu": {
+    "quantity": "Cantitate: ",
+    "selected": "produse selectate",
+    "finishCommand": "Finalizare comandă",
+    "save": "Salvează"
   }
 }
