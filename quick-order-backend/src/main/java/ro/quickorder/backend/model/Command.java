@@ -24,7 +24,7 @@ public class Command {
     @JoinTable(name = "menu_item_command",
             joinColumns = {@JoinColumn(name = "command_id")},
             inverseJoinColumns = {@JoinColumn(name = "menu_item_id")})
-    private List<CommandMenuItem> commandMenuItems;
+    private List<MenuItemCommand> commandMenuItems;
     @OneToOne
     @JoinColumn(name = "bill_id")
     private Bill bill;
@@ -87,11 +87,11 @@ public class Command {
         this.status = status;
     }
 
-    public List<CommandMenuItem> getMenuItems() {
+    public List<MenuItemCommand> getMenuItems() {
         return commandMenuItems;
     }
 
-    public void setMenuItems(List<CommandMenuItem> commandMenuItems) {
+    public void setMenuItems(List<MenuItemCommand> commandMenuItems) {
         this.commandMenuItems = commandMenuItems;
     }
 
@@ -162,11 +162,11 @@ public class Command {
                 '}';
     }
 
-    public List<CommandMenuItem> getCommandMenuItems() {
+    public List<MenuItemCommand> getCommandMenuItems() {
         return commandMenuItems;
     }
 
-    public void setCommandMenuItems(List<CommandMenuItem> commandMenuItems) {
+    public void setCommandMenuItems(List<MenuItemCommand> commandMenuItems) {
         this.commandMenuItems = commandMenuItems;
     }
 }

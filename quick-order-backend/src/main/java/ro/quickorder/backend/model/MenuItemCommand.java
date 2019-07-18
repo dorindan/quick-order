@@ -10,7 +10,7 @@ import java.util.List;
  * @author R. Lupoaie
  */
 @Entity
-public class CommandMenuItem {
+public class MenuItemCommand {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -22,7 +22,7 @@ public class CommandMenuItem {
     private String id;
 
     private Integer amount;
-    @OneToMany
+    @ManyToOne
     @Lazy(false)
     private MenuItem menuItem;
     @ManyToOne

@@ -46,6 +46,9 @@ public class CommandConverter {
 
     public List<Command> toCommands(List<CommandDto> commandDto) {
         List<Command> commands = new ArrayList<>();
+        if (commandDto == null) {
+            return null;
+        }
         for(int i=0;i< commandDto.size(); i++) {
             if (commandDto.get(i) == null) {
                 return null;
@@ -62,6 +65,9 @@ public class CommandConverter {
 
     public List<CommandDto> toCommandDtos(List<Command> command) {
         List<CommandDto> commandDtos = new ArrayList<>();
+        if (command == null) {
+            return null;
+        }
         for(int i=0;i< command.size(); i++) {
             if (command.get(i) == null) {
                 return null;

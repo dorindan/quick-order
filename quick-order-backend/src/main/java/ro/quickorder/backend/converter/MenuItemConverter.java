@@ -34,6 +34,9 @@ public class MenuItemConverter {
 
     public List<MenuItem> toMenuItems(List<MenuItemDto> menuItemDtos) {
         List<MenuItem> menuItems = new ArrayList<>();
+        if (menuItemDtos == null) {
+            return null;
+        }
         for (MenuItemDto menuItemDto : menuItemDtos) {
             if (menuItemDto == null) {
                 return null;
@@ -74,6 +77,9 @@ public class MenuItemConverter {
 
     public List<MenuItemDto> toMenuItemDtos(List<MenuItem> menuItems) {
         List<MenuItemDto> menuItemDtos = new ArrayList<>();
+        if (menuItems == null) {
+            return null;
+        }
         for (MenuItem menuItem : menuItems) {
             if (menuItem == null) {
                 return null;

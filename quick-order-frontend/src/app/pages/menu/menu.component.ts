@@ -51,15 +51,18 @@ export class MenuComponent implements OnInit {
       this.command = res;
       if (res !== null && res.status === 'Active') {
         this.commandActive = true;
+      } else {
+        alert(res.status);
       }
+      this.commandActive = true;
     });
   }
 
   addToCommand(menuItem: MenuItem, amountIndex: number) {
-      const commandMenuItem = new CommandMenuItem();
-      commandMenuItem.amount = this.amounts[amountIndex];
-      commandMenuItem.menuItem = menuItem;
-      this.command.menuItems.push(commandMenuItem);
+    const commandMenuItem = new CommandMenuItem();
+    commandMenuItem.amount = this.amounts[amountIndex];
+    commandMenuItem.menuItem = menuItem;
+    this.command.menuItems.push(commandMenuItem);
     if (this.amounts[amountIndex] > 1) {
       this.showSnackbar(this.amounts[amountIndex] + ' items successfully added');
     } else {

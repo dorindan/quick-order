@@ -9,15 +9,11 @@ import ro.quickorder.backend.converter.CommandMenuItemConverter;
 import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Command;
-import ro.quickorder.backend.model.CommandMenuItem;
-import ro.quickorder.backend.model.TableFood;
+import ro.quickorder.backend.model.MenuItemCommand;
 import ro.quickorder.backend.model.dto.CommandDto;
-import ro.quickorder.backend.model.dto.MenuItemDto;
-import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.CommandRepository;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author R. Lupoaie
@@ -58,7 +54,7 @@ public class CommandService {
         command.setSpecification(commandDto.getSpecification());
         command.setCommandMenuItems(new ArrayList<>());
         for(int i=0;i<commandDto.getCommandMenuItemDtos().size();i++){
-            CommandMenuItem commandMenuItem = commandMenuItemConverter.toCommandMenuItem(commandDto.getCommandMenuItemDtos().get(i));
+            MenuItemCommand commandMenuItem = commandMenuItemConverter.toCommandMenuItem(commandDto.getCommandMenuItemDtos().get(i));
             commandMenuItem.setCommand(command);
             command.getCommandMenuItems().add(commandMenuItem);
         }

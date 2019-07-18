@@ -2,8 +2,7 @@ package ro.quickorder.backend.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.quickorder.backend.model.CommandMenuItem;
-import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.MenuItemCommand;
 import ro.quickorder.backend.model.dto.CommandMenuItemDto;
 
 import java.util.ArrayList;
@@ -21,11 +20,11 @@ public class CommandMenuItemConverter {
     @Autowired
     MenuItemConverter menuItemConverter;
 
-    public CommandMenuItem toCommandMenuItem(CommandMenuItemDto commandMenuItemDto) {
+    public MenuItemCommand toCommandMenuItem(CommandMenuItemDto commandMenuItemDto) {
         if (commandMenuItemDto == null) {
             return null;
         }
-        CommandMenuItem commandMenuItem =  new CommandMenuItem();
+        MenuItemCommand commandMenuItem =  new MenuItemCommand();
 
         commandMenuItem.setAmount(commandMenuItemDto.getAmount());
         //commandMenuItem.setCommand(commandConverter.toCommand(commandMenuItemDto.getCommandDto()));
@@ -34,7 +33,7 @@ public class CommandMenuItemConverter {
         return commandMenuItem;
     }
 
-    public CommandMenuItemDto toCommandMenuItemDto(CommandMenuItem commandMenuItem) {
+    public CommandMenuItemDto toCommandMenuItemDto(MenuItemCommand commandMenuItem) {
         if (commandMenuItem == null) {
             return null;
         }
@@ -47,13 +46,16 @@ public class CommandMenuItemConverter {
         return commandMenuItemDto;
     }
 
-    public List<CommandMenuItem> toCommandMenuItems(List<CommandMenuItemDto> commandMenuItemDtos) {
-        List<CommandMenuItem> commandMenuItems = new ArrayList<>();
+    public List<MenuItemCommand> toCommandMenuItems(List<CommandMenuItemDto> commandMenuItemDtos) {
+        List<MenuItemCommand> commandMenuItems = new ArrayList<>();
+        if (commandMenuItemDtos == null) {
+            return null;
+        }
         for(int i=0;i< commandMenuItemDtos.size(); i++) {
             if (commandMenuItemDtos.get(i) == null) {
                 return null;
             }
-            CommandMenuItem commandMenuItem = new CommandMenuItem();
+            MenuItemCommand commandMenuItem = new MenuItemCommand();
 
             commandMenuItem.setAmount(commandMenuItemDtos.get(i).getAmount());
             //commandMenuItem.setCommand(commandConverter.toCommand(commandMenuItemDtos.get(i).getCommandDto()));
@@ -63,8 +65,11 @@ public class CommandMenuItemConverter {
         return commandMenuItems;
     }
 
-    public List<CommandMenuItemDto> toCommandMenuItemDtos(List<CommandMenuItem> commandMenuItems) {
+    public List<CommandMenuItemDto> toCommandMenuItemDtos(List<MenuItemCommand> commandMenuItems) {
         List<CommandMenuItemDto> commandMenuItemDtos = new ArrayList<>();
+        if (commandMenuItems == null) {
+            return null;
+        }
         for(int i=0;i< commandMenuItems.size(); i++) {
             if (commandMenuItems.get(i) == null) {
                 return null;
