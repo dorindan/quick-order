@@ -124,5 +124,11 @@
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
     "acceptReservation": "Accepta Rezervarea"
+  },
+  "myRes": {
+    "myRes": "Rezervările mele",
+    "resFor": "Rezervare pentru ",
+    "persons": " persoane",
+    "delete": "Șterge rezervarea"
   }
 }

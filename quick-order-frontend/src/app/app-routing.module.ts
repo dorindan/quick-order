@@ -11,7 +11,7 @@ import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {ContactComponent} from './pages/contact/contact.component';
-import {ReservationLogComponent} from './reservation-log/reservation-log.component';
+import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 
 const routes: Routes = [];
 

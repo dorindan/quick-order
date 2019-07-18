@@ -124,5 +124,11 @@
     "windowView": "  Has window view: ",
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation"
+  },
+  "myRes": {
+    "myRes": "My reservations",
+    "resFor": "Reservation for ",
+    "persons": " persons",
+    "delete": "Delete my Reservation"
   }
 }

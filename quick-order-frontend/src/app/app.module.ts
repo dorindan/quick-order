@@ -23,9 +23,9 @@ import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {httpInterceptorProviders} from './auth/auth-interceptor';
-import { ContactComponent } from './pages/contact/contact.component';
-import { AgmCoreModule } from '@agm/core';
-import { ReservationLogComponent } from './reservation-log/reservation-log.component';
+import {ContactComponent} from './pages/contact/contact.component';
+import {AgmCoreModule} from '@agm/core';
+import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
