@@ -94,8 +94,17 @@ export class MenuComponent implements OnInit {
   }
 
   public saveCommand() {
-    this.commandService.updateCommand(this.newCommand);
-    this.showSnackbar('Products added successfully');
+    this.commandService.updateCommand(this.newCommand).subscribe( res => {
+      this.showSnackbar('Products added successfully');
+    }, error => {
+      switch (error.status) {
+        case 404: // not found exception
+          this.showSnackbar('Something went wrong, refresh and try again.');
+          break;
+        default:
+          this.showSnackbar('Something went wrong, Pleas try again.');
+      }
+    });
   }
 
   finishCommand() {

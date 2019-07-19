@@ -25,7 +25,7 @@ public class MenuItemCommandConverter {
         this.menuItemConverter = menuItemConverter;
     }
 
-    public List<MenuItemCommand> toCommandMenuItems(List<MenuItemCommandDto> menuItemCommandDtos) {
+    public List<MenuItemCommand> toMenuItemCommands(List<MenuItemCommandDto> menuItemCommandDtos) {
         List<MenuItemCommand> menuItemCommands = new ArrayList<>();
         if (menuItemCommandDtos == null) {
             return null;
@@ -43,7 +43,7 @@ public class MenuItemCommandConverter {
         return menuItemCommands;
     }
 
-    public List<MenuItemCommandDto> toCommandMenuItemDtos(List<MenuItemCommand> menuItemCommands) {
+    public List<MenuItemCommandDto> toMenuItemCommandDtos(List<MenuItemCommand> menuItemCommands) {
         List<MenuItemCommandDto> menuItemCommandDtos = new ArrayList<>();
         if (menuItemCommands == null) {
             return null;

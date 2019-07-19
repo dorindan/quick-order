@@ -5,9 +5,6 @@ import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Command;
 import ro.quickorder.backend.model.dto.CommandDto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *  Converts Commands to their corresponding DTO and vice versa.
  * @author R. Lupoaie
@@ -34,7 +31,7 @@ public class CommandConverter {
         command.setSpecification(commandDto.getSpecification());
         command.setPacked(commandDto.isPacked());
         command.setStatus(commandDto.getStatus());
-        command.setMenuItemCommands(menuItemCommandConverter.toCommandMenuItems(commandDto.getMenuItemCommandDtos()));
+        command.setMenuItemCommands(menuItemCommandConverter.toMenuItemCommands(commandDto.getMenuItemCommandDtos()));
         return command;
     }
 
@@ -47,7 +44,7 @@ public class CommandConverter {
         commandDto.setSpecification(command.getSpecification());
         commandDto.setPacked(command.isPacked());
         commandDto.setStatus(command.getStatus());
-        commandDto.setMenuItemCommandDtos(menuItemCommandConverter.toCommandMenuItemDtos(command.getMenuItemCommands()));
+        commandDto.setMenuItemCommandDtos(menuItemCommandConverter.toMenuItemCommandDtos(command.getMenuItemCommands()));
         return commandDto;
     }
 }

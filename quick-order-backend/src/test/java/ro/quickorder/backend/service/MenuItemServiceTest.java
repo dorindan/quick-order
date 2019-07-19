@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.converter.IngredientConverter;
@@ -22,6 +24,7 @@ import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
 import javax.inject.Inject;
+import javax.persistence.Entity;
 
 
 import java.util.ArrayList;
@@ -48,13 +51,7 @@ public class MenuItemServiceTest {
     @Inject
     private IngredientService ingredientService;
     @Inject
-    private MenuItemConverter menuItemConverter;
-    @Inject
-    private IngredientConverter ingredientConverter;
-    @Inject
     private MenuItemTypeRepository menuItemTypeRepository;
-
-
 
     @Before
     public void setUp(){

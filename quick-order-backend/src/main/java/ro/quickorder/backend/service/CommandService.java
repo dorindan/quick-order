@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.CommandConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Command;
+import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.MenuItemCommand;
+import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
 import ro.quickorder.backend.repository.MenuItemCommandRepository;
@@ -26,26 +28,27 @@ public class CommandService {
     private static final Logger LOG = LoggerFactory.getLogger(MenuItemService.class);
 
     @Autowired
-    CommandRepository commandRepository;
-
+    private CommandRepository commandRepository;
     @Autowired
-    CommandConverter commandConverter;
-
+    private CommandConverter commandConverter;
     @Autowired
-    MenuItemRepository menuItemRepository;
-
+    private MenuItemRepository menuItemRepository;
     @Autowired
-    MenuItemCommandRepository menuItemCommandRepository;
+    private MenuItemCommandRepository menuItemCommandRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    public CommandDto userHasOpenCommand(String userName) {
-        Command command = commandRepository.findActiveByUser(userRepository.findByUsername(userName), CommandStatus.ACTIVE);
+    public CommandDto userActiveCommand(String userName) {
+        User user = userRepository.findByUsername(userName);
+        if (user == null) {
+            LOG.error("User not found");
+            throw new NotFoundException("User not found");
+        }
+        Command command = commandRepository.findActiveByUser(user, CommandStatus.ACTIVE);
         return commandConverter.toCommandDto(command);
     }
 
     public void updateCommand( CommandDto commandDto){
-        System.out.println("Acuma incerc");
         Command command = commandRepository.findByCommandNameWithItems(commandDto.getCommandName());
         if (command == null) {
             LOG.error("Command not found");
@@ -65,6 +68,10 @@ public class CommandService {
         }
         for(int i = 0; i<commandDto.getMenuItemCommandDtos().size(); i++){
             boolean ok = false;
+            if (commandDto.getMenuItemCommandDtos().get(i).getMenuItemDto() == null) {
+                LOG.error("MenuItem not found");
+                throw new NotFoundException("MenuItem not found");
+            }
             for(int j=0;j<command.getMenuItemCommands().size();j++){
                 if(commandDto.getMenuItemCommandDtos().get(i).getMenuItemDto().getName()
                         .equals(command.getMenuItemCommands().get(j).getMenuItem().getName()))
@@ -87,8 +94,13 @@ public class CommandService {
         MenuItemCommand menuItemCommand = new MenuItemCommand();
         menuItemCommand.setCommand(command);
         menuItemCommand.setAmount(commandDto.getMenuItemCommandDtos().get(i).getAmount());
-        menuItemCommand.setMenuItem(menuItemRepository.findByName(
-                commandDto.getMenuItemCommandDtos().get(i).getMenuItemDto().getName()));
+        MenuItem menuItem = menuItemRepository.findByName(
+                commandDto.getMenuItemCommandDtos().get(i).getMenuItemDto().getName());
+        if (menuItem == null) {
+            LOG.error("MenuItem not found");
+            throw new NotFoundException("MenuItem not found");
+        }
+        menuItemCommand.setMenuItem(menuItem);
         return menuItemCommandRepository.save(menuItemCommand);
     }
 

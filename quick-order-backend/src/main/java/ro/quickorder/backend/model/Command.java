@@ -35,7 +35,6 @@ public class Command {
     private TableFood table;
     @OneToMany(mappedBy = "command")
     private List<Reservation> reservations;
-
     @ManyToMany
     @JoinTable(
             name = "user_command",

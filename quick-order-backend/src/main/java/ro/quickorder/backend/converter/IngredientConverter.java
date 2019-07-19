@@ -1,5 +1,7 @@
 package ro.quickorder.backend.converter;
 
+import org.hibernate.Hibernate;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.dto.IngredientDto;
@@ -41,7 +43,7 @@ public class IngredientConverter {
     }
 
     public Set<IngredientDto> toIngredientDtoList(Set<Ingredient> ingredients) {
-        if (ingredients == null) {
+        if (ingredients == null || !Hibernate.isInitialized(ingredients)) {
             return null;
         }
         return ingredients.stream().map(this::toIngredientDto).collect(Collectors.toSet());
