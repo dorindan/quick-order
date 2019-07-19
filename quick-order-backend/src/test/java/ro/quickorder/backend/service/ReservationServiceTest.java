@@ -21,7 +21,10 @@ import ro.quickorder.backend.model.dto.ConfirmReservationDto;
 import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.model.dto.UserDto;
-import ro.quickorder.backend.repository.*;
+import ro.quickorder.backend.repository.CommandRepository;
+import ro.quickorder.backend.repository.ReservationRepository;
+import ro.quickorder.backend.repository.TableFoodRepository;
+import ro.quickorder.backend.repository.UserRepository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -53,8 +56,6 @@ public class ReservationServiceTest {
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Before
     public void setUp() {

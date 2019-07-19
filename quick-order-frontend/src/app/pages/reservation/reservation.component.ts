@@ -53,7 +53,6 @@ export class ReservationComponent implements OnInit {
       const startHours: string[] = response.startProgramTime.split(':', 3);
       const startHour = new Date();
       startHour.setHours(+startHours[0], +startHours[1], +startHours[2]);
-      console.log(startHour);
       const endHours: string[] = response.endProgramTime.split(':', 3);
       const endHour = new Date();
       endHour.setHours(+endHours[0], +endHours[1], +endHours[2]);
