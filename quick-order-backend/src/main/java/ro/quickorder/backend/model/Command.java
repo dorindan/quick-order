@@ -97,8 +97,8 @@ public class Command {
         return menuItemCommands;
     }
 
-    public void setMenuItems(List<MenuItemCommand> commandMenuItems) {
-        this.menuItemCommands = commandMenuItems;
+    public void setMenuItems(List<MenuItemCommand> menuItemCommands) {
+        this.menuItemCommands = menuItemCommands;
     }
 
     public Bill getBill() {

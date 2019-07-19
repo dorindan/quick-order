@@ -83,10 +83,10 @@ export class MenuComponent implements OnInit {
       }
     }
     if (!exist) {
-      const commandMenuItem = new MenuItemCommand();
-      commandMenuItem.amount = this.amounts[amountIndex];
-      commandMenuItem.menuItemDto = menuItem;
-      this.newCommand.menuItemCommandDtos.push(commandMenuItem);
+      const menuItemCommand = new MenuItemCommand();
+      menuItemCommand.amount = this.amounts[amountIndex];
+      menuItemCommand.menuItemDto = menuItem;
+      this.newCommand.menuItemCommandDtos.push(menuItemCommand);
     }
     this.totalAmount += this.amounts[amountIndex];
     this.showSnackbar(this.amounts[amountIndex] + ' ' + menuItem.name + ' successfully added');
