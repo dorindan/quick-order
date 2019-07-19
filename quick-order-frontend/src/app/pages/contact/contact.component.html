@@ -1,13 +1,17 @@
 <div class="contact">
   <h1>CONTACT</h1>
-  <p style="font-size: x-large"><i class="material-icons">location_on</i> {{location}} </p>
-  <p style="font-size: x-large"><i class="material-icons">email</i> {{email}} </p>
-  <p style="font-size: x-large"><i class="material-icons">lock_open</i> Open at: {{openHour}} </p>
-  <p style="font-size: x-large"><i class="material-icons">lock</i> Close at: {{closeHour}} </p>
+  <div class="bigFont">
+    <p><i class="material-icons">location_on</i> {{location}} </p>
+    <p><i class="material-icons">email</i> {{email}} </p>
+    <p style="display: inline-block" translate=""><i class="material-icons">lock_open</i>contact.open</p> &nbsp;
+    <p style="display: inline-block">{{openHour}}</p> <br>
+    <p style="display: inline-block" translate=""><i class="material-icons">lock</i>contact.close</p>&nbsp;
+    <p style="display: inline-block">{{closeHour}}</p>
+  </div>
 </div>
 
 <div class="googleMap">
-  <agm-map [latitude]="lat" [longitude]="lng">
+  <agm-map [zoom]="15" [latitude]="lat" [longitude]="lng">
     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
   </agm-map>
 </div>
