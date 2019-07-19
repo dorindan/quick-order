@@ -66,18 +66,18 @@ public class ReservationServiceTest {
 
         Timestamp timestampIn1 = Timestamp.valueOf("2007-09-23 11:0:0.0");
         Timestamp timestampOut1 = Timestamp.valueOf("2007-09-23 13:59:0.0");
-        Reservation res1 = new Reservation(timestampIn1, timestampOut1, null, null, 1, false, null, new ArrayList<>());
+        Reservation reservation1 = new Reservation(timestampIn1, timestampOut1, null, null, 1, false, null, new ArrayList<>());
         Timestamp timestampIn2 = Timestamp.valueOf("2007-09-23 9:0:0.0");
         Timestamp timestampOut2 = Timestamp.valueOf("2007-09-23 11:59:0.0");
-        Reservation res2 = new Reservation(timestampIn2, timestampOut2, null, null, 1, true, null, new ArrayList<>());
+        Reservation reservation2 = new Reservation(timestampIn2, timestampOut2, null, null, 1, true, null, new ArrayList<>());
         Timestamp timestampIn3 = Timestamp.valueOf("2007-09-23 9:0:0.0");
         Timestamp timestampOut3 = Timestamp.valueOf("2007-09-23 13:59:0.0");
-        Reservation res3 = new Reservation(timestampIn3, timestampOut3, null, null, 1, false, null, new ArrayList<>());
+        Reservation reservation3 = new Reservation(timestampIn3, timestampOut3, null, null, 1, false, null, new ArrayList<>());
         //save reservation
-        res1.setReservationName("res1");
-        reservationRepository.save(res1);
-        Reservation re2 = reservationRepository.save(res2);
-        reservationRepository.save(res3);
+        reservation1.setReservationName("reservation1");
+        reservationRepository.save(reservation1);
+        Reservation reservation4 = reservationRepository.save(reservation2);
+        reservationRepository.save(reservation3);
         // save table
         tableFoodRepository.save(table2);
         tableFoodRepository.save(table3);
@@ -85,22 +85,22 @@ public class ReservationServiceTest {
         TableFood tableFood1 = tableFoodRepository.save(table1);
         List<TableFood> tableFoodList1 = new ArrayList<>();
         tableFoodList1.add(tableFood1);
-        re2.setTables(tableFoodList1);
+        reservation4.setTables(tableFoodList1);
         // save reservation
-        reservationRepository.save(re2);
+        reservationRepository.save(reservation4);
         //create user
         User user1 = new User("hellohello", "$2a$10$bO..vvSzK55NYvsGUdF1s.W9uBCGM8rIHDB/sSGRl2UARiKXrR/7C", "hello@yahoo.com");
         User user2 = new User("hellohelloo", "$2a$10$bO..vvSzK55NYvsGUdF1s.W9uBCGM8rIHDB/sSGRl2UARiKXrR/8C", "helloo@yahoo.com");
         userRepository.save(user1);
         userRepository.save(user2);
         List<Reservation> reservationList = new ArrayList<>();
-        res1.setUser(user1);
-        res2.setUser(user2);
-        res3.setUser(user2);
-        reservationRepository.save(res1);
-        reservationRepository.save(res2);
-        reservationRepository.save(res3);
-        reservationList.add(res1);
+        reservation1.setUser(user1);
+        reservation2.setUser(user2);
+        reservation3.setUser(user2);
+        reservationRepository.save(reservation1);
+        reservationRepository.save(reservation2);
+        reservationRepository.save(reservation3);
+        reservationList.add(reservation1);
         //set reservations of user
         user1.setReservations(reservationList);
         userRepository.save(user1);
@@ -281,7 +281,7 @@ public class ReservationServiceTest {
     public void testRemoveReservation() {
         userService.login(new UserDto("hellohello",
                 "hellohello", "hello@yahoo.com"));
-        reservationService.removeReservation("res1");
+        reservationService.removeReservation("reservation1");
         List<ReservationDto> reservationDtos = reservationService.reservationOfActualUser();
         assertEquals(0, reservationDtos.size());
     }

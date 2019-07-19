@@ -21,7 +21,6 @@ export class ReservationLogComponent implements OnInit {
     this.reservationsGet = this.reservationService.getReservationOfUser();
     this.reservations = [];
     this.reservationsGet.forEach(reservation => reservation.forEach(r => this.reservations.push(r)));
-    console.log(this.reservations);
   }
 
   showSnackbar(message: string) {
