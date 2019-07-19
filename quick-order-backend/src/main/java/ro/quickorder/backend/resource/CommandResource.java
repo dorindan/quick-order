@@ -14,8 +14,8 @@ public class CommandResource {
 
 
     @RequestMapping(path = "/hasCommand/{userName}", method = RequestMethod.GET)
-    public CommandDto userHasOpenCommand(@PathVariable String userName) {
-        return commandService.userActiveCommand(userName);
+    public CommandDto getUserActiveCommand(@PathVariable String userName) {
+        return commandService.getUserActiveCommand(userName);
     }
 
     @RequestMapping(path = "/update", method = RequestMethod.PUT)

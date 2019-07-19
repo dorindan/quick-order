@@ -7,6 +7,8 @@ import ro.quickorder.backend.model.dto.MenuItemCommandDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author R. Lupoaie
@@ -25,39 +27,41 @@ public class MenuItemCommandConverter {
         this.menuItemConverter = menuItemConverter;
     }
 
-    public List<MenuItemCommand> toMenuItemCommands(List<MenuItemCommandDto> menuItemCommandDtos) {
-        List<MenuItemCommand> menuItemCommands = new ArrayList<>();
-        if (menuItemCommandDtos == null) {
+
+    public MenuItemCommandDto toMenuItemCommandDto(MenuItemCommand menuItemCommand) {
+        if (menuItemCommand == null) {
             return null;
         }
-        for (int i = 0; i < menuItemCommandDtos.size(); i++) {
-            if (menuItemCommandDtos.get(i) == null) {
-                break;
+        MenuItemCommandDto menuItemCommandDto = new MenuItemCommandDto();
+        menuItemCommandDto.setAmount(menuItemCommand.getAmount());
+        menuItemCommandDto.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItemCommand.getMenuItem()));
+        return menuItemCommandDto;
+
+    }
+
+    public MenuItemCommand toMenuItemCommand(MenuItemCommandDto menuItemCommandDto) {
+
+            if (menuItemCommandDto == null) {
+                return null;
             }
             MenuItemCommand menuItemCommand = new MenuItemCommand();
 
-            menuItemCommand.setAmount(menuItemCommandDtos.get(i).getAmount());
-            menuItemCommand.setMenuItem(menuItemConverter.toMenuItem(menuItemCommandDtos.get(i).getMenuItemDto()));
-            menuItemCommands.add(menuItemCommand);
-        }
-        return menuItemCommands;
+            menuItemCommand.setAmount(menuItemCommandDto.getAmount());
+            menuItemCommand.setMenuItem(menuItemConverter.toMenuItem(menuItemCommandDto.getMenuItemDto()));
+            return menuItemCommand;
     }
 
-    public List<MenuItemCommandDto> toMenuItemCommandDtos(List<MenuItemCommand> menuItemCommands) {
-        List<MenuItemCommandDto> menuItemCommandDtos = new ArrayList<>();
+    public Set<MenuItemCommand> toMenuItemCommands(Set<MenuItemCommandDto> menuItemCommandDtos) {
+        if (menuItemCommandDtos == null) {
+            return null;
+        }
+        return menuItemCommandDtos.stream().map(this::toMenuItemCommand).collect(Collectors.toSet());
+    }
+
+    public Set<MenuItemCommandDto> toMenuItemCommandDtos(Set<MenuItemCommand> menuItemCommands) {
         if (menuItemCommands == null) {
             return null;
         }
-        for (int i = 0; i < menuItemCommands.size(); i++) {
-            if (menuItemCommands.get(i) == null) {
-                break;
-            }
-            MenuItemCommandDto menuItemCommandDto = new MenuItemCommandDto();
-
-            menuItemCommandDto.setAmount(menuItemCommands.get(i).getAmount());
-            menuItemCommandDto.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItemCommands.get(i).getMenuItem()));
-            menuItemCommandDtos.add(menuItemCommandDto);
-        }
-        return menuItemCommandDtos;
+        return menuItemCommands.stream().map(this::toMenuItemCommandDto).collect(Collectors.toSet());
     }
 }

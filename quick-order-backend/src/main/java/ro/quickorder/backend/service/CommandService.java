@@ -38,7 +38,7 @@ public class CommandService {
     @Autowired
     private UserRepository userRepository;
 
-    public CommandDto userActiveCommand(String userName) {
+    public CommandDto getUserActiveCommand(String userName) {
         User user = userRepository.findByUsername(userName);
         if (user == null) {
             LOG.error("User not found");
@@ -73,8 +73,9 @@ public class CommandService {
                 throw new NotFoundException("MenuItem not found");
             }
             for (int j = 0; j < command.getMenuItemCommands().size(); j++) {
-                if (commandDto.getMenuItemCommandDtos().get(i).getMenuItemDto().getName()
-                        .equals(command.getMenuItemCommands().get(j).getMenuItem().getName())) {
+                String menuItemDtoName = commandDto.getMenuItemCommandDtos().get(i).getMenuItemDto().getName();
+                String menuItemName = command.getMenuItemCommands().get(j).getMenuItem().getName();
+                if (menuItemDtoName.equals(menuItemName)) {
                     Integer amount = commandDto.getMenuItemCommandDtos().get(i).getAmount() +
                             command.getMenuItemCommands().get(j).getAmount();
                     command.getMenuItemCommands().get(j).setAmount(amount);

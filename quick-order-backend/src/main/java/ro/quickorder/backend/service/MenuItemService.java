@@ -108,16 +108,4 @@ public class MenuItemService {
         menuItemRepository.delete(menuItem);
     }
 
-    public List<MenuItem> getMenuItems(List<MenuItemDto> menuItemDtos) {
-        List<MenuItem> menuItems = new ArrayList<>();
-        for (int i = 0; i < menuItemDtos.size(); i++) {
-            MenuItem tableFood = menuItemRepository.findByName(menuItemDtos.get(i).getName());
-            if (tableFood == null) {
-                LOG.error("Table not found");
-                throw new NotFoundException("Table not found");
-            }
-            menuItems.add(tableFood);
-        }
-        return menuItems;
-    }
 }

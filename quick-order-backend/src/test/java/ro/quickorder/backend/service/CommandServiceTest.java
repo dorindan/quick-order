@@ -4,17 +4,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import ro.quickorder.backend.converter.MenuItemCommandConverter;
 import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.*;
 import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.model.dto.MenuItemCommandDto;
-import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
 import ro.quickorder.backend.repository.*;
 
@@ -85,7 +82,7 @@ public class CommandServiceTest {
 
     @Test
     public void testUserActiveCommand() {
-        CommandDto commandDto = commandService.userActiveCommand("hellohello");
+        CommandDto commandDto = commandService.getUserActiveCommand("hellohello");
         assertNotNull(commandDto);
         assertEquals("Test command", commandDto.getCommandName());
         assertEquals("The test need to work", commandDto.getSpecification());
@@ -94,7 +91,7 @@ public class CommandServiceTest {
     @Test
     public void testUserActiveCommandWithUserNotFound() {
         try {
-            commandService.userActiveCommand("admin");
+            commandService.getUserActiveCommand("admin");
             fail("User should not have been found");
         } catch (NotFoundException e) {
             assertEquals("User not found", e.getMessage());
@@ -124,7 +121,7 @@ public class CommandServiceTest {
 
         commandService.updateCommand(commandDto);
 
-        CommandDto commandDtoAfter = commandService.userActiveCommand("hellohello");
+        CommandDto commandDtoAfter = commandService.getUserActiveCommand("hellohello");
         assertNotNull(commandDtoAfter);
         assertEquals("Test command", commandDtoAfter.getCommandName());
         assertEquals("Specification changed", commandDtoAfter.getSpecification());
