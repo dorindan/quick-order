@@ -1,7 +1,6 @@
 package ro.quickorder.backend.converter;
 
 import org.hibernate.Hibernate;
-import org.hibernate.proxy.HibernateProxy;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.dto.IngredientDto;

@@ -32,7 +32,7 @@ public class MenuItemCommandConverter {
         }
         for (int i = 0; i < menuItemCommandDtos.size(); i++) {
             if (menuItemCommandDtos.get(i) == null) {
-                return null;
+                break;
             }
             MenuItemCommand menuItemCommand = new MenuItemCommand();
 
@@ -50,7 +50,7 @@ public class MenuItemCommandConverter {
         }
         for (int i = 0; i < menuItemCommands.size(); i++) {
             if (menuItemCommands.get(i) == null) {
-                return null;
+                break;
             }
             MenuItemCommandDto menuItemCommandDto = new MenuItemCommandDto();
 

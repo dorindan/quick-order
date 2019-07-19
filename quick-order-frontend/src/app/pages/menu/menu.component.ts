@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MenuService} from '../../services/menu.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {MenuItem} from '../../models/MenuItem';
@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
   public menuItemType: MenuItemType[];
   public menuItems: MenuItem[];
   public command: Command;
-  public newCommand: Command = new Command();
+  public newCommand = new Command();
   public totalAmount = 0;
 
   constructor(private menuService: MenuService, private router: Router,

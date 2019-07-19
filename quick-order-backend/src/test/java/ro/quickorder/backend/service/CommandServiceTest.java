@@ -45,8 +45,6 @@ public class CommandServiceTest {
     @Inject
     private MenuItemRepository menuItemRepository;
     @Inject
-    private MenuItemCommandConverter menuItemCommandConverter;
-    @Inject
     TableFoodRepository tableFoodRepository;
     @Inject
     MenuItemCommandRepository menuItemCommandRepository;
