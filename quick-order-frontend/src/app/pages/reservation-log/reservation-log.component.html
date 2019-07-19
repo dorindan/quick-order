@@ -1,0 +1,14 @@
+<div class="jumbotron jumbotron-fluid">
+  <h1 class="title myRes" translate="">myRes.myRes</h1>
+  <br>
+  <mat-list class="myReservationList col-sm-12 col-ls-6 col-lg-3">
+    <mat-list-item *ngFor="let reservation of reservations">
+      <mat-icon mat-list-icon>date_range</mat-icon>
+      <h4 mat-line>{{ 'myRes.resFor' | translate }}{{reservation.numberOfPersons}}{{ 'myRes.persons' | translate }}</h4>
+      <p mat-line>@ {{reservation.checkInTime}} </p>
+      <mat-icon matTooltip="{{ 'myRes.delete' | translate }}" (click)="deleteReservation(reservation.reservationName)">
+        delete
+      </mat-icon>
+    </mat-list-item>
+  </mat-list>
+</div>

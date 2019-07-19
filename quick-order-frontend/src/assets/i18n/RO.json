@@ -36,7 +36,8 @@
     "contact": "Contact",
     "logout": "Iesire din cont",
     "language": "Limba: ",
-    "confirmReservations": "Confirmare Rezervări"
+    "confirmReservations": "Confirmare Rezervări",
+    "log": "Rezervările mele"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -144,8 +145,14 @@
     "fresh": "Produse proaspete.",
     "fresh2": "Susținem producătorii locali. Proaspăt în fiecare zi."
   },
-  "contact":{
-    "open" : "Deschide la:",
-    "close" : "Inchide la:"
+  "contact": {
+    "open": "Deschide la:",
+    "close": "Inchide la:"
+  },
+  "myRes": {
+    "myRes": "Rezervările mele",
+    "resFor": "Rezervare pentru ",
+    "persons": " persoane",
+    "delete": "Șterge rezervarea"
   }
 }

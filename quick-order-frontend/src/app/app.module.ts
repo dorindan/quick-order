@@ -1,3 +1,4 @@
+import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -25,8 +26,8 @@ import {httpInterceptorProviders} from './auth/auth-interceptor';
 import { FinishCommandComponent } from './pages/finish-command/finish-command.component';
 import {ContactComponent} from './pages/contact/contact.component';
 import {AgmCoreModule} from '@agm/core';
+import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -49,9 +50,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableComponent,
     ContactComponent,
     FinishCommandComponent,
+    ReservationLogComponent,
     AboutUsComponent
   ],
   imports: [
+    BrowserModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,

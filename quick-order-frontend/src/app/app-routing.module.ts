@@ -12,6 +12,7 @@ import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {FinishCommandComponent} from './pages/finish-command/finish-command.component';
 import {ContactComponent} from './pages/contact/contact.component';
+import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
 
 const routes: Routes = [];
@@ -35,9 +36,10 @@ const appRoutes: Routes = [
   {path: 'tableView', component: TableViewComponent},
   {path: 'confirmReservations', component: WaiterPageComponent},
   {path: 'table', component: TableComponent},
-  {path: 'about', component: AboutUsComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'finishCommand', component: FinishCommandComponent},
+  {path: 'about', component: AboutUsComponent},
+  {path: 'reservation-log', component: ReservationLogComponent},
   {path: '**', redirectTo: ''}
 ];
 

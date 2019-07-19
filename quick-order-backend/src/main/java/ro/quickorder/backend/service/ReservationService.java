@@ -3,6 +3,8 @@ package ro.quickorder.backend.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import ro.quickorder.backend.converter.ReservationConverter;
@@ -67,7 +69,7 @@ public class ReservationService {
         Reservation reservation = reservationConverter.toReservation(reservationDto);
         List<TableFood> reservations = reservation.getTables();
         reservation.setTables(null);
-        if(reservationDto.getUser() != null) {
+        if (reservationDto.getUser() != null) {
             reservation.setUser(userRepository.findByUsername(reservationDto.getUser().getUsername()));
         }
         // save reservation in database
@@ -146,7 +148,7 @@ public class ReservationService {
         return reservation;
     }
 
-    public ReservationDto getReservationDtoByName(String reservationName){
+    public ReservationDto getReservationDtoByName(String reservationName) {
 
         Reservation reservation = reservationRepository.findByReservationNameWithTables(reservationName);
         if (reservation == null) {
@@ -188,7 +190,7 @@ public class ReservationService {
         }
     }
 
-    public boolean reservationConfirmed(String reservationName){
+    public boolean reservationConfirmed(String reservationName) {
         return reservationRepository.findByReservationName(reservationName).isConfirmed();
     }
 
@@ -200,5 +202,32 @@ public class ReservationService {
         }
         List<Reservation> reservations = reservationRepository.findReservationByTable(tableFood);
         return reservations.stream().map(reservationConverter::toReservationDto).collect(Collectors.toList());
+    }
+
+    public List<ReservationDto> reservationOfActualUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        if (username == null) {
+            LOG.info("User not authenticated");
+            return null;
+        } else {
+            LOG.info("Reservations of user: " + username + " requested.");
+
+            final List<Reservation> reservations = reservationRepository.findReservationsByUsername(username);
+
+            return reservations.stream()
+                    .map(reservationConverter::toReservationDto)
+                    .collect(Collectors.toList());
+
+        }
+    }
+
+    public void removeReservation(String reservationName) {
+        final Reservation reservation = reservationRepository.findByReservationName(reservationName);
+        if (reservation == null) {
+            LOG.error("Reservation with name: " + reservationName + " was not found!");
+            throw new NotFoundException("Reservation not found!");
+        }
+        reservationRepository.delete(reservation);
     }
 }
