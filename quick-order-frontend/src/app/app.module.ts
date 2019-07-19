@@ -1,4 +1,3 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -23,9 +22,11 @@ import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {httpInterceptorProviders} from './auth/auth-interceptor';
-import { ContactComponent } from './pages/contact/contact.component';
-import { AgmCoreModule } from '@agm/core';
 import { FinishCommandComponent } from './pages/finish-command/finish-command.component';
+import {ContactComponent} from './pages/contact/contact.component';
+import {AgmCoreModule} from '@agm/core';
+import {AboutUsComponent} from './pages/about-us/about-us.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -47,10 +48,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     WaiterPageComponent,
     TableComponent,
     ContactComponent,
-    FinishCommandComponent
+    FinishCommandComponent,
+    AboutUsComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,

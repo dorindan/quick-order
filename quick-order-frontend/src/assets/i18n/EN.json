@@ -129,5 +129,23 @@
     "selected": "products selected",
     "finishCommand": "Finish command",
     "save": "Save"
+  },
+  "contact":{
+    "open" : "Opens at:",
+    "close" : "Closes at:"
+  },
+  "a": {
+    "reserve": "Reservations online 24/7",
+    "open": "Open Monday-Sunday:"
+  },
+  "description": {
+    "healthy": "Quick and healthy.",
+    "healthy2": "We support eating healthy. We are what we eat!",
+    "tasty": "Quick and tasty.",
+    "tasty2": "Everyone appreciates good food.",
+    "comfy": "Lively and comfortable.",
+    "comfy2": "Our restaurant is open for your events, meetings, dates or just a cozy night out.",
+    "fresh": "Fresh groceries.",
+    "fresh2": "We support locals. Fresh each day."
   }
 }

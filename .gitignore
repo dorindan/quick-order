@@ -26,4 +26,4 @@
 /.nb-gradle/
 
 application-local.properties
-/quick-order-backend/src/main/resources/static/*
+quick-order-backend/src/main/resources/static/*
