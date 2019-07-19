@@ -6,6 +6,7 @@ import ro.quickorder.backend.model.MenuItemCommand;
 import ro.quickorder.backend.model.dto.MenuItemCommandDto;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -51,17 +52,17 @@ public class MenuItemCommandConverter {
             return menuItemCommand;
     }
 
-    public Set<MenuItemCommand> toMenuItemCommands(Set<MenuItemCommandDto> menuItemCommandDtos) {
+    public List<MenuItemCommand> toMenuItemCommands(List<MenuItemCommandDto> menuItemCommandDtos) {
         if (menuItemCommandDtos == null) {
             return null;
         }
-        return menuItemCommandDtos.stream().map(this::toMenuItemCommand).collect(Collectors.toSet());
+        return menuItemCommandDtos.stream().map(this::toMenuItemCommand).collect(Collectors.toList());
     }
 
-    public Set<MenuItemCommandDto> toMenuItemCommandDtos(Set<MenuItemCommand> menuItemCommands) {
+    public List<MenuItemCommandDto> toMenuItemCommandDtos(List<MenuItemCommand> menuItemCommands) {
         if (menuItemCommands == null) {
             return null;
         }
-        return menuItemCommands.stream().map(this::toMenuItemCommandDto).collect(Collectors.toSet());
+        return menuItemCommands.stream().map(this::toMenuItemCommandDto).collect(Collectors.toList());
     }
 }
