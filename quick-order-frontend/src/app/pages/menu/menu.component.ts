@@ -94,7 +94,7 @@ export class MenuComponent implements OnInit {
   }
 
   public saveCommand() {
-    this.commandService.updateCommand(this.newCommand).subscribe( res => {
+    this.commandService.updateCommand(this.newCommand).subscribe(res => {
       this.showSnackbar('Products added successfully');
     }, error => {
       switch (error.status) {

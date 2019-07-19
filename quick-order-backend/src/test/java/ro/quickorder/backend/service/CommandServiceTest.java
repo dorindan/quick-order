@@ -98,7 +98,7 @@ public class CommandServiceTest {
         try {
             commandService.userActiveCommand("admin");
             fail("User should not have been found");
-        } catch (NotFoundException e){
+        } catch (NotFoundException e) {
             assertEquals("User not found", e.getMessage());
         }
     }
@@ -139,7 +139,7 @@ public class CommandServiceTest {
         try {
             commandService.updateCommand(new CommandDto());
             fail("Command should not have been found");
-        } catch (NotFoundException e){
+        } catch (NotFoundException e) {
             assertEquals("Command not found", e.getMessage());
         }
     }
@@ -164,7 +164,7 @@ public class CommandServiceTest {
         try {
             commandService.updateCommand(commandDto);
             fail("MenuItem should not have been found");
-        } catch (NotFoundException e){
+        } catch (NotFoundException e) {
             assertEquals("MenuItem not found", e.getMessage());
         }
 
@@ -175,11 +175,8 @@ public class CommandServiceTest {
         try {
             commandService.updateCommand(commandDto);
             fail("MenuItem should not have been found");
-        } catch (NotFoundException e){
+        } catch (NotFoundException e) {
             assertEquals("MenuItem not found", e.getMessage());
         }
     }
-
-
-
 }

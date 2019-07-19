@@ -6,7 +6,8 @@ import ro.quickorder.backend.model.Command;
 import ro.quickorder.backend.model.dto.CommandDto;
 
 /**
- *  Converts Commands to their corresponding DTO and vice versa.
+ * Converts Commands to their corresponding DTO and vice versa.
+ *
  * @author R. Lupoaie
  */
 @Component
@@ -15,10 +16,11 @@ public class CommandConverter {
     @Autowired
     MenuItemCommandConverter menuItemCommandConverter;
 
-    public CommandConverter(){
+    public CommandConverter() {
 
     }
-    public CommandConverter(MenuItemCommandConverter menuItemCommandConverter){
+
+    public CommandConverter(MenuItemCommandConverter menuItemCommandConverter) {
         this.menuItemCommandConverter = menuItemCommandConverter;
     }
 
