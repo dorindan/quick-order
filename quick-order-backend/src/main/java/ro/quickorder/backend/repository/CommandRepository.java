@@ -16,4 +16,6 @@ public interface CommandRepository extends JpaRepository<Command, Long> {
     @Query(value = "Select c FROM Command c left join fetch c.menuItemCommands where c.commandName = :commandName")
     Command findByCommandNameWithItems(String commandName);
 
+    Command findByCommandName(String commandName);
+
 }
