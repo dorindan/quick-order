@@ -37,7 +37,18 @@ export class MenuComponent implements OnInit {
       response.forEach(i => this.amounts.push(1));
     });
 
-    this.commandOpen();
+    this.commandService.hasActiveCommand('admin').subscribe(res => {
+      this.command = res;
+      if (this.command.menuItemCommandDtos == null) {
+        this.command.menuItemCommandDtos = [];
+      }
+      this.calculateAmount();
+      this.newCommand = this.command;
+      this.newCommand.menuItemCommandDtos = [];
+      if (res !== null && res.status === 'ACTIVE') {
+        this.commandActive = true;
+      }
+    });
   }
 
   showSnackbar(message: string) {
@@ -53,21 +64,6 @@ export class MenuComponent implements OnInit {
     for (const item of this.command.menuItemCommandDtos) {
       this.totalAmount += item.amount;
     }
-  }
-
-  commandOpen() {
-    this.commandService.hasActiveCommand('admin').subscribe(res => {
-      this.command = res;
-      if (this.command.menuItemCommandDtos == null) {
-        this.command.menuItemCommandDtos = [];
-      }
-      this.calculateAmount();
-      this.newCommand = this.command;
-      this.newCommand.menuItemCommandDtos = [];
-      if (res !== null && res.status === 'ACTIVE') {
-        this.commandActive = true;
-      }
-    });
   }
 
   addToCommand(menuItem: MenuItem, amountIndex: number) {
