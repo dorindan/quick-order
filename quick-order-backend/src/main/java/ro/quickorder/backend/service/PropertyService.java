@@ -98,4 +98,36 @@ public class PropertyService {
                 withLatitude(getLocationLatitude()).withLongitude(getLocationLongitude()).
                 withEmail(getEmail()).build();
     }
+
+    public void save(PropertyDto propertyDto){
+        Property nameProperty = propertyRepository.findByName(PropertyName.RESTAURANT_NAME);
+        nameProperty.setValue(propertyDto.getRestaurantName());
+        propertyRepository.save(nameProperty);
+
+        System.out.println(propertyDto);
+        System.out.println(propertyDto.getStartProgramTime().toString());
+        Property startTimeProperty = propertyRepository.findByName(PropertyName.START_TIME);
+        startTimeProperty.setValue(String.valueOf(propertyDto.getStartProgramTime().getHour()));
+        propertyRepository.save(startTimeProperty);
+
+        Property endTimeProperty = propertyRepository.findByName(PropertyName.END_TIME);
+        endTimeProperty.setValue(String.valueOf(propertyDto.getEndProgramTime().getHour()));
+        propertyRepository.save(endTimeProperty);
+
+        Property streetNameProperty = propertyRepository.findByName(PropertyName.STREET_NAME);
+        streetNameProperty.setValue(propertyDto.getStreetName());
+        propertyRepository.save(streetNameProperty);
+
+        Property locationLatitudeProperty = propertyRepository.findByName(PropertyName.LOCATION_LATITUDE);
+        locationLatitudeProperty.setValue(String.valueOf(propertyDto.getLatitude()));
+        propertyRepository.save(locationLatitudeProperty);
+
+        Property locationLongitudeproperty = propertyRepository.findByName(PropertyName.LOCATION_LONGITUDE);
+        locationLongitudeproperty.setValue(String.valueOf(propertyDto.getLongitude()));
+        propertyRepository.save(locationLongitudeproperty);
+
+        Property emailProperty = propertyRepository.findByName(PropertyName.EMAIL);
+        emailProperty.setValue(propertyDto.getEmail());
+        propertyRepository.save(emailProperty);
+    }
 }

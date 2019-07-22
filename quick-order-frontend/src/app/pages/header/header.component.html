@@ -26,6 +26,12 @@
       <li class="nav-item">
         <a class="nav-link " href="menu" translate="">header.menu</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#" translate="">header.aboutUs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="contact" translate="">header.contact</a>
+      </li>
       <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="menuItem" translate="">header.menuItem</a>
       </li>
@@ -35,11 +41,8 @@
       <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="tableView" translate="">header.tableView</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="#" translate="">header.aboutUs</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="contact" translate="">header.contact</a>
+      <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
+        <a class="nav-link " href="propertyAdministration" translate="">header.propertyAdministration</a>
       </li>
       <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="confirmReservations" translate="">header.confirmReservations</a>
