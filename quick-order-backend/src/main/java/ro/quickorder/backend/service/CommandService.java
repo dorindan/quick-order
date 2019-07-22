@@ -61,47 +61,43 @@ public class CommandService {
         command.setStatus(receivedCommandDto.getStatus());
         command.setPacked(receivedCommandDto.isPacked());
         command.setSpecification(receivedCommandDto.getSpecification());
-
-        CommandDto commandDto = commandConverter.toCommandDto(command);
-        command.setMenuItemCommands(menuItemCommandConverter.toMenuItemCommands(combineMenuItemCommands(commandDto, receivedCommandDto)));
-
+        Command receivedCommand = commandConverter.toCommand(receivedCommandDto);
+        command.setMenuItemCommands(combineMenuItemCommands(command, receivedCommand));
         commandRepository.save(command);
     }
 
-    private List<MenuItemCommandDto> combineMenuItemCommands(CommandDto existingCommandDto, CommandDto receivedCommandDto){
-        if (existingCommandDto.getMenuItemCommandDtos() == null) {
-            existingCommandDto.setMenuItemCommandDtos(new ArrayList<>());
+    private List<MenuItemCommand> combineMenuItemCommands(Command existingCommand, Command receivedCommand){
+        if (existingCommand.getMenuItemCommands() == null) {
+            existingCommand.setMenuItemCommands(new ArrayList<>());
         }
-        for (int i = 0; i < receivedCommandDto.getMenuItemCommandDtos().size(); i++) {
+        for (int i = 0; i < receivedCommand.getMenuItemCommands().size(); i++) {
             boolean ok = false;
-            if (receivedCommandDto.getMenuItemCommandDtos().get(i).getMenuItemDto() == null) {
+            if (receivedCommand.getMenuItemCommands().get(i).getMenuItem() == null) {
                 LOG.error("MenuItem not found");
                 throw new NotFoundException("MenuItem not found");
             }
-            for (int j = 0; j < existingCommandDto.getMenuItemCommandDtos().size(); j++) {
-                String receivedMenuItemDto = receivedCommandDto.getMenuItemCommandDtos().get(i).getMenuItemDto().getName();
-                String existingMenuItemDto = existingCommandDto.getMenuItemCommandDtos().get(j).getMenuItemDto().getName();
+            for (int j = 0; j < existingCommand.getMenuItemCommands().size(); j++) {
+                String receivedMenuItemDto = receivedCommand.getMenuItemCommands().get(i).getMenuItem().getName();
+                String existingMenuItemDto = existingCommand.getMenuItemCommands().get(j).getMenuItem().getName();
                 if (receivedMenuItemDto.equals(existingMenuItemDto)) {
-                    Integer amount = receivedCommandDto.getMenuItemCommandDtos().get(i).getAmount() +
-                            existingCommandDto.getMenuItemCommandDtos().get(j).getAmount();
-                    existingCommandDto.getMenuItemCommandDtos().get(j).setAmount(amount);
-                    saveMenuItemCommandDto(existingCommandDto.getMenuItemCommandDtos().get(j), existingCommandDto);
+                    Integer amount = receivedCommand.getMenuItemCommands().get(i).getAmount() +
+                            existingCommand.getMenuItemCommands().get(j).getAmount();
+                    existingCommand.getMenuItemCommands().get(j).setAmount(amount);
+                    saveMenuItemCommandDto(existingCommand.getMenuItemCommands().get(j), existingCommand);
                     ok = true;
                 }
             }
             if (!ok) {
-                MenuItemCommandDto menuItemCommandDto = saveMenuItemCommandDto(receivedCommandDto.getMenuItemCommandDtos().get(i), receivedCommandDto);
-                existingCommandDto.getMenuItemCommandDtos().add(menuItemCommandDto);
+                existingCommand.getMenuItemCommands().add(saveMenuItemCommandDto(receivedCommand.getMenuItemCommands().get(i), receivedCommand));
             }
         }
 
-        return existingCommandDto.getMenuItemCommandDtos();
+        return existingCommand.getMenuItemCommands();
     }
 
-    private MenuItemCommandDto saveMenuItemCommandDto(MenuItemCommandDto menuItemCommandDto, CommandDto commandDto){
-        MenuItemCommand menuItemCommand = menuItemCommandConverter.toMenuItemCommand(menuItemCommandDto);
-        Command command = commandRepository.findByCommandName(commandDto.getCommandName());
-        MenuItem menuItem = menuItemRepository.findByName(menuItemCommandDto.getMenuItemDto().getName());
+    private MenuItemCommand saveMenuItemCommandDto(MenuItemCommand menuItemCommand, Command existingCommand){
+        Command command = commandRepository.findByCommandName(existingCommand.getCommandName());
+        MenuItem menuItem = menuItemRepository.findByName(menuItemCommand.getMenuItem().getName());
         if (command == null) {
             LOG.error("Command not found");
             throw new NotFoundException("Command not found");
@@ -112,6 +108,6 @@ public class CommandService {
             throw new NotFoundException("MenuItem not found");
         }
         menuItemCommand.setMenuItem(menuItem);
-       return menuItemCommandConverter.toMenuItemCommandDto(menuItemCommandRepository.save(menuItemCommand));
+       return menuItemCommandRepository.save(menuItemCommand);
     }
 }
