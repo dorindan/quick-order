@@ -21,6 +21,9 @@
         <a class="nav-link" href="reserve" translate="">header.reserve</a>
       </li>
       <li class="nav-item" *ngIf="isAuthenticatedUser()">
+        <a class="nav-link" href="reservation-log" translate="">header.log</a>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticatedUser()">
         <a class="nav-link" href="#" translate="">header.placeOrder</a>
       </li>
       <li class="nav-item">
@@ -35,8 +38,8 @@
       <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="tableView" translate="">header.tableView</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="#" translate="">header.aboutUs</a>
+      <li class="nav-item" *ngIf="isAuthenticated()">
+        <a class="nav-link " href="about" translate="">header.aboutUs</a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="contact" translate="">header.contact</a>

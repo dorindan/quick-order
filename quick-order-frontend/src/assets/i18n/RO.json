@@ -36,7 +36,8 @@
     "contact": "Contact",
     "logout": "Iesire din cont",
     "language": "Limba: ",
-    "confirmReservations": "Confirmare Rezervări"
+    "confirmReservations": "Confirmare Rezervări",
+    "log": "Rezervările mele"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -111,7 +112,7 @@
     "back": "Înapoi",
     "sendReservation": "Trimite Rezervarea",
     "finish": "Trimite",
-    "choseTable": "Alege mesele*",
+    "chooseTable": "Alege mesele*",
     "table": "Masa: ",
     "seats": " Locuri: "
   },
@@ -122,10 +123,30 @@
     "floor": "  Etaj: ",
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
-    "acceptReservation": "Accepta Rezervarea"
+    "acceptReservation": "Acceptă Rezervarea"
   },
-  "contact":{
-    "open" : "Deschide la:",
-    "close" : "Inchide la:"
-}
+  "a": {
+    "reserve": "Rezervări online 24/7",
+    "open": "Deschis Luni-Duminică:"
+  },
+  "description": {
+    "healthy": "Rapid și sănătos.",
+    "healthy2": "Susținem mâncatul sănătos. Suntem ce mâncăm!",
+    "tasty": "Rapid și gustos.",
+    "tasty2": "Toată lumea apreciaza mâncarea bună.",
+    "comfy": "Plin de viață și confortabil.",
+    "comfy2": "Restaurantul nostru găzduiește evenimentele, întâlnirile sau ieșirile tale.",
+    "fresh": "Produse proaspete.",
+    "fresh2": "Susținem producătorii locali. Proaspăt în fiecare zi."
+  },
+  "contact": {
+    "open": "Deschide la:",
+    "close": "Inchide la:"
+  },
+  "myRes": {
+    "myRes": "Rezervările mele",
+    "resFor": "Rezervare pentru ",
+    "persons": " persoane",
+    "delete": "Șterge rezervarea"
+  }
 }
