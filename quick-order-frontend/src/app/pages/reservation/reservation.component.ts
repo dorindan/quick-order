@@ -120,6 +120,7 @@ export class ReservationComponent implements OnInit {
             }
           });
       } else {
+        this.disableButton = false;
         this.showSnackbar('The number of persons is too big to fit in these tables!');
       }
     } else {
