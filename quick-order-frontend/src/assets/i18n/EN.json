@@ -128,7 +128,7 @@
   "menu": {
     "quantity": "Quantity: ",
     "selected": "products selected",
-    "finishCommand": "Finish command",
+    "viewCommand": "View command",
     "save": "Save"
   },
   "contact":{

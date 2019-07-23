@@ -7,6 +7,7 @@ import {Command} from '../../models/Command';
 import {CommandService} from '../../services/command.service';
 import {MatSnackBar} from '@angular/material';
 import {MenuItemCommand} from '../../models/MenuItemCommand';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 @Component({
   selector: 'app-menu',
@@ -16,15 +17,13 @@ import {MenuItemCommand} from '../../models/MenuItemCommand';
 export class MenuComponent implements OnInit {
 
   public amounts = [];
-  public commandActive = false;
   public menuItemType: MenuItemType[];
   public menuItems: MenuItem[];
-  public command: Command;
   public newCommand = new Command();
   public totalAmount = 0;
 
   constructor(private menuService: MenuService, private router: Router,
-              private snackBar: MatSnackBar, private commandService: CommandService) {
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -37,18 +36,7 @@ export class MenuComponent implements OnInit {
       response.forEach(i => this.amounts.push(1));
     });
 
-    this.commandService.hasActiveCommand('admin').subscribe(res => {
-      this.command = res;
-      if (this.command.menuItemCommandDtos == null) {
-        this.command.menuItemCommandDtos = [];
-      }
-      this.calculateAmount();
-      this.newCommand = this.command;
-      this.newCommand.menuItemCommandDtos = [];
-      if (res !== null && res.status === 'ACTIVE') {
-        this.commandActive = true;
-      }
-    });
+    this.newCommand.menuItemCommandDtos = [];
   }
 
   showSnackbar(message: string) {
@@ -57,13 +45,6 @@ export class MenuComponent implements OnInit {
       verticalPosition: 'top',
       panelClass: ['snackbar']
     });
-  }
-
-  calculateAmount() {
-    this.totalAmount = 0;
-    for (const item of this.command.menuItemCommandDtos) {
-      this.totalAmount += item.amount;
-    }
   }
 
   addToCommand(menuItem: MenuItem, amountIndex: number) {
@@ -89,23 +70,7 @@ export class MenuComponent implements OnInit {
     this.amounts[amountIndex] = 1;
   }
 
-  public saveCommand() {
-    this.commandService.updateCommand(this.newCommand).subscribe(res => {
-      this.newCommand.menuItemCommandDtos = [];
-      this.showSnackbar('Products added successfully');
-    }, error => {
-      switch (error.status) {
-        case 404: // not found exception
-          this.showSnackbar('Something went wrong, refresh and try again.');
-          break;
-        default:
-          this.showSnackbar('Something went wrong, Pleas try again.');
-      }
-    });
-  }
-
   finishCommand() {
-    this.saveCommand();
     this.router.navigate(['finishCommand']);
   }
 

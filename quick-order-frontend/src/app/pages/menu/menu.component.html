@@ -1,16 +1,12 @@
-<form class="end" *ngIf="commandActive">
+<form class="end">
   <br>
   {{this.totalAmount + " "}}
   <label class="" translate="">menu.selected</label>
   &nbsp;
-  <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
-     (click)="saveCommand()" translate="">
-    menu.save
-  </a>
   &nbsp;
   <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
      (click)="finishCommand()" translate="">
-    menu.finishCommand
+    menu.viewCommand
   </a>
   &nbsp;
   &nbsp;
@@ -45,7 +41,7 @@
               <span *ngIf="i > 0">,</span>
               <span>{{' ' +ingredient.name}}</span>
             </span>
-            <form class="end" *ngIf="commandActive">
+            <form class="end" >
               <label translate="">menu.quantity</label>
               &nbsp;
               <mat-form-field class="smallInput">

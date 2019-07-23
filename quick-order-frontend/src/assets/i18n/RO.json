@@ -128,7 +128,7 @@
   "menu": {
     "quantity": "Cantitate: ",
     "selected": "produse selectate",
-    "finishCommand": "Finalizare comandă",
+    "viewCommand": "Vizualizare comandă",
     "save": "Salvează"
   },
   "a": {
