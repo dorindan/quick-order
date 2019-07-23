@@ -1,13 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MenuService} from '../../services/menu.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {MenuItem} from '../../models/MenuItem';
 import {Router} from '@angular/router';
 import {Command} from '../../models/Command';
-import {CommandService} from '../../services/command.service';
 import {MatSnackBar} from '@angular/material';
 import {MenuItemCommand} from '../../models/MenuItemCommand';
-import {TokenStorageService} from '../../auth/token-storage.service';
+import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 
 @Component({
   selector: 'app-menu',
@@ -22,7 +21,7 @@ export class MenuComponent implements OnInit {
   public newCommand = new Command();
   public totalAmount = 0;
 
-  constructor(private menuService: MenuService, private router: Router,
+  constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService, private menuService: MenuService, private router: Router,
               private snackBar: MatSnackBar) {
   }
 
@@ -36,7 +35,22 @@ export class MenuComponent implements OnInit {
       response.forEach(i => this.amounts.push(1));
     });
 
-    this.newCommand.menuItemCommandDtos = [];
+    this.reloadCommand();
+  }
+
+  reloadCommand() {
+    if (this.storage.get('Command')) {
+      this.newCommand = this.storage.get('Command') as Command;
+      this.calculateTotalAmount();
+    } else {
+      this.newCommand.menuItemCommandDtos = [];
+    }
+  }
+
+  calculateTotalAmount() {
+    for (const item of this.newCommand.menuItemCommandDtos) {
+      this.totalAmount += (item as MenuItemCommand).amount;
+    }
   }
 
   showSnackbar(message: string) {
@@ -68,6 +82,7 @@ export class MenuComponent implements OnInit {
     this.totalAmount += this.amounts[amountIndex];
     this.showSnackbar(this.amounts[amountIndex] + ' ' + menuItem.name + ' successfully added');
     this.amounts[amountIndex] = 1;
+    this.storage.set('Command', this.newCommand);
   }
 
   finishCommand() {
