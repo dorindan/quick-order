@@ -2,10 +2,7 @@ package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.service.CommandService;
 
@@ -27,5 +24,17 @@ public class CommandResource {
     @PreAuthorize("hasRole('USER') or hasRole('WAITER')")
     public void removeCommand(@PathVariable String commandName) {
         commandService.removeCommand(commandName);
+    }
+
+    @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('WAITER')")
+    public List<CommandDto> getAllUnconfirmed() {
+        return commandService.getCommandsWithStatus("unconfirmed");
+    }
+
+    @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('WAITER')")
+    public void confirmReservation(@RequestBody CommandDto commandDto) {
+        commandService.confirmCommand(commandDto);
     }
 }

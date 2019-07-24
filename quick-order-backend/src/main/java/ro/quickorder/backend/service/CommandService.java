@@ -60,4 +60,22 @@ public class CommandService {
         }
         commandRepository.delete(command);
     }
+
+    public List<CommandDto> getCommandsWithStatus(String status) {
+        return commandRepository.findCommandsByStatus(status)
+                .stream()
+                .map(commandConverter::toCommandDto)
+                .collect(Collectors.toList());
+    }
+
+    public void confirmCommand(CommandDto commandDto) {
+        String commandName = commandDto.getCommandName();
+        final Command command = commandRepository.findByCommandName(commandName);
+        if (command == null) {
+            LOG.error("Command with name: " + commandName + " was not found!");
+            throw new NotFoundException("Command not found!");
+        }
+        command.setStatus("confirmed");
+        commandRepository.save(command);
+    }
 }

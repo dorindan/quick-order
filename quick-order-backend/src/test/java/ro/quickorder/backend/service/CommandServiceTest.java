@@ -38,6 +38,8 @@ public class CommandServiceTest {
     public void setUp() {
         Command command = new Command("test_command", "", false, "unconfirmed", null);
         commandRepository.save(command);
+        Command command2 = new Command("test_command2", "", false, "confirmed", null);
+        commandRepository.save(command2);
         List<User> users = new ArrayList<>();
         User user = new User("hellohello", "$2a$10$bO..vvSzK55NYvsGUdF1s.W9uBCGM8rIHDB/sSGRl2UARiKXrR/7C", "hello@yahoo.com");
         userRepository.save(user);
@@ -69,10 +71,21 @@ public class CommandServiceTest {
 
     @Test
     public void testRemoveReservation() {
-        userService.login(new UserDto("hellohello",
-                "hellohello", "hello@yahoo.com"));
-        commandService.removeCommand("test_command");
-        List<CommandDto> commandDtos = commandService.getCommandsOfUser();
+        commandService.removeCommand("test_command2");
+        Command command = commandRepository.findByCommandName("test_command2");
+        assertEquals(null, command);
+    }
+
+    @Test
+    public void testGetUnconfirmedCommands() {
+        List<CommandDto> commandDtos = commandService.getCommandsWithStatus("unconfirmed");
+        assertEquals(1, commandDtos.size());
+    }
+
+    @Test
+    public void testConfirmCommand() {
+        commandService.confirmCommand(new CommandDto("test_command", "", false, ""));
+        List<CommandDto> commandDtos = commandService.getCommandsWithStatus("unconfirmed");
         assertEquals(0, commandDtos.size());
     }
 }
