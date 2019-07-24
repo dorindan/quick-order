@@ -42,4 +42,17 @@ public class ReservationResource {
     public boolean reservationConfirmed(@PathVariable String reservationName) {
         return reservationService.reservationConfirmed(reservationName);
     }
+
+    @RequestMapping(path = "/actual-user", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
+    public List<ReservationDto> reservationOfActualUser() {
+        return reservationService.reservationOfActualUser();
+    }
+
+    @RequestMapping(path = "/remove/{reservationName}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('USER')")
+    public void removeReservation(@PathVariable String reservationName) {
+        reservationService.removeReservation(reservationName);
+    }
+
 }

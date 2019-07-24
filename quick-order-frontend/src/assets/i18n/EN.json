@@ -37,7 +37,8 @@
     "logout": "Logout",
     "language": "Language ",
     "confirmReservations": "Confirm Reservations",
-    "propertyAdministration": "Property administration"
+    "propertyAdministration": "Property administration",
+    "log": "My Reservations"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -141,5 +142,25 @@
     "edit": "Edit",
     "lmessage": "(Depends on location. It is used for google maps and can be found on google maps)",
     "timeConditions": "must be an integer between 0 and 24"
+  },
+  "a": {
+    "reserve": "Reservations online 24/7",
+    "open": "Open Monday-Sunday:"
+  },
+  "description": {
+    "healthy": "Quick and healthy.",
+    "healthy2": "We support eating healthy. We are what we eat!",
+    "tasty": "Quick and tasty.",
+    "tasty2": "Everyone appreciates good food.",
+    "comfy": "Lively and comfortable.",
+    "comfy2": "Our restaurant is open for your events, meetings, dates or just a cozy night out.",
+    "fresh": "Fresh groceries.",
+    "fresh2": "We support locals. Fresh each day."
+  },
+  "myRes": {
+    "myRes": "My reservations",
+    "resFor": "Reservation for ",
+    "persons": " persons",
+    "delete": "Delete my Reservation"
   }
 }
