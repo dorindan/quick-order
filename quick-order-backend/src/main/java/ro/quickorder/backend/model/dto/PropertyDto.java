@@ -90,7 +90,7 @@ public class PropertyDto {
     @Override
     public String toString() {
         return "PropertyDto{" +
-                "numeRestaurant='" + restaurantName + '\'' +
+                "restaurantName='" + restaurantName + '\'' +
                 ", startProgramTime=" + startProgramTime +
                 ", endProgramTime=" + endProgramTime +
                 ", streetName='" + streetName + '\'' +

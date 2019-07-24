@@ -22,7 +22,7 @@ public class PropertyResource {
 
     @RequestMapping(value = "updateProperty", method = RequestMethod.POST)
     public PropertyDto updateProperty(@RequestBody PropertyDto propertyDto) {
-        propertyService.save(propertyDto);
+        propertyService.saveProperty(propertyDto);
         return propertyDto;
     }
 }

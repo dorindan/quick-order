@@ -96,8 +96,6 @@ export class PropertyAdministrationComponent implements OnInit {
     let startMoment = moment().hours(Number(this.startTime)).minutes(0).seconds(0).format("HH:mm:ss");
     let endMoment = moment().hours(Number(this.endTime)).minutes(0).seconds(0).format("HH:mm:ss");
 
-    console.log(startMoment)
-    console.log(endMoment)
     let property = new Property(this.restaurantName, startMoment, endMoment,
       this.location, this.locationLatitude, this.locationLongitude, this.email);
     if (!this.isFloat(this.locationLongitude)) {

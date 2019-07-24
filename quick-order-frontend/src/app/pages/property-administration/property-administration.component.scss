@@ -12,7 +12,7 @@
 }
 
 @media (min-width: 768px) {
-  .signUP-panel {
+  .property-panel {
     border-style: groove;
     margin-top: 5%;
     margin-left: auto;
@@ -22,13 +22,13 @@
   }
 }
 
-.signUP-panel>.panel-heading {
+.property-panel>.panel-heading {
   color: darkgreen;
   opacity: 0.8;
   text-align: center;
 }
 
-.signUP-panel input[type="text"],.signUP-panel input[type="email"],.signUP-panel input[type="password"] {
+.property-panel input[type="text"],.property-panel input[type="email"],.property-panel input[type="password"] {
   height: 45px;
   border: 1px solid #029f5b;
   font-size: 100%;
@@ -37,8 +37,8 @@
   transition: all 0.1s linear;
 }
 
-.signUP-panel input:hover,
-.signUP-panel input:focus {
+.property-panel input:hover,
+.property-panel input:focus {
   outline:none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -46,7 +46,7 @@
   border-color: #ccc;
 }
 
-.btn-signUP {
+.btn-property {
   background-color: darkgreen !important;
   opacity: 0.4;
   font-weight: normal;

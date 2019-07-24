@@ -69,7 +69,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBMimoGCQC7mafNE7Ec9-iPWrVZxO0qx6Q'
+      apiKey: 'AIzaSyBMimoGCQC7mafNE7Ec9-iPWrVZxO0qx6Q',
+      libraries: ["places"]
     }),
     NgxPopper
   ],
