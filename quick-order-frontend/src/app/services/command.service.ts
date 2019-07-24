@@ -24,5 +24,9 @@ export class CommandService {
     return this.apiService.putRequest('/api/command/update/', command);
   }
 
+  addCommand(command: Command): Observable<any> {
+    return this.apiService.postRequest('/api/command/add/', command);
+  }
+
 
 }

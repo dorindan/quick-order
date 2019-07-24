@@ -128,8 +128,7 @@
   "menu": {
     "quantity": "Quantity: ",
     "selected": "products selected",
-    "viewCommand": "View command",
-    "save": "Save"
+    "viewCommand": "View command"
   },
   "contact":{
     "open" : "Opens at:",
@@ -154,5 +153,12 @@
     "resFor": "Reservation for ",
     "persons": " persons",
     "delete": "Delete my Reservation"
+  },
+  "finishCommand": {
+    "finishCommand": "Finish command",
+    "selectedItem": "Selected items",
+    "specifications": "Specification: ",
+    "isPacked": "Packed:",
+    "totalPrice": "Total Price"
   }
 }

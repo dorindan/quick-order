@@ -24,23 +24,19 @@ public class Command {
     private boolean isPacked;
     @Enumerated(EnumType.STRING)
     private CommandStatus status;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id")
+    private User users;
     @OneToMany(mappedBy = "command")
     private List<MenuItemCommand> menuItemCommands;
     @OneToOne
     @JoinColumn(name = "bill_id")
     private Bill bill;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "table_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn( name = "table_id")
     private TableFood table;
     @OneToMany(mappedBy = "command")
     private List<Reservation> reservations;
-    @ManyToMany
-    @JoinTable(
-            name = "user_command",
-            joinColumns = @JoinColumn(name = "command_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
 
     public Command(String commandName, String specification, boolean isPacked, CommandStatus status, TableFood table) {
         this.commandName = commandName;
@@ -125,11 +121,11 @@ public class Command {
         this.reservations = reservations;
     }
 
-    public List<User> getUsers() {
+    public User getUser() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUser(User users) {
         this.users = users;
     }
 

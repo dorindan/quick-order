@@ -8,8 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.converter.MenuItemConverter;
+import ro.quickorder.backend.converter.UserConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.*;
+import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.model.dto.MenuItemCommandDto;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
@@ -17,6 +19,7 @@ import ro.quickorder.backend.repository.*;
 
 import javax.inject.Inject;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +48,8 @@ public class CommandServiceTest {
     TableFoodRepository tableFoodRepository;
     @Inject
     MenuItemCommandRepository menuItemCommandRepository;
+    @Inject
+    UserConverter userConverter;
 
     @Before
     public void setUp() {
@@ -65,9 +70,7 @@ public class CommandServiceTest {
         User user = userRepository.save(user1);
 
         Command command = new Command("Test command", "The test need to work", false, CommandStatus.ACTIVE, tableFood);
-        List<User> users = new ArrayList<>();
-        users.add(user);
-        command.setUsers(users);
+        command.setUser(user);
         commandRepository.save(command);
     }
 
@@ -79,6 +82,32 @@ public class CommandServiceTest {
         userRepository.deleteAll();
         menuItemRepository.deleteAll();
     }
+
+    @Test
+    public void testAddCommand() {
+        CommandDto commandDto = new CommandDto();
+        User user = userRepository.findByUsername("hellohello");
+        commandDto.setUserDto(userConverter.toUserDto(user));
+        commandDto.setSpecification("Putina maioneza");
+        commandDto.setPacked(true);
+        MenuItem menuItem = menuItemRepository.findByName("Name1");
+        MenuItemCommandDto menuItemCommandDto = new MenuItemCommandDto();
+        menuItemCommandDto.setAmount(7);
+        menuItemCommandDto.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItem));
+        List<MenuItemCommandDto> menuItemCommandDtos = new ArrayList<>();
+        menuItemCommandDtos.add(menuItemCommandDto);
+        commandDto.setMenuItemCommandDtos(menuItemCommandDtos);
+        commandService.addCommand(commandDto);
+        List<Command> commands = commandRepository.findAll();
+
+        assertEquals(2, commands.size());
+        assertEquals("Putina maioneza", commands.get(1).getSpecification());
+        assertTrue(commands.get(1).isPacked());
+        assertEquals(1, commands.get(1).getMenuItemCommands().size());
+        assertEquals("Name1", commands.get(1).getMenuItemCommands().get(0).getMenuItem().getName());
+        assertEquals(new Integer(7), commands.get(1).getMenuItemCommands().get(0).getAmount());
+    }
+
 
     @Test
     public void testUserActiveCommand() {

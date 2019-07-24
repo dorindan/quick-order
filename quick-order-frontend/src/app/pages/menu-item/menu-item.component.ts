@@ -6,6 +6,7 @@ import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-menu-item',
@@ -34,7 +35,7 @@ export class MenuItemComponent implements OnInit {
   menuItemTypeToAdd = '';
 
   constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService, private router: Router) {
   }
 
   ngOnInit() {
@@ -118,7 +119,7 @@ export class MenuItemComponent implements OnInit {
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
-        window.location.reload();
+        this.router.navigate(['finishCommand']);
       }, error => {
         if (error.status === 404) { // not found exception
           this.showSnackbar('The introduced data is not valid!, please try again');

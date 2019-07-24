@@ -1,6 +1,7 @@
-<h2 class="menu-section-title">Selected items</h2>
+<h2 class="menu-section-title" translate="">finishCommand.selectedItem</h2>
 <div class="menu-body">
   <div class="menu-section">
+
     <div class="menu-item" *ngFor="let menuItemCommand of this.newCommand.menuItemCommandDtos; let i = index">
       <div>
         <div class="media">
@@ -26,7 +27,7 @@
                        [(ngModel)]="menuItemCommand.amount" (change)="saveCommandInSession()">
               </mat-form-field>
               &nbsp; &nbsp; &nbsp; &nbsp;
-              <label translate="">Price</label> {{menuItemCommand.amount * menuItemCommand.menuItemDto.price}}
+              <label translate="">Price</label> {{menuItemCommand.menuItemDto.price}}
 
               &nbsp; &nbsp; &nbsp; &nbsp;
               <i class="iSize inline" data-toggle="modal">
@@ -36,15 +37,30 @@
             </form>
           </div>
         </div>
-
       </div>
     </div>
-    <form class="center">
-      <label translate="">Total Price</label> {{totalPrice()}}
+    <div class="center">
+      <label translate="">finishCommand.specifications</label>
+      <br>
+      <textarea rows="4" cols="50" id="specification" [(ngModel)]="this.specification">
+      </textarea>
+      <br>
+      <br>
+      <label data-error="wrong" data-success="right"
+             translate="">finishCommand.isPacked</label>
+      <div>
+        <input type="checkbox" class="form-control validate" id="isPacked" [(ngModel)]="this.isPacked">
+      </div>
+      <br>
+      <br>
+      <label translate="">finishCommand.totalPrice</label> {{totalPrice()}}
       <br><br>
+    </div>
+    <form class="center">
+
       <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
          (click)="finishCommand()" translate="">
-        menu.finishCommand
+        finishCommand.finishCommand
       </a>
     </form>
 

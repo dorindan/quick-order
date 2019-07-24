@@ -8,6 +8,8 @@ import {MatSnackBar} from '@angular/material';
 import {CommandService} from '../../services/command.service';
 import {MenuItemCommand} from '../../models/MenuItemCommand';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
+import {User} from '../../models/User';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
 @Component({
   selector: 'app-finish-command',
@@ -18,14 +20,23 @@ export class FinishCommandComponent implements OnInit {
   public amounts = [];
   public newCommand = new Command();
   public totalAmount = 0;
-  private amountBeforChange = 0;
+  public specification = '';
+  public isPacked = false;
 
   constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService, private menuService: MenuService, private router: Router,
-              private snackBar: MatSnackBar, private commandService: CommandService) {
+              private snackBar: MatSnackBar, private commandService: CommandService, private tokenStorage: TokenStorageService) {
   }
 
   ngOnInit() {
     this.reloadCommand();
+  }
+
+  showSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: ['snackbar']
+    });
   }
 
   reloadCommand() {
@@ -36,18 +47,11 @@ export class FinishCommandComponent implements OnInit {
       this.newCommand.menuItemCommandDtos = [];
     }
   }
+
   calculateTotalAmount() {
     for (const item of this.newCommand.menuItemCommandDtos) {
       this.totalAmount += (item as MenuItemCommand).amount;
     }
-  }
-
-  showSnackbar(message: string) {
-    this.snackBar.open(message, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['snackbar']
-    });
   }
 
   deleteMenuItemFromCommand(menuItem: MenuItem) {
@@ -65,7 +69,19 @@ export class FinishCommandComponent implements OnInit {
   }
 
   finishCommand() {
-    window.location.reload();
+    this.newCommand.specification = this.specification;
+    this.newCommand.packed = this.isPacked;
+    this.newCommand.userDto = new User(this.tokenStorage.getUsername(), '');
+    this.commandService.addCommand(this.newCommand).subscribe(rez => {
+      this.storage.set('Command', new Command());
+      this.router.navigate(['menu']);
+    }, error => {
+      if (error.status === 404) { // not found exception
+        this.showSnackbar('Something went wrong, try again!');
+      } else {
+        this.showSnackbar('Something went wrong, try again!');
+      }
+    });
   }
 
   totalPrice(): number {
