@@ -24,6 +24,9 @@
         <a class="nav-link" href="reservation-log" translate="">header.log</a>
       </li>
       <li class="nav-item" *ngIf="isAuthenticatedUser()">
+        <a class="nav-link" href="command-confirmation" translate="">header.commands</a>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticatedUser()">
         <a class="nav-link" href="#" translate="">header.placeOrder</a>
       </li>
       <li class="nav-item">
@@ -46,6 +49,9 @@
       </li>
       <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
         <a class="nav-link " href="confirmReservations" translate="">header.confirmReservations</a>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticatedWaiter()">
+        <a class="nav-link " href="command-confirmation" translate="">header.confirmCommands</a>
       </li>
       <li class="nav-item" *ngIf="isAuthenticated()">
         <a class="nav-link " (click)="logout()" href="login" translate="">header.logout</a>

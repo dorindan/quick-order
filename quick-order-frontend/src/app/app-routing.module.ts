@@ -13,6 +13,7 @@ import {TableComponent} from './pages/table/table.component';
 import {ContactComponent} from './pages/contact/contact.component';
 import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
+import {CommandConfirmationComponent} from "./pages/command-confirmation/command-confirmation.component";
 
 const routes: Routes = [];
 
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'about', component: AboutUsComponent},
   {path: 'reservation-log', component: ReservationLogComponent},
+  {path: 'command-confirmation', component: CommandConfirmationComponent},
   {path: '**', redirectTo: ''}
 ];
 

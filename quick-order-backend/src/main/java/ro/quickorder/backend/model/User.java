@@ -28,7 +28,7 @@ public class User {
     private List<Feedback> feedbacks;
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_command",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "command_id")})

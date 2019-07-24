@@ -30,7 +30,7 @@ public class Command {
     private TableFood table;
     @OneToMany(mappedBy = "command")
     private List<Reservation> reservations;
-    @ManyToMany(mappedBy = "commands")
+    @ManyToMany(mappedBy = "commands", fetch = FetchType.EAGER)
     private List<User> users;
 
     public Command(String commandName, String specification, boolean isPacked, String status, TableFood table) {
@@ -39,6 +39,15 @@ public class Command {
         this.isPacked = isPacked;
         this.status = status;
         this.table = table;
+    }
+
+    public Command(String commandName, String specification, boolean isPacked, String status, TableFood table, List<User> users) {
+        this.commandName = commandName;
+        this.specification = specification;
+        this.isPacked = isPacked;
+        this.status = status;
+        this.table = table;
+        this.users = users;
     }
 
     public Command() {

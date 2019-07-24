@@ -27,6 +27,7 @@ import {ContactComponent} from './pages/contact/contact.component';
 import {AgmCoreModule} from '@agm/core';
 import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
+import { CommandConfirmationComponent } from './pages/command-confirmation/command-confirmation.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -49,7 +50,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableComponent,
     ContactComponent,
     ReservationLogComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    CommandConfirmationComponent
   ],
   imports: [
     BrowserModule,

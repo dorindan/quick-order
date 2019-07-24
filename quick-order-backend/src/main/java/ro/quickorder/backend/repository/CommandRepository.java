@@ -6,4 +6,7 @@ import ro.quickorder.backend.model.Command;
 
 @Repository
 public interface CommandRepository extends JpaRepository<Command, Long> {
+
+    Command findByCommandName(String name);
+
 }

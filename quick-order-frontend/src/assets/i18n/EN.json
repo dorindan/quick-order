@@ -37,7 +37,9 @@
     "logout": "Logout",
     "language": "Language ",
     "confirmReservations": "Confirm Reservations",
-    "log": "My Reservations"
+    "log": "My Reservations",
+    "commands": "My Commands",
+    "confirmCommands": "Condirm Commands"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -125,9 +127,9 @@
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation"
   },
-  "contact":{
-    "open" : "Opens at:",
-    "close" : "Closes at:"
+  "contact": {
+    "open": "Opens at:",
+    "close": "Closes at:"
   },
   "a": {
     "reserve": "Reservations online 24/7",

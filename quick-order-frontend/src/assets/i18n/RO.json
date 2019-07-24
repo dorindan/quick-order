@@ -37,7 +37,9 @@
     "logout": "Iesire din cont",
     "language": "Limba: ",
     "confirmReservations": "Confirmare Rezervări",
-    "log": "Rezervările mele"
+    "log": "Rezervările mele",
+    "commands": "Comenzile mele",
+    "confirmCommands": "Confirmare Comenzi"
   },
   "startPage": {
     "quickOrder": "Quick Order",
