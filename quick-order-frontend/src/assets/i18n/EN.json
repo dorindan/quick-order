@@ -39,7 +39,7 @@
     "confirmReservations": "Confirm Reservations",
     "log": "My Reservations",
     "commands": "My Commands",
-    "confirmCommands": "Condirm Commands"
+    "confirmCommands": "Confirm Commands"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -150,5 +150,11 @@
     "resFor": "Reservation for ",
     "persons": " persons",
     "delete": "Delete my Reservation"
+  },
+  "myCommands": {
+    "myCommands": "My Commands",
+    "confirm": "Confirm command",
+    "delete": "Delete command",
+    "commandName": "Command with name: "
   }
 }

@@ -150,5 +150,11 @@
     "resFor": "Rezervare pentru ",
     "persons": " persoane",
     "delete": "Șterge rezervarea"
+  },
+  "myCommands": {
+    "myCommands": "Comenzile mele",
+    "confirm": "Confirmă comandă",
+    "delete": "Șterge comandă",
+    "commandName": "Comanda cu numele: "
   }
 }
