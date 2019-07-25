@@ -33,7 +33,7 @@
     "table": "Table administration",
     "tableView": "Table view",
     "aboutUs": "About Us",
-    "contact": "Contact",
+    "contact": "Contact Us",
     "logout": "Logout",
     "language": "Language ",
     "confirmReservations": "Confirm Reservations",
@@ -125,6 +125,12 @@
     "windowView": "  Has window view: ",
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation"
+  },
+  "menu": {
+    "quantity": "Quantity: ",
+    "selected": "products selected",
+    "viewCommand": "View command",
+    "save": "Save"
   },
   "contact":{
     "open" : "Opens at:",

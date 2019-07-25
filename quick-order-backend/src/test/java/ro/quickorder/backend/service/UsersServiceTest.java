@@ -26,16 +26,16 @@ import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
 import ro.quickorder.backend.resource.response.ResponseMessage;
 
+import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.*;
 
-
 @ActiveProfiles("junit")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UsersResourceTest {
+public class UsersServiceTest {
     @Autowired
     private UserService userService;
     @Autowired

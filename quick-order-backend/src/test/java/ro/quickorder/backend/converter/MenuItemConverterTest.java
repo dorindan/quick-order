@@ -44,7 +44,6 @@ public class MenuItemConverterTest {
         assertEquals(menuItemDto.getPreparationDurationInMinutes(), menuItem.getPreparationDurationInMinutes());
         assertEquals(menuItemDto.getPrice(), menuItem.getPrice());
         assertEquals(menuItemDto.getMenuItemTypeDto().getType(), menuItem.getMenuItemType().getType());
-        assertNull(menuItem.getCommands());
         assertNull(menuItem.getFeedbacks());
         assertNull(menuItem.getIngredients());
     }
