@@ -37,6 +37,7 @@
     "logout": "Iesire din cont",
     "language": "Limba: ",
     "confirmReservations": "Confirmare Rezervări",
+    "propertyAdministration": "Administrare proprietati",
     "log": "Rezervările mele"
   },
   "startPage": {
@@ -144,9 +145,22 @@
     "fresh": "Produse proaspete.",
     "fresh2": "Susținem producătorii locali. Proaspăt în fiecare zi."
   },
-  "contact": {
-    "open": "Deschide la:",
-    "close": "Inchide la:"
+  "contact":{
+    "open" : "Deschide la:",
+    "close" : "Inchide la:"
+},
+  "property":{
+    "property": "Proprietati restaurant",
+    "startTime": "Ora deschidere",
+    "endTime": "Ora inchidere",
+    "location": "Adresa",
+    "locationLatitude": "Adresa latitudine",
+    "locationLongitude": "Adresa longitudine",
+    "email": "Email",
+    "restaurantName": "Nume restaurant",
+    "edit": "Actualizare",
+    "lmessage": "(Depinde de locatie. Este folosita pentru google maps si poate fi gasita pe google maps)",
+    "timeConditions": "Trebuie sa fie un numar intreg intre 0 si 24"
   },
   "myRes": {
     "myRes": "Rezervările mele",

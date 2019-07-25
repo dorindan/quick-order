@@ -9,6 +9,7 @@ import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
 import {TokenStorageService} from '../../auth/token-storage.service';
 import {User} from '../../models/User';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-reservation',
@@ -30,6 +31,7 @@ export class ReservationComponent implements OnInit {
   currentDate = new Date();
   hours: string[] = [];
   hourControl = new FormControl('', [Validators.required]);
+  disableButton: boolean = false;
 
   public tableList: Table[] = [];
   public selectedTables = [];
@@ -39,7 +41,8 @@ export class ReservationComponent implements OnInit {
               private snackBar: MatSnackBar,
               private propertyService: PropertyService,
               private tableService: TableService,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -92,6 +95,7 @@ export class ReservationComponent implements OnInit {
     const username = this.tokenStorageService.getUsername();
     this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false, new User(username.toString(), ''));
     let i = -1;
+    this.disableButton = true;
     const tablesSelected: Table[] = [];
     for (i = 0; i < this.tableList.length; i++) {
       if (this.contains(this.tableList[i].tableNr)) {
@@ -103,8 +107,10 @@ export class ReservationComponent implements OnInit {
       if (this.reservation.tableFoodDtos.length === 0 || this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
         this.reservationService.reserve(this.reservation)
           .subscribe(data => {
+            this.router.navigate(['loggedStart']);
             this.showSnackbar('Reservation sent successfully.');
           }, error => {
+            this.disableButton = false;
             switch (error.status) {
               case 403: // forbidden exception
                 this.showSnackbar('Data or persons number are wrong . Please try again!');
@@ -114,13 +120,16 @@ export class ReservationComponent implements OnInit {
             }
           });
       } else {
+        this.disableButton = false;
         this.showSnackbar('The number of persons is too big to fit in these tables!');
       }
     } else {
       this.reservationService.reserve(this.reservation)
         .subscribe(data => {
+          this.router.navigate(['loggedStart']);
           this.showSnackbar('Reservation sent successfully.');
         }, error => {
+          this.disableButton = false;
           this.showSnackbar('Reservation failed. Please try again.');
         });
     }

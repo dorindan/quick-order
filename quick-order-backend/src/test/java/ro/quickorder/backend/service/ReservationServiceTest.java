@@ -116,7 +116,7 @@ public class ReservationServiceTest {
 
     @Test
     public void testGetAllUnconfirmed() {
-        List<ReservationDto> reservationDtoList = reservationService.getAllReservationUnconfirmed();
+        List<ReservationDto> reservationDtoList = reservationService.getAllReservationsUnconfirmed();
         assertEquals(reservationDtoList.size(), 2);
     }
 
@@ -125,14 +125,14 @@ public class ReservationServiceTest {
      */
     @Test
     public void testConfirmReservation() {
-        List<ReservationDto> reservationDtos = reservationService.getAllReservationUnconfirmed();
+        List<ReservationDto> reservationDtos = reservationService.getAllReservationsUnconfirmed();
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+10:10", "23+09+2007+11:10");
         assertEquals(reservationDtos.size(), 2);
         assertEquals(tableFoodDtos.size(), 2);
         ReservationDto reservationDto = reservationDtos.get(0);
         ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
         reservationService.confirmReservation(confirmReservationDto);
-        List<ReservationDto> reservationDtosAfter = reservationService.getAllReservationUnconfirmed();
+        List<ReservationDto> reservationDtosAfter = reservationService.getAllReservationsUnconfirmed();
         List<TableFoodDto> tableFoodDtosAfter = tableFoodService.getAllFree("23+09+2007+10:10", "23+09+2007+12:10");
         assertEquals(reservationDtosAfter.size(), 1);
         assertEquals(tableFoodDtosAfter.size(), 0);
@@ -140,7 +140,7 @@ public class ReservationServiceTest {
 
     @Test
     public void testConfirmReservationReservationIsInvalid() {
-        List<ReservationDto> reservationDtos = reservationService.getAllReservationUnconfirmed();
+        List<ReservationDto> reservationDtos = reservationService.getAllReservationsUnconfirmed();
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+09:00", "23+09+2007+11:59");
         ReservationDto reservationDto = reservationDtos.get(0);
         ConfirmReservationDto confirmReservationDto = reservationConverter.toConfirmReservationDtoFromReservationDto(reservationDto, tableFoodDtos);
@@ -157,7 +157,7 @@ public class ReservationServiceTest {
     public void testConfirmReservationTableIsTaken() {
         Timestamp timestampIn = Timestamp.valueOf("2007-09-23 9:0:0.0");
         Timestamp timestampOut = Timestamp.valueOf("2007-09-23 12:59:0.0");
-        List<ReservationDto> reservationDtos = reservationService.getAllReservationUnconfirmed();
+        List<ReservationDto> reservationDtos = reservationService.getAllReservationsUnconfirmed();
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+09:00", "23+09+2007+12:59");
         assertEquals(reservationDtos.size(), 2);
         assertEquals(tableFoodDtos.size(), 2);
@@ -176,7 +176,7 @@ public class ReservationServiceTest {
     public void testConfirmReservationTableIsInvalid() {
         Timestamp timestampIn = Timestamp.valueOf("2007-09-23 5:0:0.0");
         Timestamp timestampOut = Timestamp.valueOf("2007-09-23 15:59:0.0");
-        List<ReservationDto> reservationDtos = reservationService.getAllReservationUnconfirmed();
+        List<ReservationDto> reservationDtos = reservationService.getAllReservationsUnconfirmed();
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+05:00", "23+09+2007+15:59");
         assertEquals(reservationDtos.size(), 2);
         assertEquals(tableFoodDtos.size(), 2);
@@ -284,5 +284,11 @@ public class ReservationServiceTest {
         reservationService.removeReservation("reservation1");
         List<ReservationDto> reservationDtos = reservationService.reservationOfActualUser();
         assertEquals(0, reservationDtos.size());
+    }
+
+    @Test
+    public void testGetAllReservationsUnconfirmed() {
+        List<ReservationDto> reservationDtos = reservationService.getAllReservationsUnconfirmed();
+        assertEquals(2, reservationDtos.size());
     }
 }

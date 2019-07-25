@@ -14,6 +14,7 @@ import {FinishCommandComponent} from './pages/finish-command/finish-command.comp
 import {ContactComponent} from './pages/contact/contact.component';
 import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
+import {PropertyAdministrationComponent} from './pages/property-administration/property-administration.component';
 
 const routes: Routes = [];
 
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
   {path: 'table', component: TableComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'finishCommand', component: FinishCommandComponent},
+  {path: 'propertyAdministration', component: PropertyAdministrationComponent},
   {path: 'about', component: AboutUsComponent},
   {path: 'reservation-log', component: ReservationLogComponent},
   {path: '**', redirectTo: ''}
