@@ -39,20 +39,6 @@ public class CommandService {
     @Autowired
     private UserRepository userRepository;
 
-    public CommandDto getUserActiveCommand(String userName) {
-        return getUserCommandWithStatus(userName, CommandStatus.ACTIVE);
-    }
-
-    private CommandDto getUserCommandWithStatus(String userName, CommandStatus commandStatus){
-        User user = userRepository.findByUsername(userName);
-        if (user == null) {
-            LOG.error("User not found");
-            throw new NotFoundException("User not found");
-        }
-        Command command = commandRepository.findActiveByUser(commandStatus);
-        return commandConverter.toCommandDto(command);
-    }
-
     public void addCommand(CommandDto commandDto) {
         Command command = new Command();
         // find user

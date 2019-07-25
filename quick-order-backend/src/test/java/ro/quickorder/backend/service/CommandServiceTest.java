@@ -108,25 +108,6 @@ public class CommandServiceTest {
         assertEquals(new Integer(7), commands.get(1).getMenuItemCommands().get(0).getAmount());
     }
 
-
-    @Test
-    public void testUserActiveCommand() {
-        CommandDto commandDto = commandService.getUserActiveCommand("hellohello");
-        assertNotNull(commandDto);
-        assertEquals("Test command", commandDto.getCommandName());
-        assertEquals("The test need to work", commandDto.getSpecification());
-    }
-
-    @Test
-    public void testUserActiveCommandWithUserNotFound() {
-        try {
-            commandService.getUserActiveCommand("admin");
-            fail("User should not have been found");
-        } catch (NotFoundException e) {
-            assertEquals("User not found", e.getMessage());
-        }
-    }
-
     @Test
     public void testUpdateCommand() {
         CommandDto commandDto = new CommandDto("Test command", "Specification changed", true, CommandStatus.ACTIVE);
@@ -150,12 +131,12 @@ public class CommandServiceTest {
 
         commandService.updateCommand(commandDto);
 
-        CommandDto commandDtoAfter = commandService.getUserActiveCommand("hellohello");
-        assertNotNull(commandDtoAfter);
-        assertEquals("Test command", commandDtoAfter.getCommandName());
-        assertEquals("Specification changed", commandDtoAfter.getSpecification());
-        assertEquals(2, commandDtoAfter.getMenuItemCommandDtos().size());
-        assertEquals(new Integer(2), commandDtoAfter.getMenuItemCommandDtos().get(0).getAmount());
+        Command commandAfter = commandRepository.findByCommandNameWithItems(commandDto.getCommandName());
+        assertNotNull(commandAfter);
+        assertEquals("Test command", commandAfter.getCommandName());
+        assertEquals("Specification changed", commandAfter.getSpecification());
+        assertEquals(2, commandAfter.getMenuItemCommands().size());
+        assertEquals(new Integer(2), commandAfter.getMenuItemCommands().get(0).getAmount());
     }
 
     @Test

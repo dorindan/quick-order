@@ -11,9 +11,6 @@ import ro.quickorder.backend.model.enumeration.CommandStatus;
 @Repository
 public interface CommandRepository extends JpaRepository<Command, Long> {
 
-    @Query(value = "Select c FROM Command c left join fetch c.menuItemCommands where c.status = :status ")
-    Command findActiveByUser(CommandStatus status);
-
     @Query(value = "Select c FROM Command c left join fetch c.menuItemCommands where c.commandName = :commandName")
     Command findByCommandNameWithItems(String commandName);
 
