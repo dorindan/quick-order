@@ -1,8 +1,6 @@
 package ro.quickorder.backend.model;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
 
 import javax.persistence.*;
@@ -26,7 +24,7 @@ public class Command {
     private CommandStatus status;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")
-    private User users;
+    private User user;
     @OneToMany(mappedBy = "command")
     private List<MenuItemCommand> menuItemCommands;
     @OneToOne
@@ -122,11 +120,11 @@ public class Command {
     }
 
     public User getUser() {
-        return users;
+        return user;
     }
 
     public void setUser(User users) {
-        this.users = users;
+        this.user = users;
     }
 
     @Override
@@ -143,12 +141,12 @@ public class Command {
                 Objects.equals(bill, command.bill) &&
                 Objects.equals(table, command.table) &&
                 Objects.equals(reservations, command.reservations) &&
-                Objects.equals(users, command.users);
+                Objects.equals(user, command.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, commandName, specification, isPacked, status, menuItemCommands, bill, table, reservations, users);
+        return Objects.hash(id, commandName, specification, isPacked, status, menuItemCommands, bill, table, reservations, user);
     }
 
     @Override
