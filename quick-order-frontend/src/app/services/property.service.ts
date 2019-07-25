@@ -4,6 +4,7 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
 import {Menu} from '../models/Menu';
 import {Property} from '../models/Property';
+import {Reservation} from "../models/Reservation";
 
 @Injectable({
   providedIn: 'root'
@@ -18,4 +19,9 @@ export class PropertyService {
   getBistroProperty(): Observable<Property> {
     return this.apiService.getRequest('/api/property/bistro');
   }
+
+  setBistroProperty(property: Property): Observable<any>{
+    return this.apiService.postRequest('/api/property/updateProperty', property);
+  }
+
 }

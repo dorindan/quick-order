@@ -37,6 +37,7 @@
     "logout": "Logout",
     "language": "Language ",
     "confirmReservations": "Confirm Reservations",
+    "propertyAdministration": "Property administration",
     "log": "My Reservations"
   },
   "startPage": {
@@ -134,6 +135,19 @@
   "contact":{
     "open" : "Opens at:",
     "close" : "Closes at:"
+  },
+  "property":{
+    "property": "Restaurant properties",
+    "startTime": "Opening hour",
+    "endTime": "Closing hour",
+    "location": "Address",
+    "locationLatitude": "Adress latitude",
+    "locationLongitude": "Address longitude",
+    "email": "Email",
+    "restaurantName": "Restaurant Name",
+    "edit": "Edit",
+    "lmessage": "(Depends on location. It is used for google maps and can be found on google maps)",
+    "timeConditions": "must be an integer between 0 and 24"
   },
   "a": {
     "reserve": "Reservations online 24/7",

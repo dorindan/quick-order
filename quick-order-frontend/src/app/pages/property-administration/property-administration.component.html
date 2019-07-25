@@ -1,0 +1,83 @@
+<div class="card property-panel">
+  <div class="card-header panel-heading">
+    <h1 translate="">property.property</h1>
+  </div>
+  <div class="card-body">
+    <form style="display: block;">
+
+      <!-- startTime -->
+      <div class="form-group">
+        <div ng-controller="Main">
+          <label><b translate="">property.startTime</b></label>
+          &nbsp;
+          <label class="red small" *ngIf="!this.rightStartTime" translate="">property.timeConditions</label>
+        </div>
+        <input id="startTime" type="text" (focusout)="validateStartTime()" name="text" class="form-control" value="cinemagia" [(ngModel)]="startTime" required>
+      </div>
+
+      <!-- endTime -->
+      <div class="form-group">
+        <div>
+          <label><b translate="">property.endTime</b></label>
+          &nbsp;
+          <label class="red small" *ngIf="!this.rightEndTime" translate="">property.timeConditions</label>
+        </div>
+        <input type="text" name="endTime" (focusout)="validateEndTime()" class="form-control" [(ngModel)]="endTime" required>
+      </div>
+
+      <!-- location -->
+      <div class="form-group">
+        <div>
+          <label><b translate="">property.location</b></label>
+        </div>
+        <input class="form-control" name="location" [(ngModel)]="location" required>
+      </div>
+
+      <!-- location latitude -->
+      <div class="form-group">
+        <div>
+          <label><b translate="">property.locationLatitude</b></label>
+          &nbsp;
+          <label class="small" *ngIf="!this.rightPass" translate="">property.lmessage</label>
+        </div>
+        <input class="form-control" name="locationLatitude" [(ngModel)]="locationLatitude" required>
+      </div>
+
+      <!-- location longitude-->
+      <div class="form-group">
+        <div>
+          <label><b translate="">property.locationLongitude</b></label>
+          &nbsp;
+          <label class="small"  translate="">property.lmessage</label>
+        </div>
+        <input class="form-control" name="locationLongitude" [(ngModel)]="locationLongitude" required>
+      </div>
+
+      <!-- email -->
+      <div class="form-group">
+        <div>
+          <label><b translate="">property.email</b></label>
+          &nbsp;
+          <label class="red small" *ngIf="!this.rightEmail" translate="">register.emailConditions</label>
+        </div>
+        <input class="form-control" name="email" (focusout)="validateEmail()" [(ngModel)]="email" required>
+      </div>
+
+      <!-- restaurant name -->
+      <div class="form-group">
+        <div>
+          <label><b translate="">property.restaurantName</b></label>
+        </div>
+        <input class="form-control" name="restaurantName" [(ngModel)]="restaurantName" required>
+      </div>
+
+      <div class="form-group">
+        <button class="form-control btn-property" translate="" type="submit" (click)='updateProperties()'>property.edit</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+

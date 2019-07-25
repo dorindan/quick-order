@@ -18,8 +18,8 @@ public class PropertyDto {
 
     private String email;
 
-    public PropertyDto(String numeRestaurant, LocalTime startProgramTime, LocalTime endProgramTime, String streetName, Double latitude, Double longitude, String email) {
-        this.restaurantName = numeRestaurant;
+    public PropertyDto(String restaurantName, LocalTime startProgramTime, LocalTime endProgramTime, String streetName, Double latitude, Double longitude, String email) {
+        this.restaurantName = restaurantName;
         this.startProgramTime = startProgramTime;
         this.endProgramTime = endProgramTime;
         this.streetName = streetName;
@@ -31,12 +31,12 @@ public class PropertyDto {
     public PropertyDto() {
     }
 
-    public String getNumeRestaurant() {
+    public String getRestaurantName() {
         return restaurantName;
     }
 
-    public void setNumeRestaurant(String numeRestaurant) {
-        this.restaurantName = numeRestaurant;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public LocalTime getStartProgramTime() {
@@ -90,7 +90,7 @@ public class PropertyDto {
     @Override
     public String toString() {
         return "PropertyDto{" +
-                "numeRestaurant='" + restaurantName + '\'' +
+                "restaurantName='" + restaurantName + '\'' +
                 ", startProgramTime=" + startProgramTime +
                 ", endProgramTime=" + endProgramTime +
                 ", streetName='" + streetName + '\'' +

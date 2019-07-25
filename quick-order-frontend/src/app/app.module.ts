@@ -26,6 +26,7 @@ import {httpInterceptorProviders} from './auth/auth-interceptor';
 import { FinishCommandComponent } from './pages/finish-command/finish-command.component';
 import {ContactComponent} from './pages/contact/contact.component';
 import {AgmCoreModule} from '@agm/core';
+import { PropertyAdministrationComponent } from './pages/property-administration/property-administration.component';
 import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
 
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     WaiterPageComponent,
     TableComponent,
     ContactComponent,
+    PropertyAdministrationComponent,
     FinishCommandComponent,
     ReservationLogComponent,
     AboutUsComponent
