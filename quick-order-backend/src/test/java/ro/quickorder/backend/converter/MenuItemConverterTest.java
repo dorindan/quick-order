@@ -1,11 +1,6 @@
 package ro.quickorder.backend.converter;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.MenuItemDto;
@@ -13,8 +8,6 @@ import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 /**
  * Unit test for {@link MenuItemConverter}
@@ -23,7 +16,7 @@ import static org.mockito.Mockito.when;
  */
 public class MenuItemConverterTest {
 
-    private MenuItemConverter menuItemConverter = new MenuItemConverter(new IngredientConverter(),new MenuItemTypeConverter());
+    private MenuItemConverter menuItemConverter = new MenuItemConverter(new IngredientConverter(), new MenuItemTypeConverter());
 
     @Test
     public void testConvertMenuItemToDto() {

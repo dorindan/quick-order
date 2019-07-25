@@ -80,20 +80,16 @@ public class UsersResourceTest {
         assertEquals(Language.RO, userAttribute.getLanguage());
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testSetPreferenceAttributeIsNull() {
         UserDto userDto = new UserDto();
         userDto.setEmail("alex@yahoo.com");
         userDto.setUsername("Alex");
-        try {
             userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
             fail();
-        } catch (BadRequestException ex) {
-            assertEquals("No attribute!", ex.getMessage());
-        }
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testSetPreferenceBadUser() {
         UserAttributeDto attributeDto = new UserAttributeDto();
         attributeDto.setLanguage(Language.RO);
@@ -101,12 +97,8 @@ public class UsersResourceTest {
         userDto.setEmail("newUser@yahoo.com");
         userDto.setUsername("newUser");
         userDto.setUserAttributeDto(attributeDto);
-        try {
             userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
             fail();
-        } catch (NotFoundException ex) {
-            assertEquals("User not found", ex.getMessage());
-        }
     }
 
     @Test
@@ -118,7 +110,7 @@ public class UsersResourceTest {
         assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
 
-    @Test
+    @Test(expected = InternalAuthenticationServiceException.class)
     public void testLoginWrongUsername() {
         UserDto userDto = new UserDto();
         userDto.setUsername("wromg_username");
@@ -126,15 +118,11 @@ public class UsersResourceTest {
         Set<String> roles = new HashSet<String>();
         roles.add("user");
         userDto.setRole(roles);
-        try {
             userService.login(userDto);
             fail("The username should be wrong");
-        } catch (InternalAuthenticationServiceException ex) {
-            assertEquals("User is null!", ex.getMessage());
-        }
     }
 
-    @Test
+    @Test(expected = BadCredentialsException.class)
     public void testLogInWrongPassword() {
         UserDto userDto = new UserDto();
         userDto.setUsername("hellohello");
@@ -142,12 +130,8 @@ public class UsersResourceTest {
         Set<String> roles = new HashSet<String>();
         roles.add("user");
         userDto.setRole(roles);
-        try {
             userService.login(userDto);
             fail("The password should be wrong");
-        } catch (BadCredentialsException ex) {
-            assertEquals("Bad credentials", ex.getMessage());
-        }
     }
 
     @Test
@@ -165,28 +149,20 @@ public class UsersResourceTest {
         assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testSingUpUserIsNull() {
-        try {
             userService.signUp(null);
             fail("User is null, it should throw a BadRequestException");
-        } catch (BadRequestException e) {
-            assertEquals("User is null!", e.getMessage());
-        }
     }
 
-    @Test
+    @Test(expected = ForbiddenException.class)
     public void testSignUpInvalidUsername() {
-        try {
             UserDto userDtoTest = new UserDto();
             userDtoTest.setUsername("hello)");
             userDtoTest.setPassword("password");
             userDtoTest.setEmail("hello@yahoo.com");
             userService.signUp(userDtoTest);
             fail("The username should be invalid, it contains characters that are not allowed!");
-        } catch (ForbiddenException e) {
-            assertEquals("UserName has characters that are not allowed!", e.getMessage());
-        }
     }
 
     @Test

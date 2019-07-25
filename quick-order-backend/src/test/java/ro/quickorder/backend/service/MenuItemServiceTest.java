@@ -22,14 +22,12 @@ import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
 import javax.inject.Inject;
-
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author R. Lupoaie
@@ -55,9 +53,8 @@ public class MenuItemServiceTest {
     private MenuItemTypeRepository menuItemTypeRepository;
 
 
-
     @Before
-    public void setUp(){
+    public void setUp() {
 
 
         MenuItemType menuItemType = new MenuItemType("desert");
@@ -82,14 +79,12 @@ public class MenuItemServiceTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
 
         menuItemRepository.deleteAll();
         ingredientRepository.deleteAll();
         menuItemTypeRepository.deleteAll();
     }
-
-
 
 
     @Test
@@ -101,7 +96,7 @@ public class MenuItemServiceTest {
 
     @Test
     public void testAddMenuItem() {
-        MenuItemDto menuItemDto= new MenuItemDto("Salad", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
+        MenuItemDto menuItemDto = new MenuItemDto("Salad", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
 
         List<IngredientDto> ingredientDtos = ingredientService.getAll();
 
@@ -125,77 +120,55 @@ public class MenuItemServiceTest {
         assertEquals(2, newMenuItems.get(3).getIngredients().size());
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testAddMenuItemWhenNameIsNull() {
-        MenuItemDto menuItemDto= new MenuItemDto();
-        try {
-            menuItemService.addMenuItem(menuItemDto);
-            fail("MenuItem has name equals with null, error should pop-up");
-        } catch (BadRequestException e){
-            assertEquals("Name can not be null",  e.getMessage());
-        }
+        MenuItemDto menuItemDto = new MenuItemDto();
+        menuItemService.addMenuItem(menuItemDto);
+        fail("MenuItem has name equals with null, error should pop-up");
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testAddMenuItemWhenTypeIsNotFound() {
         MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("dose not exist");
-        MenuItemDto menuItemDto= new MenuItemDto("Salad", "the most original description!", menuItemTypeDto, null, 5, 18);
-        try {
-            menuItemService.addMenuItem(menuItemDto);
-            fail("MenuItem has has type that should not been found");
-        } catch (NotFoundException e){
-            assertEquals("MenuItemType was not found!",  e.getMessage());
-        }
+        MenuItemDto menuItemDto = new MenuItemDto("Salad", "the most original description!", menuItemTypeDto, null, 5, 18);
+        menuItemService.addMenuItem(menuItemDto);
+        fail("MenuItem has has type that should not been found");
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testAddMenuItemWhenItemNameAlreadyExists() {
-        MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
-
-        try {
-            menuItemService.addMenuItem(menuItemDto);
-            fail("MenuItem already exists, error should pop-up");
-        } catch (BadRequestException e){
-            assertEquals("MenuItem already exists!",  e.getMessage());
-        }
+        MenuItemDto menuItemDto = new MenuItemDto("Name1", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
+        menuItemService.addMenuItem(menuItemDto);
+        fail("MenuItem already exists, error should pop-up");
     }
 
     @Test
     public void testUpdateMenuItem() {
-        MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
+        MenuItemDto menuItemDto = new MenuItemDto("Name1", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
 
         menuItemService.updateMenuItem(menuItemDto);
 
-        MenuItem newMenuItem =  menuItemRepository.findByName(menuItemDto.getName());
+        MenuItem newMenuItem = menuItemRepository.findByName(menuItemDto.getName());
 
-        assertEquals(menuItemDto.getPrice(),newMenuItem.getPrice());
-        assertEquals(menuItemDto.getDescription(),newMenuItem.getDescription());
-        assertEquals(menuItemDto.getPreparationDurationInMinutes(),newMenuItem.getPreparationDurationInMinutes());
-        assertEquals(menuItemDto.getPrice(),newMenuItem.getPrice());
+        assertEquals(menuItemDto.getPrice(), newMenuItem.getPrice());
+        assertEquals(menuItemDto.getDescription(), newMenuItem.getDescription());
+        assertEquals(menuItemDto.getPreparationDurationInMinutes(), newMenuItem.getPreparationDurationInMinutes());
+        assertEquals(menuItemDto.getPrice(), newMenuItem.getPrice());
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testUpdateMenuItemWhenUserDoseNotExist() {
-        MenuItemDto menuItemDto= new MenuItemDto("Name", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
-
-        try {
-            menuItemService.updateMenuItem(menuItemDto);
-            fail("User dose not exist, error should pop-up");
-        } catch (NotFoundException e){
-            assertEquals("MenuItem not found!", e.getMessage());
-        }
+        MenuItemDto menuItemDto = new MenuItemDto("Name", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
+        menuItemService.updateMenuItem(menuItemDto);
+        fail("User dose not exist, error should pop-up");
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testUpdateMenuItemWhenTypeIsNotFound() {
         MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("dose not exist");
-        MenuItemDto menuItemDto= new MenuItemDto("Name1", "the most original description!", menuItemTypeDto, null, 5, 18);
-        try {
-            menuItemService.updateMenuItem(menuItemDto);
-            fail("MenuItem has has type that should not been found");
-        } catch (NotFoundException e){
-            assertEquals("MenuItemType was not found!",  e.getMessage());
-        }
+        MenuItemDto menuItemDto = new MenuItemDto("Name1", "the most original description!", menuItemTypeDto, null, 5, 18);
+        menuItemService.updateMenuItem(menuItemDto);
+        fail("MenuItem has has type that should not been found");
     }
 
     @Test
@@ -212,15 +185,10 @@ public class MenuItemServiceTest {
         assertEquals(2, newMenuItems.size());
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testRemoveMenuItemWhenMenuItemDoseNotExist() {
-        MenuItemDto menuItemDto= new MenuItemDto("Name", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
-
-        try {
+        MenuItemDto menuItemDto = new MenuItemDto("Name", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
             menuItemService.removeMenuItem(menuItemDto.getName());
             fail("User dose not exist, error should pop-up");
-        } catch (NotFoundException e){
-            assertEquals("MenuItem not found!", e.getMessage());
-        }
     }
 }
