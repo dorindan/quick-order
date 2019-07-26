@@ -40,21 +40,7 @@ public class CommandService {
     private UserRepository userRepository;
 
     public void addCommand(CommandDto commandDto) {
-        Command command = new Command();
-        // find user
-        User user = userRepository.findByUsername(commandDto.getUserDto().getUsername());
-        if (user == null) {
-            LOG.error("User not found");
-            throw new NotFoundException("User not found");
-        }
-        // set command
-        command.setUser(user);
-        command.setCommandName(UUID.randomUUID().toString());
-        command.setStatus(CommandStatus.DONE);
-        command.setSpecification(commandDto.getSpecification());
-        command.setPacked(commandDto.isPacked());
-        Command savedCommand = commandRepository.save(command);
-
+        Command savedCommand = mapCommandEntityFromCommandDto(commandDto);
         // save and set MenuItemCommand
         for(MenuItemCommandDto menuItemCommandDto : commandDto.getMenuItemCommandDtos() ){
             savedCommand.setMenuItemCommands(new ArrayList<>());
@@ -71,6 +57,23 @@ public class CommandService {
             savedCommand.getMenuItemCommands().add(savedMenuItemCommand);
         }
         commandRepository.save(savedCommand);
+    }
+
+    private Command mapCommandEntityFromCommandDto(CommandDto commandDto){
+        Command command = new Command();
+        // find user
+        User user = userRepository.findByUsername(commandDto.getUserDto().getUsername());
+        if (user == null) {
+            LOG.error("User not found");
+            throw new NotFoundException("User not found");
+        }
+        // set command
+        command.setUser(user);
+        command.setCommandName(UUID.randomUUID().toString());
+        command.setStatus(CommandStatus.DONE);
+        command.setSpecification(commandDto.getSpecification());
+        command.setPacked(commandDto.isPacked());
+        return commandRepository.save(command);
     }
 
     public void updateCommand(CommandDto receivedCommandDto) {
