@@ -67,25 +67,18 @@ public class MenuItemTypeServiceTest {
         assertEquals(4, menuItemTypesAfter.size());
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testAddMenuItemTypeWithTypeToShort() {
-        try {
-            MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("f");
-            menuItemTypeService.addMenuItemType(menuItemTypeDto);
-            fail("Type name is to short, it should fail!");
-        }catch (BadRequestException e){
-            assertEquals(e.getMessage(), "Item type is to short!");
-        }
+        MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("f");
+        menuItemTypeService.addMenuItemType(menuItemTypeDto);
+        fail("Type name is to short, it should fail!");
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testAddMenuItemTypeWithTypeThatAlreadyExists() {
-        try {
-            MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("legume");
-            menuItemTypeService.addMenuItemType(menuItemTypeDto);
-            fail("Type name already exists, it should fail!");
-        }catch (NotFoundException e){
-            assertEquals(e.getMessage(), "Item type already exists!");
-        }
+        MenuItemTypeDto menuItemTypeDto = new MenuItemTypeDto("legume");
+        menuItemTypeService.addMenuItemType(menuItemTypeDto);
+        fail("Type name already exists, it should fail!");
+
     }
 }

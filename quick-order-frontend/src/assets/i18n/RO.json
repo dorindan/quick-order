@@ -125,7 +125,13 @@
     "floor": "  Etaj: ",
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
-    "acceptReservation": "Acceptă Rezervarea"
+    "acceptReservation": "Accepta Rezervarea"
+  },
+  "menu": {
+    "quantity": "Cantitate: ",
+    "selected": "produse selectate",
+    "viewCommand": "Vizualizare comandă",
+    "save": "Salvează"
   },
   "a": {
     "reserve": "Rezervări online 24/7",
