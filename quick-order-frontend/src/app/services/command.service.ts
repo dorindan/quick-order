@@ -24,5 +24,4 @@ export class CommandService {
     return this.apiService.postRequest('/api/command/add/', command);
   }
 
-
 }
