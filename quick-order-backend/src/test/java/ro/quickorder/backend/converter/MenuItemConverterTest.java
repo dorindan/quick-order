@@ -8,7 +8,6 @@ import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.any;
 
 /**
  * Unit test for {@link MenuItemConverter}
@@ -17,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
  */
 public class MenuItemConverterTest {
 
-    private MenuItemConverter menuItemConverter = new MenuItemConverter(new IngredientConverter(),new MenuItemTypeConverter());
+    private MenuItemConverter menuItemConverter = new MenuItemConverter(new IngredientConverter(), new MenuItemTypeConverter());
 
     @Test
     public void testConvertMenuItemToDto() {
