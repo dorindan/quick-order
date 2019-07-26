@@ -10,6 +10,10 @@ public enum RoleName {
                 return ROLE_WAITER;
             case "user":
                 return ROLE_USER;
+            case "ROLE_WAITER":
+                return ROLE_WAITER;
+            case "ROLE_USER":
+                return ROLE_USER;
             default:
                 throw new IllegalStateException("Invalid role name: " + roleName);
         }
