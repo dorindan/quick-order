@@ -125,7 +125,7 @@ public class UsersResourceTest {
         userDto.setPassword("hellohello");
         Set<String> roles = new HashSet<String>();
         roles.add("user");
-        userDto.setRole(roles);
+        userDto.setRoles(roles);
         try {
             userService.login(userDto);
             fail("The username should be wrong");
@@ -141,7 +141,7 @@ public class UsersResourceTest {
         userDto.setPassword("parola1213");
         Set<String> roles = new HashSet<String>();
         roles.add("user");
-        userDto.setRole(roles);
+        userDto.setRoles(roles);
         try {
             userService.login(userDto);
             fail("The password should be wrong");
@@ -160,7 +160,7 @@ public class UsersResourceTest {
         roleRepository.save(role);
         Set<String> roles = new HashSet<String>();
         roles.add("user");
-        userDto.setRole(roles);
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
@@ -198,7 +198,7 @@ public class UsersResourceTest {
         userDto.setEmail("helloo@yahoo.com");
         Set<String> roles = new HashSet<String>();
         roles.add("user");
-        userDto.setRole(roles);
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("400 BAD_REQUEST", responseEntity.getStatusCode().toString());
         ResponseMessage rm = (ResponseMessage) responseEntity.getBody();
@@ -213,11 +213,29 @@ public class UsersResourceTest {
         userDto.setEmail("hello@yahoo.com");
         Set<String> roles = new HashSet<String>();
         roles.add("user");
-        userDto.setRole(roles);
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("400 BAD_REQUEST", responseEntity.getStatusCode().toString());
         ResponseMessage rm = (ResponseMessage) responseEntity.getBody();
         assertEquals(new ResponseMessage("Fail -> Email is already in use!").getMessage(), rm.getMessage());
     }
 
+    @Test
+    public void testUpdateUser() {
+        UserDto userDto = new UserDto();
+        userDto.setUsername("hellohello");
+        userDto.setPassword("hellohello");
+        userDto.setEmail("hello@yahoo.com");
+        Set<String> roles = new HashSet<String>();
+        Set<String> roles2 = new HashSet<String>();
+        roles.add("user");
+        Role role = new Role(RoleName.ROLE_USER);
+        roleRepository.save(role);
+        userDto.setRoles(roles);
+        userService.updateUser(userDto);
+        assertEquals(1, userRepository.findByUsername("hellohello").getRoles().size());
+        userDto.setRoles(roles2);
+        userService.updateUser(userDto);
+        assertEquals(0, userRepository.findByUsername("hellohello").getRoles().size());
+    }
 }

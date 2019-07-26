@@ -38,6 +38,7 @@
     "language": "Limba: ",
     "confirmReservations": "Confirmare Rezervări",
     "propertyAdministration": "Administrare proprietati",
+    "userAdministration": "Administrare utilizatori",
     "log": "Rezervările mele"
   },
   "startPage": {
@@ -140,11 +141,11 @@
     "fresh": "Produse proaspete.",
     "fresh2": "Susținem producătorii locali. Proaspăt în fiecare zi."
   },
-  "contact":{
-    "open" : "Deschide la:",
-    "close" : "Inchide la:"
-},
-  "property":{
+  "contact": {
+    "open": "Deschide la:",
+    "close": "Inchide la:"
+  },
+  "property": {
     "property": "Proprietati restaurant",
     "startTime": "Ora deschidere",
     "endTime": "Ora inchidere",
@@ -162,5 +163,11 @@
     "resFor": "Rezervare pentru ",
     "persons": " persoane",
     "delete": "Șterge rezervarea"
+  },
+  "userAdministration": {
+    "title": "Administrare roluri utilizatori",
+    "confirm": "Confirmare schimbare",
+    "username": "Numele de utilizator: ",
+    "email": "Email: "
   }
 }

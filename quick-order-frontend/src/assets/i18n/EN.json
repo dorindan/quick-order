@@ -38,6 +38,7 @@
     "language": "Language ",
     "confirmReservations": "Confirm Reservations",
     "propertyAdministration": "Property administration",
+    "userAdministration": "User administration",
     "log": "My Reservations"
   },
   "startPage": {
@@ -126,11 +127,11 @@
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation"
   },
-  "contact":{
-    "open" : "Opens at:",
-    "close" : "Closes at:"
+  "contact": {
+    "open": "Opens at:",
+    "close": "Closes at:"
   },
-  "property":{
+  "property": {
     "property": "Restaurant properties",
     "startTime": "Opening hour",
     "endTime": "Closing hour",
@@ -162,5 +163,9 @@
     "resFor": "Reservation for ",
     "persons": " persons",
     "delete": "Delete my Reservation"
+  },
+  "userAdministration": {
+    "title": "Administration of user roles",
+    "confirm": "Confirm the change"
   }
 }

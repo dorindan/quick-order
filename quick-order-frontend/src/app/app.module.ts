@@ -28,6 +28,7 @@ import { AgmCoreModule } from '@agm/core';
 import { PropertyAdministrationComponent } from './pages/property-administration/property-administration.component';
 import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
+import { UserAdministrationComponent } from './pages/user-administration/user-administration.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -51,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ContactComponent,
     PropertyAdministrationComponent,
     ReservationLogComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    UserAdministrationComponent
   ],
   imports: [
     BrowserModule,

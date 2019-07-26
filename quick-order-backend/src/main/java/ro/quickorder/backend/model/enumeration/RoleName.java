@@ -14,4 +14,15 @@ public enum RoleName {
                 throw new IllegalStateException("Invalid role name: " + roleName);
         }
     }
+
+    public static String fromEnumToString(RoleName roleName) {
+        switch (roleName) {
+            case ROLE_WAITER:
+                return "waiter";
+            case ROLE_USER:
+                return "user";
+            default:
+                return "";
+        }
+    }
 }
