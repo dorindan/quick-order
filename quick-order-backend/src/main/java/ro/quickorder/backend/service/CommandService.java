@@ -39,24 +39,28 @@ public class CommandService {
     @Autowired
     private UserRepository userRepository;
 
-    public void addCommand(CommandDto commandDto) {
+    public CommandDto addCommand(CommandDto commandDto) {
         Command savedCommand = mapCommandEntityFromCommandDto(commandDto);
         // save and set MenuItemCommand
         for(MenuItemCommandDto menuItemCommandDto : commandDto.getMenuItemCommandDtos() ){
-            savedCommand.setMenuItemCommands(new ArrayList<>());
-            MenuItem menuItem = menuItemRepository.findByName(menuItemCommandDto.getMenuItemDto().getName());
-            if (menuItem == null) {
-                LOG.error("Item not found");
-                throw new NotFoundException("Item not found");
-            }
-            MenuItemCommand menuItemCommand = new MenuItemCommand();
-            menuItemCommand.setMenuItem(menuItem);
-            menuItemCommand.setCommand(savedCommand);
-            menuItemCommand.setAmount(menuItemCommandDto.getAmount());
-            MenuItemCommand savedMenuItemCommand = menuItemCommandRepository.save(menuItemCommand);
+            MenuItemCommand savedMenuItemCommand = saveMenuItemCommand( savedCommand, menuItemCommandDto);
             savedCommand.getMenuItemCommands().add(savedMenuItemCommand);
         }
-        commandRepository.save(savedCommand);
+        return commandConverter.toCommandDto(commandRepository.save(savedCommand));
+    }
+
+    private MenuItemCommand saveMenuItemCommand(Command savedCommand, MenuItemCommandDto menuItemCommandDto){
+        savedCommand.setMenuItemCommands(new ArrayList<>());
+        MenuItem menuItem = menuItemRepository.findByName(menuItemCommandDto.getMenuItemDto().getName());
+        if (menuItem == null) {
+            LOG.error("Item not found");
+            throw new NotFoundException("Item not found");
+        }
+        MenuItemCommand menuItemCommand = new MenuItemCommand();
+        menuItemCommand.setMenuItem(menuItem);
+        menuItemCommand.setCommand(savedCommand);
+        menuItemCommand.setAmount(menuItemCommandDto.getAmount());
+        return menuItemCommandRepository.save(menuItemCommand);
     }
 
     private Command mapCommandEntityFromCommandDto(CommandDto commandDto){

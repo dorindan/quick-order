@@ -16,15 +16,11 @@ export class CommandService {
   ) {
   }
 
-  hasActiveCommand(userName: string): Observable<Command> {
-    return this.apiService.getRequest('/api/command/hasCommand/' + userName);
-  }
-
   updateCommand(command: Command): Observable<any> {
     return this.apiService.putRequest('/api/command/update/', command);
   }
 
-  addCommand(command: Command): Observable<any> {
+  addCommand(command: Command): Observable<Command> {
     return this.apiService.postRequest('/api/command/add/', command);
   }
 

@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MenuItemType} from '../../models/MenuItemType';
 import {MenuItem} from '../../models/MenuItem';
 import {Command} from '../../models/Command';
 import {MenuService} from '../../services/menu.service';
@@ -18,10 +17,10 @@ import {TokenStorageService} from '../../auth/token-storage.service';
 })
 export class FinishCommandComponent implements OnInit {
   public amounts = [];
-  public newCommand = new Command();
+  public command = new Command();
   public totalAmount = 0;
   public specification = '';
-  public isPacked = false;
+  public packed = false;
 
   constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService, private menuService: MenuService, private router: Router,
               private snackBar: MatSnackBar, private commandService: CommandService, private tokenStorage: TokenStorageService) {
@@ -40,40 +39,40 @@ export class FinishCommandComponent implements OnInit {
   }
 
   reloadCommand() {
-    if (this.storage.get('Command')) {
-      this.newCommand = this.storage.get('Command') as Command;
+    if (this.storage.get('command')) {
+      this.command = this.storage.get('command') as Command;
       this.calculateTotalAmount();
     } else {
-      this.newCommand.menuItemCommandDtos = [];
+      this.command.menuItemCommandDtos = [];
     }
   }
 
   calculateTotalAmount() {
-    for (const item of this.newCommand.menuItemCommandDtos) {
+    for (const item of this.command.menuItemCommandDtos) {
       this.totalAmount += (item as MenuItemCommand).amount;
     }
   }
 
   deleteMenuItemFromCommand(menuItem: MenuItem) {
-    for (const item of this.newCommand.menuItemCommandDtos) {
+    for (const item of this.command.menuItemCommandDtos) {
       if (menuItem.name === item.menuItemDto.name) {
-        this.newCommand.menuItemCommandDtos =
-          this.newCommand.menuItemCommandDtos.filter(theItem => theItem.menuItemDto.name !== item.menuItemDto.name);
+        this.command.menuItemCommandDtos =
+          this.command.menuItemCommandDtos.filter(theItem => theItem.menuItemDto.name !== item.menuItemDto.name);
       }
     }
     this.saveCommandInSession();
   }
 
   saveCommandInSession() {
-    this.storage.set('Command', this.newCommand);
+    this.storage.set('command', this.command);
   }
 
   finishCommand() {
-    this.newCommand.specification = this.specification;
-    this.newCommand.packed = this.isPacked;
-    this.newCommand.userDto = new User(this.tokenStorage.getUsername(), '');
-    this.commandService.addCommand(this.newCommand).subscribe(rez => {
-      this.storage.set('Command', new Command());
+    this.command.specification = this.specification;
+    this.command.packed = this.packed;
+    this.command.userDto = new User(this.tokenStorage.getUsername(), '');
+    this.commandService.addCommand(this.command).subscribe(rez => {
+      this.storage.set('command', new Command());
       this.router.navigate(['menu']);
     }, error => {
       if (error.status === 404) { // not found exception
@@ -86,7 +85,7 @@ export class FinishCommandComponent implements OnInit {
 
   totalPrice(): number {
     let sum = 0;
-    for (const menuItemCommand of this.newCommand.menuItemCommandDtos) {
+    for (const menuItemCommand of this.command.menuItemCommandDtos) {
       sum += menuItemCommand.amount * menuItemCommand.menuItemDto.price;
     }
     return sum;

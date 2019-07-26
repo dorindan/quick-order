@@ -13,8 +13,8 @@ public class  CommandResource {
     CommandService commandService;
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public void addCommand(@RequestBody CommandDto commandDto) {
-        commandService.addCommand(commandDto);
+    public CommandDto addCommand(@RequestBody CommandDto commandDto) {
+        return commandService.addCommand(commandDto);
     }
 
 

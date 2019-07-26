@@ -39,8 +39,8 @@ export class MenuComponent implements OnInit {
   }
 
   reloadCommand() {
-    if (this.storage.get('Command')) {
-      this.newCommand = this.storage.get('Command') as Command;
+    if (this.storage.get('command')) {
+      this.newCommand = this.storage.get('command') as Command;
       this.calculateTotalAmount();
     } else {
       this.newCommand.menuItemCommandDtos = [];
@@ -82,7 +82,7 @@ export class MenuComponent implements OnInit {
     this.totalAmount += this.amounts[amountIndex];
     this.showSnackbar(this.amounts[amountIndex] + ' ' + menuItem.name + ' successfully added');
     this.amounts[amountIndex] = 1;
-    this.storage.set('Command', this.newCommand);
+    this.storage.set('command', this.newCommand);
   }
 
   finishCommand() {

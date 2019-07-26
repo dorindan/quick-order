@@ -2,7 +2,7 @@
 <div class="menu-body">
   <div class="menu-section">
 
-    <div class="menu-item" *ngFor="let menuItemCommand of this.newCommand.menuItemCommandDtos; let i = index">
+    <div class="menu-item" *ngFor="let menuItemCommand of this.command.menuItemCommandDtos; let i = index">
       <div>
         <div class="media">
           <img src="/assets/img/QuickOrder.png" class="mr-3" alt="...">
@@ -49,7 +49,7 @@
       <label data-error="wrong" data-success="right"
              translate="">finishCommand.isPacked</label>
       <div>
-        <input type="checkbox" class="form-control validate" id="isPacked" [(ngModel)]="this.isPacked">
+        <input type="checkbox" class="form-control validate" id="isPacked" [(ngModel)]="this.packed">
       </div>
       <br>
       <br>
