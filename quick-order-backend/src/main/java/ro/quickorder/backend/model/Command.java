@@ -1,6 +1,8 @@
 package ro.quickorder.backend.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
 
 import javax.persistence.*;
@@ -26,6 +28,7 @@ public class Command {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "command")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<MenuItemCommand> menuItemCommands;
     @OneToOne
     @JoinColumn(name = "bill_id")
