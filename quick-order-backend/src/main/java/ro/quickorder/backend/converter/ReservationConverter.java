@@ -29,8 +29,9 @@ public class ReservationConverter {
 
     }
 
-    public ReservationConverter(TableFoodConverter tableFoodConverter){
+    public ReservationConverter(TableFoodConverter tableFoodConverter, UserConverter userConverter){
         this.tableFoodConverter = tableFoodConverter;
+        this.userConverter = userConverter;
     }
 
     public Reservation toReservation(ReservationDto reservationDto) {

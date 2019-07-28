@@ -29,4 +29,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query(value = "Select r.tables From Reservation r where r.checkInTime < :maxCheckOutTime and  r.checkOutTime > :minCheckInTime")
     List<TableFood> findTablesWithReservationsBetween(@Param("minCheckInTime") Timestamp minCheckInTime, @Param("maxCheckOutTime") Timestamp maxCheckOutTime);
+
+    @Query(value = "FROM Reservation r WHERE r.user.username = :username ORDER BY r.checkInTime ASC ")
+    List<Reservation> findReservationsByUsername(@Param("username") String username);
+
+    @Query(value = "FROM Reservation r WHERE r.confirmed = false ORDER BY r.checkInTime DESC ")
+    List<Reservation> findReservationsUnconfirmed();
 }

@@ -36,7 +36,9 @@
     "contact": "Contact",
     "logout": "Iesire din cont",
     "language": "Limba: ",
-    "confirmReservations": "Confirmare Rezervări"
+    "confirmReservations": "Confirmare Rezervări",
+    "propertyAdministration": "Administrare proprietati",
+    "log": "Rezervările mele"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -111,7 +113,7 @@
     "back": "Înapoi",
     "sendReservation": "Trimite Rezervarea",
     "finish": "Trimite",
-    "choseTable": "Alege mesele*",
+    "chooseTable": "Alege mesele*",
     "table": "Masa: ",
     "seats": " Locuri: "
   },
@@ -123,5 +125,48 @@
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
     "acceptReservation": "Accepta Rezervarea"
+  },
+  "menu": {
+    "quantity": "Cantitate: ",
+    "selected": "produse selectate",
+    "viewCommand": "Vizualizare comandă",
+    "save": "Salvează"
+  },
+  "a": {
+    "reserve": "Rezervări online 24/7",
+    "open": "Deschis Luni-Duminică:"
+  },
+  "description": {
+    "healthy": "Rapid și sănătos.",
+    "healthy2": "Susținem mâncatul sănătos. Suntem ce mâncăm!",
+    "tasty": "Rapid și gustos.",
+    "tasty2": "Toată lumea apreciaza mâncarea bună.",
+    "comfy": "Plin de viață și confortabil.",
+    "comfy2": "Restaurantul nostru găzduiește evenimentele, întâlnirile sau ieșirile tale.",
+    "fresh": "Produse proaspete.",
+    "fresh2": "Susținem producătorii locali. Proaspăt în fiecare zi."
+  },
+  "contact":{
+    "open" : "Deschide la:",
+    "close" : "Inchide la:"
+},
+  "property":{
+    "property": "Proprietati restaurant",
+    "startTime": "Ora deschidere",
+    "endTime": "Ora inchidere",
+    "location": "Adresa",
+    "locationLatitude": "Adresa latitudine",
+    "locationLongitude": "Adresa longitudine",
+    "email": "Email",
+    "restaurantName": "Nume restaurant",
+    "edit": "Actualizare",
+    "lmessage": "(Depinde de locatie. Este folosita pentru google maps si poate fi gasita pe google maps)",
+    "timeConditions": "Trebuie sa fie un numar intreg intre 0 si 24"
+  },
+  "myRes": {
+    "myRes": "Rezervările mele",
+    "resFor": "Rezervare pentru ",
+    "persons": " persoane",
+    "delete": "Șterge rezervarea"
   }
 }

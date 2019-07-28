@@ -10,12 +10,12 @@
 }
 
 .menu-section-title {
-  font-family: georgia;
   font-size: 50px;
   display: block;
   font-weight: normal;
   margin: 20px 0;
   text-align: Center;
+  color:darkgreen;
 }
 
 .menu-item {
@@ -24,13 +24,11 @@
 }
 
 .menu-item-name {
-  font-family: helvetica;
   font-weight: bold;
   border-bottom: 2px dotted rgb(213, 213, 213);
 }
 
 .menu-item-description {
-  font-style: italic;
   font-size: .9em;
   line-height: 1.5em;
 }
@@ -38,6 +36,46 @@
 .menu-item-price {
   float: right;
   font-weight: bold;
-  font-family: arial;
   margin-top: -22px;
+}
+
+.inline {
+  display: inline;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.end {
+  text-align: end;
+}
+
+.smallInput {
+  width: 8%;
+}
+
+.iSize {
+  width: 5%;
+}
+
+.iconSize {
+  width: 6%;
+}
+
+
+.green {
+  color: darkgreen !important;
+  opacity: 0.4 !important;
+}
+
+.btn-secondary {
+  background-color: darkgreen !important;
+  opacity: 0.4 !important;
+}
+
+img {
+  width: 30%;
+  height: 20%;
+  object-fit: contain;
 }

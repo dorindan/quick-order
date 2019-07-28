@@ -1,0 +1,76 @@
+.red {
+  color: red;
+}
+
+.green{
+  color: darkgreen !important;
+  opacity:0.6;
+}
+
+.small {
+  font-size: 80%;
+}
+
+@media (min-width: 768px) {
+  .property-panel {
+    border-style: groove;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    min-height: 450px;
+  }
+}
+
+.property-panel>.panel-heading {
+  color: darkgreen;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.property-panel input[type="text"],.property-panel input[type="email"],.property-panel input[type="password"] {
+  height: 45px;
+  border: 1px solid #029f5b;
+  font-size: 100%;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+.property-panel input:hover,
+.property-panel input:focus {
+  outline:none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-color: #ccc;
+}
+
+.btn-property {
+  background-color: darkgreen !important;
+  opacity: 0.4;
+  font-weight: normal;
+  height: 50px;
+  text-transform: uppercase;
+  border-color: darkgreen;
+  color: white;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-login:hover,
+.btn-login:focus {
+  color: #fff;
+  background-color: #285028;
+  border-color: #285028;
+}
+
+.btn{
+  color: #ffffff !important;
+}
+
+.glyphicon-none:before {
+  content: "\2122";
+  color: transparent !important;
+}

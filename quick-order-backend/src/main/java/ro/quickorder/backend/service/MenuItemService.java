@@ -16,6 +16,7 @@ import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,8 +36,6 @@ public class MenuItemService {
     private IngredientRepository ingredientRepository;
     @Autowired
     private MenuItemConverter menuItemConverter;
-    @Autowired
-    private MenuItemTypeConverter menuItemTypeConverter;
 
     public List<MenuItemDto> getMenuItems() {
         return menuItemRepository.findAll().stream().map(menuItemConverter::toMenuItemDto).collect(Collectors.toList());
@@ -108,4 +107,5 @@ public class MenuItemService {
         }
         menuItemRepository.delete(menuItem);
     }
+
 }

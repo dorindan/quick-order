@@ -31,4 +31,12 @@ export class ReservationService {
   confirmReservation(confirmReservation: ConfirmReservation): Observable<any> {
     return this.apiService.putRequest('/api/reservation/confirm', confirmReservation);
   }
+
+  getReservationOfUser(): Observable<any> {
+    return this.apiService.getRequest('/api/reservation/actual-user');
+  }
+
+  deleteReservation(reservationName: string): Observable<any> {
+    return this.apiService.deleteRequest('/api/reservation/remove/' + reservationName);
+  }
 }
