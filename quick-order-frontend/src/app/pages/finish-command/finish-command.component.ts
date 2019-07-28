@@ -18,6 +18,7 @@ import {TokenStorageService} from '../../auth/token-storage.service';
 export class FinishCommandComponent implements OnInit {
   public amounts = [];
   public command = new Command();
+  public amount = [];
   public totalAmount = 0;
   public specification = '';
   public packed = false;
@@ -44,6 +45,9 @@ export class FinishCommandComponent implements OnInit {
       this.calculateTotalAmount();
     } else {
       this.command.menuItemCommandDtos = [];
+    }
+    for (const item of this.command.menuItemCommandDtos){
+      this.amount.push(item.amount);
     }
   }
 
@@ -89,5 +93,13 @@ export class FinishCommandComponent implements OnInit {
       sum += menuItemCommand.amount * menuItemCommand.menuItemDto.price;
     }
     return sum;
+  }
+
+  onAmountChange(amount: number, index: number) {
+    if (amount > 0) {
+      this.command.menuItemCommandDtos[index].amount = amount;
+      this.saveCommandInSession();
+    }
+    this.amount[index] = this.command.menuItemCommandDtos[index].amount;
   }
 }

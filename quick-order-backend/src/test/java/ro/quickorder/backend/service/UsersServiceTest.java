@@ -85,8 +85,8 @@ public class UsersServiceTest {
         UserDto userDto = new UserDto();
         userDto.setEmail("alex@yahoo.com");
         userDto.setUsername("Alex");
-            userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
-            fail();
+
+        userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
     }
 
     @Test(expected = NotFoundException.class)
@@ -97,8 +97,8 @@ public class UsersServiceTest {
         userDto.setEmail("newUser@yahoo.com");
         userDto.setUsername("newUser");
         userDto.setUserAttributeDto(attributeDto);
-            userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
-            fail();
+
+        userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
     }
 
     @Test
@@ -118,8 +118,8 @@ public class UsersServiceTest {
         Set<String> roles = new HashSet<String>();
         roles.add("user");
         userDto.setRole(roles);
-            userService.login(userDto);
-            fail("The username should be wrong");
+
+        userService.login(userDto);
     }
 
     @Test(expected = BadCredentialsException.class)
@@ -130,8 +130,8 @@ public class UsersServiceTest {
         Set<String> roles = new HashSet<String>();
         roles.add("user");
         userDto.setRole(roles);
-            userService.login(userDto);
-            fail("The password should be wrong");
+
+        userService.login(userDto);
     }
 
     @Test
@@ -151,18 +151,17 @@ public class UsersServiceTest {
 
     @Test(expected = BadRequestException.class)
     public void testSingUpUserIsNull() {
-            userService.signUp(null);
-            fail("User is null, it should throw a BadRequestException");
+        userService.signUp(null);
     }
 
     @Test(expected = ForbiddenException.class)
     public void testSignUpInvalidUsername() {
-            UserDto userDtoTest = new UserDto();
-            userDtoTest.setUsername("hello)");
-            userDtoTest.setPassword("password");
-            userDtoTest.setEmail("hello@yahoo.com");
-            userService.signUp(userDtoTest);
-            fail("The username should be invalid, it contains characters that are not allowed!");
+        UserDto userDtoTest = new UserDto();
+        userDtoTest.setUsername("hello)");
+        userDtoTest.setPassword("password");
+        userDtoTest.setEmail("hello@yahoo.com");
+
+        userService.signUp(userDtoTest);
     }
 
     @Test

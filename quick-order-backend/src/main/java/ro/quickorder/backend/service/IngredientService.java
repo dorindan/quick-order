@@ -26,7 +26,7 @@ public class IngredientService {
     IngredientConverter ingredientConverter;
 
     public List<IngredientDto> getAll() {
-        return ingredientRepository.findAll().stream().map(ingredientConverter::toIngredientDto).collect(Collectors.toList());
+        return ingredientRepository.findAllSorted().stream().map(ingredientConverter::toIngredientDto).collect(Collectors.toList());
     }
 
     public void addIngredient(IngredientDto ingredientDto) {

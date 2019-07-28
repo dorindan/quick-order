@@ -27,13 +27,13 @@ public class Command {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "command")
+    @OneToMany(mappedBy = "command", fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<MenuItemCommand> menuItemCommands;
     @OneToOne
     @JoinColumn(name = "bill_id")
     private Bill bill;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn( name = "table_id")
     private TableFood table;
     @OneToMany(mappedBy = "command")
