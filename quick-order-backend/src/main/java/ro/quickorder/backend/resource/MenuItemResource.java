@@ -7,6 +7,7 @@ import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.service.MenuItemService;
 
 import javax.validation.constraints.NotNull;
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -30,6 +31,7 @@ public class MenuItemResource {
     @RequestMapping(path = "/update", method = RequestMethod.PUT)
     @PreAuthorize("hasRole('WAITER')")
     public void updateMenuItem(@RequestBody @NotNull MenuItemDto menuItemDto) {
+        System.out.println(menuItemDto.getImg() instanceof File);
         menuItemService.updateMenuItem(menuItemDto);
     }
 

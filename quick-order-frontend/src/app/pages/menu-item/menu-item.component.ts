@@ -48,9 +48,9 @@ export class MenuItemComponent implements OnInit {
 
 
   onFileSelected(event) {
-    const formdata: FormData = new FormData();
-    formdata.append('file', <File>event.target.files.item(0));
-
+    const formdata = new FormData();
+    const file: File = <File>event.target.files.item(0)
+    formdata.append('file', file, file.name);
     this.selectedFile = formdata;
   }
 
