@@ -130,7 +130,7 @@ export class MenuItemComponent implements OnInit {
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       newMenuItem.img = this.selectedFile;
-      this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
+      this.menuItemService.editMenuItem(this.selectedFile).subscribe(rez => {
       }, error => {
         if (error.status === 404) { // not found exception
           this.showSnackbar('The introduced data is not valid!, please try again');

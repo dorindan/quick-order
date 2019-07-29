@@ -32,7 +32,7 @@ export class MenuService {
     return this.apiService.postRequest('/api/menuItem/add', menuItem);
   }
 
-  editMenuItem(menuItem: MenuItem): Observable<any> {
+  editMenuItem(menuItem: FormData): Observable<any> {
     return this.apiService.putRequest('/api/menuItem/update', menuItem);
   }
 
