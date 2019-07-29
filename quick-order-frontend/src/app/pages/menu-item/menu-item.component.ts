@@ -6,6 +6,7 @@ import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -37,7 +38,7 @@ export class MenuItemComponent implements OnInit {
   selectedFile: FormData = null;
 
   constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService, private router: Router) {
   }
 
   ngOnInit() {
@@ -49,7 +50,7 @@ export class MenuItemComponent implements OnInit {
 
   onFileSelected(event) {
     const formdata = new FormData();
-    const file: File = <File>event.target.files.item(0)
+    const file: File = <File>event.target.files.item(0);
     formdata.append('file', file, file.name);
     this.selectedFile = formdata;
   }

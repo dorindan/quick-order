@@ -30,6 +30,7 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "angular-popper": "^2.0.0",
+    "angular-webstorage-service": "^1.0.2",
     "angular2-cookie": "^1.2.6",
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",

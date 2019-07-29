@@ -25,11 +25,9 @@ public class MenuItemCommand {
     private Integer amount;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "menu_item_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private MenuItem menuItem;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "command_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Command command;
 
     public MenuItemCommand() {

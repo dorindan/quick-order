@@ -129,8 +129,7 @@
   "menu": {
     "quantity": "Cantitate: ",
     "selected": "produse selectate",
-    "viewCommand": "Vizualizare comandă",
-    "save": "Salvează"
+    "viewCommand": "Vizualizare comandă"
   },
   "a": {
     "reserve": "Rezervări online 24/7",
@@ -168,5 +167,12 @@
     "resFor": "Rezervare pentru ",
     "persons": " persoane",
     "delete": "Șterge rezervarea"
+  },
+  "finishCommand": {
+    "finishCommand": "Finalizează comanda",
+    "selectedItem": "Produse selectate",
+    "specifications": "Specificații: ",
+    "isPacked": "Împachetat:",
+    "totalPrice": "Prețul total"
   }
 }
