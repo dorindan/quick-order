@@ -74,7 +74,7 @@ public class UserConverterTest {
         UserAttributeDto userAttributeDto = new UserAttributeDto(Language.RO);
         UserDto userDto = new UserDto("name", "password", "email", userAttributeDto);
         Set<String> rolesAsStrings = new HashSet<>();
-        rolesAsStrings.add("user");
+        rolesAsStrings.add("ROLE_USER");
         userDto.setRoles(rolesAsStrings);
         User user = userConverter.toUser(userDto);
         assertEquals(userDto.getPassword(), user.getPassword());

@@ -8,6 +8,6 @@ export class SignUpInfo {
     this.username = username;
     this.email = email;
     this.password = password;
-    this.roles = ['user'];
+    this.roles = ['ROLE_USER'];
   }
 }
