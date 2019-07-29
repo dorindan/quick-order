@@ -26,7 +26,6 @@ import ro.quickorder.backend.repository.UserAttributeRepository;
 import ro.quickorder.backend.repository.UserRepository;
 import ro.quickorder.backend.resource.response.ResponseMessage;
 
-import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -116,8 +115,8 @@ public class UsersServiceTest {
         userDto.setUsername("wromg_username");
         userDto.setPassword("hellohello");
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
 
         userService.login(userDto);
     }
@@ -128,8 +127,8 @@ public class UsersServiceTest {
         userDto.setUsername("hellohello");
         userDto.setPassword("parola1213");
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
 
         userService.login(userDto);
     }
@@ -140,11 +139,9 @@ public class UsersServiceTest {
         userDto.setUsername("test_user");
         userDto.setPassword("password");
         userDto.setEmail("test@yahoo.com");
-        Role role = new Role(RoleName.ROLE_USER);
-        roleRepository.save(role);
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
@@ -172,8 +169,8 @@ public class UsersServiceTest {
         userDto.setPassword("hellohello");
         userDto.setEmail("helloo@yahoo.com");
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("400 BAD_REQUEST", responseEntity.getStatusCode().toString());
         ResponseMessage rm = (ResponseMessage) responseEntity.getBody();
@@ -187,12 +184,30 @@ public class UsersServiceTest {
         userDto.setPassword("hellohello");
         userDto.setEmail("hello@yahoo.com");
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("400 BAD_REQUEST", responseEntity.getStatusCode().toString());
         ResponseMessage rm = (ResponseMessage) responseEntity.getBody();
         assertEquals(new ResponseMessage("Fail -> Email is already in use!").getMessage(), rm.getMessage());
     }
 
+    @Test
+    public void testUpdateUser() {
+        UserDto userDto = new UserDto();
+        userDto.setUsername("hellohello");
+        userDto.setPassword("hellohello");
+        userDto.setEmail("hello@yahoo.com");
+        Set<String> roles = new HashSet<String>();
+        Set<String> roles2 = new HashSet<String>();
+        roles.add("ROLE_USER");
+        Role role = new Role(RoleName.ROLE_USER);
+        roleRepository.save(role);
+        userDto.setRoles(roles);
+        userService.updateUser(userDto);
+        assertEquals(1, userRepository.findByUsername("hellohello").getRoles().size());
+        userDto.setRoles(roles2);
+        userService.updateUser(userDto);
+        assertEquals(0, userRepository.findByUsername("hellohello").getRoles().size());
+    }
 }
