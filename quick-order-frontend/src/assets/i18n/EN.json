@@ -130,14 +130,13 @@
   "menu": {
     "quantity": "Quantity: ",
     "selected": "products selected",
-    "viewCommand": "View command",
-    "save": "Save"
+    "viewCommand": "View command"
   },
-  "contact":{
-    "open" : "Opens at:",
-    "close" : "Closes at:"
+  "contact": {
+    "open": "Opens at:",
+    "close": "Closes at:"
   },
-  "property":{
+  "property": {
     "property": "Restaurant properties",
     "startTime": "Opening hour",
     "endTime": "Closing hour",
@@ -173,5 +172,12 @@
   "userAdministration": {
     "title": "Administration of user roles",
     "confirm": "Confirm the change"
+  },
+  "finishCommand": {
+    "finishCommand": "Finish command",
+    "selectedItem": "Selected items",
+    "specifications": "Specification: ",
+    "isPacked": "Packed:",
+    "totalPrice": "Total Price"
   }
 }

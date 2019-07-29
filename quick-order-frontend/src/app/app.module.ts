@@ -30,6 +30,7 @@ import { PropertyAdministrationComponent } from './pages/property-administration
 import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
 import { UserAdministrationComponent } from './pages/user-administration/user-administration.component';
+import { StorageServiceModule} from 'angular-webstorage-service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
+    StorageServiceModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,

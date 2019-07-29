@@ -26,7 +26,7 @@ public class MenuItemTypeService {
     MenuItemTypeConverter menuItemTypeConverter;
 
     public List<MenuItemTypeDto> getAllMenuItemTypes() {
-        return menuItemTypeRepository.findAll().stream()
+        return menuItemTypeRepository.findAllSorted().stream()
                 .map(menuItemTypeConverter::toMenuItemTypeDto)
                 .collect(Collectors.toList());
     }

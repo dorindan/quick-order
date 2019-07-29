@@ -24,23 +24,20 @@ public class Command {
     private boolean isPacked;
     @Enumerated(EnumType.STRING)
     private CommandStatus status;
-    @OneToMany(mappedBy = "command")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
+    @OneToMany(mappedBy = "command", fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<MenuItemCommand> menuItemCommands;
     @OneToOne
     @JoinColumn(name = "bill_id")
     private Bill bill;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "table_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn( name = "table_id")
     private TableFood table;
     @OneToMany(mappedBy = "command")
     private List<Reservation> reservations;
-    @ManyToMany
-    @JoinTable(
-            name = "user_command",
-            joinColumns = @JoinColumn(name = "command_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
 
     public Command(String commandName, String specification, boolean isPacked, CommandStatus status, TableFood table) {
         this.commandName = commandName;
@@ -125,12 +122,12 @@ public class Command {
         this.reservations = reservations;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUser(User users) {
+        this.user = users;
     }
 
     @Override
@@ -147,12 +144,12 @@ public class Command {
                 Objects.equals(bill, command.bill) &&
                 Objects.equals(table, command.table) &&
                 Objects.equals(reservations, command.reservations) &&
-                Objects.equals(users, command.users);
+                Objects.equals(user, command.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, commandName, specification, isPacked, status, menuItemCommands, bill, table, reservations, users);
+        return Objects.hash(id, commandName, specification, isPacked, status, menuItemCommands, bill, table, reservations, user);
     }
 
     @Override

@@ -1,3 +1,68 @@
-<p>
-  finish-command works!
-</p>
+<h2 translate="">finishCommand.selectedItem</h2>
+<div class="menu-body">
+  <div class="menu-section">
+
+    <div class="menu-item" *ngFor="let menuItemCommand of this.command.menuItemCommandDtos; let i = index">
+      <div>
+        <div class="media">
+          <img src="/assets/img/QuickOrder.png" class="mr-3" alt="...">
+          <div class="media-body">
+            <h5 class="mt-0">
+              <div class="menu-item-description">
+                {{menuItemCommand.menuItemDto.name}}
+              </div>
+            </h5>
+
+            <span *ngIf="menuItemCommand.menuItemDto.description !== ''" class="menu-item-description">
+              <span *ngIf="i > 0">,</span>
+              <span>{{menuItemCommand.menuItemDto.description}}</span>
+              <br>
+            </span>
+
+            <form class="end">
+              <label translate="">menu.quantity</label>
+              &nbsp;
+              <mat-form-field class="smallInput">
+                <input matInput type="number" pattern="^([1-9][0-9]{0,1})$" name="amount" min="1"
+                       [(ngModel)]="this.amount[i]" (change)="onAmountChange($event.target.value, i)">
+              </mat-form-field>
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              <label translate="">Price</label> {{menuItemCommand.menuItemDto.price}}
+
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              <i class="iSize inline" data-toggle="modal">
+                <img class="cursorPointer iconSize " src="assets/edit-delete/delete.svg"
+                     (click)="deleteMenuItemFromCommand(menuItemCommand.menuItemDto)">
+              </i>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="center">
+      <label translate="">finishCommand.specifications</label>
+      <br>
+      <textarea rows="4" cols="50" id="specification" [(ngModel)]="this.specification">
+      </textarea>
+      <br>
+      <br>
+      <label data-error="wrong" data-success="right"
+             translate="">finishCommand.isPacked</label>
+      <div>
+        <input type="checkbox" class="form-control validate" id="isPacked" [(ngModel)]="this.packed">
+      </div>
+      <br>
+      <br>
+      <label translate="">finishCommand.totalPrice</label> {{totalPrice()}}
+      <br><br>
+    </div>
+    <form class="center">
+
+      <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
+         (click)="finishCommand()" translate="">
+        finishCommand.finishCommand
+      </a>
+    </form>
+
+  </div>
+</div>
