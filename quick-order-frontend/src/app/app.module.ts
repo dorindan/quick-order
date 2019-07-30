@@ -35,21 +35,21 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-// export function appInitializerFactory(translate: TranslateService, injector: Injector) {
-//   return () => new Promise<any>((resolve: any) => {
-//     const locationInitialized = injector.get(LOCATION_INITIALIZED, Promise.resolve(null));
-//     locationInitialized.then(() => {
-//       const langToSet = 'EN'
-//       translate.use(langToSet).subscribe(() => {
-//         console.info(`Successfully initialized '${langToSet}' language.'`);
-//       }, err => {
-//         console.error(`Problem with '${langToSet}' language initialization.'`);
-//       }, () => {
-//         resolve(null);
-//       });
-//     });
-//   });
-// }
+export function appInitializerFactory(translate: TranslateService, injector: Injector) {
+  return () => new Promise<any>((resolve: any) => {
+    const locationInitialized = injector.get(LOCATION_INITIALIZED, Promise.resolve(null));
+    locationInitialized.then(() => {
+      const langToSet = 'EN'
+      translate.use(langToSet).subscribe(() => {
+        console.info(`Successfully initialized '${langToSet}' language.'`);
+      }, err => {
+        console.error(`Problem with '${langToSet}' language initialization.'`);
+      }, () => {
+        resolve(null);
+      });
+    });
+  });
+}
 
 @NgModule({
   declarations: [
@@ -97,12 +97,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgxPopper
   ],
   providers: [httpInterceptorProviders,
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: appInitializerFactory,
-    //   deps: [TranslateService, Injector],
-    //   multi: true
-    // }
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFactory,
+      deps: [TranslateService, Injector],
+      multi: true
+    }
     ],
   bootstrap: [AppComponent]
 })
