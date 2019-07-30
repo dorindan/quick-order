@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApiService} from './api.service';
-import {User} from '../models/User';
 import {Observable} from 'rxjs';
-import {MenuItem} from '../models/MenuItem';
 import {Command} from '../models/Command';
 
 @Injectable({

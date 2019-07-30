@@ -17,11 +17,11 @@ public class UserConverter {
     @Autowired
     private UserAttributeConverter userAttributeConverter;
 
-    public UserConverter(){
+    public UserConverter() {
 
     }
 
-    public UserConverter(UserAttributeConverter userAttributeConverter){
+    public UserConverter(UserAttributeConverter userAttributeConverter) {
         this.userAttributeConverter = userAttributeConverter;
     }
 

@@ -3,7 +3,6 @@ package ro.quickorder.backend.model;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 

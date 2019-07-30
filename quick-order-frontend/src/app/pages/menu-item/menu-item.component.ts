@@ -6,6 +6,7 @@ import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-menu-item',
@@ -33,7 +34,8 @@ export class MenuItemComponent implements OnInit {
   ingredientToAdd = '';
   menuItemTypeToAdd = '';
 
-  constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
+  constructor(private translateService: TranslateService,
+              private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
               private tokenStorageService: TokenStorageService) {
   }
 
@@ -102,10 +104,10 @@ export class MenuItemComponent implements OnInit {
         .subscribe(rez => {
           window.location.reload();
         }, error => {
-          this.showSnackbar(error.valueOf().error.message);
+          this.showSnackbar(this.translateService.instant(error.valueOf().error.message));
         });
     } else {
-      this.showSnackbar('The introduced data is not valid!, please try again!');
+      this.showSnackbar(this.translateService.instant('menuItemError.dataNotValid'));
     }
   }
 
@@ -121,13 +123,13 @@ export class MenuItemComponent implements OnInit {
         window.location.reload();
       }, error => {
         if (error.status === 404) { // not found exception
-          this.showSnackbar('The introduced data is not valid!, please try again');
+          this.showSnackbar(this.translateService.instant('menuItemError.dataNotValid'));
         } else {
-          this.showSnackbar('The introduced data is not valid!, please try again');
+          this.showSnackbar(this.translateService.instant('menuItemError.dataNotValid'));
         }
       });
     } else {
-      this.showSnackbar('The introduced data is not valid!, please try again!');
+      this.showSnackbar(this.translateService.instant('menuItemError.dataNotValid'));
     }
   }
 
@@ -136,9 +138,9 @@ export class MenuItemComponent implements OnInit {
       window.location.reload();
     }, error => {
       if (error.status === 404) { // not found exception
-        this.showSnackbar('The item could not be deleted!, please try again!');
+        this.showSnackbar(this.translateService.instant('menuItemError.itemCannotBeDeleted'));
       } else {
-        this.showSnackbar('The item could not be deleted!, please try again!');
+        this.showSnackbar(this.translateService.instant('menuItemError.itemCannotBeDeleted'));
       }
     });
   }
@@ -163,9 +165,9 @@ export class MenuItemComponent implements OnInit {
         this.ingredientsList.push(ingredient);
       }, error1 => {
         if (error1.valueOf().error.message === 'Ingredient already exists!') {
-          this.showSnackbar('The ingredient already exists!');
+          this.showSnackbar(this.translateService.instant('menuItemError.ingredientExists'));
         } else {
-          this.showSnackbar('The ingredient could not be added, please try again!');
+          this.showSnackbar(this.translateService.instant('menuItemError.ingredientCannotBeAdded'));
         }
       });
       this.activateIngredientAdd = false;
@@ -182,9 +184,9 @@ export class MenuItemComponent implements OnInit {
         this.menuItemTypes.push(itemType);
       }, error1 => {
         if (error1.valueOf().error.message === 'Item type already exists!') {
-          this.showSnackbar('The item type already exists!');
+          this.showSnackbar(this.translateService.instant('menuItemError.itemTypeExists'));
         } else {
-          this.showSnackbar('The item type could not be added, please try again!');
+          this.showSnackbar(this.translateService.instant('menuItemError.itemTypeCannotBeAdded'));
         }
       });
       this.activateTypeAdd = false;

@@ -12,10 +12,9 @@ import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.MenuItemCommand;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.CommandDto;
-import ro.quickorder.backend.model.dto.MenuItemCommandDto;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
-import ro.quickorder.backend.repository.MenuItemCommandRepository;
 import ro.quickorder.backend.repository.CommandRepository;
+import ro.quickorder.backend.repository.MenuItemCommandRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.repository.UserRepository;
 
@@ -66,7 +65,7 @@ public class CommandService {
         commandRepository.save(command);
     }
 
-    private List<MenuItemCommand> combineMenuItemCommands(Command existingCommand, Command receivedCommand){
+    private List<MenuItemCommand> combineMenuItemCommands(Command existingCommand, Command receivedCommand) {
         if (existingCommand.getMenuItemCommands() == null) {
             existingCommand.setMenuItemCommands(new ArrayList<>());
         }
@@ -95,7 +94,7 @@ public class CommandService {
         return existingCommand.getMenuItemCommands();
     }
 
-    private MenuItemCommand saveMenuItemCommandDto(MenuItemCommand menuItemCommand, Command existingCommand){
+    private MenuItemCommand saveMenuItemCommandDto(MenuItemCommand menuItemCommand, Command existingCommand) {
         Command command = commandRepository.findByCommandName(existingCommand.getCommandName());
         MenuItem menuItem = menuItemRepository.findByName(menuItemCommand.getMenuItem().getName());
         if (command == null) {
@@ -108,6 +107,6 @@ public class CommandService {
             throw new NotFoundException("MenuItem not found");
         }
         menuItemCommand.setMenuItem(menuItem);
-       return menuItemCommandRepository.save(menuItemCommand);
+        return menuItemCommandRepository.save(menuItemCommand);
     }
 }

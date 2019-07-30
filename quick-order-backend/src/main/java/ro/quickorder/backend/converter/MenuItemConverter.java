@@ -6,8 +6,6 @@ import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.dto.IngredientDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**

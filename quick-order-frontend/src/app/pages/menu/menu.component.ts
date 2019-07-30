@@ -4,10 +4,8 @@ import {MenuItemType} from '../../models/MenuItemType';
 import {MenuItem} from '../../models/MenuItem';
 import {Router} from '@angular/router';
 import {Command} from '../../models/Command';
-import {CommandService} from '../../services/command.service';
 import {MatSnackBar} from '@angular/material';
 import {MenuItemCommand} from '../../models/MenuItemCommand';
-import {TokenStorageService} from '../../auth/token-storage.service';
 
 @Component({
   selector: 'app-menu',

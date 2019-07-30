@@ -11,5 +11,4 @@ import ro.quickorder.backend.model.MenuItemCommand;
 public interface MenuItemCommandRepository extends JpaRepository<MenuItemCommand, Long> {
 
 
-
 }

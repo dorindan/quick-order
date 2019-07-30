@@ -71,10 +71,10 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
         switch (error.status) {
           case 404: // not found exception
-            this.showSnackbar('User dose not exist. Please try again.');
+            this.showSnackbar(this.translateService.instant('loginError.userNotFound'));
             break;
           default:
-            this.showSnackbar('Username or password is incorrect. Please try again.');
+            this.showSnackbar(this.translateService.instant('loginError.badCredentials'));
         }
       }
     );

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PropertyAdministrationComponent } from './property-administration.component';
+import {PropertyAdministrationComponent} from './property-administration.component';
 
 describe('PropertyAdministrationComponent', () => {
   let component: PropertyAdministrationComponent;
@@ -8,9 +8,9 @@ describe('PropertyAdministrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertyAdministrationComponent ]
+      declarations: [PropertyAdministrationComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

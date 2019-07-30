@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PropertyService} from "../../services/property.service";
 
 @Component({
@@ -14,7 +14,9 @@ export class ContactComponent implements OnInit {
   lng: number;
   openHour: string;
   closeHour: string;
-  constructor(private propertyService: PropertyService) { }
+
+  constructor(private propertyService: PropertyService) {
+  }
 
   ngOnInit() {
     this.propertyService.getBistroProperty().subscribe(response => {

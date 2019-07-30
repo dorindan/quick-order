@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { TokenStorageService } from './token-storage.service';
+import {TokenStorageService} from './token-storage.service';
 
 describe('TokenStorageService', () => {
   beforeEach(() => {

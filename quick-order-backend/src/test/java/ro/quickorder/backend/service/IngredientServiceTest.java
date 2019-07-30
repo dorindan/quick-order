@@ -78,8 +78,8 @@ public class IngredientServiceTest {
 
     @Test(expected = NotFoundException.class)
     public void testAddIngredientWithIngredientThatAlreadyExists() {
-            IngredientDto ingredientDto = new IngredientDto("muraturi");
-            ingredientService.addIngredient(ingredientDto);
+        IngredientDto ingredientDto = new IngredientDto("muraturi");
+        ingredientService.addIngredient(ingredientDto);
     }
 
 }

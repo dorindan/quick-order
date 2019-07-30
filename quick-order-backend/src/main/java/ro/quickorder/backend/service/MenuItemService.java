@@ -49,7 +49,7 @@ public class MenuItemService {
         MenuItem menuItem = menuItemRepository.findByName(menuItemDto.getName());
         if (menuItem != null) {
             LOG.error("MenuItem already exists!");
-            throw new BadRequestException("MenuItem already exists!");
+            throw new BadRequestException("menuItemError.menuItemExists");
         }
         MenuItemType menuItemType = menuItemTypeRepository.findByType(menuItemDto.getMenuItemTypeDto().getType());
         if (menuItemType == null) {

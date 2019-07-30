@@ -9,14 +9,16 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.exception.NotFoundException;
-import ro.quickorder.backend.model.*;
+import ro.quickorder.backend.model.Command;
+import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.TableFood;
+import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.model.dto.MenuItemCommandDto;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
 import ro.quickorder.backend.repository.*;
 
 import javax.inject.Inject;
-
 import java.util.ArrayList;
 import java.util.List;
 

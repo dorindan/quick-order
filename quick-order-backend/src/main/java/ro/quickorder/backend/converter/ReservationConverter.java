@@ -25,11 +25,11 @@ public class ReservationConverter {
     @Autowired
     private UserConverter userConverter;
 
-    public ReservationConverter(){
+    public ReservationConverter() {
 
     }
 
-    public ReservationConverter(TableFoodConverter tableFoodConverter, UserConverter userConverter){
+    public ReservationConverter(TableFoodConverter tableFoodConverter, UserConverter userConverter) {
         this.tableFoodConverter = tableFoodConverter;
         this.userConverter = userConverter;
     }

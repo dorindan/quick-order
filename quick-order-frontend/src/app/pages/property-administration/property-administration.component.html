@@ -12,7 +12,8 @@
           &nbsp;
           <label class="red small" *ngIf="!this.rightStartTime" translate="">property.timeConditions</label>
         </div>
-        <input id="startTime" type="text" (focusout)="validateStartTime()" name="text" class="form-control" value="cinemagia" [(ngModel)]="startTime" required>
+        <input id="startTime" type="text" (focusout)="validateStartTime()" name="text" class="form-control"
+               value="cinemagia" [(ngModel)]="startTime" required>
       </div>
 
       <!-- endTime -->
@@ -22,7 +23,8 @@
           &nbsp;
           <label class="red small" *ngIf="!this.rightEndTime" translate="">property.timeConditions</label>
         </div>
-        <input type="text" name="endTime" (focusout)="validateEndTime()" class="form-control" [(ngModel)]="endTime" required>
+        <input type="text" name="endTime" (focusout)="validateEndTime()" class="form-control" [(ngModel)]="endTime"
+               required>
       </div>
 
       <!-- location -->
@@ -48,7 +50,7 @@
         <div>
           <label><b translate="">property.locationLongitude</b></label>
           &nbsp;
-          <label class="small"  translate="">property.lmessage</label>
+          <label class="small" translate="">property.lmessage</label>
         </div>
         <input class="form-control" name="locationLongitude" [(ngModel)]="locationLongitude" required>
       </div>
@@ -72,7 +74,9 @@
       </div>
 
       <div class="form-group">
-        <button class="form-control btn-property" translate="" type="submit" (click)='updateProperties()'>property.edit</button>
+        <button class="form-control btn-property" translate="" type="submit" (click)='updateProperties()'>
+          property.edit
+        </button>
       </div>
 
     </form>

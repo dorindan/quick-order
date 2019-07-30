@@ -188,7 +188,7 @@ public class MenuItemServiceTest {
     @Test(expected = NotFoundException.class)
     public void testRemoveMenuItemWhenMenuItemDoseNotExist() {
         MenuItemDto menuItemDto = new MenuItemDto("Name", "the most original description!", 5, 18, new MenuItemTypeDto("desert"));
-            menuItemService.removeMenuItem(menuItemDto.getName());
-            fail("User dose not exist, error should pop-up");
+        menuItemService.removeMenuItem(menuItemDto.getName());
+        fail("User dose not exist, error should pop-up");
     }
 }

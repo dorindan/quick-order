@@ -4,7 +4,8 @@ import org.junit.Test;
 import ro.quickorder.backend.model.MenuItemType;
 import ro.quickorder.backend.model.dto.MenuItemTypeDto;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Unit test for {@link MenuItemTypeConverter}

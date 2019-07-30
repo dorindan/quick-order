@@ -146,11 +146,11 @@
     "fresh": "Produse proaspete.",
     "fresh2": "Susținem producătorii locali. Proaspăt în fiecare zi."
   },
-  "contact":{
-    "open" : "Deschide la:",
-    "close" : "Inchide la:"
-},
-  "property":{
+  "contact": {
+    "open": "Deschide la:",
+    "close": "Inchide la:"
+  },
+  "property": {
     "property": "Proprietati restaurant",
     "startTime": "Ora deschidere",
     "endTime": "Ora inchidere",
@@ -168,5 +168,18 @@
     "resFor": "Rezervare pentru ",
     "persons": " persoane",
     "delete": "Șterge rezervarea"
+  },
+  "loginError": {
+    "userNotFound": "Utilizatorul nu exista. Va rugam sa incercati din nou.",
+    "badCredentials": "Numele de utilizator sau parola sunt gresite. Va rugam sa incercati din nou."
+  },
+  "menuItemError": {
+    "dataNotValid": "Datele introduse nu sunt valide. Va rugam sa incercati din nou.",
+    "itemCannotBeDeleted": "Produsul nu s-a putut sterge. Va rugam sa incercati din nou.",
+    "ingredientExists": "Ingredientul deja exista.",
+    "ingredientCannotBeAdded": "Ingredientul a putut sa fie adaugat. Va rugam sa incercati din nou.",
+    "itemTypeExists": "Tipul de produs exista deja",
+    "itemTypeCannotBeAdded": "Tipul de produs nu a putut sa fie adaugat. Va rugam sa incercati din nou.",
+    "menuItemExists": "Produsul exista deja."
   }
 }
