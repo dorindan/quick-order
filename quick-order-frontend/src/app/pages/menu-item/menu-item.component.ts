@@ -36,6 +36,7 @@ export class MenuItemComponent implements OnInit {
   menuItemTypeToAdd = '';
 
   selectedFile: FormData = null;
+  filesSelected = [];
 
   constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
               private tokenStorageService: TokenStorageService, private router: Router) {
@@ -47,12 +48,17 @@ export class MenuItemComponent implements OnInit {
     this.updateMenuItemType();
   }
 
-
-  onFileSelected(event) {
+  onFileSelected(event, name: string) {
     const formdata = new FormData();
     const file: File = <File>event.target.files.item(0);
-    formdata.append('file', file, file.name);
-    this.selectedFile = formdata;
+    if (file.name.substring(file.name.length - 4) === '.jpg') {
+      const fileName = name + '.jpg';
+      formdata.append('file', file, fileName);
+      this.selectedFile = formdata;
+    } else {
+      this.showSnackbar('Please select a picture(.jpg file)!');
+      this.filesSelected = [];
+    }
   }
 
   showSnackbar(message: string) {
@@ -84,6 +90,8 @@ export class MenuItemComponent implements OnInit {
   }
 
   setUpdate(menuItem: MenuItem): void {
+    this.selectedFile = null;
+    this.filesSelected = [];
     this.ingredients = [];
     this.name = menuItem.name;
     this.description = menuItem.description;
@@ -112,6 +120,7 @@ export class MenuItemComponent implements OnInit {
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.addMenuItem(newMenuItem)
         .subscribe(rez => {
+          this.uploadImg();
           window.location.reload();
         }, error => {
           this.showSnackbar(error.valueOf().error.message);
@@ -129,8 +138,8 @@ export class MenuItemComponent implements OnInit {
         .filter(value => this.ingredients.filter(value1 => value.name === value1).length > 0);
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
-      newMenuItem.img = this.selectedFile;
-      this.menuItemService.editMenuItem(this.selectedFile).subscribe(rez => {
+      this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
+        this.uploadImg();
       }, error => {
         if (error.status === 404) { // not found exception
           this.showSnackbar('The introduced data is not valid!, please try again');
@@ -155,7 +164,20 @@ export class MenuItemComponent implements OnInit {
     });
   }
 
+  uploadImg() {
+    this.menuItemService.uploadImg(this.selectedFile).subscribe(rez => {
+    }, error => {
+      if (error.status === 404) { // not found exception
+        this.showSnackbar('The introduced data is not valid!, please try again');
+      } else {
+        this.showSnackbar('The introduced data is not valid!, please try again');
+      }
+    });
+  }
+
   clear(): void {
+    this.selectedFile = null;
+    this.filesSelected = [];
     this.name = '';
     this.description = '';
     this.preparationDurationInMinutes = 0;

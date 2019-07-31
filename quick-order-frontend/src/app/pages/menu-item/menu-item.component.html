@@ -91,6 +91,11 @@
                 <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validation()">
               </div>
             </div>
+            <div class = "center">
+              <label class="center" translate="">Select a img:</label>
+              &nbsp;
+              <input type="file" (change)="onFileSelected($event, name)" [(ngModel)]="filesSelected">
+            </div>
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
               <button class="btn btn-outline-secondary btn-block editInside" (click)="add()"
                       translate="">
@@ -187,10 +192,10 @@
                 <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validation()">
               </div>
             </div>
-            <div>
-              <label>File Upload</label>
+            <div class = "center">
+              <label class="center" translate="">Select a img:</label>
               &nbsp;
-              <input type="file" (change)="onFileSelected($event)">
+              <input type="file" (change)="onFileSelected($event, name)" [(ngModel)]="filesSelected">
             </div>
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
               <button class="btn btn-outline-secondary btn-block editInside" (click)="update()"

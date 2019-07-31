@@ -22,6 +22,7 @@ export class FinishCommandComponent implements OnInit {
   public totalAmount = 0;
   public specification = '';
   public packed = false;
+  public imgPath = [];
 
   constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService, private menuService: MenuService, private router: Router,
               private snackBar: MatSnackBar, private commandService: CommandService, private tokenStorage: TokenStorageService) {
@@ -46,8 +47,13 @@ export class FinishCommandComponent implements OnInit {
     } else {
       this.command.menuItemCommandDtos = [];
     }
-    for (const item of this.command.menuItemCommandDtos){
+    for (const item of this.command.menuItemCommandDtos) {
       this.amount.push(item.amount);
+      if (item.menuItemDto.img) {
+        this.imgPath.push('assets/menuItemImg/' + item.menuItemDto.name + '.jpg');
+      } else {
+        this.imgPath.push('/assets/menuItemImg/default.jpg');
+      }
     }
   }
 
@@ -58,10 +64,12 @@ export class FinishCommandComponent implements OnInit {
   }
 
   deleteMenuItemFromCommand(menuItem: MenuItem) {
-    for (const item of this.command.menuItemCommandDtos) {
+    for (let i = 0; i < this.command.menuItemCommandDtos.length; i++) {
+      const item = this.command.menuItemCommandDtos[i];
       if (menuItem.name === item.menuItemDto.name) {
         this.command.menuItemCommandDtos =
           this.command.menuItemCommandDtos.filter(theItem => theItem.menuItemDto.name !== item.menuItemDto.name);
+        this.imgPath = this.imgPath.filter( img => img !== this.imgPath[i]);
       }
     }
     this.saveCommandInSession();

@@ -16,7 +16,7 @@ public class MenuItemDto {
     private Integer price;
     private MenuItemTypeDto menuItemTypeDto;
     private Set<IngredientDto> ingredients;
-    private MultipartFile img ;
+    private boolean img = false;
 
     public MenuItemDto() {
     }
@@ -86,11 +86,11 @@ public class MenuItemDto {
         this.ingredients = ingredients;
     }
 
-    public MultipartFile getImg() {
+    public boolean isImg() {
         return img;
     }
 
-    public void setImg(MultipartFile img) {
+    public void setImg(boolean img) {
         this.img = img;
     }
 }

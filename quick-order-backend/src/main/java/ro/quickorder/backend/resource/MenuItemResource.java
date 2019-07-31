@@ -3,6 +3,8 @@ package ro.quickorder.backend.resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.service.MenuItemService;
 
@@ -30,9 +32,14 @@ public class MenuItemResource {
 
     @RequestMapping(path = "/update", method = RequestMethod.PUT)
     @PreAuthorize("hasRole('WAITER')")
-    public void updateMenuItem(@RequestBody @NotNull MenuItemDto menuItemDto) {
-        System.out.println(menuItemDto.getImg() instanceof File);
+    public void updateMenuItem(@RequestBody MenuItemDto menuItemDto) {
         menuItemService.updateMenuItem(menuItemDto);
+    }
+
+    @RequestMapping(path = "/updateImg", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('WAITER')")
+    public void updateMenuItem(@RequestParam("file") MultipartFile file) {
+        menuItemService.uploadImg(file);
     }
 
     @RequestMapping(path = "/remove/{menuItemName}", method = RequestMethod.DELETE)

@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit {
   public menuItems: MenuItem[];
   public newCommand = new Command();
   public totalAmount = 0;
+  public imgPath = [];
 
   constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService, private menuService: MenuService, private router: Router,
               private snackBar: MatSnackBar) {
@@ -32,7 +33,14 @@ export class MenuComponent implements OnInit {
 
     this.menuService.getMenuItems().subscribe(response => {
       this.menuItems = response;
-      response.forEach(i => this.amounts.push(1));
+      this.menuItems.forEach(menuItem => {
+        this.amounts.push(1);
+        if (menuItem.img) {
+          this.imgPath.push('assets/menuItemImg/' + menuItem.name + '.jpg');
+        } else {
+          this.imgPath.push('/assets/menuItemImg/default.jpg');
+        }
+      });
     });
 
     this.reloadCommand();
