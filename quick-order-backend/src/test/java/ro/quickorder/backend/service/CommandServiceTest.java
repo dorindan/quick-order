@@ -34,6 +34,14 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class CommandServiceTest {
     @Autowired
+    TableFoodRepository tableFoodRepository;
+    @Autowired
+    MenuItemCommandRepository menuItemCommandRepository;
+    @Autowired
+    UserConverter userConverter;
+    @Autowired
+    UserService userService;
+    @Autowired
     private CommandService commandService;
     @Autowired
     private MenuItemConverter menuItemConverter;
@@ -43,19 +51,9 @@ public class CommandServiceTest {
     private UserRepository userRepository;
     @Autowired
     private MenuItemRepository menuItemRepository;
-    @Autowired
-    TableFoodRepository tableFoodRepository;
-    @Autowired
-    MenuItemCommandRepository menuItemCommandRepository;
-    @Autowired
-    UserConverter userConverter;
-    @Autowired
-    UserService userService;
-
 
     @Before
     public void setUp() {
-
         TableFood table = new TableFood(5, 5, false, 1);
         TableFood tableFood = tableFoodRepository.save(table);
 
@@ -235,14 +233,14 @@ public class CommandServiceTest {
 
     @Test
     public void testGetUnconfirmedCommands() {
-        List<CommandDto> commandDtos = commandService.getCommandsWithStatus("unconfirmed");
+        List<CommandDto> commandDtos = commandService.getCommandsWithStatus(CommandStatus.DONE);
         assertEquals(1, commandDtos.size());
     }
 
     @Test
     public void testConfirmCommand() {
-        commandService.confirmCommand(new CommandDto("test_command", "", false, ""));
-        List<CommandDto> commandDtos = commandService.getCommandsWithStatus("unconfirmed");
+        commandService.confirmCommand(new CommandDto("Test command", "", false, CommandStatus.DONE));
+        List<CommandDto> commandDtos = commandService.getCommandsWithStatus(CommandStatus.DONE);
         assertEquals(0, commandDtos.size());
     }
 }

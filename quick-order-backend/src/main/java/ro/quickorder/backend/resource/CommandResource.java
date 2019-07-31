@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.dto.CommandDto;
+import ro.quickorder.backend.model.enumeration.CommandStatus;
 import ro.quickorder.backend.service.CommandService;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class CommandResource {
     @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
     @PreAuthorize("hasRole('WAITER')")
     public List<CommandDto> getAllUnconfirmed() {
-        return commandService.getCommandsWithStatus("unconfirmed");
+        return commandService.getCommandsWithStatus(CommandStatus.DONE);
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)

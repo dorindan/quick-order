@@ -7,15 +7,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.CommandConverter;
-import ro.quickorder.backend.converter.MenuItemCommandConverter;
 import ro.quickorder.backend.exception.NotFoundException;
-import ro.quickorder.backend.model.*;
+import ro.quickorder.backend.model.Command;
+import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.MenuItemCommand;
+import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.model.dto.MenuItemCommandDto;
-import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
-import ro.quickorder.backend.repository.MenuItemCommandRepository;
 import ro.quickorder.backend.repository.CommandRepository;
+import ro.quickorder.backend.repository.MenuItemCommandRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.repository.UserRepository;
 
@@ -42,14 +43,14 @@ public class CommandService {
     public CommandDto addCommand(CommandDto commandDto) {
         Command savedCommand = mapCommandEntityFromCommandDto(commandDto);
         // save and set MenuItemCommand
-        for(MenuItemCommandDto menuItemCommandDto : commandDto.getMenuItemCommandDtos() ){
-            MenuItemCommand savedMenuItemCommand = saveMenuItemCommand( savedCommand, menuItemCommandDto);
+        for (MenuItemCommandDto menuItemCommandDto : commandDto.getMenuItemCommandDtos()) {
+            MenuItemCommand savedMenuItemCommand = saveMenuItemCommand(savedCommand, menuItemCommandDto);
             savedCommand.getMenuItemCommands().add(savedMenuItemCommand);
         }
         return commandConverter.toCommandDto(commandRepository.save(savedCommand));
     }
 
-    private MenuItemCommand saveMenuItemCommand(Command savedCommand, MenuItemCommandDto menuItemCommandDto){
+    private MenuItemCommand saveMenuItemCommand(Command savedCommand, MenuItemCommandDto menuItemCommandDto) {
         savedCommand.setMenuItemCommands(new ArrayList<>());
         MenuItem menuItem = menuItemRepository.findByName(menuItemCommandDto.getMenuItemDto().getName());
         if (menuItem == null) {
@@ -63,7 +64,7 @@ public class CommandService {
         return menuItemCommandRepository.save(menuItemCommand);
     }
 
-    private Command mapCommandEntityFromCommandDto(CommandDto commandDto){
+    private Command mapCommandEntityFromCommandDto(CommandDto commandDto) {
         Command command = new Command();
         // find user
         User user = userRepository.findByUsername(commandDto.getUserDto().getUsername());
@@ -94,7 +95,7 @@ public class CommandService {
         commandRepository.save(command);
     }
 
-    private List<MenuItemCommand> combineMenuItemCommands(Command existingCommand, Command receivedCommand){
+    private List<MenuItemCommand> combineMenuItemCommands(Command existingCommand, Command receivedCommand) {
         if (existingCommand.getMenuItemCommands() == null) {
             existingCommand.setMenuItemCommands(new ArrayList<>());
         }
@@ -123,7 +124,7 @@ public class CommandService {
         return existingCommand.getMenuItemCommands();
     }
 
-    private MenuItemCommand saveMenuItemCommandDto(MenuItemCommand menuItemCommand, Command existingCommand){
+    private MenuItemCommand saveMenuItemCommandDto(MenuItemCommand menuItemCommand, Command existingCommand) {
         Command command = commandRepository.findByCommandName(existingCommand.getCommandName());
         MenuItem menuItem = menuItemRepository.findByName(menuItemCommand.getMenuItem().getName());
         if (command == null) {
@@ -136,7 +137,7 @@ public class CommandService {
             throw new NotFoundException("MenuItem not found");
         }
         menuItemCommand.setMenuItem(menuItem);
-       return menuItemCommandRepository.save(menuItemCommand);
+        return menuItemCommandRepository.save(menuItemCommand);
     }
 
     public List<CommandDto> getCommandsOfUser() {
@@ -151,11 +152,8 @@ public class CommandService {
             final List<Command> commands = commandRepository.findAll()
                     .stream()
                     .filter(command -> {
-                        for (User user :
-                                command.getUsers()) {
-                            if (user.getUsername().equals(username)) {
-                                return true;
-                            }
+                        if (command.getUser().getUsername().equals(username)) {
+                            return true;
                         }
                         return false;
                     }).collect(Collectors.toList());
@@ -176,7 +174,7 @@ public class CommandService {
         commandRepository.delete(command);
     }
 
-    public List<CommandDto> getCommandsWithStatus(String status) {
+    public List<CommandDto> getCommandsWithStatus(CommandStatus status) {
         return commandRepository.findCommandsByStatus(status)
                 .stream()
                 .map(commandConverter::toCommandDto)
@@ -190,7 +188,7 @@ public class CommandService {
             LOG.error("Command with name: " + commandName + " was not found!");
             throw new NotFoundException("Command not found!");
         }
-        command.setStatus("confirmed");
+        command.setStatus(CommandStatus.CONFIRMED);
         commandRepository.save(command);
     }
 }
