@@ -140,6 +140,7 @@ export class MenuItemComponent implements OnInit {
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
         this.uploadImg();
+        window.location.reload();
       }, error => {
         if (error.status === 404) { // not found exception
           this.showSnackbar('The introduced data is not valid!, please try again');
@@ -165,14 +166,16 @@ export class MenuItemComponent implements OnInit {
   }
 
   uploadImg() {
-    this.menuItemService.uploadImg(this.selectedFile).subscribe(rez => {
-    }, error => {
-      if (error.status === 404) { // not found exception
-        this.showSnackbar('The introduced data is not valid!, please try again');
-      } else {
-        this.showSnackbar('The introduced data is not valid!, please try again');
-      }
-    });
+    if(this.selectedFile !== null) {
+      this.menuItemService.uploadImg(this.selectedFile).subscribe(rez => {
+      }, error => {
+        if (error.status === 404) { // not found exception
+          this.showSnackbar('The introduced data is not valid!, please try again');
+        } else {
+          this.showSnackbar('The introduced data is not valid!, please try again');
+        }
+      });
+    }
   }
 
   clear(): void {
