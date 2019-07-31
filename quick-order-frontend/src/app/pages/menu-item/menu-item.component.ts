@@ -35,7 +35,7 @@ export class MenuItemComponent implements OnInit {
   ingredientToAdd = '';
   menuItemTypeToAdd = '';
 
-  selectedFile: FormData = null;
+  selectedFile: File = null;
   filesSelected = [];
 
   constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
@@ -48,13 +48,10 @@ export class MenuItemComponent implements OnInit {
     this.updateMenuItemType();
   }
 
-  onFileSelected(event, name: string) {
-    const formdata = new FormData();
+  onFileSelected(event) {
     const file: File = <File>event.target.files.item(0);
     if (file.name.substring(file.name.length - 4) === '.jpg') {
-      const fileName = name + '.jpg';
-      formdata.append('file', file, fileName);
-      this.selectedFile = formdata;
+      this.selectedFile = file;
     } else {
       this.showSnackbar('Please select a picture(.jpg file)!');
       this.filesSelected = [];
@@ -120,7 +117,7 @@ export class MenuItemComponent implements OnInit {
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.addMenuItem(newMenuItem)
         .subscribe(rez => {
-          this.uploadImg();
+          this.uploadImg(newMenuItem.name);
           window.location.reload();
         }, error => {
           this.showSnackbar(error.valueOf().error.message);
@@ -139,7 +136,7 @@ export class MenuItemComponent implements OnInit {
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
-        this.uploadImg();
+        this.uploadImg(newMenuItem.name);
         window.location.reload();
       }, error => {
         if (error.status === 404) { // not found exception
@@ -165,9 +162,12 @@ export class MenuItemComponent implements OnInit {
     });
   }
 
-  uploadImg() {
-    if(this.selectedFile !== null) {
-      this.menuItemService.uploadImg(this.selectedFile).subscribe(rez => {
+  uploadImg(name: string) {
+    if (this.selectedFile !== null) {
+      const formData = new FormData();
+      const fileName = name + '.jpg';
+      formData.append('file', this.selectedFile, fileName);
+      this.menuItemService.uploadImg(formData).subscribe(rez => {
       }, error => {
         if (error.status === 404) { // not found exception
           this.showSnackbar('The introduced data is not valid!, please try again');

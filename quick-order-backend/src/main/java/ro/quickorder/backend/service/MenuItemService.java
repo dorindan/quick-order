@@ -73,21 +73,24 @@ public class MenuItemService {
 
     public void uploadImg(MultipartFile multipartFile) {
         if (!multipartFile.isEmpty()) {
-
-            final String dir = System.getProperty("user.dir");
-            String location = "\\src\\assets\\menuItemImg\\";
-            String orgName = multipartFile.getOriginalFilename();
-            String filePath = dir + location + orgName;
-            File dest = new File(filePath);
-            if (dest.exists() && !dest.isDirectory()) {
-                dest.delete();
-            }
+            File dest = deleteFileWithName(multipartFile.getOriginalFilename());
             try {
                 multipartFile.transferTo(dest);
             } catch (IOException e) {
                 throw new BadRequestException("The file could not be added!");
             }
         }
+    }
+
+    private File deleteFileWithName(String fileName){
+        final String dir = System.getProperty("user.dir");
+        String location = "\\src\\assets\\menuItemImg\\";
+        String filePath = dir + location + fileName;
+        File dest = new File(filePath);
+        if (dest.exists() && !dest.isDirectory()) {
+            dest.delete();
+        }
+        return dest;
     }
 
     public void updateMenuItem(MenuItemDto menuItemDto) {
@@ -119,8 +122,8 @@ public class MenuItemService {
                 if (ingredient != null) {
                     ingredients.add(ingredient);
                 } else {
-                    LOG.error("Ingredient " + ingredient.toString() + " was not found!");
-                    throw new NotFoundException("Ingredient " + ingredient.toString() + " was not found!");
+                    LOG.error("Ingredient " + ingredientDto.getName() + " was not found!");
+                    throw new NotFoundException("Ingredient " + ingredientDto.getName() + " was not found!");
                 }
             });
         }
@@ -133,6 +136,7 @@ public class MenuItemService {
             LOG.error("MenuItem not found!");
             throw new NotFoundException("MenuItem not found!");
         }
+        deleteFileWithName(menuItem.getName() + ".jpg");
         menuItemRepository.delete(menuItem);
     }
 
