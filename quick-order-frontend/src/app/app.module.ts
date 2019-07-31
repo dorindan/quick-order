@@ -23,10 +23,14 @@ import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {httpInterceptorProviders} from './auth/auth-interceptor';
+import { FinishCommandComponent } from './pages/finish-command/finish-command.component';
 import {ContactComponent} from './pages/contact/contact.component';
 import {AgmCoreModule} from '@agm/core';
+import { PropertyAdministrationComponent } from './pages/property-administration/property-administration.component';
 import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
+import { UserAdministrationComponent } from './pages/user-administration/user-administration.component';
+import { StorageServiceModule} from 'angular-webstorage-service';
 import { CommandConfirmationComponent } from './pages/command-confirmation/command-confirmation.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,12 +53,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     WaiterPageComponent,
     TableComponent,
     ContactComponent,
+    PropertyAdministrationComponent,
+    FinishCommandComponent,
     ReservationLogComponent,
     AboutUsComponent,
+    UserAdministrationComponent,
     CommandConfirmationComponent
   ],
   imports: [
     BrowserModule,
+    StorageServiceModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,

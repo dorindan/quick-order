@@ -6,6 +6,7 @@ import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-menu-item',
@@ -34,7 +35,7 @@ export class MenuItemComponent implements OnInit {
   menuItemTypeToAdd = '';
 
   constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService, private router: Router) {
   }
 
   ngOnInit() {

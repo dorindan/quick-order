@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.PropertyConverter;
 import ro.quickorder.backend.model.Property;
-import ro.quickorder.backend.model.PropertyName;
+import ro.quickorder.backend.model.enumeration.PropertyName;
 import ro.quickorder.backend.model.dto.PropertyDto;
 import ro.quickorder.backend.repository.PropertyRepository;
 
@@ -15,8 +15,6 @@ import java.time.LocalTime;
 @Service
 public class PropertyService {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationService.class);
-    @Autowired
-    PropertyConverter propertyConvertor;
     @Autowired
     PropertyRepository propertyRepository;
 
@@ -97,5 +95,35 @@ public class PropertyService {
                 withEndProgramTime(getEndProperty()).withStreetName(getStreetName()).
                 withLatitude(getLocationLatitude()).withLongitude(getLocationLongitude()).
                 withEmail(getEmail()).build();
+    }
+
+    public void saveProperty(PropertyDto propertyDto){
+        Property nameProperty = propertyRepository.findByName(PropertyName.RESTAURANT_NAME);
+        nameProperty.setValue(propertyDto.getRestaurantName());
+        propertyRepository.save(nameProperty);
+
+        Property startTimeProperty = propertyRepository.findByName(PropertyName.START_TIME);
+        startTimeProperty.setValue(String.valueOf(propertyDto.getStartProgramTime().getHour()));
+        propertyRepository.save(startTimeProperty);
+
+        Property endTimeProperty = propertyRepository.findByName(PropertyName.END_TIME);
+        endTimeProperty.setValue(String.valueOf(propertyDto.getEndProgramTime().getHour()));
+        propertyRepository.save(endTimeProperty);
+
+        Property streetNameProperty = propertyRepository.findByName(PropertyName.STREET_NAME);
+        streetNameProperty.setValue(propertyDto.getStreetName());
+        propertyRepository.save(streetNameProperty);
+
+        Property locationLatitudeProperty = propertyRepository.findByName(PropertyName.LOCATION_LATITUDE);
+        locationLatitudeProperty.setValue(String.valueOf(propertyDto.getLatitude()));
+        propertyRepository.save(locationLatitudeProperty);
+
+        Property locationLongitudeproperty = propertyRepository.findByName(PropertyName.LOCATION_LONGITUDE);
+        locationLongitudeproperty.setValue(String.valueOf(propertyDto.getLongitude()));
+        propertyRepository.save(locationLongitudeproperty);
+
+        Property emailProperty = propertyRepository.findByName(PropertyName.EMAIL);
+        emailProperty.setValue(propertyDto.getEmail());
+        propertyRepository.save(emailProperty);
     }
 }

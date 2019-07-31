@@ -6,6 +6,8 @@ import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.dto.IngredientDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,11 +23,11 @@ public class MenuItemConverter {
     @Autowired
     private MenuItemTypeConverter menuItemTypeConverter;
 
-    public MenuItemConverter(){
+    public MenuItemConverter() {
 
     }
 
-    public MenuItemConverter(IngredientConverter ingredientConverter, MenuItemTypeConverter menuItemTypeConverter){
+    public MenuItemConverter(IngredientConverter ingredientConverter, MenuItemTypeConverter menuItemTypeConverter) {
         this.ingredientConverter = ingredientConverter;
         this.menuItemTypeConverter = menuItemTypeConverter;
     }

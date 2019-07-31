@@ -96,14 +96,10 @@ public class TableFoodServiceTest {
         assertEquals(5, rezFree6.size());
     }
 
-    @Test
+    @Test(expected = NotAcceptableException.class)
     public void testGetAllFreeTablesTimestempIsNull() {
-        try {
-            tableFoodService.getAllFree(null, null);
-            fail("Time parameter is null, it should throw an error");
-        } catch (NotAcceptableException e) {
-            assertEquals("Could not deserialize string as timestamp", e.getMessage());
-        }
+        tableFoodService.getAllFree(null, null);
+        fail("Time parameter is null, it should throw an error");
     }
 
     @Test
@@ -119,15 +115,12 @@ public class TableFoodServiceTest {
         assertEquals(6, newTableFoods.size());
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testAddTableWhenTableAlreadyExists() {
         TableFoodDto tableFoodDto = new TableFoodDto(1, 12, true, 1);
-        try {
-            tableFoodService.addTable(tableFoodDto);
-            fail("Table already exists, BadRequestException should be thrown");
-        } catch (BadRequestException e) {
-            assertEquals("Table already exists", e.getMessage());
-        }
+        tableFoodService.addTable(tableFoodDto);
+        fail("Table already exists, BadRequestException should be thrown");
+
     }
 
     @Test
@@ -145,15 +138,11 @@ public class TableFoodServiceTest {
         assertTrue(newTableFood.isWindowView());
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testUpdateTableWhenTableDoseNotExists() {
         TableFoodDto tableFoodDto = new TableFoodDto(47, 12, true, 1);
-        try {
-            tableFoodService.updateTable(tableFoodDto);
-            fail("Table dose not exists, NotFoundException should be thrown");
-        } catch (NotFoundException e) {
-            assertEquals("Table not found", e.getMessage());
-        }
+        tableFoodService.updateTable(tableFoodDto);
+        fail("Table dose not exists, NotFoundException should be thrown");
     }
 
     @Test
@@ -167,14 +156,10 @@ public class TableFoodServiceTest {
         assertEquals(4, newTableFoods.size());
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testRemoveTableWhenTableDoseNotExists() {
-        try {
-            tableFoodService.removeTable(47);
-            fail("Table dose not exists, NotFoundException should be thrown");
-        } catch (NotFoundException e) {
-            assertEquals("Table not found", e.getMessage());
-        }
+        tableFoodService.removeTable(47);
+        fail("Table dose not exists, NotFoundException should be thrown");
     }
 
 }

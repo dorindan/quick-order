@@ -13,7 +13,10 @@ import {TableComponent} from './pages/table/table.component';
 import {ContactComponent} from './pages/contact/contact.component';
 import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
 import {AboutUsComponent} from './pages/about-us/about-us.component';
-import {CommandConfirmationComponent} from "./pages/command-confirmation/command-confirmation.component";
+import {FinishCommandComponent} from './pages/finish-command/finish-command.component';
+import {PropertyAdministrationComponent} from './pages/property-administration/property-administration.component';
+import {CommandConfirmationComponent} from './pages/command-confirmation/command-confirmation.component';
+import {UserAdministrationComponent} from './pages/user-administration/user-administration.component';
 
 const routes: Routes = [];
 
@@ -37,9 +40,12 @@ const appRoutes: Routes = [
   {path: 'confirmReservations', component: WaiterPageComponent},
   {path: 'table', component: TableComponent},
   {path: 'contact', component: ContactComponent},
+  {path: 'finishCommand', component: FinishCommandComponent},
+  {path: 'propertyAdministration', component: PropertyAdministrationComponent},
   {path: 'about', component: AboutUsComponent},
   {path: 'reservation-log', component: ReservationLogComponent},
   {path: 'command-confirmation', component: CommandConfirmationComponent},
+  {path: 'user-administration', component: UserAdministrationComponent},
   {path: '**', redirectTo: ''}
 ];
 

@@ -39,7 +39,9 @@
     "confirmReservations": "Confirm Reservations",
     "log": "My Reservations",
     "commands": "My Commands",
-    "confirmCommands": "Confirm Commands"
+    "confirmCommands": "Confirm Commands",
+    "propertyAdministration": "Property administration",
+    "userAdministration": "User administration"
   },
   "startPage": {
     "quickOrder": "Quick Order",
@@ -127,9 +129,27 @@
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation"
   },
+  "menu": {
+    "quantity": "Quantity: ",
+    "selected": "products selected",
+    "viewCommand": "View command"
+  },
   "contact": {
     "open": "Opens at:",
     "close": "Closes at:"
+  },
+  "property": {
+    "property": "Restaurant properties",
+    "startTime": "Opening hour",
+    "endTime": "Closing hour",
+    "location": "Address",
+    "locationLatitude": "Adress latitude",
+    "locationLongitude": "Address longitude",
+    "email": "Email",
+    "restaurantName": "Restaurant Name",
+    "edit": "Edit",
+    "lmessage": "(Depends on location. It is used for google maps and can be found on google maps)",
+    "timeConditions": "must be an integer between 0 and 24"
   },
   "a": {
     "reserve": "Reservations online 24/7",
@@ -156,5 +176,16 @@
     "confirm": "Confirm command",
     "delete": "Delete command",
     "commandName": "Command with name: "
+  },
+  "userAdministration": {
+    "title": "Administration of user roles",
+    "confirm": "Confirm the change"
+  },
+  "finishCommand": {
+    "finishCommand": "Finish command",
+    "selectedItem": "Selected items",
+    "specifications": "Specification: ",
+    "isPacked": "Packed:",
+    "totalPrice": "Total Price"
   }
 }

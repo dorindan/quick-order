@@ -1,15 +1,29 @@
 package ro.quickorder.backend.converter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.quickorder.backend.model.Command;
 import ro.quickorder.backend.model.dto.CommandDto;
 
 /**
- *  Converts Commands to their corresponding DTO and vice versa.
+ * Converts Commands to their corresponding DTO and vice versa.
+ *
  * @author R. Lupoaie
  */
 @Component
 public class CommandConverter {
+
+    @Autowired
+    MenuItemCommandConverter menuItemCommandConverter;
+
+    public CommandConverter() {
+
+    }
+
+    public CommandConverter(MenuItemCommandConverter menuItemCommandConverter) {
+        this.menuItemCommandConverter = menuItemCommandConverter;
+    }
+
     public Command toCommand(CommandDto commandDto) {
         if (commandDto == null) {
             return null;
@@ -19,6 +33,7 @@ public class CommandConverter {
         command.setSpecification(commandDto.getSpecification());
         command.setPacked(commandDto.isPacked());
         command.setStatus(commandDto.getStatus());
+        command.setMenuItemCommands(menuItemCommandConverter.toMenuItemCommands(commandDto.getMenuItemCommandDtos()));
         return command;
     }
 
@@ -31,6 +46,7 @@ public class CommandConverter {
         commandDto.setSpecification(command.getSpecification());
         commandDto.setPacked(command.isPacked());
         commandDto.setStatus(command.getStatus());
+        commandDto.setMenuItemCommandDtos(menuItemCommandConverter.toMenuItemCommandDtos(command.getMenuItemCommands()));
         return commandDto;
     }
 }

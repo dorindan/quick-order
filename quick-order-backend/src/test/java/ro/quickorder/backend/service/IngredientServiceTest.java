@@ -16,7 +16,7 @@ import ro.quickorder.backend.repository.IngredientRepository;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author R. Lupoaie
@@ -70,24 +70,16 @@ public class IngredientServiceTest {
         assertEquals(5, ingredientDtosAfter.size());
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testAddIngredientWithIngredientNameToShort() {
-        try{
-            IngredientDto ingredientDto = new IngredientDto("e");
-            ingredientService.addIngredient(ingredientDto);
-        }catch (BadRequestException e){
-            assertEquals(e.getMessage(), "Ingredient name is too short!");
-        }
+        IngredientDto ingredientDto = new IngredientDto("e");
+        ingredientService.addIngredient(ingredientDto);
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testAddIngredientWithIngredientThatAlreadyExists() {
-        try{
-            IngredientDto ingredientDto = new IngredientDto("muraturi");
-            ingredientService.addIngredient(ingredientDto);
-        }catch (NotFoundException e){
-            assertEquals(e.getMessage(), "Ingredient already exists!");
-        }
+        IngredientDto ingredientDto = new IngredientDto("muraturi");
+        ingredientService.addIngredient(ingredientDto);
     }
 
 }

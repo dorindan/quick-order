@@ -1,0 +1,58 @@
+<div class="jumbotron jumbotron-fluid">
+  <h1 class="title indent" translate="">userAdministration.title</h1>
+  <div *ngIf="userToBeChanged != null">
+    <mat-list class=" col-sm-12 col-ls-8 col-lg-4">
+      <br>
+      <mat-list-item>
+        <mat-icon mat-list-icon>account_circle</mat-icon>
+        <h4 mat-line>{{ 'userAdministration.username' | translate }}{{userToBeChanged.username}}</h4>
+        <p mat-line>{{ 'userAdministration.email' | translate }} {{userToBeChanged.email}}</p>
+      </mat-list-item>
+    </mat-list>
+    <mat-form-field class="example-chip-list  indent col-sm-8 col-ls-9 col-lg-3">
+      <mat-chip-list #chipList aria-label="Role selection">
+        <mat-chip
+          *ngFor="let role of roles"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(role)">
+          {{role}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="Roles"
+          #roleInput
+          [formControl]="roleCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let role of filteredRoles | async" [value]="roles">
+          {{role}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    &nbsp;
+    <mat-icon matTooltip="{{ 'userAdministration.confirm' | translate }}"
+              (click)="confirm()">
+      check
+    </mat-icon>
+  </div>
+</div>
+
+<div class="jumbotron jumbotron-fluid">
+  <mat-list class=" col-sm-12 col-ls-8 col-lg-4">
+    <mat-list-item *ngFor="let user of users">
+      <mat-icon mat-list-icon>account_circle</mat-icon>
+      <h4 mat-line>{{ 'userAdministration.username' | translate }}{{user.username}}</h4>
+      <p mat-line>{{ 'userAdministration.email' | translate }} {{user.email}}</p>
+      <mat-icon matTooltip="{{ 'userAdministration.confirm' | translate }}"
+                (click)="editUser(user)">
+        create
+      </mat-icon>
+    </mat-list-item>
+  </mat-list>
+</div>

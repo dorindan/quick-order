@@ -1,6 +1,9 @@
 package ro.quickorder.backend.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import ro.quickorder.backend.model.enumeration.CommandStatus;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,35 +22,29 @@ public class Command {
     private String commandName;
     private String specification;
     private boolean isPacked;
-    private String status;
-    @ManyToMany(mappedBy = "commands")
-    private List<MenuItem> menuItems;
+    @Enumerated(EnumType.STRING)
+    private CommandStatus status;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
+    @OneToMany(mappedBy = "command", fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<MenuItemCommand> menuItemCommands;
     @OneToOne
     @JoinColumn(name = "bill_id")
     private Bill bill;
-    @ManyToOne
-    @JoinColumn(name = "table_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn( name = "table_id")
     private TableFood table;
     @OneToMany(mappedBy = "command")
     private List<Reservation> reservations;
-    @ManyToMany(mappedBy = "commands", fetch = FetchType.EAGER)
-    private List<User> users;
 
-    public Command(String commandName, String specification, boolean isPacked, String status, TableFood table) {
+    public Command(String commandName, String specification, boolean isPacked, CommandStatus status, TableFood table) {
         this.commandName = commandName;
         this.specification = specification;
         this.isPacked = isPacked;
         this.status = status;
         this.table = table;
-    }
-
-    public Command(String commandName, String specification, boolean isPacked, String status, TableFood table, List<User> users) {
-        this.commandName = commandName;
-        this.specification = specification;
-        this.isPacked = isPacked;
-        this.status = status;
-        this.table = table;
-        this.users = users;
     }
 
     public Command() {
@@ -85,20 +82,20 @@ public class Command {
         isPacked = packed;
     }
 
-    public String getStatus() {
+    public CommandStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CommandStatus status) {
         this.status = status;
     }
 
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
+    public List<MenuItemCommand> getMenuItems() {
+        return menuItemCommands;
     }
 
-    public void setMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
+    public void setMenuItems(List<MenuItemCommand> menuItemCommands) {
+        this.menuItemCommands = menuItemCommands;
     }
 
     public Bill getBill() {
@@ -125,12 +122,12 @@ public class Command {
         this.reservations = reservations;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUser(User users) {
+        this.user = users;
     }
 
     @Override
@@ -143,16 +140,16 @@ public class Command {
                 Objects.equals(commandName, command.commandName) &&
                 Objects.equals(specification, command.specification) &&
                 Objects.equals(status, command.status) &&
-                Objects.equals(menuItems, command.menuItems) &&
+                Objects.equals(menuItemCommands, command.menuItemCommands) &&
                 Objects.equals(bill, command.bill) &&
                 Objects.equals(table, command.table) &&
                 Objects.equals(reservations, command.reservations) &&
-                Objects.equals(users, command.users);
+                Objects.equals(user, command.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, commandName, specification, isPacked, status, menuItems, bill, table, reservations, users);
+        return Objects.hash(id, commandName, specification, isPacked, status, menuItemCommands, bill, table, reservations, user);
     }
 
     @Override
@@ -166,5 +163,13 @@ public class Command {
                 ", bill=" + bill.getId() +
                 ", table=" + table +
                 '}';
+    }
+
+    public List<MenuItemCommand> getMenuItemCommands() {
+        return menuItemCommands;
+    }
+
+    public void setMenuItemCommands(List<MenuItemCommand> menuItemCommands) {
+        this.menuItemCommands = menuItemCommands;
     }
 }

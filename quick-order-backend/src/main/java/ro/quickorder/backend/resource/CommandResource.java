@@ -14,6 +14,18 @@ public class CommandResource {
     @Autowired
     CommandService commandService;
 
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
+    public CommandDto addCommand(@RequestBody CommandDto commandDto) {
+        return commandService.addCommand(commandDto);
+    }
+
+
+    // to be deleted if not used
+    @RequestMapping(path = "/update", method = RequestMethod.PUT)
+    public void updateCommand(@RequestBody CommandDto commandDto) {
+        commandService.updateCommand(commandDto);
+    }
+
     @RequestMapping(path = "/actual-user", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public List<CommandDto> commandOfActualUser() {

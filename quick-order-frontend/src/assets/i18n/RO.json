@@ -38,6 +38,8 @@
     "language": "Limba: ",
     "confirmReservations": "Confirmare Rezervări",
     "log": "Rezervările mele",
+    "propertyAdministration": "Administrare proprietati",
+    "userAdministration": "Administrare utilizatori",
     "commands": "Comenzile mele",
     "confirmCommands": "Confirmare Comenzi"
   },
@@ -127,6 +129,11 @@
     "tableTitle": "MESE",
     "acceptReservation": "Acceptă Rezervarea"
   },
+  "menu": {
+    "quantity": "Cantitate: ",
+    "selected": "produse selectate",
+    "viewCommand": "Vizualizare comandă"
+  },
   "a": {
     "reserve": "Rezervări online 24/7",
     "open": "Deschis Luni-Duminică:"
@@ -145,6 +152,19 @@
     "open": "Deschide la:",
     "close": "Inchide la:"
   },
+  "property": {
+    "property": "Proprietati restaurant",
+    "startTime": "Ora deschidere",
+    "endTime": "Ora inchidere",
+    "location": "Adresa",
+    "locationLatitude": "Adresa latitudine",
+    "locationLongitude": "Adresa longitudine",
+    "email": "Email",
+    "restaurantName": "Nume restaurant",
+    "edit": "Actualizare",
+    "lmessage": "(Depinde de locatie. Este folosita pentru google maps si poate fi gasita pe google maps)",
+    "timeConditions": "Trebuie sa fie un numar intreg intre 0 si 24"
+  },
   "myRes": {
     "myRes": "Rezervările mele",
     "resFor": "Rezervare pentru ",
@@ -156,5 +176,18 @@
     "confirm": "Confirmă comandă",
     "delete": "Șterge comandă",
     "commandName": "Comanda cu numele: "
+  },
+  "userAdministration": {
+    "title": "Administrare roluri utilizatori",
+    "confirm": "Confirmare schimbare",
+    "username": "Numele de utilizator: ",
+    "email": "Email: "
+  },
+  "finishCommand": {
+    "finishCommand": "Finalizează comanda",
+    "selectedItem": "Produse selectate",
+    "specifications": "Specificații: ",
+    "isPacked": "Împachetat:",
+    "totalPrice": "Prețul total"
   }
 }

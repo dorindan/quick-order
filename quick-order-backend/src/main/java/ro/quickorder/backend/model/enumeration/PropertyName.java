@@ -1,4 +1,4 @@
-package ro.quickorder.backend.model;
+package ro.quickorder.backend.model.enumeration;
 
 /**
  * @author R. Lupoaie

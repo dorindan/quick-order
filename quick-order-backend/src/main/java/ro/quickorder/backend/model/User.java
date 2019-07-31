@@ -33,7 +33,7 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "command_id")})
     private List<Command> commands;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -110,6 +110,7 @@ public class User {
     }
 
     public void setAttribute(UserAttribute attribute) {
+
         this.attribute = attribute;
     }
 

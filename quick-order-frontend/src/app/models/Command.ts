@@ -1,6 +1,14 @@
+import {MenuItemCommand} from './MenuItemCommand';
+import {User} from './User';
+
 export class Command {
-  private commandName: string;
-  private specification: string;
-  private isPacked: boolean;
-  private status: String;
+  public commandName: string;
+  public specification: string;
+  public packed: boolean;
+  public status: string;
+  public userDto: User;
+  public menuItemCommandDtos: MenuItemCommand[] = [];
+
+  constructor() {
+  }
 }

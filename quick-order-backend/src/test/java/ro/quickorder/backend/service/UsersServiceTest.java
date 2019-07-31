@@ -31,11 +31,10 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-
 @ActiveProfiles("junit")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UsersResourceTest {
+public class UsersServiceTest {
     @Autowired
     private UserService userService;
     @Autowired
@@ -80,20 +79,16 @@ public class UsersResourceTest {
         assertEquals(Language.RO, userAttribute.getLanguage());
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testSetPreferenceAttributeIsNull() {
         UserDto userDto = new UserDto();
         userDto.setEmail("alex@yahoo.com");
         userDto.setUsername("Alex");
-        try {
-            userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
-            fail();
-        } catch (BadRequestException ex) {
-            assertEquals("No attribute!", ex.getMessage());
-        }
+
+        userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testSetPreferenceBadUser() {
         UserAttributeDto attributeDto = new UserAttributeDto();
         attributeDto.setLanguage(Language.RO);
@@ -101,12 +96,8 @@ public class UsersResourceTest {
         userDto.setEmail("newUser@yahoo.com");
         userDto.setUsername("newUser");
         userDto.setUserAttributeDto(attributeDto);
-        try {
-            userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
-            fail();
-        } catch (NotFoundException ex) {
-            assertEquals("User not found", ex.getMessage());
-        }
+
+        userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
     }
 
     @Test
@@ -118,36 +109,28 @@ public class UsersResourceTest {
         assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
 
-    @Test
+    @Test(expected = InternalAuthenticationServiceException.class)
     public void testLoginWrongUsername() {
         UserDto userDto = new UserDto();
         userDto.setUsername("wromg_username");
         userDto.setPassword("hellohello");
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
-        try {
-            userService.login(userDto);
-            fail("The username should be wrong");
-        } catch (InternalAuthenticationServiceException ex) {
-            assertEquals("User is null!", ex.getMessage());
-        }
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
+
+        userService.login(userDto);
     }
 
-    @Test
+    @Test(expected = BadCredentialsException.class)
     public void testLogInWrongPassword() {
         UserDto userDto = new UserDto();
         userDto.setUsername("hellohello");
         userDto.setPassword("parola1213");
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
-        try {
-            userService.login(userDto);
-            fail("The password should be wrong");
-        } catch (BadCredentialsException ex) {
-            assertEquals("Bad credentials", ex.getMessage());
-        }
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
+
+        userService.login(userDto);
     }
 
     @Test
@@ -156,37 +139,26 @@ public class UsersResourceTest {
         userDto.setUsername("test_user");
         userDto.setPassword("password");
         userDto.setEmail("test@yahoo.com");
-        Role role = new Role(RoleName.ROLE_USER);
-        roleRepository.save(role);
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testSingUpUserIsNull() {
-        try {
-            userService.signUp(null);
-            fail("User is null, it should throw a BadRequestException");
-        } catch (BadRequestException e) {
-            assertEquals("User is null!", e.getMessage());
-        }
+        userService.signUp(null);
     }
 
-    @Test
+    @Test(expected = ForbiddenException.class)
     public void testSignUpInvalidUsername() {
-        try {
-            UserDto userDtoTest = new UserDto();
-            userDtoTest.setUsername("hello)");
-            userDtoTest.setPassword("password");
-            userDtoTest.setEmail("hello@yahoo.com");
-            userService.signUp(userDtoTest);
-            fail("The username should be invalid, it contains characters that are not allowed!");
-        } catch (ForbiddenException e) {
-            assertEquals("UserName has characters that are not allowed!", e.getMessage());
-        }
+        UserDto userDtoTest = new UserDto();
+        userDtoTest.setUsername("hello)");
+        userDtoTest.setPassword("password");
+        userDtoTest.setEmail("hello@yahoo.com");
+
+        userService.signUp(userDtoTest);
     }
 
     @Test
@@ -197,8 +169,8 @@ public class UsersResourceTest {
         userDto.setPassword("hellohello");
         userDto.setEmail("helloo@yahoo.com");
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("400 BAD_REQUEST", responseEntity.getStatusCode().toString());
         ResponseMessage rm = (ResponseMessage) responseEntity.getBody();
@@ -212,12 +184,30 @@ public class UsersResourceTest {
         userDto.setPassword("hellohello");
         userDto.setEmail("hello@yahoo.com");
         Set<String> roles = new HashSet<String>();
-        roles.add("user");
-        userDto.setRole(roles);
+        roles.add("ROLE_USER");
+        userDto.setRoles(roles);
         ResponseEntity<?> responseEntity = userService.signUp(userDto);
         assertEquals("400 BAD_REQUEST", responseEntity.getStatusCode().toString());
         ResponseMessage rm = (ResponseMessage) responseEntity.getBody();
         assertEquals(new ResponseMessage("Fail -> Email is already in use!").getMessage(), rm.getMessage());
     }
 
+    @Test
+    public void testUpdateUser() {
+        UserDto userDto = new UserDto();
+        userDto.setUsername("hellohello");
+        userDto.setPassword("hellohello");
+        userDto.setEmail("hello@yahoo.com");
+        Set<String> roles = new HashSet<String>();
+        Set<String> roles2 = new HashSet<String>();
+        roles.add("ROLE_USER");
+        Role role = new Role(RoleName.ROLE_USER);
+        roleRepository.save(role);
+        userDto.setRoles(roles);
+        userService.updateUser(userDto);
+        assertEquals(1, userRepository.findByUsername("hellohello").getRoles().size());
+        userDto.setRoles(roles2);
+        userService.updateUser(userDto);
+        assertEquals(0, userRepository.findByUsername("hellohello").getRoles().size());
+    }
 }
