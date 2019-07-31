@@ -196,18 +196,20 @@ export class MenuItemComponent implements OnInit {
 
   addIngredient(): void {
     if (this.activateIngredientAdd) {
-      const ingredient = new Ingredient(this.ingredientToAdd);
-      this.ingredientService.addIngredient(ingredient).subscribe(rez => {
-        this.ingredientsList.push(ingredient);
-      }, error1 => {
-        if (error1.valueOf().error.message === 'Ingredient already exists!') {
-          this.showSnackbar('The ingredient already exists!');
-        } else {
-          this.showSnackbar('The ingredient could not be added, please try again!');
-        }
-      });
+      if (this.ingredientToAdd !== null && this.ingredientToAdd !== '') {
+        const ingredient = new Ingredient(this.ingredientToAdd);
+        this.ingredientService.addIngredient(ingredient).subscribe(rez => {
+          this.ingredientsList.push(ingredient);
+        }, error1 => {
+          if (error1.valueOf().error.message === 'Ingredient already exists!') {
+            this.showSnackbar('The ingredient already exists!');
+          } else {
+            this.showSnackbar('The ingredient could not be added, please try again!');
+          }
+        });
+        this.ingredientToAdd = '';
+      }
       this.activateIngredientAdd = false;
-      this.ingredientToAdd = '';
     } else {
       this.activateIngredientAdd = true;
     }
@@ -215,18 +217,20 @@ export class MenuItemComponent implements OnInit {
 
   addItemType(): void {
     if (this.activateTypeAdd) {
-      const itemType = new MenuItemType(this.menuItemTypeToAdd);
-      this.menuItemService.addMenuItemType(itemType).subscribe(rez => {
-        this.menuItemTypes.push(itemType);
-      }, error1 => {
-        if (error1.valueOf().error.message === 'Item type already exists!') {
-          this.showSnackbar('The item type already exists!');
-        } else {
-          this.showSnackbar('The item type could not be added, please try again!');
-        }
-      });
+      if (this.menuItemTypeToAdd !== null && this.menuItemTypeToAdd !== '') {
+        const itemType = new MenuItemType(this.menuItemTypeToAdd);
+        this.menuItemService.addMenuItemType(itemType).subscribe(rez => {
+          this.menuItemTypes.push(itemType);
+        }, error1 => {
+          if (error1.valueOf().error.message === 'Item type already exists!') {
+            this.showSnackbar('The item type already exists!');
+          } else {
+            this.showSnackbar('The item type could not be added, please try again!');
+          }
+        });
+        this.menuItemTypeToAdd = '';
+      }
       this.activateTypeAdd = false;
-      this.menuItemTypeToAdd = '';
     } else {
       this.activateTypeAdd = true;
     }
