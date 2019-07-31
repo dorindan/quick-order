@@ -93,7 +93,10 @@ export class ReservationComponent implements OnInit {
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
     const username = this.tokenStorageService.getUsername();
-    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false, new User(username.toString(), ''));
+    const authorities = this.tokenStorageService.getAuthorities();
+    const user = new User(username.toString(), '');
+    user.roles = authorities;
+    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false, user);
     let i = -1;
     this.disableButton = true;
     const tablesSelected: Table[] = [];
