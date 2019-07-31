@@ -23,16 +23,16 @@ insert into public.ingredient (name, id) values ('salata', '1f2d76e3-ce0e-449f-a
 insert into public.ingredient (name, id) values ('crenvursti', '243ea7d6-71e4-48b9-afb7-7948d9e9de2a');
 insert into public.ingredient (name, id) values ('bagheta', '08f270ae-d7ff-4650-9573-07abdceaa106');
 insert into public.ingredient (name, id) values ('croissant', '4748dd33-787b-4da0-81f7-44f8d29251b5');
-insert into public.ingredient (name, id) values ('ciftea de porc', '57418cea-726e-4f3f-972d-7c6518b0716a');
 insert into public.ingredient (name, id) values ('castraveti', '7c6b51ec-e284-4c5c-99b7-91437ac21a20');
 insert into public.ingredient (name, id) values ('faina de ovaz', 'fd5ce9aa-e1e3-4aa8-9b75-a64c2b66dcad');
 insert into public.ingredient (name, id) values ('miere', 'a6499eff-96dc-4d3d-8312-1df96fc6ddde');
 insert into public.ingredient (name, id) values ('pui', '4771548f-0873-4ec2-aa18-fe7e3091df59');
 insert into public.ingredient (name, id) values ('somon', 'fe5633e5-1d24-4fe2-8575-640fec0a1461');
 insert into public.ingredient (name, id) values ('cartof', '0a020b5b-9cb2-4637-9415-8cab6116cfb9');
-insert into public.ingredient (name, id) values ('cifla', 'd39b1fdb-c3ef-4e18-955c-1a76102aebf2');
 insert into public.ingredient (name, id) values ('ceafa de porc', '373d3be8-019d-4d22-8a39-155e0eb8e55f');
 insert into public.ingredient (name, id) values ('branza', '264b979a-be09-4ffe-8837-6bfffa2014c9');
+insert into public.ingredient (name, id) values ('chifla', 'd39b1fdb-c3ef-4e18-955c-1a76102aebf2');
+insert into public.ingredient (name, id) values ('chiftea de porc', '57418cea-726e-4f3f-972d-7c6518b0716a');
 
 insert into public.menu_item_type (type, id) values ('Pizza', 'e4940d8e-edff-483f-b0b0-601e87a55061');
 insert into public.menu_item_type (type, id) values ('Desert', 'c3a0c547-feea-46ee-8e21-a174c79963ea');
