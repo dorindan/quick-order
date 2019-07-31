@@ -12,7 +12,10 @@ import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Ingredient;
 import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.MenuItemCommand;
 import ro.quickorder.backend.model.MenuItemType;
+import ro.quickorder.backend.model.dto.CommandDto;
+import ro.quickorder.backend.model.dto.MenuItemCommandDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
@@ -50,6 +53,15 @@ public class MenuItemService {
         return menuItemRepository.findAll().stream().map(menuItemConverter::toMenuItemDto).collect(Collectors.toList());
     }
 
+    public CommandDto updateMenuItemsFromCommand(CommandDto commandDto) {
+        if (commandDto.getMenuItemCommandDtos() != null) {
+            for (MenuItemCommandDto itm : commandDto.getMenuItemCommandDtos()) {
+                itm.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItemRepository.findByName(itm.getMenuItemDto().getName())));
+            }
+        }
+        return commandDto;
+    }
+
     public void addMenuItem(MenuItemDto menuItemDto) {
         if (menuItemDto.getName() == null) {
             LOG.error("Name can not be null");
@@ -82,7 +94,7 @@ public class MenuItemService {
         }
     }
 
-    private File deleteFileWithName(String fileName){
+    private File deleteFileWithName(String fileName) {
         final String dir = System.getProperty("user.dir");
         String location = "\\src\\assets\\menuItemImg\\";
         String filePath = dir + location + fileName;

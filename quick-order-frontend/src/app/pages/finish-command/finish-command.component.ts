@@ -42,7 +42,13 @@ export class FinishCommandComponent implements OnInit {
 
   reloadCommand() {
     if (this.storage.get('command')) {
-      this.command = this.storage.get('command') as Command;
+      const command = this.storage.get('command') as Command;
+      this.menuService.updateMenuItemsFromCommand(command).subscribe(rez => {
+        this.command = rez;
+        if (this.command.menuItemCommandDtos === null) {
+          this.command.menuItemCommandDtos = [];
+        }
+      });
       this.calculateTotalAmount();
     } else {
       this.command.menuItemCommandDtos = [];
