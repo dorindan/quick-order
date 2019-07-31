@@ -13,8 +13,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ro.quickorder.backend.converter.UserConverter;
 import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.exception.ForbiddenException;
+import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Role;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.UserAttribute;
@@ -28,9 +30,11 @@ import ro.quickorder.backend.resource.response.ResponseMessage;
 import ro.quickorder.backend.security.jwt.JwtProvider;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -47,6 +51,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private UserAttributeRepository userAttributeRepository;
+    @Autowired
+    private UserConverter userConverter;
 
     public ResponseEntity<?> login(UserDto userDto) {
         Authentication authentication = authenticationManager.authenticate(
@@ -107,5 +113,28 @@ public class UserService {
         user.setRoles(roles);
         userRepository.save(user);
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+    }
+
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(userConverter::toUserDto)
+                .collect(Collectors.toList());
+    }
+
+    public void updateUser(UserDto userDto) {
+        User user = userRepository.findByUsername(userDto.getUsername());
+        if (user == null) {
+            LOG.error("User not found!");
+            throw new NotFoundException("User not found!");
+        }
+        Set<Role> roles = new HashSet<>();
+        Set<String> rolesAsString = userDto.getRoles();
+        rolesAsString.stream().map(RoleName::from)
+                .map(role -> roleRepository.findByName(role)
+                        .orElseThrow(() -> new NotFoundException("Could not find Role " + role.name())))
+                .forEach(roles::add);
+        user.setRoles(roles);
+        userRepository.save(user);
     }
 }

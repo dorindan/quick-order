@@ -1,9 +1,11 @@
 package ro.quickorder.backend.service;
 
+import com.google.common.io.Resources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.converter.MenuItemTypeConverter;
 import ro.quickorder.backend.exception.BadRequestException;
@@ -16,6 +18,10 @@ import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +34,9 @@ import java.util.stream.Collectors;
 @Service
 public class MenuItemService {
     private static final Logger LOG = LoggerFactory.getLogger(MenuItemService.class);
+
+    @Autowired
+    private HttpServletRequest request;
     @Autowired
     private MenuItemRepository menuItemRepository;
     @Autowired
@@ -60,6 +69,25 @@ public class MenuItemService {
         Set<Ingredient> ingredients = setIngredients(menuItemDto);
         menuItem = new MenuItem(menuItemDto.getName(), menuItemDto.getDescription(), menuItemType, menuItemDto.getPreparationDurationInMinutes(), menuItemDto.getPrice(), ingredients);
         menuItemRepository.save(menuItem);
+    }
+
+    public void uploadImg(MultipartFile multipartFile) {
+        if (!multipartFile.isEmpty()) {
+
+            final String dir = System.getProperty("user.dir");
+            String location = "\\src\\assets\\menuItemImg\\";
+            String orgName = multipartFile.getOriginalFilename();
+            String filePath = dir + location + orgName;
+            File dest = new File(filePath);
+            if (dest.exists() && !dest.isDirectory()) {
+                dest.delete();
+            }
+            try {
+                multipartFile.transferTo(dest);
+            } catch (IOException e) {
+                throw new BadRequestException("The file could not be added!");
+            }
+        }
     }
 
     public void updateMenuItem(MenuItemDto menuItemDto) {
