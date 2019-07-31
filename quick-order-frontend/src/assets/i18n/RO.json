@@ -22,7 +22,8 @@
     "passwordConditions": " *(Foloseste cel putin 6 caractere)",
     "Re_PasswordConditions": " *(Parola si confirmare parola trebuie sa fie identice)",
     "invalidFields": "Anumite filduri nu sunt completate corespunzator",
-    "termsAndConditionsAlert": "*  "
+    "termsAndConditionsAlert": "*  ",
+    "registerSuccessful": "Inregistrat cu succes"
   },
   "header": {
     "home": "Acasă",
@@ -115,7 +116,8 @@
     "finish": "Trimite",
     "chooseTable": "Alege mesele*",
     "table": "Masa: ",
-    "seats": " Locuri: "
+    "seats": " Locuri: ",
+    "reservationSuccessful": "Rezervarea a fost trimisa cu succes"
   },
   "waiterPage": {
     "nrOfPersons": "Numărul de persoane:",
@@ -161,7 +163,8 @@
     "restaurantName": "Nume restaurant",
     "edit": "Actualizare",
     "lmessage": "(Depinde de locatie. Este folosita pentru google maps si poate fi gasita pe google maps)",
-    "timeConditions": "Trebuie sa fie un numar intreg intre 0 si 24"
+    "timeConditions": "Trebuie sa fie un numar intreg intre 0 si 24",
+    "updateSuccessfull": "Proprietate actualizata"
   },
   "myRes": {
     "myRes": "Rezervările mele",
@@ -180,6 +183,23 @@
     "ingredientCannotBeAdded": "Ingredientul a putut sa fie adaugat. Va rugam sa incercati din nou.",
     "itemTypeExists": "Tipul de produs exista deja",
     "itemTypeCannotBeAdded": "Tipul de produs nu a putut sa fie adaugat. Va rugam sa incercati din nou.",
-    "menuItemExists": "Produsul exista deja."
+    "menuItemExists": "Produsul exista deja.",
+    "nullName": "Numele nu poate fi nul.",
+    "menuItemNotFound": "Produsul nu a putut sa fie gasit",
+    "menuItemTypeNotFound": "Tipul de produs nu exista"
+  },
+  "propertyError": {
+    "wrongLongitude": "longitudinea trebuie sa fie de forma a.b, unde a si b sunt numere intregi",
+    "wrongLatitude": "latitudinea trebuie sa fie de forma a.b, unde a si b sunt numere intregi",
+    "emailNotValid": "emailul nu este valid",
+    "wrongStartTime": "Timpul de start nu este valid",
+    "wrongEndTime": "Timpul de final nu este valid"
+  },
+  "registerError": {
+    "takenEmailOrUsername": "Numele de utilizator sau emailul sunt deja folosite. Va rugam sa incercati din nou.",
+    "forbiddenCharacters": "Numele de utilizator are caractere interzise. Va rugam sa incercati din nou.",
+    "badRequest": "Ceva nu a mers cum trebuie. Te rugam sa incerci din nou.",
+    "unknownError": "Eroare la inregistrare",
+    "completeAll": "Completeaza toate casutele cu prima data."
   }
 }

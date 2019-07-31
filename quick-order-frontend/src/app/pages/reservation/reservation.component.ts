@@ -10,6 +10,7 @@ import {TableService} from '../../services/table.service';
 import {TokenStorageService} from '../../auth/token-storage.service';
 import {User} from '../../models/User';
 import {Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-reservation',
@@ -36,7 +37,8 @@ export class ReservationComponent implements OnInit {
   public tableList: Table[] = [];
   public selectedTables = [];
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(private translateService: TranslateService,
+              private _formBuilder: FormBuilder,
               private reservationService: ReservationService,
               private snackBar: MatSnackBar,
               private propertyService: PropertyService,
@@ -108,7 +110,7 @@ export class ReservationComponent implements OnInit {
         this.reservationService.reserve(this.reservation)
           .subscribe(data => {
             this.router.navigate(['loggedStart']);
-            this.showSnackbar('Reservation sent successfully.');
+            this.showSnackbar(this.translateService.instant('reservation.reservationSuccessful'));
           }, error => {
             this.disableButton = false;
             switch (error.status) {
@@ -127,7 +129,7 @@ export class ReservationComponent implements OnInit {
       this.reservationService.reserve(this.reservation)
         .subscribe(data => {
           this.router.navigate(['loggedStart']);
-          this.showSnackbar('Reservation sent successfully.');
+          this.showSnackbar(this.translateService.instant('reservation.reservationSuccessful'));
         }, error => {
           this.disableButton = false;
           this.showSnackbar('Reservation failed. Please try again.');

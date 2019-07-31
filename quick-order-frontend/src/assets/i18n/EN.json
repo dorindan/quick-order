@@ -22,7 +22,8 @@
     "passwordConditions": " *(Use 6 ore more characters)",
     "Re_PasswordConditions": "*(Password and confirm password need to be identical) ",
     "invalidFields": "Some of the fields above are not valid!",
-    "termsAndConditionsAlert": "*  "
+    "termsAndConditionsAlert": "*  ",
+    "registerSuccessful": "Register successful"
   },
   "header": {
     "home": "Home",
@@ -98,7 +99,8 @@
     "finish": "Finish",
     "chooseTable": "Choose the tables*",
     "table": "Table: ",
-    "seats": " Seats: "
+    "seats": " Seats: ",
+    "reservationSuccessful": "Reservation sent successfully."
   },
   "table": {
     "addNew": "Add new Table",
@@ -147,7 +149,8 @@
     "restaurantName": "Restaurant Name",
     "edit": "Edit",
     "lmessage": "(Depends on location. It is used for google maps and can be found on google maps)",
-    "timeConditions": "must be an integer between 0 and 24"
+    "timeConditions": "must be an integer between 0 and 24",
+    "updateSuccessful": "Property updated"
   },
   "a": {
     "reserve": "Reservations online 24/7",
@@ -180,6 +183,23 @@
     "ingredientCannotBeAdded": "The ingredient could not be added, please try again.",
     "itemTypeExists": "The item type already exists.",
     "itemTypeCannotBeAdded": "The item type could not be added, please try again.",
-    "menuItemExists": "MenuItem already exists."
+    "menuItemExists": "Menu item already exists.",
+    "nullName": "Name can not be null.",
+    "menuItemNotFound": "Menu item was not found",
+    "menuItemTypeNotFound": "Menu item type was not found"
+  },
+  "propertyError": {
+    "wrongLongitude" : "longitude must be of form a.b, where a and b are integers",
+    "wrongLatitude" : "latitude must be of form a.b, where a and b are integers",
+    "emailNotValid" : "email is not valid",
+    "wrongStartTime" : "Start time is not valid",
+    "wrongEndTime" : "End time is not valid"
+  },
+  "registerError": {
+    "takenEmailOrUsername": "UserName or Email are already taken. Please try again.",
+    "forbiddenCharacters": "UserName has forbidden characters. Please try again.",
+    "badRequest": "Something went bad. Please try again.",
+    "unknownError": "Register failed.",
+    "completeAll": "Complete all boxes with the appropriate data first."
   }
 }

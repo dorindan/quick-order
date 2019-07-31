@@ -43,7 +43,7 @@ public class MenuItemService {
 
     public void addMenuItem(MenuItemDto menuItemDto) {
         if (menuItemDto.getName() == null) {
-            LOG.error("Name can not be null");
+            LOG.error("menuItemError.nullName");
             throw new BadRequestException("Name can not be null");
         }
         MenuItem menuItem = menuItemRepository.findByName(menuItemDto.getName());
@@ -54,7 +54,7 @@ public class MenuItemService {
         MenuItemType menuItemType = menuItemTypeRepository.findByType(menuItemDto.getMenuItemTypeDto().getType());
         if (menuItemType == null) {
             LOG.error("MenuItemType was not found!");
-            throw new NotFoundException("MenuItemType was not found!");
+            throw new NotFoundException("menuItemError.menuItemTypeNotFound");
         }
 
         Set<Ingredient> ingredients = setIngredients(menuItemDto);
