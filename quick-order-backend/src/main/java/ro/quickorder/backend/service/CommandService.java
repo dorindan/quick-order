@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.CommandConverter;
 import ro.quickorder.backend.converter.MenuItemCommandConverter;
+import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.*;
 import ro.quickorder.backend.model.dto.CommandDto;
@@ -38,6 +39,17 @@ public class CommandService {
     private MenuItemCommandRepository menuItemCommandRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private MenuItemConverter menuItemConverter;
+
+    public CommandDto updateMenuItemsFromCommand(CommandDto commandDto) {
+        if (commandDto.getMenuItemCommandDtos() != null) {
+            for (MenuItemCommandDto itm : commandDto.getMenuItemCommandDtos()) {
+                itm.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItemRepository.findByName(itm.getMenuItemDto().getName())));
+            }
+        }
+        return commandDto;
+    }
 
     public CommandDto addCommand(CommandDto commandDto) {
         Command savedCommand = mapCommandEntityFromCommandDto(commandDto);

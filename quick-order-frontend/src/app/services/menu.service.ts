@@ -28,10 +28,6 @@ export class MenuService {
     return this.apiService.getRequest('/api/menuItem/all');
   }
 
-  updateMenuItemsFromCommand(command: Command): Observable<Command> {
-    return this.apiService.postRequest('/api/menuItem/all-from-command', command);
-  }
-
   addMenuItem(menuItem: MenuItem): Observable<any> {
     return this.apiService.postRequest('/api/menuItem/add', menuItem);
   }

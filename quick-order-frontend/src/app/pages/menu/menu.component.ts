@@ -7,6 +7,7 @@ import {Command} from '../../models/Command';
 import {MatSnackBar} from '@angular/material';
 import {MenuItemCommand} from '../../models/MenuItemCommand';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
+import {CommandService} from '../../services/command.service';
 
 @Component({
   selector: 'app-menu',
@@ -23,7 +24,7 @@ export class MenuComponent implements OnInit {
   public imgPath = [];
 
   constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService, private menuService: MenuService, private router: Router,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar, private commandService: CommandService) {
   }
 
   ngOnInit() {
@@ -49,13 +50,13 @@ export class MenuComponent implements OnInit {
   reloadCommand() {
     if (this.storage.get('command')) {
       const command = this.storage.get('command') as Command;
-      this.menuService.updateMenuItemsFromCommand(command).subscribe(rez => {
+      this.commandService.updateMenuItemsFromCommand(command).subscribe(rez => {
         this.command = rez;
         if (this.command.menuItemCommandDtos === null) {
           this.command.menuItemCommandDtos = [];
         }
+        this.calculateTotalAmount();
       });
-      this.calculateTotalAmount();
     } else {
       this.command.menuItemCommandDtos = [];
     }

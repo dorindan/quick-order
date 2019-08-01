@@ -24,4 +24,8 @@ export class CommandService {
     return this.apiService.postRequest('/api/command/add/', command);
   }
 
+  updateMenuItemsFromCommand(command: Command): Observable<Command> {
+    return this.apiService.postRequest('/api/command/all-from-command', command);
+  }
+
 }

@@ -25,11 +25,7 @@ public class MenuItemResource {
         return menuItemService.getMenuItems();
     }
 
-    @RequestMapping(path = "/all-from-command", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER') or hasRole('WAITER')")
-    public CommandDto updateMenuItemsFromCommand(CommandDto commandDto) {
-        return menuItemService.updateMenuItemsFromCommand(commandDto);
-    }
+
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @PreAuthorize("hasRole('WAITER')")

@@ -53,15 +53,6 @@ public class MenuItemService {
         return menuItemRepository.findAll().stream().map(menuItemConverter::toMenuItemDto).collect(Collectors.toList());
     }
 
-    public CommandDto updateMenuItemsFromCommand(CommandDto commandDto) {
-        if (commandDto.getMenuItemCommandDtos() != null) {
-            for (MenuItemCommandDto itm : commandDto.getMenuItemCommandDtos()) {
-                itm.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItemRepository.findByName(itm.getMenuItemDto().getName())));
-            }
-        }
-        return commandDto;
-    }
-
     public void addMenuItem(MenuItemDto menuItemDto) {
         if (menuItemDto.getName() == null) {
             LOG.error("Name can not be null");
