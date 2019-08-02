@@ -7,6 +7,7 @@ import {Reservation} from '../../models/Reservation';
 import {ConfirmReservation} from '../../models/ConfirmReservation';
 import {MatSnackBar} from '@angular/material';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -28,8 +29,10 @@ export class WaiterPageComponent implements OnInit {
   // contains the index if the obj is confirmed
   private actualConfirmed = -1;
 
-  constructor(private tableService: TableService, private reservationService: ReservationService
-    , private snackBar: MatSnackBar, private token: TokenStorageService) {
+  constructor(private translateService: TranslateService,
+              private tableService: TableService,
+              private reservationService: ReservationService,
+              private snackBar: MatSnackBar, private token: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -45,10 +48,7 @@ export class WaiterPageComponent implements OnInit {
     this.disabledElements = [];
     this.selectedOptions = [];
   }
-
-  selection() {
-    this.selectedOptions.forEach(table => console.log(table));
-  }
+  
 
   getFormattedTime(reservation: Reservation): string {
     return reservation.checkInTime.substr(0, 10) + ' ' +
@@ -69,14 +69,14 @@ export class WaiterPageComponent implements OnInit {
       this.reservationService.confirmReservation(new ConfirmReservation(reservation.checkInTime,
         reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions))
         .subscribe(data => {
-          this.showSnackbar('Reservation confirmed successfully.');
+          this.showSnackbar(this.translateService.instant('waiterPage.confirmed'));
         }, error => {
           switch (error.status) {
             case 404: // not found exception
-              this.showSnackbar('Reservation not found. Please try again.');
+              this.showSnackbar(this.translateService.instant('confirmReservationError.notFound'));
               break;
             default:
-              this.showSnackbar('Confirmation failed. Please try again.');
+              this.showSnackbar(this.translateService.instant('confirmReservationError.fail'));
           }
         });
 

@@ -115,15 +115,15 @@ export class ReservationComponent implements OnInit {
             this.disableButton = false;
             switch (error.status) {
               case 403: // forbidden exception
-                this.showSnackbar('Data or persons number are wrong . Please try again!');
+                this.showSnackbar(this.translateService.instant('reservationError.wrongDateOrNrOfPersons'));
                 break;
               default:
-                this.showSnackbar('Reservation failed. Please try again.');
+                this.showSnackbar(this.translateService.instant('reservationError.fail'));
             }
           });
       } else {
         this.disableButton = false;
-        this.showSnackbar('The number of persons is too big to fit in these tables!');
+        this.showSnackbar(this.translateService.instant('reservationError.personsFitInTable'));
       }
     } else {
       this.reservationService.reserve(this.reservation)
@@ -132,7 +132,7 @@ export class ReservationComponent implements OnInit {
           this.showSnackbar(this.translateService.instant('reservation.reservationSuccessful'));
         }, error => {
           this.disableButton = false;
-          this.showSnackbar('Reservation failed. Please try again.');
+          this.showSnackbar(this.translateService.instant('reservationError.fail'));
         });
     }
   }

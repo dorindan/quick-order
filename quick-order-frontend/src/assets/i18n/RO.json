@@ -126,7 +126,8 @@
     "floor": "  Etaj: ",
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
-    "acceptReservation": "Accepta Rezervarea"
+    "acceptReservation": "Accepta Rezervarea",
+    "confirmed": "Rezervarea a fost confirmata cu succes"
   },
   "menu": {
     "quantity": "Cantitate: ",
@@ -170,7 +171,8 @@
     "myRes": "Rezervările mele",
     "resFor": "Rezervare pentru ",
     "persons": " persoane",
-    "delete": "Șterge rezervarea"
+    "delete": "Șterge rezervarea",
+    "successDelete": "Sters cu succes"
   },
   "loginError": {
     "userNotFound": "Utilizatorul nu exista. Va rugam sa incercati din nou.",
@@ -201,5 +203,19 @@
     "badRequest": "Ceva nu a mers cum trebuie. Te rugam sa incerci din nou.",
     "unknownError": "Eroare la inregistrare",
     "completeAll": "Completeaza toate casutele cu prima data."
+  },
+  "reservationError": {
+    "wrongDateOrNrOfPersons": "Data sau numarul de persoane este gresit, va rugam sa incercati din nou",
+    "fail": "A avut loc o eroare la rezervare, va rugam sa incercati din nou",
+    "personsFitInTable": "Numarul de persoane este prea mare ca sa incapa la mesele selectate"
+  },
+  "tableError": {
+    "uniqueId": "Numarul pentru fiecare masa trebuie sa fie unic, va rugam sa incercati din nou",
+    "dataNotValid": "Datele introduse nu sunt valide, va rugam sa incercati din nou",
+    "cannotBeDeleted": "Produsul nu poate fi sters, va rugam sa incercati din nou"
+  },
+  "confirmReservationError": {
+    "notFound": "Rezervarea nu poate fi gasita, va rugam sa incercati din nou",
+    "fail": "Confirmarea a esuat, va rugam sa incercati din nou"
   }
 }

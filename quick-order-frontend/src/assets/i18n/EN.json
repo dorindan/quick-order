@@ -126,7 +126,8 @@
     "floor": "  Floor: ",
     "windowView": "  Has window view: ",
     "tableTitle": "TABLES",
-    "acceptReservation": "Accept Reservation"
+    "acceptReservation": "Accept Reservation",
+    "confirmed": "Reservation confirmed successfully"
   },
   "menu": {
     "quantity": "Quantity: ",
@@ -170,7 +171,8 @@
     "myRes": "My reservations",
     "resFor": "Reservation for ",
     "persons": " persons",
-    "delete": "Delete my Reservation"
+    "delete": "Delete my Reservation",
+    "successDelete": "Successfully deleted"
   },
   "loginError": {
     "userNotFound": "User does not exist. Please try again.",
@@ -201,5 +203,19 @@
     "badRequest": "Something went bad. Please try again.",
     "unknownError": "Register failed.",
     "completeAll": "Complete all boxes with the appropriate data first."
+  },
+  "reservationError": {
+    "wrongDateOrNrOfPersons": "Data or persons number are wrong, please try again",
+    "fail": "Reservation failed, please try again",
+    "personsFitInTable": "The number of persons is too big to fit in these tables"
+  },
+  "tableError": {
+    "uniqueId": "Table number must be unique, please try again",
+    "dataNotValid": "The introduced data is not valid, please try again",
+    "cannotBeDeleted": "The item cannot be deleted, please try again"
+  },
+  "confirmReservationError": {
+    "notFound": "Reservation not found, please try again",
+    "fail": "Confirmation failed, please try again"
   }
 }
