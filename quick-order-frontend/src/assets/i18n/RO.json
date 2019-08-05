@@ -13,9 +13,9 @@
     "enterPassword": "Introduceți parola",
     "enterRe_Password": "Confirmare parola",
     "cancel": "Înapoi",
-    "agreements1": "Sunt de acord cu ",
+    "agreements1": " Sunt de acord cu ",
     "termsAndConditions": "Termeni si Conditiile",
-    "agreements2": "si am citit si am luat la cunostinta",
+    "agreements2": " si am citit si am luat la cunostinta ",
     "privacyPolicy": "Politica de confidentialitate",
     "usernameConditions": "  *(Numele de utilizare trebuie sa aiba minim 5 caractere)",
     "emailConditions": "*(Adresa nu este valida)",
@@ -48,12 +48,15 @@
     "signUp": "Înregistrare"
   },
   "login": {
-    "login": "Log In",
-    "register": "Register",
-    "username": "Username",
-    "password": "Password",
-    "remember": "Remember Me",
-    "forgotPass": "Forgot Password?"
+    "login": "Logare",
+    "register": "Inregistrare",
+    "username": "Nume de utilizator",
+    "password": "Parola",
+    "remember": "Tine-ma minte",
+    "forgotPass": "Ai uitat parola?",
+    "noAccount": "Nu ai cont? Inregistreaza-te acum gratuit!",
+    "userReq": "Casuta pentru numele de utilizator trebuie completata",
+    "passReq": "Casuta pentru parola trebuie completata"
   },
   "tableView": {
     "table": "Tabel",

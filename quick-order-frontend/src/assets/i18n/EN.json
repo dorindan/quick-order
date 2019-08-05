@@ -13,9 +13,9 @@
     "enterPassword": "Enter Password",
     "enterRe_Password": "Confirm Password",
     "cancel": "Cancel",
-    "agreements1": "I agree to the",
+    "agreements1": " I agree to the ",
     "termsAndConditions": "Terms & Conditions",
-    "agreements2": "and I have read and acknowledge the",
+    "agreements2": " and I have read and acknowledge the ",
     "privacyPolicy": "Privacy Policy",
     "usernameConditions": "  *(Username must have at least 5 characters)",
     "emailConditions": "*(Not a valid email address)",
@@ -48,12 +48,15 @@
     "signUp": "Sign up"
   },
   "login": {
-    "login": "Log In",
+    "login": "Login",
     "register": "Register",
     "username": "Username",
     "password": "Password",
     "remember": "Remember Me",
-    "forgotPass": "Forgot Password?"
+    "forgotPass": "Forgot Password?",
+    "noAccount": "Don't you have an account? Sign up now for free!",
+    "userReq": "Username is required",
+    "passReq": "Password is required"
   },
   "tableView": {
     "table": "Table",
