@@ -5,13 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.quickorder.backend.converter.CommandConverter;
-import ro.quickorder.backend.converter.MenuItemCommandConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Command;
 import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.MenuItemCommand;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.CommandDto;
+import ro.quickorder.backend.model.dto.MenuItemCommandDto;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
 import ro.quickorder.backend.repository.CommandRepository;
 import ro.quickorder.backend.repository.MenuItemCommandRepository;
@@ -20,6 +20,7 @@ import ro.quickorder.backend.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author R. Lupoaie
@@ -38,17 +39,46 @@ public class CommandService {
     private MenuItemCommandRepository menuItemCommandRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private MenuItemCommandConverter menuItemCommandConverter;
 
-    public CommandDto getUserActiveCommand(String userName) {
-        User user = userRepository.findByUsername(userName);
+    public CommandDto addCommand(CommandDto commandDto) {
+        Command savedCommand = mapCommandEntityFromCommandDto(commandDto);
+        // save and set MenuItemCommand
+        for(MenuItemCommandDto menuItemCommandDto : commandDto.getMenuItemCommandDtos() ){
+            MenuItemCommand savedMenuItemCommand = saveMenuItemCommand( savedCommand, menuItemCommandDto);
+            savedCommand.getMenuItemCommands().add(savedMenuItemCommand);
+        }
+        return commandConverter.toCommandDto(commandRepository.save(savedCommand));
+    }
+
+    private MenuItemCommand saveMenuItemCommand(Command savedCommand, MenuItemCommandDto menuItemCommandDto){
+        savedCommand.setMenuItemCommands(new ArrayList<>());
+        MenuItem menuItem = menuItemRepository.findByName(menuItemCommandDto.getMenuItemDto().getName());
+        if (menuItem == null) {
+            LOG.error("Item not found");
+            throw new NotFoundException("Item not found");
+        }
+        MenuItemCommand menuItemCommand = new MenuItemCommand();
+        menuItemCommand.setMenuItem(menuItem);
+        menuItemCommand.setCommand(savedCommand);
+        menuItemCommand.setAmount(menuItemCommandDto.getAmount());
+        return menuItemCommandRepository.save(menuItemCommand);
+    }
+
+    private Command mapCommandEntityFromCommandDto(CommandDto commandDto){
+        Command command = new Command();
+        // find user
+        User user = userRepository.findByUsername(commandDto.getUserDto().getUsername());
         if (user == null) {
             LOG.error("User not found");
             throw new NotFoundException("User not found");
         }
-        Command command = commandRepository.findActiveByUser(user, CommandStatus.ACTIVE);
-        return commandConverter.toCommandDto(command);
+        // set command
+        command.setUser(user);
+        command.setCommandName(UUID.randomUUID().toString());
+        command.setStatus(CommandStatus.DONE);
+        command.setSpecification(commandDto.getSpecification());
+        command.setPacked(commandDto.isPacked());
+        return commandRepository.save(command);
     }
 
     public void updateCommand(CommandDto receivedCommandDto) {

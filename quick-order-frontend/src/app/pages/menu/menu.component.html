@@ -18,7 +18,7 @@
     <div class="menu-item" *ngFor="let menuItem of this.menuItems; let i = index">
       <div *ngIf="itemType.type === menuItem.menuItemTypeDto.type">
         <div class="media">
-          <img src="/assets/img/QuickOrder.png" class="mr-3" alt="...">
+          <img src={{this.imgPath[i]}} class="mr-3" alt="...">
           <div class="media-body">
             <h5 class="mt-0">
               <div class="menu-item-name">
@@ -30,7 +30,6 @@
             </h5>
 
             <span *ngIf="menuItem.description !== ''" class="menu-item-description">
-              <span *ngIf="i > 0">,</span>
               <span>{{menuItem.description}}</span>
               <br>
             </span>

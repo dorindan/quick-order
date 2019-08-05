@@ -35,6 +35,10 @@ export class MenuService {
     return this.apiService.putRequest('/api/menuItem/update', menuItem);
   }
 
+  uploadImg(formData: FormData): Observable<any> {
+    return this.apiService.putRequest('/api/menuItem/updateImg', formData);
+  }
+
   deleteMenuItem(menuItemName: string): Observable<any> {
     return this.apiService.deleteRequest('/api/menuItem/remove/' + menuItemName);
   }

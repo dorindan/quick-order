@@ -151,8 +151,6 @@ public class ReservationServiceTest {
 
     @Test(expected = NotFoundException.class)
     public void testConfirmReservationTableIsTaken() {
-        Timestamp timestampIn = Timestamp.valueOf("2007-09-23 9:0:0.0");
-        Timestamp timestampOut = Timestamp.valueOf("2007-09-23 12:59:0.0");
         List<ReservationDto> reservationDtos = reservationService.getAllReservationsUnconfirmed();
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+09:00", "23+09+2007+12:59");
         assertEquals(reservationDtos.size(), 2);
@@ -166,8 +164,6 @@ public class ReservationServiceTest {
 
     @Test(expected = ForbiddenException.class)
     public void testConfirmReservationTableIsInvalid() {
-        Timestamp timestampIn = Timestamp.valueOf("2007-09-23 5:0:0.0");
-        Timestamp timestampOut = Timestamp.valueOf("2007-09-23 15:59:0.0");
         List<ReservationDto> reservationDtos = reservationService.getAllReservationsUnconfirmed();
         List<TableFoodDto> tableFoodDtos = tableFoodService.getAllFree("23+09+2007+05:00", "23+09+2007+15:59");
         assertEquals(reservationDtos.size(), 2);

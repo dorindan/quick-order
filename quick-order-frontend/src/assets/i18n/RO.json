@@ -39,6 +39,7 @@
     "language": "Limba: ",
     "confirmReservations": "Confirmare Rezervări",
     "propertyAdministration": "Administrare proprietati",
+    "userAdministration": "Administrare utilizatori",
     "log": "Rezervările mele"
   },
   "startPage": {
@@ -135,8 +136,7 @@
   "menu": {
     "quantity": "Cantitate: ",
     "selected": "produse selectate",
-    "viewCommand": "Vizualizare comandă",
-    "save": "Salvează"
+    "viewCommand": "Vizualizare comandă"
   },
   "a": {
     "reserve": "Rezervări online 24/7",
@@ -220,5 +220,18 @@
   "confirmReservationError": {
     "notFound": "Rezervarea nu poate fi gasita, va rugam sa incercati din nou",
     "fail": "Confirmarea a esuat, va rugam sa incercati din nou"
+  },
+  "userAdministration": {
+    "title": "Administrare roluri utilizatori",
+    "confirm": "Confirmare schimbare",
+    "username": "Numele de utilizator: ",
+    "email": "Email: "
+  },
+  "finishCommand": {
+    "finishCommand": "Finalizează comanda",
+    "selectedItem": "Produse selectate",
+    "specifications": "Specificații: ",
+    "isPacked": "Împachetat:",
+    "totalPrice": "Prețul total"
   }
 }

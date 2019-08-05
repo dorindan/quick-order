@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MenuService} from '../../services/menu.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {MenuItem} from '../../models/MenuItem';
@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {Command} from '../../models/Command';
 import {MatSnackBar} from '@angular/material';
 import {MenuItemCommand} from '../../models/MenuItemCommand';
+import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 
 @Component({
   selector: 'app-menu',
@@ -19,8 +20,9 @@ export class MenuComponent implements OnInit {
   public menuItems: MenuItem[];
   public newCommand = new Command();
   public totalAmount = 0;
+  public imgPath = [];
 
-  constructor(private menuService: MenuService, private router: Router,
+  constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService, private menuService: MenuService, private router: Router,
               private snackBar: MatSnackBar) {
   }
 
@@ -31,10 +33,32 @@ export class MenuComponent implements OnInit {
 
     this.menuService.getMenuItems().subscribe(response => {
       this.menuItems = response;
-      response.forEach(i => this.amounts.push(1));
+      this.menuItems.forEach(menuItem => {
+        this.amounts.push(1);
+        if (menuItem.img) {
+          this.imgPath.push('assets/menuItemImg/' + menuItem.name + '.jpg');
+        } else {
+          this.imgPath.push('/assets/menuItemImg/default.jpg');
+        }
+      });
     });
 
-    this.newCommand.menuItemCommandDtos = [];
+    this.reloadCommand();
+  }
+
+  reloadCommand() {
+    if (this.storage.get('command')) {
+      this.newCommand = this.storage.get('command') as Command;
+      this.calculateTotalAmount();
+    } else {
+      this.newCommand.menuItemCommandDtos = [];
+    }
+  }
+
+  calculateTotalAmount() {
+    for (const item of this.newCommand.menuItemCommandDtos) {
+      this.totalAmount += (item as MenuItemCommand).amount;
+    }
   }
 
   showSnackbar(message: string) {
@@ -66,6 +90,7 @@ export class MenuComponent implements OnInit {
     this.totalAmount += this.amounts[amountIndex];
     this.showSnackbar(this.amounts[amountIndex] + ' ' + menuItem.name + ' successfully added');
     this.amounts[amountIndex] = 1;
+    this.storage.set('command', this.newCommand);
   }
 
   finishCommand() {

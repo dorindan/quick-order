@@ -44,7 +44,7 @@ public class CommandConverterTest {
         assertEquals(commandDto.isPacked(), command.isPacked());
         assertNull(command.getMenuItems());
         assertNull(command.getBill());
-        assertNull(command.getUsers());
+        assertNull(command.getUser());
         assertNull(command.getTable());
         assertNull(command.getReservations());
     }

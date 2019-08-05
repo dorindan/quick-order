@@ -46,10 +46,6 @@ public class MenuItemServiceTest {
     @Inject
     private IngredientService ingredientService;
     @Inject
-    private MenuItemConverter menuItemConverter;
-    @Inject
-    private IngredientConverter ingredientConverter;
-    @Inject
     private MenuItemTypeRepository menuItemTypeRepository;
 
 

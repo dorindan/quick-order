@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ro.quickorder.backend.converter.MenuItemConverter;
+import ro.quickorder.backend.converter.UserConverter;
 import ro.quickorder.backend.exception.NotFoundException;
 import ro.quickorder.backend.model.Command;
 import ro.quickorder.backend.model.MenuItem;
@@ -15,6 +16,7 @@ import ro.quickorder.backend.model.TableFood;
 import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.model.dto.MenuItemCommandDto;
+import ro.quickorder.backend.model.dto.UserDto;
 import ro.quickorder.backend.model.enumeration.CommandStatus;
 import ro.quickorder.backend.repository.*;
 
@@ -47,6 +49,8 @@ public class CommandServiceTest {
     TableFoodRepository tableFoodRepository;
     @Inject
     MenuItemCommandRepository menuItemCommandRepository;
+    @Inject
+    UserConverter userConverter;
 
     @Before
     public void setUp() {
@@ -67,9 +71,7 @@ public class CommandServiceTest {
         User user = userRepository.save(user1);
 
         Command command = new Command("Test command", "The test need to work", false, CommandStatus.ACTIVE, tableFood);
-        List<User> users = new ArrayList<>();
-        users.add(user);
-        command.setUsers(users);
+        command.setUser(user);
         commandRepository.save(command);
     }
 
@@ -83,21 +85,51 @@ public class CommandServiceTest {
     }
 
     @Test
-    public void testUserActiveCommand() {
-        CommandDto commandDto = commandService.getUserActiveCommand("hellohello");
-        assertNotNull(commandDto);
-        assertEquals("Test command", commandDto.getCommandName());
-        assertEquals("The test need to work", commandDto.getSpecification());
+    public void testAddCommand() {
+        CommandDto commandDto = new CommandDto();
+        User user = userRepository.findByUsername("hellohello");
+        commandDto.setUserDto(userConverter.toUserDto(user));
+        commandDto.setSpecification("Putina maioneza");
+        commandDto.setPacked(true);
+        MenuItem menuItem = menuItemRepository.findByName("Name1");
+        MenuItemCommandDto menuItemCommandDto = new MenuItemCommandDto();
+        menuItemCommandDto.setAmount(7);
+        menuItemCommandDto.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItem));
+        List<MenuItemCommandDto> menuItemCommandDtos = new ArrayList<>();
+        menuItemCommandDtos.add(menuItemCommandDto);
+        commandDto.setMenuItemCommandDtos(menuItemCommandDtos);
+        commandService.addCommand(commandDto);
+        List<Command> commands = commandRepository.findAll();
+
+        assertEquals(2, commands.size());
+        assertEquals("Putina maioneza", commands.get(1).getSpecification());
+        assertTrue(commands.get(1).isPacked());
+        assertEquals(1, commands.get(1).getMenuItemCommands().size());
+        assertEquals("Name1", commands.get(1).getMenuItemCommands().get(0).getMenuItem().getName());
+        assertEquals(new Integer(7), commands.get(1).getMenuItemCommands().get(0).getAmount());
     }
 
-    @Test
-    public void testUserActiveCommandWithUserNotFound() {
-        try {
-            commandService.getUserActiveCommand("admin");
-            fail("User should not have been found");
-        } catch (NotFoundException e) {
-            assertEquals("User not found", e.getMessage());
-        }
+    @Test(expected = NotFoundException.class)
+    public void testAddCommandWithUserNotFound() {
+        CommandDto commandDto = new CommandDto();
+        commandDto.setUserDto(new UserDto("nonExisting", "password", "email"));
+        commandService.addCommand(commandDto);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testAddCommandWithMenuItemNotFound() {
+        CommandDto commandDto = new CommandDto();
+        User user = userRepository.findByUsername("hellohello");
+        commandDto.setUserDto(userConverter.toUserDto(user));
+        MenuItem menuItem = menuItemRepository.findByName("Name1");
+        MenuItemCommandDto menuItemCommandDto = new MenuItemCommandDto();
+        menuItemCommandDto.setAmount(7);
+        menuItemCommandDto.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItem));
+        menuItemCommandDto.getMenuItemDto().setName("UnExisting Item");
+        List<MenuItemCommandDto> menuItemCommandDtos = new ArrayList<>();
+        menuItemCommandDtos.add(menuItemCommandDto);
+        commandDto.setMenuItemCommandDtos(menuItemCommandDtos);
+        commandService.addCommand(commandDto);
     }
 
     @Test
@@ -118,31 +150,25 @@ public class CommandServiceTest {
         List<MenuItemCommandDto> menuItemCommandDtos = new ArrayList<>();
         menuItemCommandDtos.add(menuItemCommandDto1);
         menuItemCommandDtos.add(menuItemCommandDto2);
-
         commandDto.setMenuItemCommandDtos(menuItemCommandDtos);
 
         commandService.updateCommand(commandDto);
 
-        CommandDto commandDtoAfter = commandService.getUserActiveCommand("hellohello");
-        assertNotNull(commandDtoAfter);
-        assertEquals("Test command", commandDtoAfter.getCommandName());
-        assertEquals("Specification changed", commandDtoAfter.getSpecification());
-        assertEquals(2, commandDtoAfter.getMenuItemCommandDtos().size());
-        assertEquals(new Integer(2), commandDtoAfter.getMenuItemCommandDtos().get(0).getAmount());
+        Command commandAfter = commandRepository.findByCommandNameWithItems(commandDto.getCommandName());
+        assertNotNull(commandAfter);
+        assertEquals("Test command", commandAfter.getCommandName());
+        assertEquals("Specification changed", commandAfter.getSpecification());
+        assertEquals(2, commandAfter.getMenuItemCommands().size());
+        assertEquals(new Integer(2), commandAfter.getMenuItemCommands().get(0).getAmount());
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testUpdateCommandWithCommandNotFound() {
-        try {
-            commandService.updateCommand(new CommandDto());
-            fail("Command should not have been found");
-        } catch (NotFoundException e) {
-            assertEquals("Command not found", e.getMessage());
-        }
+        commandService.updateCommand(new CommandDto());
     }
 
-    @Test
-    public void testUpdateCommandWhenMenuItemNotFound() {
+    @Test(expected = NotFoundException.class)
+    public void testUpdateCommandWhenMenuItemNotFoundNewMenuItem() {
         CommandDto commandDto = new CommandDto("Test command", "Specification changed", true, CommandStatus.ACTIVE);
 
         List<MenuItem> menuItems = menuItemRepository.findAll();
@@ -158,22 +184,31 @@ public class CommandServiceTest {
         menuItemCommandDtos.add(menuItemCommandDto2);
         commandDto.setMenuItemCommandDtos(menuItemCommandDtos);
 
-        try {
-            commandService.updateCommand(commandDto);
-            fail("MenuItem should not have been found");
-        } catch (NotFoundException e) {
-            assertEquals("MenuItem not found", e.getMessage());
-        }
+        commandService.updateCommand(commandDto);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testUpdateCommandWhenMenuItemNotFoundWrongMenuItemName() {
+        CommandDto commandDto = new CommandDto("Test command", "Specification changed", true, CommandStatus.ACTIVE);
+
+        List<MenuItem> menuItems = menuItemRepository.findAll();
+        assertEquals(3, menuItems.size());
+
+        MenuItemCommandDto menuItemCommandDto1 = new MenuItemCommandDto();
+        menuItemCommandDto1.setAmount(2);
+        menuItemCommandDto1.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItems.get(0)));
+
+        MenuItemCommandDto menuItemCommandDto2 = new MenuItemCommandDto();
+        List<MenuItemCommandDto> menuItemCommandDtos = new ArrayList<>();
+        menuItemCommandDtos.add(menuItemCommandDto1);
+        menuItemCommandDtos.add(menuItemCommandDto2);
+        commandDto.setMenuItemCommandDtos(menuItemCommandDtos);
 
         menuItemCommandDto2.setAmount(2);
         menuItemCommandDto2.setMenuItemDto(menuItemConverter.toMenuItemDto(menuItems.get(0)));
         menuItemCommandDto2.getMenuItemDto().setName("Wrong name");
         commandDto.setMenuItemCommandDtos(menuItemCommandDtos);
-        try {
-            commandService.updateCommand(commandDto);
-            fail("MenuItem should not have been found");
-        } catch (NotFoundException e) {
-            assertEquals("MenuItem not found", e.getMessage());
-        }
+
+        commandService.updateCommand(commandDto);
     }
 }

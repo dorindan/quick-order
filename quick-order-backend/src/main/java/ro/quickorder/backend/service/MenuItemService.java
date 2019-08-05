@@ -1,9 +1,11 @@
 package ro.quickorder.backend.service;
 
+import com.google.common.io.Resources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ro.quickorder.backend.converter.MenuItemConverter;
 import ro.quickorder.backend.converter.MenuItemTypeConverter;
 import ro.quickorder.backend.exception.BadRequestException;
@@ -16,6 +18,10 @@ import ro.quickorder.backend.repository.IngredientRepository;
 import ro.quickorder.backend.repository.MenuItemRepository;
 import ro.quickorder.backend.repository.MenuItemTypeRepository;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +34,9 @@ import java.util.stream.Collectors;
 @Service
 public class MenuItemService {
     private static final Logger LOG = LoggerFactory.getLogger(MenuItemService.class);
+
+    @Autowired
+    private HttpServletRequest request;
     @Autowired
     private MenuItemRepository menuItemRepository;
     @Autowired
@@ -62,6 +71,28 @@ public class MenuItemService {
         menuItemRepository.save(menuItem);
     }
 
+    public void uploadImg(MultipartFile multipartFile) {
+        if (!multipartFile.isEmpty()) {
+            File dest = deleteFileWithName(multipartFile.getOriginalFilename());
+            try {
+                multipartFile.transferTo(dest);
+            } catch (IOException e) {
+                throw new BadRequestException("The file could not be added!");
+            }
+        }
+    }
+
+    private File deleteFileWithName(String fileName){
+        final String dir = System.getProperty("user.dir");
+        String location = "\\src\\assets\\menuItemImg\\";
+        String filePath = dir + location + fileName;
+        File dest = new File(filePath);
+        if (dest.exists() && !dest.isDirectory()) {
+            dest.delete();
+        }
+        return dest;
+    }
+
     public void updateMenuItem(MenuItemDto menuItemDto) {
         MenuItem menuItem = menuItemRepository.findByName(menuItemDto.getName());
         if (menuItem == null) {
@@ -91,8 +122,8 @@ public class MenuItemService {
                 if (ingredient != null) {
                     ingredients.add(ingredient);
                 } else {
-                    LOG.error("Ingredient " + ingredient.toString() + " was not found!");
-                    throw new NotFoundException("Ingredient " + ingredient.toString() + " was not found!");
+                    LOG.error("Ingredient " + ingredientDto.getName() + " was not found!");
+                    throw new NotFoundException("Ingredient " + ingredientDto.getName() + " was not found!");
                 }
             });
         }
@@ -105,6 +136,7 @@ public class MenuItemService {
             LOG.error("MenuItem not found!");
             throw new NotFoundException("MenuItem not found!");
         }
+        deleteFileWithName(menuItem.getName() + ".jpg");
         menuItemRepository.delete(menuItem);
     }
 

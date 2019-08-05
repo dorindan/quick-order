@@ -34,11 +34,12 @@
     "table": "Table administration",
     "tableView": "Table view",
     "aboutUs": "About Us",
-    "contact": "Contact Us",
+    "contact": "Contact",
     "logout": "Logout",
     "language": "Language ",
     "confirmReservations": "Confirm Reservations",
     "propertyAdministration": "Property administration",
+    "userAdministration": "User administration",
     "log": "My Reservations"
   },
   "startPage": {
@@ -135,8 +136,7 @@
   "menu": {
     "quantity": "Quantity: ",
     "selected": "products selected",
-    "viewCommand": "View command",
-    "save": "Save"
+    "viewCommand": "View command"
   },
   "contact": {
     "open": "Opens at:",
@@ -220,5 +220,16 @@
   "confirmReservationError": {
     "notFound": "Reservation not found, please try again",
     "fail": "Confirmation failed, please try again"
+  },
+  "userAdministration": {
+    "title": "Administration of user roles",
+    "confirm": "Confirm the change"
+  },
+  "finishCommand": {
+    "finishCommand": "Finish command",
+    "selectedItem": "Selected items",
+    "specifications": "Specification: ",
+    "isPacked": "Packed:",
+    "totalPrice": "Total Price"
   }
 }
