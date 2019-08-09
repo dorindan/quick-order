@@ -148,6 +148,14 @@ public class ReservationService {
         return reservation;
     }
 
+    public List<ReservationDto> getAllReservations() {
+        List<ReservationDto> reservationDtos = new ArrayList<>();
+        for (Reservation reservation : reservationRepository.findAll()) {
+            reservationDtos.add(reservationConverter.toReservationDto(reservation));
+        }
+        return reservationDtos;
+    }
+
     public ReservationDto getReservationDtoByName(String reservationName) {
 
         Reservation reservation = reservationRepository.findByReservationNameWithTables(reservationName);

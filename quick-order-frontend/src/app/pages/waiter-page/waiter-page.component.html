@@ -18,6 +18,12 @@
             {{getFormattedTime(reservation)}}
           </mat-panel-description>
         </div>
+        <div *ngIf="reservation.confirmed===true">
+          <mat-panel-description translate="">waiterPage.reservationAlreadyConfirmed</mat-panel-description>
+        </div>
+        <div *ngIf="reservation.confirmed===false">
+          <mat-panel-description translate="">waiterPage.reservationUnconfirmed</mat-panel-description>
+        </div>
         <div class="editButtonDiv" *ngIf=checkDisabled(i); then [hidden]="true" disabled="false" else [hidden]="false">
           <mat-icon class="editButton" (click)="enableEdit(i)">create</mat-icon>
         </div>

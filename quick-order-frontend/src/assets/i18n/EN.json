@@ -131,7 +131,9 @@
     "windowView": "  Has window view: ",
     "tableTitle": "TABLES",
     "acceptReservation": "Accept Reservation",
-    "confirmed": "Reservation confirmed successfully"
+    "confirmed": "Reservation confirmed successfully",
+    "reservationAlreadyConfirmed": "Reservation confirmed",
+    "reservationUnconfirmed": "Reservation unconfirmed"
   },
   "menu": {
     "quantity": "Quantity: ",

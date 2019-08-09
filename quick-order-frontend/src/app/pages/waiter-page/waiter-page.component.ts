@@ -41,12 +41,31 @@ export class WaiterPageComponent implements OnInit {
       username: this.token.getUsername(),
       authorities: this.token.getAuthorities()
     };
-    this.reservationsGet = this.reservationService.getUnacceptedReservation();
-    this.reservations = [];
-    this.reservationsGet.forEach(reservation => reservation.forEach(r => this.reservations.push(r)));
+    this.reservationService.getAllReservations().subscribe(response => {
+      console.log(response);
+      let rezervarile: Reservation[] = this.sortByConfirmation(response);
+      this.reservations = rezervarile;
+    });
     this.indexExpanded = -1;
     this.disabledElements = [];
     this.selectedOptions = [];
+  }
+
+  sortByConfirmation(reservationList: Reservation[]): Reservation[]{
+    console.log(reservationList[0]);
+    let newReservationList: Reservation[] = [];
+    reservationList.forEach(reservation => {
+      if (reservation.confirmed == true){
+        newReservationList.push(reservation);
+      }
+      else newReservationList.unshift(reservation);
+    })
+    return newReservationList;
+  }
+
+  sortByDate(reservationList: Reservation[]): Reservation[]{
+    let newReservationList: Reservation[] = [];
+    return null;
   }
   
 
@@ -79,7 +98,6 @@ export class WaiterPageComponent implements OnInit {
               this.showSnackbar(this.translateService.instant('confirmReservationError.fail'));
           }
         });
-
     }
   }
 

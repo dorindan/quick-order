@@ -131,7 +131,9 @@
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
     "acceptReservation": "Accepta Rezervarea",
-    "confirmed": "Rezervarea a fost confirmata cu succes"
+    "confirmed": "Rezervarea a fost confirmata cu succes",
+    "reservationAlreadyConfirmed": "Rezervare confirmata",
+    "reservationUnconfirmed": "Rezervare neconfirmata"
   },
   "menu": {
     "quantity": "Cantitate: ",
