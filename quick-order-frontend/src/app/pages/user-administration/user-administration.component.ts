@@ -29,7 +29,7 @@ export class UserAdministrationComponent implements OnInit {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   userToBeChanged: User;
   private usersGet: Observable<User[]>;
-  private users: User[];
+  public users: User[];
   private rolesGet: Observable<Authorities>;
 
   constructor(private userService: UserService,

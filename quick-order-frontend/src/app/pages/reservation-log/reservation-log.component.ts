@@ -11,8 +11,8 @@ import {TranslateService} from "@ngx-translate/core";
   styleUrls: ['./reservation-log.component.scss']
 })
 export class ReservationLogComponent implements OnInit {
-  private reservationsGet: Observable<Reservation[]>;
-  private reservations: Reservation[];
+  public reservationsGet: Observable<Reservation[]>;
+  public reservations: Reservation[];
 
   constructor(
     private translateService: TranslateService,
