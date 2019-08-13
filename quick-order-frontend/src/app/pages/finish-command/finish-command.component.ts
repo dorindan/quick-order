@@ -42,18 +42,25 @@ export class FinishCommandComponent implements OnInit {
 
   reloadCommand() {
     if (this.storage.get('command')) {
-      this.command = this.storage.get('command') as Command;
-      this.calculateTotalAmount();
+      const command = this.storage.get('command') as Command;
+      this.commandService.updateMenuItemsFromCommand(command).subscribe(rez => {
+        this.command = rez;
+        if (this.command.menuItemCommandDtos === null) {
+          this.command.menuItemCommandDtos = [];
+          alert('menuITem sunt null');
+        }
+        this.calculateTotalAmount();
+        for (const item of this.command.menuItemCommandDtos) {
+          this.amount.push(item.amount);
+          if (item.menuItemDto.img) {
+            this.imgPath.push('assets/menuItemImg/' + item.menuItemDto.name + '.jpg');
+          } else {
+            this.imgPath.push('/assets/menuItemImg/default.jpg');
+          }
+        }
+      });
     } else {
       this.command.menuItemCommandDtos = [];
-    }
-    for (const item of this.command.menuItemCommandDtos) {
-      this.amount.push(item.amount);
-      if (item.menuItemDto.img) {
-        this.imgPath.push('assets/menuItemImg/' + item.menuItemDto.name + '.jpg');
-      } else {
-        this.imgPath.push('/assets/menuItemImg/default.jpg');
-      }
     }
   }
 
@@ -69,7 +76,7 @@ export class FinishCommandComponent implements OnInit {
       if (menuItem.name === item.menuItemDto.name) {
         this.command.menuItemCommandDtos =
           this.command.menuItemCommandDtos.filter(theItem => theItem.menuItemDto.name !== item.menuItemDto.name);
-        this.imgPath = this.imgPath.filter( img => img !== this.imgPath[i]);
+        this.imgPath = this.imgPath.filter(img => img !== this.imgPath[i]);
       }
     }
     this.saveCommandInSession();

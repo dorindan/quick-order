@@ -1,6 +1,7 @@
 package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.service.CommandService;
@@ -22,5 +23,11 @@ public class  CommandResource {
     @RequestMapping(path = "/update", method = RequestMethod.PUT)
     public void updateCommand(@RequestBody CommandDto commandDto) {
         commandService.updateCommand(commandDto);
+    }
+
+    @RequestMapping(path = "/all-from-command", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER') or hasRole('WAITER')")
+    public CommandDto updateMenuItemsFromCommand(@RequestBody CommandDto commandDto) {
+        return commandService.updateMenuItemsFromCommand(commandDto);
     }
 }

@@ -7,6 +7,7 @@ import {Command} from '../../models/Command';
 import {MatSnackBar} from '@angular/material';
 import {MenuItemCommand} from '../../models/MenuItemCommand';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
+import {CommandService} from '../../services/command.service';
 
 @Component({
   selector: 'app-menu',
@@ -18,12 +19,12 @@ export class MenuComponent implements OnInit {
   public amounts = [];
   public menuItemType: MenuItemType[];
   public menuItems: MenuItem[];
-  public newCommand = new Command();
+  public command = new Command();
   public totalAmount = 0;
   public imgPath = [];
 
   constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService, private menuService: MenuService, private router: Router,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar, private commandService: CommandService) {
   }
 
   ngOnInit() {
@@ -48,15 +49,21 @@ export class MenuComponent implements OnInit {
 
   reloadCommand() {
     if (this.storage.get('command')) {
-      this.newCommand = this.storage.get('command') as Command;
-      this.calculateTotalAmount();
+      const command = this.storage.get('command') as Command;
+      this.commandService.updateMenuItemsFromCommand(command).subscribe(rez => {
+        this.command = rez;
+        if (this.command.menuItemCommandDtos === null) {
+          this.command.menuItemCommandDtos = [];
+        }
+        this.calculateTotalAmount();
+      });
     } else {
-      this.newCommand.menuItemCommandDtos = [];
+      this.command.menuItemCommandDtos = [];
     }
   }
 
   calculateTotalAmount() {
-    for (const item of this.newCommand.menuItemCommandDtos) {
+    for (const item of this.command.menuItemCommandDtos) {
       this.totalAmount += (item as MenuItemCommand).amount;
     }
   }
@@ -75,7 +82,7 @@ export class MenuComponent implements OnInit {
       return;
     }
     let exist = false;
-    for (const item of this.newCommand.menuItemCommandDtos) {
+    for (const item of this.command.menuItemCommandDtos) {
       if (item.menuItemDto.name === menuItem.name) {
         item.amount += this.amounts[amountIndex];
         exist = true;
@@ -85,12 +92,12 @@ export class MenuComponent implements OnInit {
       const menuItemCommand = new MenuItemCommand();
       menuItemCommand.amount = this.amounts[amountIndex];
       menuItemCommand.menuItemDto = menuItem;
-      this.newCommand.menuItemCommandDtos.push(menuItemCommand);
+      this.command.menuItemCommandDtos.push(menuItemCommand);
     }
     this.totalAmount += this.amounts[amountIndex];
     this.showSnackbar(this.amounts[amountIndex] + ' ' + menuItem.name + ' successfully added');
     this.amounts[amountIndex] = 1;
-    this.storage.set('command', this.newCommand);
+    this.storage.set('command', this.command);
   }
 
   finishCommand() {

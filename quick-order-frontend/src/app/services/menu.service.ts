@@ -4,6 +4,7 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
 import {MenuItem} from '../models/MenuItem';
 import {MenuItemType} from '../models/MenuItemType';
+import {Command} from '../models/Command';
 
 @Injectable({
   providedIn: 'root'
