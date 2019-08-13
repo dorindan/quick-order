@@ -42,18 +42,15 @@ export class WaiterPageComponent implements OnInit {
       authorities: this.token.getAuthorities()
     };
     this.reservationService.getAllReservations().subscribe(response => {
-      console.log(response);
       let rezervarile: Reservation[] = this.sortReservations(response);
       this.reservations = rezervarile;
     });
     this.indexExpanded = -1;
     this.disabledElements = [];
     this.selectedOptions = [];
-    console.log(this.compareDate('29/08/2019 08:15', '29/08/2019 08:10'));
   }
 
   sortByConfirmation(reservationList: Reservation[]): Reservation[]{
-    console.log(reservationList[0]);
     let newReservationList: Reservation[] = [];
     reservationList.forEach(reservation => {
       if (reservation.confirmed == true){
@@ -92,7 +89,6 @@ export class WaiterPageComponent implements OnInit {
   if the second date is bigger than first date it returns -1
    */
   compareDate(dateAndHour1: string, dateAndHour2: string): number{
-    console.log(dateAndHour1,dateAndHour2);
     let date1= dateAndHour1.split(' ',2)[0].split('/',3);
     let hour1= dateAndHour1.split(' ',2)[1].split(':',2);
     let date2= dateAndHour2.split(' ',2)[0].split('/',3);
