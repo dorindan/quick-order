@@ -150,8 +150,8 @@ export class WaiterPageComponent implements OnInit {
 
   }
 
-  checkDisabled(i: number): boolean {
-    return this.disabledElements.includes(i);
+  checkDisabled(reservation: Reservation): boolean {
+    return reservation.confirmed;
   }
 
   enableEdit(i: number) {

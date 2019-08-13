@@ -5,7 +5,7 @@
     <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let reservation of reservations ; let i = index"
                          (opened)="openGroup(reservation.reservationName, i, reservation)"
                          (closed)="closeGroup()"
-                         [disabled]="checkDisabled(i)">
+                         [disabled]="checkDisabled(reservation)">
       <mat-expansion-panel-header>
         <div class="numberOfPersons">
           <mat-panel-description>
@@ -24,7 +24,7 @@
         <div *ngIf="reservation.confirmed===false">
           <mat-panel-description translate="">waiterPage.reservationUnconfirmed</mat-panel-description>
         </div>
-        <div class="editButtonDiv" *ngIf=checkDisabled(i); then [hidden]="true" disabled="false" else [hidden]="false">
+        <div class="editButtonDiv" *ngIf=checkDisabled(reservation); then [hidden]="true" disabled="false" else [hidden]="false">
           <mat-icon class="editButton" (click)="enableEdit(i)">create</mat-icon>
         </div>
       </mat-expansion-panel-header>
