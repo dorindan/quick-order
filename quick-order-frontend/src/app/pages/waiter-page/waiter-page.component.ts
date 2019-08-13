@@ -43,12 +43,13 @@ export class WaiterPageComponent implements OnInit {
     };
     this.reservationService.getAllReservations().subscribe(response => {
       console.log(response);
-      let rezervarile: Reservation[] = this.sortByConfirmation(response);
+      let rezervarile: Reservation[] = this.sortReservations(response);
       this.reservations = rezervarile;
     });
     this.indexExpanded = -1;
     this.disabledElements = [];
     this.selectedOptions = [];
+    console.log(this.compareDate('29/08/2019 08:15', '29/08/2019 08:10'));
   }
 
   sortByConfirmation(reservationList: Reservation[]): Reservation[]{
@@ -63,8 +64,81 @@ export class WaiterPageComponent implements OnInit {
     return newReservationList;
   }
 
-  sortByDate(reservationList: Reservation[]): Reservation[]{
-    let newReservationList: Reservation[] = [];
+  sortReservations(reservationList: Reservation[]): Reservation[]{
+    let confirmedReservationList: Reservation[] = [];
+    let unconfirmedReservationList: Reservation[] = [];
+    reservationList.forEach(reservation => {
+      let i: number = 0;
+      if (reservation.confirmed == true){
+        while (i < confirmedReservationList.length && this.compareDate(reservation.checkInTime,confirmedReservationList[i].checkInTime) > 0){
+          i++;
+        }
+        confirmedReservationList.splice(i,0, reservation);
+        this.disabledElements.push(reservation);
+      }
+      else{
+        while (i < unconfirmedReservationList.length && this.compareDate(reservation.checkInTime,unconfirmedReservationList[i].checkInTime) > 0){
+          i++;
+        }
+        unconfirmedReservationList.splice(i,0, reservation);
+      }
+    })
+    return unconfirmedReservationList.concat(confirmedReservationList);
+  }
+
+  /*
+  if the first date is bigger than second returns 1
+  if the dates are equal returns 0
+  if the second date is bigger than first date it returns -1
+   */
+  compareDate(dateAndHour1: string, dateAndHour2: string): number{
+    console.log(dateAndHour1,dateAndHour2);
+    let date1= dateAndHour1.split(' ',2)[0].split('/',3);
+    let hour1= dateAndHour1.split(' ',2)[1].split(':',2);
+    let date2= dateAndHour2.split(' ',2)[0].split('/',3);
+    let hour2= dateAndHour2.split(' ',2)[1].split(':',2);
+
+    if (date1[2] > date2[2]){
+      return 1;
+    }
+    else if (date1[2] < date2[2]){
+      return -1;
+    }
+    else {
+      if (date1[1] > date2[1]){
+        return 1;
+      }
+      else if (date1[1] < date2[1]){
+        return -1;
+      }
+      else {
+        if (date1[0] > date2[0]){
+          return 1;
+        }
+        else if (date1[0] < date2[0]){
+          return -1;
+        }
+        else{
+          if (hour1[1] > hour2[1]){
+            return 1;
+          }
+          else if (hour1[1] < hour2[1]){
+            return-1;
+          }
+          else {
+            if (hour1[0] > hour2[0]){
+              return 1;
+            }
+            else if (hour1[0] < hour2[0]){
+              return -1;
+            }
+            else{
+              return 0;
+            }
+          }
+        }
+      }
+    }
     return null;
   }
   
