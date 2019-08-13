@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ro.quickorder.backend.model.MenuItem;
+import ro.quickorder.backend.model.dto.CommandDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 import ro.quickorder.backend.service.MenuItemService;
 
@@ -23,6 +24,8 @@ public class MenuItemResource {
     public List<MenuItemDto> getMenuItems() {
         return menuItemService.getMenuItems();
     }
+
+
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @PreAuthorize("hasRole('WAITER')")

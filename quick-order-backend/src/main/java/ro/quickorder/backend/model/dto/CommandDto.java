@@ -16,7 +16,7 @@ public class CommandDto {
     private String specification;
     private boolean packed;
     private CommandStatus status;
-    private List<MenuItemCommandDto> MenuItemCommandDtos;
+    private List<MenuItemCommandDto> menuItemCommandDtos;
     private UserDto userDto;
 
     public CommandDto() {
@@ -62,11 +62,11 @@ public class CommandDto {
     }
 
     public List<MenuItemCommandDto> getMenuItemCommandDtos() {
-        return MenuItemCommandDtos;
+        return menuItemCommandDtos;
     }
 
     public void setMenuItemCommandDtos(List<MenuItemCommandDto> menuItemCommandDtos) {
-        this.MenuItemCommandDtos = menuItemCommandDtos;
+        this.menuItemCommandDtos = menuItemCommandDtos;
     }
 
     public UserDto getUserDto() {
