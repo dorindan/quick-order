@@ -71,7 +71,6 @@ export class WaiterPageComponent implements OnInit {
           i++;
         }
         confirmedReservationList.splice(i,0, reservation);
-        this.disabledElements.push(reservation);
       }
       else{
         while (i < unconfirmedReservationList.length && this.compareDate(reservation.checkInTime,unconfirmedReservationList[i].checkInTime) > 0){
