@@ -98,11 +98,6 @@ public class ReservationService {
                 reservation.getCheckOutTime(), reservation.getUser(), false);
     }
 
-    public List<ReservationDto> getAllReservationsUnconfirmed() {
-        List<Reservation> reservations = reservationRepository.findReservationsUnconfirmed();
-        return reservations.stream().map(reservationConverter::toReservationDto).collect(Collectors.toList());
-    }
-
     public void confirmReservation(ConfirmReservationDto confirmReservationDto) {
         List<TableFoodDto> tableFoodDtos = confirmReservationDto.getTableFoodDtos();
         ReservationDto reservationDto = reservationConverter.toReservationDtoFromConfirmReservationDto(confirmReservationDto);
