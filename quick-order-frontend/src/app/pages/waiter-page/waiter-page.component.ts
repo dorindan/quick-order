@@ -42,8 +42,7 @@ export class WaiterPageComponent implements OnInit {
       authorities: this.token.getAuthorities()
     };
     this.reservationService.getAllReservations().subscribe(response => {
-      let rezervarile: Reservation[] = this.sortReservations(response);
-      this.reservations = rezervarile;
+      this.reservations = this.sortReservations(response);
     });
     this.indexExpanded = -1;
     this.disabledElements = [];
@@ -93,48 +92,14 @@ export class WaiterPageComponent implements OnInit {
     let date2= dateAndHour2.split(' ',2)[0].split('/',3);
     let hour2= dateAndHour2.split(' ',2)[1].split(':',2);
 
-    if (date1[2] > date2[2]){
+    const firstDate : Date = new Date(+date1[2], +date1[1], +date1[0], +hour1[0], +hour1[1]);
+    const secondDate : Date = new Date(+date2[2], +date2[1], +date2[0], +hour2[0], +hour2[1]);
+
+    if (firstDate > secondDate)
       return 1;
-    }
-    else if (date1[2] < date2[2]){
+    else if (secondDate > firstDate)
       return -1;
-    }
-    else {
-      if (date1[1] > date2[1]){
-        return 1;
-      }
-      else if (date1[1] < date2[1]){
-        return -1;
-      }
-      else {
-        if (date1[0] > date2[0]){
-          return 1;
-        }
-        else if (date1[0] < date2[0]){
-          return -1;
-        }
-        else{
-          if (hour1[1] > hour2[1]){
-            return 1;
-          }
-          else if (hour1[1] < hour2[1]){
-            return-1;
-          }
-          else {
-            if (hour1[0] > hour2[0]){
-              return 1;
-            }
-            else if (hour1[0] < hour2[0]){
-              return -1;
-            }
-            else{
-              return 0;
-            }
-          }
-        }
-      }
-    }
-    return null;
+    return 0;
   }
   
 
