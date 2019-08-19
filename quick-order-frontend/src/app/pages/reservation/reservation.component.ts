@@ -200,20 +200,14 @@ export class ReservationComponent implements OnInit {
   fillHours(startHour: Date, finishHour: Date) {
     let i: number;
     let j: number;
-    let h: string;
     for (i = startHour.getHours(); i < finishHour.getHours(); i++) {
       for (j = 0; j <= 55; j += 5) {
-        if (i < 10) {
-          h = '0' + i;
-        } else {
-          h = i.toString();
-        }
         if (j === 0) {
-          this.hours.push(h + ':' + '00');
+          this.hours.push(i + ':' + '00');
         } else if (j === 5) {
-          this.hours.push(h + ':' + '05');
+          this.hours.push(i + ':' + '05');
         } else {
-          this.hours.push(h + ':' + j);
+          this.hours.push(i + ':' + j);
         }
       }
     }
