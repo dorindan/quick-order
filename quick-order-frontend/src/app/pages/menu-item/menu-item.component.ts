@@ -6,6 +6,8 @@ import {MenuService} from '../../services/menu.service';
 import {IngredientService} from '../../services/ingredient.service';
 import {MenuItemType} from '../../models/MenuItemType';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {Router} from '@angular/router';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-menu-item',
@@ -33,14 +35,28 @@ export class MenuItemComponent implements OnInit {
   ingredientToAdd = '';
   menuItemTypeToAdd = '';
 
-  constructor(private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
-              private tokenStorageService: TokenStorageService) {
+  selectedFile: File = null;
+  filesSelected = [];
+
+  constructor(private translateService: TranslateService,
+              private menuItemService: MenuService, private ingredientService: IngredientService, private snackBar: MatSnackBar,
+              private tokenStorageService: TokenStorageService, private router: Router) {
   }
 
   ngOnInit() {
     this.updateIngredients();
     this.updateMenu();
     this.updateMenuItemType();
+  }
+
+  onFileSelected(event) {
+    const file: File = <File>event.target.files.item(0);
+    if (file.name.substring(file.name.length - 4) === '.jpg') {
+      this.selectedFile = file;
+    } else {
+      this.showSnackbar('Please select a picture(.jpg file)!');
+      this.filesSelected = [];
+    }
   }
 
   showSnackbar(message: string) {
@@ -72,6 +88,8 @@ export class MenuItemComponent implements OnInit {
   }
 
   setUpdate(menuItem: MenuItem): void {
+    this.selectedFile = null;
+    this.filesSelected = [];
     this.ingredients = [];
     this.name = menuItem.name;
     this.description = menuItem.description;
@@ -100,21 +118,13 @@ export class MenuItemComponent implements OnInit {
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.addMenuItem(newMenuItem)
         .subscribe(rez => {
+          this.uploadImg(newMenuItem.name);
           window.location.reload();
         }, error => {
-          switch (error.status) {
-            case 400: // bad request exception
-              this.showSnackbar('Something went bad. Please try again!');
-              break;
-            case 404: // not found exception
-              this.showSnackbar('The data could not been found. Please try again.');
-              break;
-            default:
-              this.showSnackbar('The introduced data is not valid!, please try again!');
-          }
+          this.showSnackbar(this.translateService.instant(error.valueOf().error.message));
         });
     } else {
-      this.showSnackbar('The introduced data is not valid!, please try again!');
+      this.showSnackbar(this.translateService.instant('menuItemError.dataNotValid'));
     }
   }
 
@@ -127,16 +137,17 @@ export class MenuItemComponent implements OnInit {
       newMenuItem = new MenuItem(this.name, this.description,
         this.preparationDurationInMinutes, selectedIngredients, this.price, itemTypeToUse);
       this.menuItemService.editMenuItem(newMenuItem).subscribe(rez => {
+        this.uploadImg(newMenuItem.name);
         window.location.reload();
       }, error => {
         if (error.status === 404) { // not found exception
-          this.showSnackbar('The introduced data is not valid!, please try again');
+          this.showSnackbar(this.translateService.instant('menuItemError.dataNotValid'));
         } else {
-          this.showSnackbar('The introduced data is not valid!, please try again');
+          this.showSnackbar(this.translateService.instant('menuItemError.dataNotValid'));
         }
       });
     } else {
-      this.showSnackbar('The introduced data is not valid!, please try again!');
+      this.showSnackbar(this.translateService.instant('menuItemError.dataNotValid'));
     }
   }
 
@@ -145,14 +156,32 @@ export class MenuItemComponent implements OnInit {
       window.location.reload();
     }, error => {
       if (error.status === 404) { // not found exception
-        this.showSnackbar('The item could not be deleted!, please try again!');
+        this.showSnackbar(this.translateService.instant('menuItemError.itemCannotBeDeleted'));
       } else {
-        this.showSnackbar('The item could not be deleted!, please try again!');
+        this.showSnackbar(this.translateService.instant('menuItemError.itemCannotBeDeleted'));
       }
     });
   }
 
+  uploadImg(name: string) {
+    if (this.selectedFile !== null) {
+      const formData = new FormData();
+      const fileName = name + '.jpg';
+      formData.append('file', this.selectedFile, fileName);
+      this.menuItemService.uploadImg(formData).subscribe(rez => {
+      }, error => {
+        if (error.status === 404) { // not found exception
+          this.showSnackbar('The introduced data is not valid!, please try again');
+        } else {
+          this.showSnackbar('The introduced data is not valid!, please try again');
+        }
+      });
+    }
+  }
+
   clear(): void {
+    this.selectedFile = null;
+    this.filesSelected = [];
     this.name = '';
     this.description = '';
     this.preparationDurationInMinutes = 0;
@@ -163,22 +192,25 @@ export class MenuItemComponent implements OnInit {
     this.activateTypeAdd = false;
     this.ingredientToAdd = '';
     this.menuItemTypeToAdd = '';
+    this.selectedFile = null;
   }
 
   addIngredient(): void {
     if (this.activateIngredientAdd) {
-      const ingredient = new Ingredient(this.ingredientToAdd);
-      this.ingredientService.addIngredient(ingredient).subscribe(rez => {
-        this.ingredientsList.push(ingredient);
-      }, error1 => {
-        if (error1.valueOf().error.message === 'Ingredient already exists!') {
-          this.showSnackbar('The ingredient already exists!');
-        } else {
-          this.showSnackbar('The ingredient could not be added, please try again!');
-        }
-      });
+      if (this.ingredientToAdd !== null && this.ingredientToAdd !== '') {
+        const ingredient = new Ingredient(this.ingredientToAdd);
+        this.ingredientService.addIngredient(ingredient).subscribe(rez => {
+          this.ingredientsList.push(ingredient);
+        }, error1 => {
+          if (error1.valueOf().error.message === 'Ingredient already exists!') {
+            this.showSnackbar(this.translateService.instant('menuItemError.ingredientExists'));
+          } else {
+            this.showSnackbar(this.translateService.instant('menuItemError.ingredientCannotBeAdded'));
+          }
+        });
+        this.ingredientToAdd = '';
+      }
       this.activateIngredientAdd = false;
-      this.ingredientToAdd = '';
     } else {
       this.activateIngredientAdd = true;
     }
@@ -186,18 +218,20 @@ export class MenuItemComponent implements OnInit {
 
   addItemType(): void {
     if (this.activateTypeAdd) {
-      const itemType = new MenuItemType(this.menuItemTypeToAdd);
-      this.menuItemService.addMenuItemType(itemType).subscribe(rez => {
-        this.menuItemTypes.push(itemType);
-      }, error1 => {
-        if (error1.valueOf().error.message === 'Item type already exists!') {
-          this.showSnackbar('The item type already exists!');
-        } else {
-          this.showSnackbar('The item type could not be added, please try again!');
-        }
-      });
+      if (this.menuItemTypeToAdd !== null && this.menuItemTypeToAdd !== '') {
+        const itemType = new MenuItemType(this.menuItemTypeToAdd);
+        this.menuItemService.addMenuItemType(itemType).subscribe(rez => {
+          this.menuItemTypes.push(itemType);
+        }, error1 => {
+          if (error1.valueOf().error.message === 'Item type already exists!') {
+            this.showSnackbar(this.translateService.instant('menuItemError.itemTypeExists'));
+          } else {
+            this.showSnackbar(this.translateService.instant('menuItemError.itemTypeCannotBeAdded'));
+          }
+        });
+        this.menuItemTypeToAdd = '';
+      }
       this.activateTypeAdd = false;
-      this.menuItemTypeToAdd = '';
     } else {
       this.activateTypeAdd = true;
     }

@@ -9,6 +9,8 @@ import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
 import {TokenStorageService} from '../../auth/token-storage.service';
 import {User} from '../../models/User';
+import {Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-reservation',
@@ -30,16 +32,19 @@ export class ReservationComponent implements OnInit {
   currentDate = new Date();
   hours: string[] = [];
   hourControl = new FormControl('', [Validators.required]);
+  disableButton: boolean = false;
 
   public tableList: Table[] = [];
   public selectedTables = [];
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(private translateService: TranslateService,
+              private _formBuilder: FormBuilder,
               private reservationService: ReservationService,
               private snackBar: MatSnackBar,
               private propertyService: PropertyService,
               private tableService: TableService,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -90,8 +95,12 @@ export class ReservationComponent implements OnInit {
   concatenate() {
     this.dateTime = this.date.concat(' ').concat(this.time);
     const username = this.tokenStorageService.getUsername();
-    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false, new User(username.toString(), ''));
+    const authorities = this.tokenStorageService.getAuthorities();
+    const user = new User(username.toString(), '');
+    user.roles = authorities;
+    this.reservation = new Reservation(this.dateTime, this.dateTime, this.nrOfPersons, 'add', false, user);
     let i = -1;
+    this.disableButton = true;
     const tablesSelected: Table[] = [];
     for (i = 0; i < this.tableList.length; i++) {
       if (this.contains(this.tableList[i].tableNr)) {
@@ -103,25 +112,30 @@ export class ReservationComponent implements OnInit {
       if (this.reservation.tableFoodDtos.length === 0 || this.calculateSeats(this.reservation.tableFoodDtos) >= this.nrOfPersons) {
         this.reservationService.reserve(this.reservation)
           .subscribe(data => {
-            this.showSnackbar('Reservation sent successfully.');
+            this.router.navigate(['loggedStart']);
+            this.showSnackbar(this.translateService.instant('reservation.reservationSuccessful'));
           }, error => {
+            this.disableButton = false;
             switch (error.status) {
               case 403: // forbidden exception
-                this.showSnackbar('Data or persons number are wrong . Please try again!');
+                this.showSnackbar(this.translateService.instant('reservationError.wrongDateOrNrOfPersons'));
                 break;
               default:
-                this.showSnackbar('Reservation failed. Please try again.');
+                this.showSnackbar(this.translateService.instant('reservationError.fail'));
             }
           });
       } else {
-        this.showSnackbar('The number of persons is too big to fit in these tables!');
+        this.disableButton = false;
+        this.showSnackbar(this.translateService.instant('reservationError.personsFitInTable'));
       }
     } else {
       this.reservationService.reserve(this.reservation)
         .subscribe(data => {
-          this.showSnackbar('Reservation sent successfully.');
+          this.router.navigate(['loggedStart']);
+          this.showSnackbar(this.translateService.instant('reservation.reservationSuccessful'));
         }, error => {
-          this.showSnackbar('Reservation failed. Please try again.');
+          this.disableButton = false;
+          this.showSnackbar(this.translateService.instant('reservationError.fail'));
         });
     }
   }

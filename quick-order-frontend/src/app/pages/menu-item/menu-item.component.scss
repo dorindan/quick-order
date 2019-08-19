@@ -2,6 +2,10 @@ table {
   width: 90%;
 }
 
+.center {
+  text-align: Center;
+}
+
 .maxWidthLabel {
   max-width: 90% !important;
   word-break: break-all !important;
@@ -31,14 +35,14 @@ table {
   display: inline;
 }
 
-.small{
-  width : 10%
+.small {
+  width: 10%
 }
 
-.medium{
-  width : 20%
+.medium {
+  width: 20%
 }
 
-.large{
-  width : 30%
+.large {
+  width: 30%
 }

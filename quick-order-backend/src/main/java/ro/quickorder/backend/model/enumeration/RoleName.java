@@ -6,12 +6,23 @@ public enum RoleName {
 
     public static RoleName from(String roleName) {
         switch (roleName) {
-            case "waiter":
+            case "ROLE_WAITER":
                 return ROLE_WAITER;
-            case "user":
+            case "ROLE_USER":
                 return ROLE_USER;
             default:
                 throw new IllegalStateException("Invalid role name: " + roleName);
+        }
+    }
+
+    public static String fromEnumToString(RoleName roleName) {
+        switch (roleName) {
+            case ROLE_WAITER:
+                return "ROLE_WAITER";
+            case ROLE_USER:
+                return "ROLE_USER";
+            default:
+                return "";
         }
     }
 }

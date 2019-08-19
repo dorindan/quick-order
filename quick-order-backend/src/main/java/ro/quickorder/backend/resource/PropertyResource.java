@@ -1,6 +1,7 @@
 package ro.quickorder.backend.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +17,11 @@ public class PropertyResource {
     @RequestMapping(value = "bistro", method = RequestMethod.GET)
     public PropertyDto getProperty() {
         return propertyService.findProperties();
+    }
+
+    @RequestMapping(value = "updateProperty", method = RequestMethod.POST)
+    public PropertyDto updateProperty(@RequestBody PropertyDto propertyDto) {
+        propertyService.saveProperty(propertyDto);
+        return propertyDto;
     }
 }

@@ -8,7 +8,6 @@ import ro.quickorder.backend.model.User;
 import ro.quickorder.backend.sendEmail.EmailTemplate;
 import ro.quickorder.backend.sendEmail.JavaMailUtil;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.Timestamp;
 
 /**
@@ -21,16 +20,16 @@ public class EmailService {
     @Autowired
     private JavaMailUtil javaMailUtil;
 
-    public void sendReservationMail(int numberOfPersons, Timestamp checkInTime, Timestamp checkOutTime, User user, boolean confirmed){
+    public void sendReservationMail(int numberOfPersons, Timestamp checkInTime, Timestamp checkOutTime, User user, boolean confirmed) {
         String mailTitle = EmailTemplate.createTitleReservation();
-        String mailText = EmailTemplate.createTextReservation(numberOfPersons,checkInTime,checkOutTime, confirmed);
+        String mailText = EmailTemplate.createTextReservation(numberOfPersons, checkInTime, checkOutTime, confirmed);
 
         String mailReceiver = "";
 
-        if(user != null && user.getEmail() != null){
+        if (user != null && user.getEmail() != null) {
             mailReceiver = user.getEmail();
         }
-        javaMailUtil.sendMail(mailReceiver, mailText, mailTitle );
+        javaMailUtil.sendMail(mailReceiver, mailText, mailTitle);
     }
 
 }

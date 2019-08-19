@@ -5,6 +5,7 @@ import {ApiService} from '../../services/api.service';
 import {MatSnackBar} from '@angular/material';
 import {AuthService} from '../../auth/auth.service';
 import {SignUpInfo} from '../../auth/signup-info';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-register',
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private apiService: ApiService, private router: Router, private authService: AuthService, private snackBar: MatSnackBar) {
+  constructor(private translateService: TranslateService, private apiService: ApiService, private router: Router, private authService: AuthService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -81,7 +82,7 @@ export class RegisterComponent implements OnInit {
       this.authService.signUp(this.signupInfo).subscribe(
         data => {
           this.router.navigate(['']);
-          this.showSnackbar('Register successful.');
+          this.showSnackbar(this.translateService.instant('register.registerSuccessful'));
           this.isSignedUp = true;
           this.isSignUpFailed = false;
         },
@@ -90,29 +91,29 @@ export class RegisterComponent implements OnInit {
           this.isSignUpFailed = true;
           switch (error.status) {
             case 406: // not acceptable
-              this.showSnackbar('UserName or Email are already taken. Please try again!');
+              this.showSnackbar(this.translateService.instant('registerError.takenEmailOrUsername'));
               break;
             case 403: // forbidden exception
-              this.showSnackbar('UserName has forbidden characters. Please try again!');
+              this.showSnackbar(this.translateService.instant('registerError.forbiddenCharacters'));
               break;
             case 400: // bad request exception
-              this.showSnackbar('Something went bad. Please try again!');
+              this.showSnackbar(this.translateService.instant('registerError.badRequest'));
               break;
             default:
-              this.showSnackbar('Register failed. ');
+              this.showSnackbar(this.translateService.instant('registerError.unknownError'));
           }
           return;
         }
       );
     } else {
-      this.showSnackbar('Complete all boxes with the appropriate data first!');
+      this.showSnackbar(this.translateService.instant('registerError.completeAll'));
     }
   }
 
   private isValidMailFormat(email: string): boolean {
     let control: FormControl;
     control = new FormControl(email);
-    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    const EMAIL_REGEXP = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/i;
     return !(control.value === '' || (control.value.length <= 5 || !EMAIL_REGEXP.test(control.value)));
   }
 

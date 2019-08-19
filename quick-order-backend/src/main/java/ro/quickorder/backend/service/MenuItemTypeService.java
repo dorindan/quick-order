@@ -26,12 +26,12 @@ public class MenuItemTypeService {
     MenuItemTypeConverter menuItemTypeConverter;
 
     public List<MenuItemTypeDto> getAllMenuItemTypes() {
-        return menuItemTypeRepository.findAll().stream()
+        return menuItemTypeRepository.findAllSorted().stream()
                 .map(menuItemTypeConverter::toMenuItemTypeDto)
                 .collect(Collectors.toList());
     }
 
-    public void addMenuItemType(MenuItemTypeDto menuItemTypeDto){
+    public void addMenuItemType(MenuItemTypeDto menuItemTypeDto) {
         if (menuItemTypeDto.getType().length() < 2) {
             LOG.error("Item type is to short!");
             throw new BadRequestException("Item type is to short!");

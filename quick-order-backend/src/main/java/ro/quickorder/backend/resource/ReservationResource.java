@@ -20,10 +20,10 @@ public class ReservationResource {
         reservationService.addReservation(reservation);
     }
 
-    @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
     @PreAuthorize("hasRole('WAITER')")
-    public List<ReservationDto> getAllUnconfirmed() {
-        return reservationService.getAllReservationUnconfirmed();
+    public List<ReservationDto> getAll() {
+        return reservationService.getAllReservations();
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
@@ -42,4 +42,17 @@ public class ReservationResource {
     public boolean reservationConfirmed(@PathVariable String reservationName) {
         return reservationService.reservationConfirmed(reservationName);
     }
+
+    @RequestMapping(path = "/actual-user", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
+    public List<ReservationDto> reservationOfActualUser() {
+        return reservationService.reservationOfActualUser();
+    }
+
+    @RequestMapping(path = "/remove/{reservationName}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('USER')")
+    public void removeReservation(@PathVariable String reservationName) {
+        reservationService.removeReservation(reservationName);
+    }
+
 }

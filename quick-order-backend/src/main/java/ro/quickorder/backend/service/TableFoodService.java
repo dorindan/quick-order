@@ -14,11 +14,9 @@ import ro.quickorder.backend.model.dto.TableFoodDto;
 import ro.quickorder.backend.repository.ReservationRepository;
 import ro.quickorder.backend.repository.TableFoodRepository;
 
-import javax.ws.rs.NotAcceptableException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TableFoodService {
@@ -33,8 +31,8 @@ public class TableFoodService {
     private ReservationService reservationService;
 
     public List<TableFoodDto> getAllFree(String checkInT, String checkOutT) {
-        Timestamp checkInTime ;
-        Timestamp checkOutTime ;
+        Timestamp checkInTime;
+        Timestamp checkOutTime;
         checkInTime = CustomDateDeserializer.deserialize(checkInT);
         checkOutTime = CustomDateDeserializer.deserialize(checkOutT);
         List<TableFoodDto> allFreeTables = new ArrayList<>();
@@ -47,7 +45,7 @@ public class TableFoodService {
 
     public List<TableFoodDto> getAllAssignedTablesOfAReservation(String reservationName) {
         ReservationDto reservationDto = reservationService.getReservationDtoByName(reservationName);
-        if(reservationDto.getTableFoodDtos() == null){
+        if (reservationDto.getTableFoodDtos() == null) {
             return new ArrayList<>();
         }
         return reservationDto.getTableFoodDtos();
@@ -90,9 +88,9 @@ public class TableFoodService {
 
         List<Reservation> reservations = reservationRepository.findAllWithTables();
         reservations.forEach(reservation -> {
-            if(reservation.getTables().contains(tableFood)){
+            if (reservation.getTables().contains(tableFood)) {
                 reservation.getTables().remove(tableFood);
-                if(reservation.getCheckInTime().after(new Timestamp(System.currentTimeMillis()))){
+                if (reservation.getCheckInTime().after(new Timestamp(System.currentTimeMillis()))) {
                     reservation.setConfirmed(false);
                     reservation.setTables(null);
                 }

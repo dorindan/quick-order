@@ -6,6 +6,7 @@ import ro.quickorder.backend.model.MenuItem;
 import ro.quickorder.backend.model.dto.IngredientDto;
 import ro.quickorder.backend.model.dto.MenuItemDto;
 
+import java.io.File;
 import java.util.Set;
 
 /**
@@ -21,11 +22,11 @@ public class MenuItemConverter {
     @Autowired
     private MenuItemTypeConverter menuItemTypeConverter;
 
-    public MenuItemConverter(){
+    public MenuItemConverter() {
 
     }
 
-    public MenuItemConverter(IngredientConverter ingredientConverter, MenuItemTypeConverter menuItemTypeConverter){
+    public MenuItemConverter(IngredientConverter ingredientConverter, MenuItemTypeConverter menuItemTypeConverter) {
         this.ingredientConverter = ingredientConverter;
         this.menuItemTypeConverter = menuItemTypeConverter;
     }
@@ -64,6 +65,14 @@ public class MenuItemConverter {
             menuItemDto.setIngredients(ingredientDtoSet);
         }
         menuItemDto.setMenuItemTypeDto(menuItemTypeConverter.toMenuItemTypeDto(menuItem.getMenuItemType()));
+        final String dir = System.getProperty("user.dir");
+        String location = "\\src\\assets\\menuItemImg\\";
+        String orgName = menuItemDto.getName()  ;
+        String filePath = dir + location + orgName + ".jpg";
+        File dest = new File(filePath);
+        if (dest.exists() && !dest.isDirectory()) {
+            menuItemDto.setImg(true);
+        }
         return menuItemDto;
     }
 }

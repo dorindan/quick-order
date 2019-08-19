@@ -1,8 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {AppRoutingModule, routing} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -23,11 +23,34 @@ import {TableViewComponent} from './pages/table-view/table-view.component';
 import {WaiterPageComponent} from './pages/waiter-page/waiter-page.component';
 import {TableComponent} from './pages/table/table.component';
 import {httpInterceptorProviders} from './auth/auth-interceptor';
-import { ContactComponent } from './pages/contact/contact.component';
-import { AgmCoreModule } from '@agm/core';
+import {FinishCommandComponent} from './pages/finish-command/finish-command.component';
+import {ContactComponent} from './pages/contact/contact.component';
+import {AgmCoreModule} from '@agm/core';
+import {PropertyAdministrationComponent} from './pages/property-administration/property-administration.component';
+import {ReservationLogComponent} from './pages/reservation-log/reservation-log.component';
+import {AboutUsComponent} from './pages/about-us/about-us.component';
+import { UserAdministrationComponent } from './pages/user-administration/user-administration.component';
+import { StorageServiceModule} from 'angular-webstorage-service';
+import {LOCATION_INITIALIZED} from "@angular/common";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function appInitializerFactory(translate: TranslateService, injector: Injector) {
+  return () => new Promise<any>((resolve: any) => {
+    const locationInitialized = injector.get(LOCATION_INITIALIZED, Promise.resolve(null));
+    locationInitialized.then(() => {
+      const langToSet = 'EN'
+      translate.use(langToSet).subscribe(() => {
+        console.info(`Successfully initialized '${langToSet}' language.'`);
+      }, err => {
+        console.error(`Problem with '${langToSet}' language initialization.'`);
+      }, () => {
+        resolve(null);
+      });
+    });
+  });
 }
 
 @NgModule({
@@ -45,10 +68,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuItemComponent,
     WaiterPageComponent,
     TableComponent,
-    ContactComponent
+    ContactComponent,
+    PropertyAdministrationComponent,
+    FinishCommandComponent,
+    ReservationLogComponent,
+    AboutUsComponent,
+    UserAdministrationComponent
   ],
   imports: [
     BrowserModule,
+    StorageServiceModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
@@ -71,7 +100,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgxPopper
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFactory,
+      deps: [TranslateService, Injector],
+      multi: true
+    }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

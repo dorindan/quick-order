@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
-import {Menu} from '../models/Menu';
 import {MenuItem} from '../models/MenuItem';
 import {MenuItemType} from '../models/MenuItemType';
+import {Command} from '../models/Command';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,10 @@ export class MenuService {
 
   editMenuItem(menuItem: MenuItem): Observable<any> {
     return this.apiService.putRequest('/api/menuItem/update', menuItem);
+  }
+
+  uploadImg(formData: FormData): Observable<any> {
+    return this.apiService.putRequest('/api/menuItem/updateImg', formData);
   }
 
   deleteMenuItem(menuItemName: string): Observable<any> {

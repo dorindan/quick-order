@@ -33,13 +33,8 @@ public class MenuItem {
             joinColumns = {@JoinColumn(name = "menu_item_id")},
             inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
     private Set<Ingredient> ingredients;
-    @ManyToMany
-    @JoinTable(name = "menu_item_command",
-            joinColumns = {@JoinColumn(name = "menu_item_id")},
-            inverseJoinColumns = {@JoinColumn(name = "command_id")})
-    private List<Command> commands;
 
-    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price,  MenuItemType menuItemType) {
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price, MenuItemType menuItemType) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;
@@ -123,13 +118,6 @@ public class MenuItem {
         this.ingredients = ingredients;
     }
 
-    public List<Command> getCommands() {
-        return commands;
-    }
-
-    public void setCommands(List<Command> commands) {
-        this.commands = commands;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -142,13 +130,12 @@ public class MenuItem {
                 Objects.equals(preparationDurationInMinutes, menuItem.preparationDurationInMinutes) &&
                 Objects.equals(menuItemType, menuItem.menuItemType) &&
                 Objects.equals(feedbacks, menuItem.feedbacks) &&
-                Objects.equals(ingredients, menuItem.ingredients) &&
-                Objects.equals(commands, menuItem.commands);
+                Objects.equals(ingredients, menuItem.ingredients);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, preparationDurationInMinutes, menuItemType, feedbacks, ingredients, commands);
+        return Objects.hash(id, name, description, preparationDurationInMinutes, menuItemType, feedbacks, ingredients);
     }
 
     @Override
