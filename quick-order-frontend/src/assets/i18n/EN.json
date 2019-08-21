@@ -196,8 +196,8 @@
     "menuItemTypeNotFound": "Menu item type was not found"
   },
   "propertyError": {
-    "wrongLongitude" : "longitude must be of form a.b, where a and b are integers",
-    "wrongLatitude" : "latitude must be of form a.b, where a and b are integers",
+    "wrongLongitude" : "Must be a correct longitude",
+    "wrongLatitude" : "Must be a correct latitude",
     "emailNotValid" : "email is not valid",
     "wrongStartTime" : "Start time is not valid",
     "wrongEndTime" : "End time is not valid"

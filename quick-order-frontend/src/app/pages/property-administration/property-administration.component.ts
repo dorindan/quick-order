@@ -23,6 +23,8 @@ export class PropertyAdministrationComponent implements OnInit {
   rightEmail = true;
   rightStartTime = true;
   rightEndTime = true;
+  rightLatitude = true;
+  rightLongitude = true;
 
   constructor(private translateService: TranslateService,
               private snackBar: MatSnackBar,
@@ -74,6 +76,32 @@ export class PropertyAdministrationComponent implements OnInit {
     else {
       this.rightEndTime = true;
     }
+  }
+
+  public validateLatitude(){
+    let control: FormControl;
+    control = new FormControl(this.locationLatitude);
+    const latitudeRegex = /^[-+]?[0-9]*\.?[0-9]+$/i;
+    if (control.value != '' && latitudeRegex.test(control.value)){
+      this.rightLatitude = true;
+    }
+    else{
+      this.rightLatitude = false;
+    }
+    console.log(control.value === '' || !latitudeRegex.test(control.value));
+  }
+
+  public validateLongitude(){
+    let control: FormControl;
+    control = new FormControl(this.locationLongitude);
+    const longitudeRegex = /^[-+]?[0-9]*\.?[0-9]+$/i;
+    if (control.value != '' && longitudeRegex.test(control.value)){
+      this.rightLongitude = true;
+    }
+    else{
+      this.rightLongitude = false;
+    }
+    console.log(control.value === '' || !longitudeRegex.test(control.value));
   }
 
   private isValidMailFormat(email: string): boolean {

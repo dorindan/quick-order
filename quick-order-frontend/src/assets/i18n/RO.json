@@ -196,8 +196,8 @@
     "menuItemTypeNotFound": "Tipul de produs nu exista"
   },
   "propertyError": {
-    "wrongLongitude": "longitudinea trebuie sa fie de forma a.b, unde a si b sunt numere intregi",
-    "wrongLatitude": "latitudinea trebuie sa fie de forma a.b, unde a si b sunt numere intregi",
+    "wrongLongitude": "longitudinea trebuie sa fie corect introdusa",
+    "wrongLatitude": "latitudinea trebuie sa fie corect introdusa",
     "emailNotValid": "emailul nu este valid",
     "wrongStartTime": "Timpul de start nu este valid",
     "wrongEndTime": "Timpul de final nu este valid"
