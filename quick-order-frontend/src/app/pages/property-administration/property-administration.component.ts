@@ -88,7 +88,6 @@ export class PropertyAdministrationComponent implements OnInit {
     else{
       this.rightLatitude = false;
     }
-    console.log(control.value === '' || !latitudeRegex.test(control.value));
   }
 
   public validateLongitude(){
@@ -101,7 +100,6 @@ export class PropertyAdministrationComponent implements OnInit {
     else{
       this.rightLongitude = false;
     }
-    console.log(control.value === '' || !longitudeRegex.test(control.value));
   }
 
   private isValidMailFormat(email: string): boolean {
