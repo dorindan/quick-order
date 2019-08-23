@@ -26,6 +26,10 @@ export class CommandService {
     return this.apiService.postRequest('/api/command/all-from-command', command);
   }
 
+  getAllUnconfirmed(): Observable<Command[]> {
+    return this.apiService.getRequest('/api/command/unconfirmed');
+  }
+
   confirmCommand(command: Command): Observable<any> {
     return this.apiService.putRequest('/api/command/confirm', command);
   }
