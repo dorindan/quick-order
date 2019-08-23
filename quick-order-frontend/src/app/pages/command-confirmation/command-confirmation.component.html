@@ -1,19 +1,14 @@
 <div class="jumbotron jumbotron-fluid">
   <h1 class="title myCommands" translate="" *ngIf="isAuthenticatedUser()">myCommands.myCommands</h1>
   <br>
-  <mat-list class="col-sm-12 col-ls-6 col-lg-4">
-    <mat-list-item *ngFor="let command of commands">
-      <mat-icon mat-list-icon>fastfood</mat-icon>
-      <h4 mat-line style="overflow: visible">{{'myCommands.commandName' | translate}}{{command.commandName}}</h4>
-      <p mat-line></p>
-      <mat-icon matTooltip="{{ 'myCommands.confirm' | translate }}" (click)="confirmCommand(command)"
-                *ngIf="isAuthenticatedWaiter()">
-        check
-      </mat-icon>
-      &nbsp;
-      <mat-icon matTooltip="{{ 'myCommands.delete' | translate }}" (click)="deleteCommand(command.commandName)">
-        delete
-      </mat-icon>
+  <mat-list>
+    <mat-list-item  class="col-lg-6" *ngFor="let command of commands">
+          <mat-icon mat-list-icon>fastfood</mat-icon>
+          <h4 mat-line style="overflow: visible">{{'myCommands.commandName' | translate}}{{command.commandName}}{{'myCommands.withStatus'| translate}}{{command.status}}</h4>
+          <mat-icon matTooltip="{{ 'myCommands.confirm' | translate }}" (click)="confirmCommand(command)"
+                    *ngIf="isAuthenticatedWaiter()">check</mat-icon>
+          &nbsp;
+          <mat-icon matTooltip="{{ 'myCommands.delete' | translate }}" (click)="deleteCommand(command.commandName)">delete</mat-icon>
     </mat-list-item>
   </mat-list>
 </div>

@@ -160,7 +160,6 @@ public class Command {
                 ", specification='" + specification + '\'' +
                 ", isPacked=" + isPacked +
                 ", status='" + status + '\'' +
-                ", bill=" + bill.getId() +
                 ", table=" + table +
                 '}';
     }

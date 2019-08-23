@@ -171,6 +171,9 @@ public class CommandService {
             LOG.error("Command with name: " + commandName + " was not found!");
             throw new NotFoundException("Command not found!");
         }
+        for (MenuItemCommand menuItemCommand: command.getMenuItemCommands()){
+            menuItemCommandRepository.deleteByCommandId(command.getId());
+        }
         commandRepository.delete(command);
     }
 

@@ -175,7 +175,8 @@
     "myCommands": "Comenzile mele",
     "confirm": "Confirmă comandă",
     "delete": "Șterge comandă",
-    "commandName": "Comanda cu numele: "
+    "commandName": "Comanda cu numele: ",
+    "withStatus": " cu statusul: "
   },
   "userAdministration": {
     "title": "Administrare roluri utilizatori",

@@ -175,7 +175,8 @@
     "myCommands": "My Commands",
     "confirm": "Confirm command",
     "delete": "Delete command",
-    "commandName": "Command with name: "
+    "commandName": "Command with name: ",
+    "withStatus": " with status: "
   },
   "userAdministration": {
     "title": "Administration of user roles",
@@ -188,4 +189,5 @@
     "isPacked": "Packed:",
     "totalPrice": "Total Price"
   }
+
 }
