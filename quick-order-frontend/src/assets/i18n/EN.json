@@ -13,16 +13,17 @@
     "enterPassword": "Enter Password",
     "enterRe_Password": "Confirm Password",
     "cancel": "Cancel",
-    "agreements1": "I agree to the",
+    "agreements1": " I agree to the ",
     "termsAndConditions": "Terms & Conditions",
-    "agreements2": "and I have read and acknowledge the",
+    "agreements2": " and I have read and acknowledge the ",
     "privacyPolicy": "Privacy Policy",
     "usernameConditions": "  *(Username must have at least 5 characters)",
     "emailConditions": "*(Not a valid email address)",
     "passwordConditions": " *(Use 6 ore more characters)",
     "Re_PasswordConditions": "*(Password and confirm password need to be identical) ",
     "invalidFields": "Some of the fields above are not valid!",
-    "termsAndConditionsAlert": "*  "
+    "termsAndConditionsAlert": "*  ",
+    "registerSuccessful": "Register successful"
   },
   "header": {
     "home": "Home",
@@ -50,12 +51,15 @@
     "signUp": "Sign up"
   },
   "login": {
-    "login": "Log In",
+    "login": "Login",
     "register": "Register",
     "username": "Username",
     "password": "Password",
     "remember": "Remember Me",
-    "forgotPass": "Forgot Password?"
+    "forgotPass": "Forgot Password?",
+    "noAccount": "Don't you have an account? Sign up now for free!",
+    "userReq": "Username is required",
+    "passReq": "Password is required"
   },
   "tableView": {
     "table": "Table",
@@ -101,7 +105,8 @@
     "finish": "Finish",
     "chooseTable": "Choose the tables*",
     "table": "Table: ",
-    "seats": " Seats: "
+    "seats": " Seats: ",
+    "reservationSuccessful": "Reservation sent successfully."
   },
   "table": {
     "addNew": "Add new Table",
@@ -127,7 +132,10 @@
     "floor": "  Floor: ",
     "windowView": "  Has window view: ",
     "tableTitle": "TABLES",
-    "acceptReservation": "Accept Reservation"
+    "acceptReservation": "Accept Reservation",
+    "confirmed": "Reservation confirmed successfully",
+    "reservationAlreadyConfirmed": "Reservation confirmed",
+    "reservationUnconfirmed": "Reservation unconfirmed"
   },
   "menu": {
     "quantity": "Quantity: ",
@@ -149,7 +157,8 @@
     "restaurantName": "Restaurant Name",
     "edit": "Edit",
     "lmessage": "(Depends on location. It is used for google maps and can be found on google maps)",
-    "timeConditions": "must be an integer between 0 and 24"
+    "timeConditions": "must be an integer between 0 and 24",
+    "updateSuccessful": "Property updated"
   },
   "a": {
     "reserve": "Reservations online 24/7",
@@ -169,7 +178,52 @@
     "myRes": "My reservations",
     "resFor": "Reservation for ",
     "persons": " persons",
-    "delete": "Delete my Reservation"
+    "delete": "Delete my Reservation",
+    "successDelete": "Successfully deleted"
+  },
+  "loginError": {
+    "userNotFound": "User does not exist. Please try again.",
+    "badCredentials": "Username or password is incorrect. Please try again."
+  },
+  "menuItemError": {
+    "dataNotValid": "The introduced data is not valid. Please try again.",
+    "itemCannotBeDeleted": "The item could not be deleted. Please try again.",
+    "ingredientExists": "The ingredient already exists.",
+    "ingredientCannotBeAdded": "The ingredient could not be added, please try again.",
+    "itemTypeExists": "The item type already exists.",
+    "itemTypeCannotBeAdded": "The item type could not be added, please try again.",
+    "menuItemExists": "Menu item already exists.",
+    "nullName": "Name can not be null.",
+    "menuItemNotFound": "Menu item was not found",
+    "menuItemTypeNotFound": "Menu item type was not found"
+  },
+  "propertyError": {
+    "wrongLongitude" : "Must be a correct longitude",
+    "wrongLatitude" : "Must be a correct latitude",
+    "emailNotValid" : "email is not valid",
+    "wrongStartTime" : "Start time is not valid",
+    "wrongEndTime" : "End time is not valid"
+  },
+  "registerError": {
+    "takenEmailOrUsername": "UserName or Email are already taken. Please try again.",
+    "forbiddenCharacters": "UserName has forbidden characters. Please try again.",
+    "badRequest": "Something went bad. Please try again.",
+    "unknownError": "Register failed.",
+    "completeAll": "Complete all boxes with the appropriate data first."
+  },
+  "reservationError": {
+    "wrongDateOrNrOfPersons": "Data or persons number are wrong, please try again",
+    "fail": "Reservation failed, please try again",
+    "personsFitInTable": "The number of persons is too big to fit in these tables"
+  },
+  "tableError": {
+    "uniqueId": "Table number must be unique, please try again",
+    "dataNotValid": "The introduced data is not valid, please try again",
+    "cannotBeDeleted": "The item cannot be deleted, please try again"
+  },
+  "confirmReservationError": {
+    "notFound": "Reservation not found, please try again",
+    "fail": "Confirmation failed, please try again"
   },
   "myCommands": {
     "myCommands": "My Commands",

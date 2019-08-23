@@ -22,9 +22,7 @@
                        (focusout)="validation()">
               </div>
               <div class="md-form mb-5">
-                <label data-error="wrong" data-success="right" for="inputDescription" translate="">
-                  menuItem.description
-                </label>
+                <label data-error="wrong" data-success="right" for="inputDescription" translate="">menuItem.description</label>
                 <input type="text" id="inputDescription" [(ngModel)]="description" class="form-control validate">
               </div>
 
@@ -90,6 +88,11 @@
                 <label class="red small" *ngIf="!priceRight" translate="">menuItem.priceCondition</label>
                 <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validation()">
               </div>
+            </div>
+            <div class = "center">
+              <label class="center" translate="">Select a img:</label>
+              &nbsp;
+              <input type="file" (change)="onFileSelected($event, name)" [(ngModel)]="filesSelected">
             </div>
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
               <button class="btn btn-outline-secondary btn-block editInside" (click)="add()"
@@ -186,6 +189,11 @@
                 <label class="red small" *ngIf="!priceRight" translate="">menuItem.priceCondition</label>
                 <input type="number" min="0" [(ngModel)]="price" class="form-control" (focusout)="validation()">
               </div>
+            </div>
+            <div class = "center">
+              <label class="center" translate="">Select a img:</label>
+              &nbsp;
+              <input type="file" (change)="onFileSelected($event, name)" [(ngModel)]="filesSelected">
             </div>
             <div class="modal-footer d-flex justify-content-center editInsideWrapper">
               <button class="btn btn-outline-secondary btn-block editInside" (click)="update()"
@@ -297,9 +305,7 @@
       <th lass="small" mat-header-cell *matHeaderCellDef>
         <div class="text-center ">
           <a href="" class="btn btn-secondary btn-info btn-rounded btn-sm" data-toggle="modal"
-             data-target="#modalAdd" (click)="clearMenuItemType(); clearIngredient()" translate="">
-            menuItem.add
-          </a>
+             data-target="#modalAdd" (click)="clearMenuItemType(); clearIngredient()" translate="">menuItem.add</a>
         </div>
       </th>
       <td mat-cell width="10%" *matCellDef="let element">

@@ -7,6 +7,7 @@ import {Reservation} from '../../models/Reservation';
 import {ConfirmReservation} from '../../models/ConfirmReservation';
 import {MatSnackBar} from '@angular/material';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -28,8 +29,10 @@ export class WaiterPageComponent implements OnInit {
   // contains the index if the obj is confirmed
   private actualConfirmed = -1;
 
-  constructor(private tableService: TableService, private reservationService: ReservationService
-    , private snackBar: MatSnackBar, private token: TokenStorageService) {
+  constructor(private translateService: TranslateService,
+              private tableService: TableService,
+              private reservationService: ReservationService,
+              private snackBar: MatSnackBar, private token: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -38,17 +41,67 @@ export class WaiterPageComponent implements OnInit {
       username: this.token.getUsername(),
       authorities: this.token.getAuthorities()
     };
-    this.reservationsGet = this.reservationService.getUnacceptedReservation();
-    this.reservations = [];
-    this.reservationsGet.forEach(reservation => reservation.forEach(r => this.reservations.push(r)));
+    this.reservationService.getAllReservations().subscribe(response => {
+      this.reservations = this.sortReservations(response);
+    });
     this.indexExpanded = -1;
     this.disabledElements = [];
     this.selectedOptions = [];
   }
 
-  selection() {
-    this.selectedOptions.forEach(table => console.log(table));
+  sortByConfirmation(reservationList: Reservation[]): Reservation[]{
+    let newReservationList: Reservation[] = [];
+    reservationList.forEach(reservation => {
+      if (reservation.confirmed == true){
+        newReservationList.push(reservation);
+      }
+      else newReservationList.unshift(reservation);
+    })
+    return newReservationList;
   }
+
+  sortReservations(reservationList: Reservation[]): Reservation[]{
+    let confirmedReservationList: Reservation[] = [];
+    let unconfirmedReservationList: Reservation[] = [];
+    reservationList.forEach(reservation => {
+      let i: number = 0;
+      if (reservation.confirmed == true){
+        while (i < confirmedReservationList.length && this.compareDate(reservation.checkInTime,confirmedReservationList[i].checkInTime) > 0){
+          i++;
+        }
+        confirmedReservationList.splice(i,0, reservation);
+      }
+      else{
+        while (i < unconfirmedReservationList.length && this.compareDate(reservation.checkInTime,unconfirmedReservationList[i].checkInTime) > 0){
+          i++;
+        }
+        unconfirmedReservationList.splice(i,0, reservation);
+      }
+    })
+    return unconfirmedReservationList.concat(confirmedReservationList);
+  }
+
+  /*
+  if the first date is bigger than second returns 1
+  if the dates are equal returns 0
+  if the second date is bigger than first date it returns -1
+   */
+  compareDate(dateAndHour1: string, dateAndHour2: string): number{
+    let date1= dateAndHour1.split(' ',2)[0].split('/',3);
+    let hour1= dateAndHour1.split(' ',2)[1].split(':',2);
+    let date2= dateAndHour2.split(' ',2)[0].split('/',3);
+    let hour2= dateAndHour2.split(' ',2)[1].split(':',2);
+
+    const firstDate : Date = new Date(+date1[2], +date1[1], +date1[0], +hour1[0], +hour1[1]);
+    const secondDate : Date = new Date(+date2[2], +date2[1], +date2[0], +hour2[0], +hour2[1]);
+
+    if (firstDate > secondDate)
+      return 1;
+    else if (secondDate > firstDate)
+      return -1;
+    return 0;
+  }
+  
 
   getFormattedTime(reservation: Reservation): string {
     return reservation.checkInTime.substr(0, 10) + ' ' +
@@ -69,17 +122,16 @@ export class WaiterPageComponent implements OnInit {
       this.reservationService.confirmReservation(new ConfirmReservation(reservation.checkInTime,
         reservation.numberOfPersons, reservation.checkOutTime, reservation.reservationName, this.selectedOptions))
         .subscribe(data => {
-          this.showSnackbar('Reservation confirmed successfully.');
+          this.showSnackbar(this.translateService.instant('waiterPage.confirmed'));
         }, error => {
           switch (error.status) {
             case 404: // not found exception
-              this.showSnackbar('Reservation not found. Please try again.');
+              this.showSnackbar(this.translateService.instant('confirmReservationError.notFound'));
               break;
             default:
-              this.showSnackbar('Confirmation failed. Please try again.');
+              this.showSnackbar(this.translateService.instant('confirmReservationError.fail'));
           }
         });
-
     }
   }
 
@@ -132,8 +184,8 @@ export class WaiterPageComponent implements OnInit {
 
   }
 
-  checkDisabled(i: number): boolean {
-    return this.disabledElements.includes(i);
+  checkDisabled(reservation: Reservation): boolean {
+    return reservation.confirmed;
   }
 
   enableEdit(i: number) {

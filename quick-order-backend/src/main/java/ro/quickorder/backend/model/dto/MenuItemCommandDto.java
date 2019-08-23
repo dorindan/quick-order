@@ -1,7 +1,5 @@
 package ro.quickorder.backend.model.dto;
 
-import ro.quickorder.backend.model.MenuItem;
-
 /**
  * @author R. Lupoaie
  */

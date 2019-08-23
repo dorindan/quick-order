@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNull;
  */
 public class CommandConverterTest {
     private CommandConverter commandConverter = new CommandConverter(new MenuItemCommandConverter(
-            new MenuItemConverter( new IngredientConverter(), new MenuItemTypeConverter())
+            new MenuItemConverter(new IngredientConverter(), new MenuItemTypeConverter())
     ));
 
     @Test

@@ -24,11 +24,11 @@ public class Property {
 
     private String value;
 
-    public Property(){
+    public Property() {
 
     }
 
-    public Property(PropertyName name, String value){
+    public Property(PropertyName name, String value) {
         this.name = name;
         this.value = value;
     }
@@ -49,7 +49,7 @@ public class Property {
         Property that = (Property) o;
         return Objects.equals(id, that.id) &&
                 name == that.name &&
-                value.equals(that.value) ;
+                value.equals(that.value);
     }
 
     @Override

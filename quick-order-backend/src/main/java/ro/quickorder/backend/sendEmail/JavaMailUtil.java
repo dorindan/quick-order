@@ -7,14 +7,15 @@ import ro.quickorder.backend.exception.BadRequestException;
 import ro.quickorder.backend.service.ReservationService;
 
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author R. Lupoaie
@@ -39,13 +40,13 @@ public class JavaMailUtil {
     public void sendMail(String recipient, String mailText, String mailTitle) {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", auth);
-        properties.put("mail.smtp.starttls.enable",startles);
+        properties.put("mail.smtp.starttls.enable", startles);
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", port);
         if (myAccountEmail.equals("")) {
             readEmailFromFile();
         }
-        if(recipient.equals("")){
+        if (recipient.equals("")) {
             recipient = receiver;
         }
         Session session = Session.getInstance(properties, new Authenticator() {
@@ -64,8 +65,8 @@ public class JavaMailUtil {
         }
     }
 
-    private  Message prepareMessage(Session session, String myAccountEmail,
-                                          String recepient, String mailText, String mailTitle) {
+    private Message prepareMessage(Session session, String myAccountEmail,
+                                   String recepient, String mailText, String mailTitle) {
         Message message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(myAccountEmail));

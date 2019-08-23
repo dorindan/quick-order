@@ -1,12 +1,12 @@
 <div class="card signUP-panel">
   <div class="card-header panel-heading">
-    <h1 translate="">Login</h1>
+    <h1 translate="">login.login</h1>
   </div>
   <div class="card-body panel-body">
     <form id="Login" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
 
       <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-        <label><b translate="">Username</b></label>
+        <label><b translate="">login.username</b></label>
         <input type="text"
                class="form-control"
                id="userName"
@@ -15,12 +15,12 @@
                [(ngModel)]="model.username"
                #username="ngModel" required/>
         <div *ngIf="f.submitted
-                && !username.valid"><label class="red small">Username is required</label>
+                && !username.valid"><label class="red small" translate="">login.userReq</label>
         </div>
       </div>
 
       <div class="form-group example-container" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-        <label><b translate="">Password</b></label>
+        <label><b translate="">login.password</b></label>
         <input [type]="hide ? 'password' : 'text'"
                class="form-control eye"
                id="inputPassword"
@@ -29,7 +29,7 @@
                [(ngModel)]="model.password"
                #password="ngModel" required/>
         <div *ngIf="f.submitted
-                && !password.valid"><label class="red small">Password is required</label>
+                && !password.valid"><label class="red small" translate="">login.passReq</label>
         </div>
 
         <mat-icon (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -38,17 +38,17 @@
       <br>
 
 
-      <button type="submit" class="form-control btn-signUP">Login</button>
+      <button type="submit" class="form-control btn-signUP" translate="">login.login</button>
       <br>
 
     </form>
   </div>
   <div class="card-footer">
     <div class="forgot">
-      <a href="reset.html">Forgot password?</a>
+      <a href="reset.html" translate="">login.forgotPass</a>
     </div>
     <div class="forgot">
-      <a href="signUp">Don't you have an account? Sign up now!</a>
+      <a href="signUp" translate="">login.noAccount</a>
     </div>
   </div>
 </div>

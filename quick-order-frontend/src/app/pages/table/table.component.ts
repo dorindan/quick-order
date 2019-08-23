@@ -3,6 +3,7 @@ import {MatSnackBar, MatTableDataSource} from '@angular/material';
 import {Table} from '../../models/Table';
 import {TableService} from '../../services/table.service';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-table',
@@ -24,7 +25,9 @@ export class TableComponent implements OnInit {
   windowView = false;
   floor = 0;
 
-  constructor(private tableService: TableService, private snackBar: MatSnackBar,
+  constructor(private translateService: TranslateService,
+              private tableService: TableService,
+              private snackBar: MatSnackBar,
               private tokenStorageService: TokenStorageService) {
   }
 
@@ -67,14 +70,14 @@ export class TableComponent implements OnInit {
       }, error => {
         switch (error.status) {
           case 400: // bad request exception
-            this.showSnackbar('Table number must be unique. Please try again!');
+            this.showSnackbar(this.translateService.instant('tableError.uniqueId'));
             break;
           default:
-            this.showSnackbar('The introduced data is not valid!, please try again!');
+            this.showSnackbar(this.translateService.instant('tableError.dataNotValid'));
         }
       });
     } else {
-      this.showSnackbar('The introduced data is not valid!, please try again!');
+      this.showSnackbar(this.translateService.instant('tableError.dataNotValid'));
     }
   }
 
@@ -86,13 +89,13 @@ export class TableComponent implements OnInit {
         window.location.reload();
       }, error => {
         if (error.status === 404) { // not found exception
-          this.showSnackbar('The introduced data is not valid!, please try again!');
+          this.showSnackbar(this.translateService.instant('tableError.dataNotValid'));
         } else {
-          this.showSnackbar('The introduced data is not valid!, please try again!');
+          this.showSnackbar(this.translateService.instant('tableError.dataNotValid'));
         }
       });
     } else {
-      this.showSnackbar('The introduced data is not valid!, please try again!');
+      this.showSnackbar(this.translateService.instant('tableError.dataNotValid'));
     }
   }
 
@@ -101,9 +104,9 @@ export class TableComponent implements OnInit {
       window.location.reload();
     }, error => {
       if (error.status === 404) { // not found exception
-        this.showSnackbar('The item could not be deleted!, pleas try again!');
+        this.showSnackbar(this.translateService.instant('tableError.cannotBeDeleted'));
       } else {
-        this.showSnackbar('The item could not be deleted!, pleas try again!');
+        this.showSnackbar(this.translateService.instant('tableError.cannotBeDeleted'));
       }
     });
   }

@@ -98,11 +98,6 @@ public class ReservationService {
                 reservation.getCheckOutTime(), reservation.getUser(), false);
     }
 
-    public List<ReservationDto> getAllReservationsUnconfirmed() {
-        List<Reservation> reservations = reservationRepository.findReservationsUnconfirmed();
-        return reservations.stream().map(reservationConverter::toReservationDto).collect(Collectors.toList());
-    }
-
     public void confirmReservation(ConfirmReservationDto confirmReservationDto) {
         List<TableFoodDto> tableFoodDtos = confirmReservationDto.getTableFoodDtos();
         ReservationDto reservationDto = reservationConverter.toReservationDtoFromConfirmReservationDto(confirmReservationDto);
@@ -146,6 +141,14 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
         return reservation;
+    }
+
+    public List<ReservationDto> getAllReservations() {
+        List<ReservationDto> reservationDtos = new ArrayList<>();
+        for (Reservation reservation : reservationRepository.findAll()) {
+            reservationDtos.add(reservationConverter.toReservationDto(reservation));
+        }
+        return reservationDtos;
     }
 
     public ReservationDto getReservationDtoByName(String reservationName) {

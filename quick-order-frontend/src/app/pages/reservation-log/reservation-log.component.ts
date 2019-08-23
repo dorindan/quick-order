@@ -3,6 +3,7 @@ import {ReservationService} from '../../services/reservation.service';
 import {MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs';
 import {Reservation} from '../../models/Reservation';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-reservation-log',
@@ -10,11 +11,13 @@ import {Reservation} from '../../models/Reservation';
   styleUrls: ['./reservation-log.component.scss']
 })
 export class ReservationLogComponent implements OnInit {
-  private reservationsGet: Observable<Reservation[]>;
-  private reservations: Reservation[];
+  public reservationsGet: Observable<Reservation[]>;
+  public reservations: Reservation[];
 
-  constructor(private reservationService: ReservationService
-    , private snackBar: MatSnackBar) {
+  constructor(
+    private translateService: TranslateService,
+    private reservationService: ReservationService,
+    private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -33,7 +36,7 @@ export class ReservationLogComponent implements OnInit {
 
   deleteReservation(reservationName: string) {
     this.reservationService.deleteReservation(reservationName).subscribe(data => {
-        this.showSnackbar('Successfully deleted');
+        this.showSnackbar(this.translateService.instant('myRes.successDelete'));
         location.reload();
       },
       error => {

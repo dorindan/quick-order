@@ -34,7 +34,7 @@ public class MenuItem {
             inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
     private Set<Ingredient> ingredients;
 
-    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price,  MenuItemType menuItemType) {
+    public MenuItem(String name, String description, Integer preparationDurationInMinutes, Integer price, MenuItemType menuItemType) {
         this.name = name;
         this.description = description;
         this.preparationDurationInMinutes = preparationDurationInMinutes;

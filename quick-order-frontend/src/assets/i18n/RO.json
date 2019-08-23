@@ -13,16 +13,17 @@
     "enterPassword": "Introduceți parola",
     "enterRe_Password": "Confirmare parola",
     "cancel": "Înapoi",
-    "agreements1": "Sunt de acord cu ",
+    "agreements1": " Sunt de acord cu ",
     "termsAndConditions": "Termeni si Conditiile",
-    "agreements2": "si am citit si am luat la cunostinta",
+    "agreements2": " si am citit si am luat la cunostinta ",
     "privacyPolicy": "Politica de confidentialitate",
     "usernameConditions": "  *(Numele de utilizare trebuie sa aiba minim 5 caractere)",
     "emailConditions": "*(Adresa nu este valida)",
     "passwordConditions": " *(Foloseste cel putin 6 caractere)",
     "Re_PasswordConditions": " *(Parola si confirmare parola trebuie sa fie identice)",
     "invalidFields": "Anumite filduri nu sunt completate corespunzator",
-    "termsAndConditionsAlert": "*  "
+    "termsAndConditionsAlert": "*  ",
+    "registerSuccessful": "Inregistrat cu succes"
   },
   "header": {
     "home": "Acasă",
@@ -50,12 +51,15 @@
     "signUp": "Înregistrare"
   },
   "login": {
-    "login": "Log In",
-    "register": "Register",
-    "username": "Username",
-    "password": "Password",
-    "remember": "Remember Me",
-    "forgotPass": "Forgot Password?"
+    "login": "Logare",
+    "register": "Inregistrare",
+    "username": "Nume de utilizator",
+    "password": "Parola",
+    "remember": "Tine-ma minte",
+    "forgotPass": "Ai uitat parola?",
+    "noAccount": "Nu ai cont? Inregistreaza-te acum gratuit!",
+    "userReq": "Casuta pentru numele de utilizator trebuie completata",
+    "passReq": "Casuta pentru parola trebuie completata"
   },
   "tableView": {
     "table": "Tabel",
@@ -118,7 +122,8 @@
     "finish": "Trimite",
     "chooseTable": "Alege mesele*",
     "table": "Masa: ",
-    "seats": " Locuri: "
+    "seats": " Locuri: ",
+    "reservationSuccessful": "Rezervarea a fost trimisa cu succes"
   },
   "waiterPage": {
     "nrOfPersons": "Numărul de persoane:",
@@ -127,7 +132,10 @@
     "floor": "  Etaj: ",
     "windowView": "  La geam: ",
     "tableTitle": "MESE",
-    "acceptReservation": "Acceptă Rezervarea"
+    "acceptReservation": "Acceptă Rezervarea",
+    "confirmed": "Rezervarea a fost confirmata cu succes",
+    "reservationAlreadyConfirmed": "Rezervare confirmata",
+    "reservationUnconfirmed": "Rezervare neconfirmata"
   },
   "menu": {
     "quantity": "Cantitate: ",
@@ -163,13 +171,59 @@
     "restaurantName": "Nume restaurant",
     "edit": "Actualizare",
     "lmessage": "(Depinde de locatie. Este folosita pentru google maps si poate fi gasita pe google maps)",
-    "timeConditions": "Trebuie sa fie un numar intreg intre 0 si 24"
+    "timeConditions": "Trebuie sa fie un numar intreg intre 0 si 24",
+    "updateSuccessfull": "Proprietate actualizata"
   },
   "myRes": {
     "myRes": "Rezervările mele",
     "resFor": "Rezervare pentru ",
     "persons": " persoane",
-    "delete": "Șterge rezervarea"
+    "delete": "Șterge rezervarea",
+    "successDelete": "Sters cu succes"
+  },
+  "loginError": {
+    "userNotFound": "Utilizatorul nu exista. Va rugam sa incercati din nou.",
+    "badCredentials": "Numele de utilizator sau parola sunt gresite. Va rugam sa incercati din nou."
+  },
+  "menuItemError": {
+    "dataNotValid": "Datele introduse nu sunt valide. Va rugam sa incercati din nou.",
+    "itemCannotBeDeleted": "Produsul nu s-a putut sterge. Va rugam sa incercati din nou.",
+    "ingredientExists": "Ingredientul deja exista.",
+    "ingredientCannotBeAdded": "Ingredientul a putut sa fie adaugat. Va rugam sa incercati din nou.",
+    "itemTypeExists": "Tipul de produs exista deja",
+    "itemTypeCannotBeAdded": "Tipul de produs nu a putut sa fie adaugat. Va rugam sa incercati din nou.",
+    "menuItemExists": "Produsul exista deja.",
+    "nullName": "Numele nu poate fi nul.",
+    "menuItemNotFound": "Produsul nu a putut sa fie gasit",
+    "menuItemTypeNotFound": "Tipul de produs nu exista"
+  },
+  "propertyError": {
+    "wrongLongitude": "longitudinea trebuie sa fie corect introdusa",
+    "wrongLatitude": "latitudinea trebuie sa fie corect introdusa",
+    "emailNotValid": "emailul nu este valid",
+    "wrongStartTime": "Timpul de start nu este valid",
+    "wrongEndTime": "Timpul de final nu este valid"
+  },
+  "registerError": {
+    "takenEmailOrUsername": "Numele de utilizator sau emailul sunt deja folosite. Va rugam sa incercati din nou.",
+    "forbiddenCharacters": "Numele de utilizator are caractere interzise. Va rugam sa incercati din nou.",
+    "badRequest": "Ceva nu a mers cum trebuie. Te rugam sa incerci din nou.",
+    "unknownError": "Eroare la inregistrare",
+    "completeAll": "Completeaza toate casutele cu prima data."
+  },
+  "reservationError": {
+    "wrongDateOrNrOfPersons": "Data sau numarul de persoane este gresit, va rugam sa incercati din nou",
+    "fail": "A avut loc o eroare la rezervare, va rugam sa incercati din nou",
+    "personsFitInTable": "Numarul de persoane este prea mare ca sa incapa la mesele selectate"
+  },
+  "tableError": {
+    "uniqueId": "Numarul pentru fiecare masa trebuie sa fie unic, va rugam sa incercati din nou",
+    "dataNotValid": "Datele introduse nu sunt valide, va rugam sa incercati din nou",
+    "cannotBeDeleted": "Produsul nu poate fi sters, va rugam sa incercati din nou"
+  },
+  "confirmReservationError": {
+    "notFound": "Rezervarea nu poate fi gasita, va rugam sa incercati din nou",
+    "fail": "Confirmarea a esuat, va rugam sa incercati din nou"
   },
   "myCommands": {
     "myCommands": "Comenzile mele",

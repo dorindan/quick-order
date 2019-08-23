@@ -8,6 +8,7 @@ export class MenuItem {
   public ingredients: Ingredient[] = [];
   public price: number;
   public menuItemTypeDto: MenuItemType;
+  public img: boolean;
 
   constructor(newName: string, newDescription: string, newPreparationDurationInMinutes: number,
               nerIngredients: Ingredient[], newPrice: number, menuItemType: MenuItemType) {

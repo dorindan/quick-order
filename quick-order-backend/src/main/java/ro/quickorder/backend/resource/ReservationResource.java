@@ -20,10 +20,10 @@ public class ReservationResource {
         reservationService.addReservation(reservation);
     }
 
-    @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
     @PreAuthorize("hasRole('WAITER')")
-    public List<ReservationDto> getAllUnconfirmed() {
-        return reservationService.getAllReservationsUnconfirmed();
+    public List<ReservationDto> getAll() {
+        return reservationService.getAllReservations();
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)

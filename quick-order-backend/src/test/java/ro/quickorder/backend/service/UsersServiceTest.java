@@ -84,8 +84,8 @@ public class UsersServiceTest {
         UserDto userDto = new UserDto();
         userDto.setEmail("alex@yahoo.com");
         userDto.setUsername("Alex");
-
         userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
+
     }
 
     @Test(expected = NotFoundException.class)
@@ -96,8 +96,8 @@ public class UsersServiceTest {
         userDto.setEmail("newUser@yahoo.com");
         userDto.setUsername("newUser");
         userDto.setUserAttributeDto(attributeDto);
-
         userAttributeService.setPreference(userDto, userDto.getUserAttributeDto());
+
     }
 
     @Test
@@ -117,8 +117,8 @@ public class UsersServiceTest {
         Set<String> roles = new HashSet<String>();
         roles.add("ROLE_USER");
         userDto.setRoles(roles);
-
         userService.login(userDto);
+
     }
 
     @Test(expected = BadCredentialsException.class)
@@ -129,8 +129,8 @@ public class UsersServiceTest {
         Set<String> roles = new HashSet<String>();
         roles.add("ROLE_USER");
         userDto.setRoles(roles);
-
         userService.login(userDto);
+
     }
 
     @Test
@@ -149,6 +149,7 @@ public class UsersServiceTest {
     @Test(expected = BadRequestException.class)
     public void testSingUpUserIsNull() {
         userService.signUp(null);
+
     }
 
     @Test(expected = ForbiddenException.class)
@@ -157,8 +158,8 @@ public class UsersServiceTest {
         userDtoTest.setUsername("hello)");
         userDtoTest.setPassword("password");
         userDtoTest.setEmail("hello@yahoo.com");
-
         userService.signUp(userDtoTest);
+
     }
 
     @Test

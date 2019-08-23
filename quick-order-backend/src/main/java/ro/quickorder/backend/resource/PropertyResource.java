@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ro.quickorder.backend.model.dto.PropertyDto;
-import ro.quickorder.backend.model.dto.ReservationDto;
 import ro.quickorder.backend.service.PropertyService;
 
 @RestController

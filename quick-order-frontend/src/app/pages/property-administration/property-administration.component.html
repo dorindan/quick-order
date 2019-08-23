@@ -12,7 +12,8 @@
           &nbsp;
           <label class="red small" *ngIf="!this.rightStartTime" translate="">property.timeConditions</label>
         </div>
-        <input id="startTime" type="text" (focusout)="validateStartTime()" name="text" class="form-control" value="cinemagia" [(ngModel)]="startTime" required>
+        <input id="startTime" type="text" (focusout)="validateStartTime()" name="text" class="form-control"
+               value="cinemagia" [(ngModel)]="startTime" required>
       </div>
 
       <!-- endTime -->
@@ -22,7 +23,8 @@
           &nbsp;
           <label class="red small" *ngIf="!this.rightEndTime" translate="">property.timeConditions</label>
         </div>
-        <input type="text" name="endTime" (focusout)="validateEndTime()" class="form-control" [(ngModel)]="endTime" required>
+        <input type="text" name="endTime" (focusout)="validateEndTime()" class="form-control" [(ngModel)]="endTime"
+               required>
       </div>
 
       <!-- location -->
@@ -38,9 +40,10 @@
         <div>
           <label><b translate="">property.locationLatitude</b></label>
           &nbsp;
-          <label class="small" *ngIf="!this.rightPass" translate="">property.lmessage</label>
+          <label class="small" translate="">property.lmessage</label>
+          <label *ngIf="!this.rightLatitude" class="red small" translate="">propertyError.wrongLatitude</label>
         </div>
-        <input class="form-control" name="locationLatitude" [(ngModel)]="locationLatitude" required>
+        <input class="form-control" (focusout)="validateLatitude()" name="locationLatitude" [(ngModel)]="locationLatitude" required>
       </div>
 
       <!-- location longitude-->
@@ -48,9 +51,10 @@
         <div>
           <label><b translate="">property.locationLongitude</b></label>
           &nbsp;
-          <label class="small"  translate="">property.lmessage</label>
+          <label class="small" translate="">property.lmessage</label>
+          <label *ngIf="!this.rightLongitude" class="red small" translate="">propertyError.wrongLongitude</label>
         </div>
-        <input class="form-control" name="locationLongitude" [(ngModel)]="locationLongitude" required>
+        <input class="form-control" (focusout)="validateLongitude()" name="locationLongitude" [(ngModel)]="locationLongitude" required>
       </div>
 
       <!-- email -->
@@ -78,6 +82,3 @@
     </form>
   </div>
 </div>
-
-
-

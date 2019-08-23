@@ -10,6 +10,8 @@ import {TableService} from '../../services/table.service';
 import {TokenStorageService} from '../../auth/token-storage.service';
 import {User} from '../../models/User';
 import {Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-reservation',
@@ -36,7 +38,8 @@ export class ReservationComponent implements OnInit {
   public tableList: Table[] = [];
   public selectedTables = [];
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(private translateService: TranslateService,
+              private _formBuilder: FormBuilder,
               private reservationService: ReservationService,
               private snackBar: MatSnackBar,
               private propertyService: PropertyService,
@@ -62,18 +65,21 @@ export class ReservationComponent implements OnInit {
       this.fillHours(startHour, endHour);
     });
   }
-
+/*
+4/9/2019 08:05
+21+8+2019+08:05
+ */
   updateTables() {
     this.dateTime = this.date.concat(' ').concat(this.time);
-    const checkInTimeFormatted = this.dateTime.substr(0, this.dateTime.indexOf(' ')).replace('/', '+').replace('/', '+')
-      + '+' + this.dateTime.substr(this.dateTime.indexOf(' ') + 1, 5);
-    const outHouer = Number(this.time.charAt(1)) + 2;
-    this.dateTime = this.date.concat(' ').concat(this.time.replace(this.time.charAt(1), outHouer + ''));
-    const checkOutTimeFormatted = this.dateTime.substr(0, this.dateTime.indexOf(' ')).replace('/', '+').replace('/', '+') + '+' +
-      this.dateTime.substr(this.dateTime.indexOf(' ') + 1, 5);
-    this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted).subscribe(rez => {
-      this.tableList = rez;
-    });
+    const checkInTimeFormatted = moment(this.dateTime, "D/M/YYYY HH:mm").format("D+M+YYYY+HH:mm");
+    const outHouer = Number(this.time.split(':')[0]) + 2;
+    this.dateTime = this.date.concat(' ').concat(outHouer + ':' + this.time.split(':')[1]);
+    const checkOutTimeFormatted = moment(this.dateTime, "D/M/YYYY HH:mm").format("D+M+YYYY+HH:mm");
+    if (this.isAuthenticatedWaiter()){
+      this.tableService.getTables(checkInTimeFormatted, checkOutTimeFormatted).subscribe(rez => {
+        this.tableList = rez;
+      });
+    }
   }
 
   addDate(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -111,29 +117,29 @@ export class ReservationComponent implements OnInit {
         this.reservationService.reserve(this.reservation)
           .subscribe(data => {
             this.router.navigate(['loggedStart']);
-            this.showSnackbar('Reservation sent successfully.');
+            this.showSnackbar(this.translateService.instant('reservation.reservationSuccessful'));
           }, error => {
             this.disableButton = false;
             switch (error.status) {
               case 403: // forbidden exception
-                this.showSnackbar('Data or persons number are wrong . Please try again!');
+                this.showSnackbar(this.translateService.instant('reservationError.wrongDateOrNrOfPersons'));
                 break;
               default:
-                this.showSnackbar('Reservation failed. Please try again.');
+                this.showSnackbar(this.translateService.instant('reservationError.fail'));
             }
           });
       } else {
         this.disableButton = false;
-        this.showSnackbar('The number of persons is too big to fit in these tables!');
+        this.showSnackbar(this.translateService.instant('reservationError.personsFitInTable'));
       }
     } else {
       this.reservationService.reserve(this.reservation)
         .subscribe(data => {
           this.router.navigate(['loggedStart']);
-          this.showSnackbar('Reservation sent successfully.');
+          this.showSnackbar(this.translateService.instant('reservation.reservationSuccessful'));
         }, error => {
           this.disableButton = false;
-          this.showSnackbar('Reservation failed. Please try again.');
+          this.showSnackbar(this.translateService.instant('reservationError.fail'));
         });
     }
   }

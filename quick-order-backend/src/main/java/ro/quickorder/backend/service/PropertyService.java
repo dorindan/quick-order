@@ -4,10 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.quickorder.backend.converter.PropertyConverter;
 import ro.quickorder.backend.model.Property;
-import ro.quickorder.backend.model.enumeration.PropertyName;
 import ro.quickorder.backend.model.dto.PropertyDto;
+import ro.quickorder.backend.model.enumeration.PropertyName;
 import ro.quickorder.backend.repository.PropertyRepository;
 
 import java.time.LocalTime;
@@ -97,7 +96,7 @@ public class PropertyService {
                 withEmail(getEmail()).build();
     }
 
-    public void saveProperty(PropertyDto propertyDto){
+    public void saveProperty(PropertyDto propertyDto) {
         Property nameProperty = propertyRepository.findByName(PropertyName.RESTAURANT_NAME);
         nameProperty.setValue(propertyDto.getRestaurantName());
         propertyRepository.save(nameProperty);

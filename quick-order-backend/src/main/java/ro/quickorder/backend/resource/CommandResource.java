@@ -39,15 +39,15 @@ public class CommandResource {
         commandService.removeCommand(commandName);
     }
 
-    @RequestMapping(path = "/unconfirmed", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('WAITER')")
-    public List<CommandDto> getAllUnconfirmed() {
-        return commandService.getCommandsWithStatus(CommandStatus.DONE);
-    }
-
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
     @PreAuthorize("hasRole('WAITER')")
     public void confirmReservation(@RequestBody CommandDto commandDto) {
         commandService.confirmCommand(commandDto);
+    }
+
+    @RequestMapping(path = "/all-from-command", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER') or hasRole('WAITER')")
+    public CommandDto updateMenuItemsFromCommand(@RequestBody CommandDto commandDto) {
+        return commandService.updateMenuItemsFromCommand(commandDto);
     }
 }

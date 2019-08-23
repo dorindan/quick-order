@@ -16,4 +16,3 @@ public interface MenuItemCommandRepository extends JpaRepository<MenuItemCommand
     @Transactional
     void deleteByCommandId(String id);
 }
-
