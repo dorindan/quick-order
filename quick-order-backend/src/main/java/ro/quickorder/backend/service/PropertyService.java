@@ -19,12 +19,12 @@ public class PropertyService {
 
     public String getPropertyByName(PropertyName propertyName) {
         if (propertyName == null) {
-            return null;
+            throw new NullPointerException("Property name cannot be null");
         }
         final Property property = propertyRepository.findByName(propertyName);
         if (property == null) {
             LOG.error("property {} was not found!", propertyName);
-            return null;
+            throw new NullPointerException("Cannot find property with name " + propertyName);
         }
         return property.getValue();
     }
