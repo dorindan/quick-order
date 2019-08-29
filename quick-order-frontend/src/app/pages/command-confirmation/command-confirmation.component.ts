@@ -14,20 +14,20 @@ export class CommandConfirmationComponent implements OnInit {
   private commandsGet: Observable<Command[]>;
   private commands: Command[];
 
-  constructor(private commandSerivce: CommandService,
+  constructor(private commandService: CommandService,
               private snackBar: MatSnackBar,
               private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
     if (this.isAuthenticatedWaiter()) {
-      this.commandsGet = this.commandSerivce.getAllUnconfirmed();
-      this.commands = [];
-      this.commandsGet.forEach(command => command.forEach(r => this.commands.push(r)));
+      this.commandService.getAllUnconfirmed().subscribe (res => {
+        this.commands = res;
+      });
     } else if (this.isAuthenticatedUser()) {
-      this.commandsGet = this.commandSerivce.getCommandsOfUser();
-      this.commands = [];
-      this.commandsGet.forEach(command => command.forEach(r => this.commands.push(r)));
+      this.commandService.getCommandsOfUser().subscribe (res => {
+        this.commands = res;
+      });
     }
   }
 
@@ -48,7 +48,7 @@ export class CommandConfirmationComponent implements OnInit {
   }
 
   confirmCommand(command: Command) {
-    this.commandSerivce.confirmCommand(command).subscribe(data => {
+    this.commandService.confirmCommand(command).subscribe(data => {
         this.showSnackbar('Successfully confirmed');
         location.reload();
       },
@@ -58,7 +58,7 @@ export class CommandConfirmationComponent implements OnInit {
   }
 
   deleteCommand(commandName: string) {
-    this.commandSerivce.deleteCommand(commandName).subscribe(data => {
+    this.commandService.deleteCommand(commandName).subscribe(data => {
         this.showSnackbar('Successfully deleted');
         location.reload();
       },
